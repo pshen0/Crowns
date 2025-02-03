@@ -1,0 +1,898 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0F1A78DA2D4837C500DAA4F0 /* HomeModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A78D92D4837C500DAA4F0 /* HomeModuleBuilder.swift */; };
+		0F1A78DE2D48425300DAA4F0 /* ChallengeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A78DD2D48425300DAA4F0 /* ChallengeViewController.swift */; };
+		0F1A78E02D4842AD00DAA4F0 /* ChallengeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A78DF2D4842AD00DAA4F0 /* ChallengeInteractor.swift */; };
+		0F1A78E22D4842BD00DAA4F0 /* ChallengePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A78E12D4842BD00DAA4F0 /* ChallengePresenter.swift */; };
+		0F1A78E42D4842CD00DAA4F0 /* ChallengeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A78E32D4842CD00DAA4F0 /* ChallengeRouter.swift */; };
+		0F1A78E62D4842E500DAA4F0 /* ChallengeModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A78E52D4842E500DAA4F0 /* ChallengeModuleBuilder.swift */; };
+		0F1A78E82D48522D00DAA4F0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8CBB2D41A7DE006A8164 /* Constants.swift */; };
+		0F1A78EB2D48577200DAA4F0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A78EA2D48577200DAA4F0 /* ProfileViewController.swift */; };
+		0F1A78ED2D48577F00DAA4F0 /* ProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A78EC2D48577F00DAA4F0 /* ProfileInteractor.swift */; };
+		0F1A78EF2D48579A00DAA4F0 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A78EE2D48579A00DAA4F0 /* ProfilePresenter.swift */; };
+		0F1A78F12D4857AA00DAA4F0 /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A78F02D4857AA00DAA4F0 /* ProfileRouter.swift */; };
+		0F1A78F32D4857BF00DAA4F0 /* ProfileModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A78F22D4857BF00DAA4F0 /* ProfileModuleBuilder.swift */; };
+		0F2C541E2D492EFD0051AD13 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C541D2D492EFD0051AD13 /* MainTabBarController.swift */; };
+		0F2C54232D4EEADC0051AD13 /* CrownsLearningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54222D4EEADC0051AD13 /* CrownsLearningViewController.swift */; };
+		0F2C54272D4EF4600051AD13 /* SudokuLearningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54262D4EF4600051AD13 /* SudokuLearningViewController.swift */; };
+		0F2C54292D4EF4710051AD13 /* QueensLearningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54282D4EF4710051AD13 /* QueensLearningViewController.swift */; };
+		0F2C542E2D4EF6C60051AD13 /* SettingUpGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C542D2D4EF6C60051AD13 /* SettingUpGameViewController.swift */; };
+		0F2C54322D5018430051AD13 /* SettimgUpGameInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54312D5018430051AD13 /* SettimgUpGameInteractor.swift */; };
+		0F2C54342D5018510051AD13 /* SettimgUpGamePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54332D5018510051AD13 /* SettimgUpGamePresenter.swift */; };
+		0F2C54362D50185E0051AD13 /* SettimgUpGameRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54352D50185E0051AD13 /* SettimgUpGameRouter.swift */; };
+		0F2C54382D5018780051AD13 /* SettimgUpGameModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54372D5018780051AD13 /* SettimgUpGameModuleBuilder.swift */; };
+		0F2C543B2D50224B0051AD13 /* SudokuPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C543A2D50224B0051AD13 /* SudokuPlayViewController.swift */; };
+		0F2C543D2D50230F0051AD13 /* CrownsPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C543C2D50230F0051AD13 /* CrownsPlayViewController.swift */; };
+		0F2C543F2D50236C0051AD13 /* QueensPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C543E2D50236C0051AD13 /* QueensPlayViewController.swift */; };
+		0F2C54412D50511D0051AD13 /* CrownsPlayInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54402D50511D0051AD13 /* CrownsPlayInteractor.swift */; };
+		0F2C54432D50512C0051AD13 /* CrownsPlayPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54422D50512C0051AD13 /* CrownsPlayPresenter.swift */; };
+		0F2C54452D50513A0051AD13 /* CrownsPlayRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54442D50513A0051AD13 /* CrownsPlayRouter.swift */; };
+		0F2C54472D50514D0051AD13 /* CrownsPlayModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54462D50514D0051AD13 /* CrownsPlayModuleBuilder.swift */; };
+		0F2C54492D5051680051AD13 /* SudokuPlayInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54482D5051680051AD13 /* SudokuPlayInteractor.swift */; };
+		0F2C544B2D5051750051AD13 /* SudokuPlayPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C544A2D5051750051AD13 /* SudokuPlayPresenter.swift */; };
+		0F2C544D2D50518E0051AD13 /* SudokuPlayRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C544C2D50518E0051AD13 /* SudokuPlayRouter.swift */; };
+		0F2C544F2D5051A10051AD13 /* SudokuPlayModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C544E2D5051A10051AD13 /* SudokuPlayModuleBuilder.swift */; };
+		0F2C54512D5051E10051AD13 /* QueensPlayInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54502D5051E10051AD13 /* QueensPlayInteractor.swift */; };
+		0F2C54532D5051F00051AD13 /* QueensPlayPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54522D5051F00051AD13 /* QueensPlayPresenter.swift */; };
+		0F2C54552D5052030051AD13 /* QueensPlayRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54542D5052030051AD13 /* QueensPlayRouter.swift */; };
+		0F2C54572D5052120051AD13 /* QueensPlayModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54562D5052120051AD13 /* QueensPlayModuleBuilder.swift */; };
+		0F5F8C802D4177E2006A8164 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8C7F2D4177E2006A8164 /* AppDelegate.swift */; };
+		0F5F8C822D4177E2006A8164 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8C812D4177E2006A8164 /* SceneDelegate.swift */; };
+		0F5F8C842D4177E2006A8164 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8C832D4177E2006A8164 /* HomeViewController.swift */; };
+		0F5F8C892D4177E4006A8164 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F5F8C882D4177E4006A8164 /* Assets.xcassets */; };
+		0F5F8C8C2D4177E4006A8164 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F5F8C8A2D4177E4006A8164 /* LaunchScreen.storyboard */; };
+		0F5F8C972D4177E4006A8164 /* CrownsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8C962D4177E4006A8164 /* CrownsTests.swift */; };
+		0F5F8CA12D4177E4006A8164 /* CrownsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8CA02D4177E4006A8164 /* CrownsUITests.swift */; };
+		0F5F8CA32D4177E4006A8164 /* CrownsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8CA22D4177E4006A8164 /* CrownsUITestsLaunchTests.swift */; };
+		0F5F8CB02D417C6B006A8164 /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8CAF2D417C6B006A8164 /* HomeRouter.swift */; };
+		0F5F8CB22D417C8C006A8164 /* HomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8CB12D417C8C006A8164 /* HomeInteractor.swift */; };
+		0F5F8CB42D417C9C006A8164 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8CB32D417C9C006A8164 /* HomePresenter.swift */; };
+		0F5F8CB72D418883006A8164 /* PinExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8CB62D418883006A8164 /* PinExtension.swift */; };
+		0F5F8CBA2D418B14006A8164 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8CB92D418B14006A8164 /* ColorExtension.swift */; };
+		0F5F8CBE2D41A865006A8164 /* CustomObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8CBD2D41A865006A8164 /* CustomObjects.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0F5F8C932D4177E4006A8164 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0F5F8C742D4177E2006A8164 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0F5F8C7B2D4177E2006A8164;
+			remoteInfo = Crowns;
+		};
+		0F5F8C9D2D4177E4006A8164 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0F5F8C742D4177E2006A8164 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0F5F8C7B2D4177E2006A8164;
+			remoteInfo = Crowns;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0F1A78D92D4837C500DAA4F0 /* HomeModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModuleBuilder.swift; sourceTree = "<group>"; };
+		0F1A78DD2D48425300DAA4F0 /* ChallengeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeViewController.swift; sourceTree = "<group>"; };
+		0F1A78DF2D4842AD00DAA4F0 /* ChallengeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeInteractor.swift; sourceTree = "<group>"; };
+		0F1A78E12D4842BD00DAA4F0 /* ChallengePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengePresenter.swift; sourceTree = "<group>"; };
+		0F1A78E32D4842CD00DAA4F0 /* ChallengeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeRouter.swift; sourceTree = "<group>"; };
+		0F1A78E52D4842E500DAA4F0 /* ChallengeModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeModuleBuilder.swift; sourceTree = "<group>"; };
+		0F1A78EA2D48577200DAA4F0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		0F1A78EC2D48577F00DAA4F0 /* ProfileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInteractor.swift; sourceTree = "<group>"; };
+		0F1A78EE2D48579A00DAA4F0 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
+		0F1A78F02D4857AA00DAA4F0 /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
+		0F1A78F22D4857BF00DAA4F0 /* ProfileModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModuleBuilder.swift; sourceTree = "<group>"; };
+		0F2C541D2D492EFD0051AD13 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		0F2C54222D4EEADC0051AD13 /* CrownsLearningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsLearningViewController.swift; sourceTree = "<group>"; };
+		0F2C54262D4EF4600051AD13 /* SudokuLearningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuLearningViewController.swift; sourceTree = "<group>"; };
+		0F2C54282D4EF4710051AD13 /* QueensLearningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensLearningViewController.swift; sourceTree = "<group>"; };
+		0F2C542D2D4EF6C60051AD13 /* SettingUpGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingUpGameViewController.swift; sourceTree = "<group>"; };
+		0F2C54312D5018430051AD13 /* SettimgUpGameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettimgUpGameInteractor.swift; sourceTree = "<group>"; };
+		0F2C54332D5018510051AD13 /* SettimgUpGamePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettimgUpGamePresenter.swift; sourceTree = "<group>"; };
+		0F2C54352D50185E0051AD13 /* SettimgUpGameRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettimgUpGameRouter.swift; sourceTree = "<group>"; };
+		0F2C54372D5018780051AD13 /* SettimgUpGameModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettimgUpGameModuleBuilder.swift; sourceTree = "<group>"; };
+		0F2C543A2D50224B0051AD13 /* SudokuPlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuPlayViewController.swift; sourceTree = "<group>"; };
+		0F2C543C2D50230F0051AD13 /* CrownsPlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsPlayViewController.swift; sourceTree = "<group>"; };
+		0F2C543E2D50236C0051AD13 /* QueensPlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensPlayViewController.swift; sourceTree = "<group>"; };
+		0F2C54402D50511D0051AD13 /* CrownsPlayInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsPlayInteractor.swift; sourceTree = "<group>"; };
+		0F2C54422D50512C0051AD13 /* CrownsPlayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsPlayPresenter.swift; sourceTree = "<group>"; };
+		0F2C54442D50513A0051AD13 /* CrownsPlayRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsPlayRouter.swift; sourceTree = "<group>"; };
+		0F2C54462D50514D0051AD13 /* CrownsPlayModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsPlayModuleBuilder.swift; sourceTree = "<group>"; };
+		0F2C54482D5051680051AD13 /* SudokuPlayInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuPlayInteractor.swift; sourceTree = "<group>"; };
+		0F2C544A2D5051750051AD13 /* SudokuPlayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuPlayPresenter.swift; sourceTree = "<group>"; };
+		0F2C544C2D50518E0051AD13 /* SudokuPlayRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuPlayRouter.swift; sourceTree = "<group>"; };
+		0F2C544E2D5051A10051AD13 /* SudokuPlayModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuPlayModuleBuilder.swift; sourceTree = "<group>"; };
+		0F2C54502D5051E10051AD13 /* QueensPlayInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensPlayInteractor.swift; sourceTree = "<group>"; };
+		0F2C54522D5051F00051AD13 /* QueensPlayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensPlayPresenter.swift; sourceTree = "<group>"; };
+		0F2C54542D5052030051AD13 /* QueensPlayRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensPlayRouter.swift; sourceTree = "<group>"; };
+		0F2C54562D5052120051AD13 /* QueensPlayModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensPlayModuleBuilder.swift; sourceTree = "<group>"; };
+		0F5F8C7C2D4177E2006A8164 /* Crowns.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crowns.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F5F8C7F2D4177E2006A8164 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0F5F8C812D4177E2006A8164 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		0F5F8C832D4177E2006A8164 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		0F5F8C882D4177E4006A8164 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0F5F8C8B2D4177E4006A8164 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0F5F8C8D2D4177E4006A8164 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0F5F8C922D4177E4006A8164 /* CrownsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrownsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F5F8C962D4177E4006A8164 /* CrownsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsTests.swift; sourceTree = "<group>"; };
+		0F5F8C9C2D4177E4006A8164 /* CrownsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrownsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F5F8CA02D4177E4006A8164 /* CrownsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsUITests.swift; sourceTree = "<group>"; };
+		0F5F8CA22D4177E4006A8164 /* CrownsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0F5F8CAF2D417C6B006A8164 /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
+		0F5F8CB12D417C8C006A8164 /* HomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInteractor.swift; sourceTree = "<group>"; };
+		0F5F8CB32D417C9C006A8164 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
+		0F5F8CB62D418883006A8164 /* PinExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinExtension.swift; sourceTree = "<group>"; };
+		0F5F8CB92D418B14006A8164 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		0F5F8CBB2D41A7DE006A8164 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0F5F8CBD2D41A865006A8164 /* CustomObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomObjects.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0F5F8C792D4177E2006A8164 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0F5F8C8F2D4177E4006A8164 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0F5F8C992D4177E4006A8164 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0F1A78D72D482D9D00DAA4F0 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				0F5F8C7F2D4177E2006A8164 /* AppDelegate.swift */,
+				0F5F8C812D4177E2006A8164 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		0F1A78D82D482DF600DAA4F0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0F5F8CBB2D41A7DE006A8164 /* Constants.swift */,
+				0F5F8C8A2D4177E4006A8164 /* LaunchScreen.storyboard */,
+				0F5F8C882D4177E4006A8164 /* Assets.xcassets */,
+				0F5F8C8D2D4177E4006A8164 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		0F1A78DC2D4841AA00DAA4F0 /* ChallengeModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F1A78DD2D48425300DAA4F0 /* ChallengeViewController.swift */,
+				0F1A78DF2D4842AD00DAA4F0 /* ChallengeInteractor.swift */,
+				0F1A78E12D4842BD00DAA4F0 /* ChallengePresenter.swift */,
+				0F1A78E32D4842CD00DAA4F0 /* ChallengeRouter.swift */,
+				0F1A78E52D4842E500DAA4F0 /* ChallengeModuleBuilder.swift */,
+			);
+			path = ChallengeModule;
+			sourceTree = "<group>";
+		};
+		0F1A78E92D48575300DAA4F0 /* ProfileModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F1A78EA2D48577200DAA4F0 /* ProfileViewController.swift */,
+				0F1A78EC2D48577F00DAA4F0 /* ProfileInteractor.swift */,
+				0F1A78EE2D48579A00DAA4F0 /* ProfilePresenter.swift */,
+				0F1A78F02D4857AA00DAA4F0 /* ProfileRouter.swift */,
+				0F1A78F22D4857BF00DAA4F0 /* ProfileModuleBuilder.swift */,
+			);
+			path = ProfileModule;
+			sourceTree = "<group>";
+		};
+		0F2C541F2D4930F80051AD13 /* MainTabBarModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F2C541D2D492EFD0051AD13 /* MainTabBarController.swift */,
+			);
+			path = MainTabBarModule;
+			sourceTree = "<group>";
+		};
+		0F2C54202D49529D0051AD13 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				0F2C54302D4EF7240051AD13 /* Learning */,
+				0F2C542F2D4EF6E30051AD13 /* Plays */,
+				0F2C542C2D4EF6870051AD13 /* SettingUpGameModule */,
+				0F1A78DC2D4841AA00DAA4F0 /* ChallengeModule */,
+				0F1A78E92D48575300DAA4F0 /* ProfileModule */,
+				0F5F8CB52D417CA6006A8164 /* HomeModule */,
+				0F2C541F2D4930F80051AD13 /* MainTabBarModule */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		0F2C54212D4EEA5F0051AD13 /* CrownsLearningModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F2C54222D4EEADC0051AD13 /* CrownsLearningViewController.swift */,
+			);
+			path = CrownsLearningModule;
+			sourceTree = "<group>";
+		};
+		0F2C54242D4EF3CB0051AD13 /* SudokuLearningModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F2C54262D4EF4600051AD13 /* SudokuLearningViewController.swift */,
+			);
+			path = SudokuLearningModule;
+			sourceTree = "<group>";
+		};
+		0F2C54252D4EF4370051AD13 /* QueensLearningModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F2C54282D4EF4710051AD13 /* QueensLearningViewController.swift */,
+			);
+			path = QueensLearningModule;
+			sourceTree = "<group>";
+		};
+		0F2C542A2D4EF57B0051AD13 /* CrownsPlayModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F2C543C2D50230F0051AD13 /* CrownsPlayViewController.swift */,
+				0F2C54402D50511D0051AD13 /* CrownsPlayInteractor.swift */,
+				0F2C54422D50512C0051AD13 /* CrownsPlayPresenter.swift */,
+				0F2C54442D50513A0051AD13 /* CrownsPlayRouter.swift */,
+				0F2C54462D50514D0051AD13 /* CrownsPlayModuleBuilder.swift */,
+			);
+			path = CrownsPlayModule;
+			sourceTree = "<group>";
+		};
+		0F2C542B2D4EF5940051AD13 /* QueensPlayModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F2C543E2D50236C0051AD13 /* QueensPlayViewController.swift */,
+				0F2C54502D5051E10051AD13 /* QueensPlayInteractor.swift */,
+				0F2C54522D5051F00051AD13 /* QueensPlayPresenter.swift */,
+				0F2C54542D5052030051AD13 /* QueensPlayRouter.swift */,
+				0F2C54562D5052120051AD13 /* QueensPlayModuleBuilder.swift */,
+			);
+			path = QueensPlayModule;
+			sourceTree = "<group>";
+		};
+		0F2C542C2D4EF6870051AD13 /* SettingUpGameModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F2C542D2D4EF6C60051AD13 /* SettingUpGameViewController.swift */,
+				0F2C54312D5018430051AD13 /* SettimgUpGameInteractor.swift */,
+				0F2C54332D5018510051AD13 /* SettimgUpGamePresenter.swift */,
+				0F2C54352D50185E0051AD13 /* SettimgUpGameRouter.swift */,
+				0F2C54372D5018780051AD13 /* SettimgUpGameModuleBuilder.swift */,
+			);
+			path = SettingUpGameModule;
+			sourceTree = "<group>";
+		};
+		0F2C542F2D4EF6E30051AD13 /* Plays */ = {
+			isa = PBXGroup;
+			children = (
+				0F2C542A2D4EF57B0051AD13 /* CrownsPlayModule */,
+				0F2C54392D5022030051AD13 /* SudokuPlayModule */,
+				0F2C542B2D4EF5940051AD13 /* QueensPlayModule */,
+			);
+			path = Plays;
+			sourceTree = "<group>";
+		};
+		0F2C54302D4EF7240051AD13 /* Learning */ = {
+			isa = PBXGroup;
+			children = (
+				0F2C54212D4EEA5F0051AD13 /* CrownsLearningModule */,
+				0F2C54242D4EF3CB0051AD13 /* SudokuLearningModule */,
+				0F2C54252D4EF4370051AD13 /* QueensLearningModule */,
+			);
+			path = Learning;
+			sourceTree = "<group>";
+		};
+		0F2C54392D5022030051AD13 /* SudokuPlayModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F2C543A2D50224B0051AD13 /* SudokuPlayViewController.swift */,
+				0F2C54482D5051680051AD13 /* SudokuPlayInteractor.swift */,
+				0F2C544A2D5051750051AD13 /* SudokuPlayPresenter.swift */,
+				0F2C544C2D50518E0051AD13 /* SudokuPlayRouter.swift */,
+				0F2C544E2D5051A10051AD13 /* SudokuPlayModuleBuilder.swift */,
+			);
+			path = SudokuPlayModule;
+			sourceTree = "<group>";
+		};
+		0F5F8C732D4177E2006A8164 = {
+			isa = PBXGroup;
+			children = (
+				0F5F8C7E2D4177E2006A8164 /* Crowns */,
+				0F5F8C952D4177E4006A8164 /* CrownsTests */,
+				0F5F8C9F2D4177E4006A8164 /* CrownsUITests */,
+				0F5F8C7D2D4177E2006A8164 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0F5F8C7D2D4177E2006A8164 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0F5F8C7C2D4177E2006A8164 /* Crowns.app */,
+				0F5F8C922D4177E4006A8164 /* CrownsTests.xctest */,
+				0F5F8C9C2D4177E4006A8164 /* CrownsUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0F5F8C7E2D4177E2006A8164 /* Crowns */ = {
+			isa = PBXGroup;
+			children = (
+				0F2C54202D49529D0051AD13 /* Modules */,
+				0F1A78D72D482D9D00DAA4F0 /* Application */,
+				0F1A78D82D482DF600DAA4F0 /* Resources */,
+				0F5F8CB82D418ADA006A8164 /* Extensions */,
+			);
+			path = Crowns;
+			sourceTree = "<group>";
+		};
+		0F5F8C952D4177E4006A8164 /* CrownsTests */ = {
+			isa = PBXGroup;
+			children = (
+				0F5F8C962D4177E4006A8164 /* CrownsTests.swift */,
+			);
+			path = CrownsTests;
+			sourceTree = "<group>";
+		};
+		0F5F8C9F2D4177E4006A8164 /* CrownsUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0F5F8CA02D4177E4006A8164 /* CrownsUITests.swift */,
+				0F5F8CA22D4177E4006A8164 /* CrownsUITestsLaunchTests.swift */,
+			);
+			path = CrownsUITests;
+			sourceTree = "<group>";
+		};
+		0F5F8CB52D417CA6006A8164 /* HomeModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F5F8C832D4177E2006A8164 /* HomeViewController.swift */,
+				0F5F8CB12D417C8C006A8164 /* HomeInteractor.swift */,
+				0F5F8CB32D417C9C006A8164 /* HomePresenter.swift */,
+				0F5F8CAF2D417C6B006A8164 /* HomeRouter.swift */,
+				0F1A78D92D4837C500DAA4F0 /* HomeModuleBuilder.swift */,
+			);
+			path = HomeModule;
+			sourceTree = "<group>";
+		};
+		0F5F8CB82D418ADA006A8164 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0F5F8CBD2D41A865006A8164 /* CustomObjects.swift */,
+				0F5F8CB62D418883006A8164 /* PinExtension.swift */,
+				0F5F8CB92D418B14006A8164 /* ColorExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0F5F8C7B2D4177E2006A8164 /* Crowns */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0F5F8CA62D4177E4006A8164 /* Build configuration list for PBXNativeTarget "Crowns" */;
+			buildPhases = (
+				0F5F8C782D4177E2006A8164 /* Sources */,
+				0F5F8C792D4177E2006A8164 /* Frameworks */,
+				0F5F8C7A2D4177E2006A8164 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Crowns;
+			productName = Crowns;
+			productReference = 0F5F8C7C2D4177E2006A8164 /* Crowns.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0F5F8C912D4177E4006A8164 /* CrownsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0F5F8CA92D4177E4006A8164 /* Build configuration list for PBXNativeTarget "CrownsTests" */;
+			buildPhases = (
+				0F5F8C8E2D4177E4006A8164 /* Sources */,
+				0F5F8C8F2D4177E4006A8164 /* Frameworks */,
+				0F5F8C902D4177E4006A8164 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0F5F8C942D4177E4006A8164 /* PBXTargetDependency */,
+			);
+			name = CrownsTests;
+			productName = CrownsTests;
+			productReference = 0F5F8C922D4177E4006A8164 /* CrownsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0F5F8C9B2D4177E4006A8164 /* CrownsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0F5F8CAC2D4177E4006A8164 /* Build configuration list for PBXNativeTarget "CrownsUITests" */;
+			buildPhases = (
+				0F5F8C982D4177E4006A8164 /* Sources */,
+				0F5F8C992D4177E4006A8164 /* Frameworks */,
+				0F5F8C9A2D4177E4006A8164 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0F5F8C9E2D4177E4006A8164 /* PBXTargetDependency */,
+			);
+			name = CrownsUITests;
+			productName = CrownsUITests;
+			productReference = 0F5F8C9C2D4177E4006A8164 /* CrownsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0F5F8C742D4177E2006A8164 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					0F5F8C7B2D4177E2006A8164 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					0F5F8C912D4177E4006A8164 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = 0F5F8C7B2D4177E2006A8164;
+					};
+					0F5F8C9B2D4177E4006A8164 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = 0F5F8C7B2D4177E2006A8164;
+					};
+				};
+			};
+			buildConfigurationList = 0F5F8C772D4177E2006A8164 /* Build configuration list for PBXProject "Crowns" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0F5F8C732D4177E2006A8164;
+			productRefGroup = 0F5F8C7D2D4177E2006A8164 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0F5F8C7B2D4177E2006A8164 /* Crowns */,
+				0F5F8C912D4177E4006A8164 /* CrownsTests */,
+				0F5F8C9B2D4177E4006A8164 /* CrownsUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0F5F8C7A2D4177E2006A8164 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F5F8C8C2D4177E4006A8164 /* LaunchScreen.storyboard in Resources */,
+				0F5F8C892D4177E4006A8164 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0F5F8C902D4177E4006A8164 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0F5F8C9A2D4177E4006A8164 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0F5F8C782D4177E2006A8164 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F1A78E02D4842AD00DAA4F0 /* ChallengeInteractor.swift in Sources */,
+				0F5F8CB72D418883006A8164 /* PinExtension.swift in Sources */,
+				0F2C54432D50512C0051AD13 /* CrownsPlayPresenter.swift in Sources */,
+				0F2C544F2D5051A10051AD13 /* SudokuPlayModuleBuilder.swift in Sources */,
+				0F2C54362D50185E0051AD13 /* SettimgUpGameRouter.swift in Sources */,
+				0F2C542E2D4EF6C60051AD13 /* SettingUpGameViewController.swift in Sources */,
+				0F2C54412D50511D0051AD13 /* CrownsPlayInteractor.swift in Sources */,
+				0F2C544B2D5051750051AD13 /* SudokuPlayPresenter.swift in Sources */,
+				0F5F8CBE2D41A865006A8164 /* CustomObjects.swift in Sources */,
+				0F2C54552D5052030051AD13 /* QueensPlayRouter.swift in Sources */,
+				0F2C54272D4EF4600051AD13 /* SudokuLearningViewController.swift in Sources */,
+				0F2C54452D50513A0051AD13 /* CrownsPlayRouter.swift in Sources */,
+				0F2C54512D5051E10051AD13 /* QueensPlayInteractor.swift in Sources */,
+				0F5F8CB42D417C9C006A8164 /* HomePresenter.swift in Sources */,
+				0F2C54232D4EEADC0051AD13 /* CrownsLearningViewController.swift in Sources */,
+				0F1A78F12D4857AA00DAA4F0 /* ProfileRouter.swift in Sources */,
+				0F5F8CB02D417C6B006A8164 /* HomeRouter.swift in Sources */,
+				0F2C543F2D50236C0051AD13 /* QueensPlayViewController.swift in Sources */,
+				0F2C543D2D50230F0051AD13 /* CrownsPlayViewController.swift in Sources */,
+				0F1A78DA2D4837C500DAA4F0 /* HomeModuleBuilder.swift in Sources */,
+				0F1A78E82D48522D00DAA4F0 /* Constants.swift in Sources */,
+				0F2C54342D5018510051AD13 /* SettimgUpGamePresenter.swift in Sources */,
+				0F2C541E2D492EFD0051AD13 /* MainTabBarController.swift in Sources */,
+				0F2C54322D5018430051AD13 /* SettimgUpGameInteractor.swift in Sources */,
+				0F1A78ED2D48577F00DAA4F0 /* ProfileInteractor.swift in Sources */,
+				0F1A78EB2D48577200DAA4F0 /* ProfileViewController.swift in Sources */,
+				0F2C54472D50514D0051AD13 /* CrownsPlayModuleBuilder.swift in Sources */,
+				0F2C54492D5051680051AD13 /* SudokuPlayInteractor.swift in Sources */,
+				0F1A78E42D4842CD00DAA4F0 /* ChallengeRouter.swift in Sources */,
+				0F1A78E62D4842E500DAA4F0 /* ChallengeModuleBuilder.swift in Sources */,
+				0F2C544D2D50518E0051AD13 /* SudokuPlayRouter.swift in Sources */,
+				0F1A78EF2D48579A00DAA4F0 /* ProfilePresenter.swift in Sources */,
+				0F2C54382D5018780051AD13 /* SettimgUpGameModuleBuilder.swift in Sources */,
+				0F5F8CBA2D418B14006A8164 /* ColorExtension.swift in Sources */,
+				0F5F8C842D4177E2006A8164 /* HomeViewController.swift in Sources */,
+				0F1A78E22D4842BD00DAA4F0 /* ChallengePresenter.swift in Sources */,
+				0F5F8CB22D417C8C006A8164 /* HomeInteractor.swift in Sources */,
+				0F5F8C802D4177E2006A8164 /* AppDelegate.swift in Sources */,
+				0F1A78F32D4857BF00DAA4F0 /* ProfileModuleBuilder.swift in Sources */,
+				0F5F8C822D4177E2006A8164 /* SceneDelegate.swift in Sources */,
+				0F2C54532D5051F00051AD13 /* QueensPlayPresenter.swift in Sources */,
+				0F2C543B2D50224B0051AD13 /* SudokuPlayViewController.swift in Sources */,
+				0F2C54572D5052120051AD13 /* QueensPlayModuleBuilder.swift in Sources */,
+				0F2C54292D4EF4710051AD13 /* QueensLearningViewController.swift in Sources */,
+				0F1A78DE2D48425300DAA4F0 /* ChallengeViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0F5F8C8E2D4177E4006A8164 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F5F8C972D4177E4006A8164 /* CrownsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0F5F8C982D4177E4006A8164 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F5F8CA32D4177E4006A8164 /* CrownsUITestsLaunchTests.swift in Sources */,
+				0F5F8CA12D4177E4006A8164 /* CrownsUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0F5F8C942D4177E4006A8164 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0F5F8C7B2D4177E2006A8164 /* Crowns */;
+			targetProxy = 0F5F8C932D4177E4006A8164 /* PBXContainerItemProxy */;
+		};
+		0F5F8C9E2D4177E4006A8164 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0F5F8C7B2D4177E2006A8164 /* Crowns */;
+			targetProxy = 0F5F8C9D2D4177E4006A8164 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0F5F8C8A2D4177E4006A8164 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0F5F8C8B2D4177E4006A8164 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0F5F8CA42D4177E4006A8164 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		0F5F8CA52D4177E4006A8164 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0F5F8CA72D4177E4006A8164 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Crowns/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = hse.Crowns;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0F5F8CA82D4177E4006A8164 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Crowns/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = hse.Crowns;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0F5F8CAA2D4177E4006A8164 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = hse.CrownsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Crowns.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Crowns";
+			};
+			name = Debug;
+		};
+		0F5F8CAB2D4177E4006A8164 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = hse.CrownsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Crowns.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Crowns";
+			};
+			name = Release;
+		};
+		0F5F8CAD2D4177E4006A8164 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = hse.CrownsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Crowns;
+			};
+			name = Debug;
+		};
+		0F5F8CAE2D4177E4006A8164 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = hse.CrownsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Crowns;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0F5F8C772D4177E2006A8164 /* Build configuration list for PBXProject "Crowns" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0F5F8CA42D4177E4006A8164 /* Debug */,
+				0F5F8CA52D4177E4006A8164 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0F5F8CA62D4177E4006A8164 /* Build configuration list for PBXNativeTarget "Crowns" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0F5F8CA72D4177E4006A8164 /* Debug */,
+				0F5F8CA82D4177E4006A8164 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0F5F8CA92D4177E4006A8164 /* Build configuration list for PBXNativeTarget "CrownsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0F5F8CAA2D4177E4006A8164 /* Debug */,
+				0F5F8CAB2D4177E4006A8164 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0F5F8CAC2D4177E4006A8164 /* Build configuration list for PBXNativeTarget "CrownsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0F5F8CAD2D4177E4006A8164 /* Debug */,
+				0F5F8CAE2D4177E4006A8164 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0F5F8C742D4177E2006A8164 /* Project object */;
+}
