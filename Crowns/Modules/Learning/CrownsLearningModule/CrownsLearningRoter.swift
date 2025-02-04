@@ -1,5 +1,5 @@
 //
-//  CrownsPlayRouter.swift
+//  CrownsLearningRoter.swift
 //  Crowns
 //
 //  Created by Анна Сазонова on 03.02.2025.
@@ -7,12 +7,12 @@
 
 import UIKit
 
-protocol CrownsPlayRouterProtocol: AnyObject {
+protocol CrownsLearningRouterProtocol: AnyObject {
     func navigateBack()
 }
 
-class CrownsPlayRouter: CrownsPlayRouterProtocol {
-    weak var presenter: CrownsPlayPresenterProtocol?
+class CrownsLearningRouter: CrownsLearningRouterProtocol {
+    weak var presenter: CrownsLearningPresenterProtocol?
     weak var viewController: UIViewController?
     
     func navigateBack() {

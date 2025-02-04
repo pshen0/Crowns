@@ -46,7 +46,7 @@ final class CrownsPlayViewController: UIViewController, CrownsPlayViewProtocol{
     }
     
     @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: false)
+        presenter?.processBackButton()
     }
     
 }

@@ -9,8 +9,8 @@ import Foundation
 
 protocol HomePresenterProtocol: AnyObject {
     func viewDidLoaded()
-    func learningButtonTapped(for game: String)
-    func playButtonTapped(for game: String)
+    func processLearningButton(for game: Int)
+    func processPlayButton(for game: Int)
 }
 
 class HomePresenter: HomePresenterProtocol {
@@ -27,11 +27,11 @@ class HomePresenter: HomePresenterProtocol {
         //
     }
     
-    func learningButtonTapped(for game: String) {
+    func processLearningButton(for game: Int) {
         router.navigateToLearning(for: game)
     }
     
-    func playButtonTapped(for game: String) {
+    func processPlayButton(for game: Int) {
         router.navigateToPlaySettings(for: game)
     }
 }

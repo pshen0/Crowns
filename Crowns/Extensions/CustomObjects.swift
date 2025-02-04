@@ -19,7 +19,7 @@ class CustomButton: UIButton {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Text.initError)
     }
     
     override init(frame: CGRect) {
@@ -27,6 +27,35 @@ class CustomButton: UIButton {
     }
 }
 
+class CustomText: UILabel {
+    
+    init(text: String, fontSize: CGFloat, textColor: UIColor = .black) {
+        super.init(frame: .zero)
+        self.text = text
+        self.textColor = textColor
+        setupFont(with: fontSize)
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupFont(with: Constraints.textSize)
+        setupUI()
+    }
+    
+    private func setupFont(with size: CGFloat) {
+        if let customFont = UIFont(name: Text.fontIrishGrover, size: size) {
+            self.font = customFont
+        } else {
+            self.font = UIFont.systemFont(ofSize: size)
+        }
+    }
+
+    private func setupUI() {
+        self.numberOfLines = 0
+        self.textAlignment = .center
+    }
+}
 
 class BlinkingCatView: UIImageView {
     
@@ -45,7 +74,7 @@ class BlinkingCatView: UIImageView {
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Text.initError)
     }
     
     override init(frame: CGRect) {
@@ -61,8 +90,8 @@ class BlinkingCatView: UIImageView {
                                     image6, image5, image4, image3, image2, image1]
         }
 
-        self.animationDuration = 0.6 // Длительность моргания
-        self.animationRepeatCount = 1 // Один раз за вызов
+        self.animationDuration = Numbers.blinkingAnimationDuration
+        self.animationRepeatCount = Numbers.blinkingRepeat
     }
     
     func startBlinking() {

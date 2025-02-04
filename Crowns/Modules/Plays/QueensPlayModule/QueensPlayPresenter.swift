@@ -8,7 +8,7 @@
 import Foundation
 
 protocol QueensPlayPresenterProtocol: AnyObject {
-    func viewDidLoaded()
+    func processBackButton()
 }
 
 class QueensPlayPresenter: QueensPlayPresenterProtocol {
@@ -21,8 +21,8 @@ class QueensPlayPresenter: QueensPlayPresenterProtocol {
         self.router = router
     }
     
-    func viewDidLoaded() {
-        //
+    func processBackButton() {
+        router.navigateBack()
     }
 
 }

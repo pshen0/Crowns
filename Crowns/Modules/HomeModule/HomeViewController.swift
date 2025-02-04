@@ -27,11 +27,11 @@ final class HomeViewController: UIViewController, HomeViewProtocol{
                                                            tapped: UIImageView(image: Images.chooseSudokuButtonTap))
     private let chooseQueensButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseQueensButton),
                                                            tapped: UIImageView(image: Images.chooseQueensButtonTap))
-    private let homeLogo = UIImageView(image: Images.homeLogo)
+    private let homeLogoPicture = UIImageView(image: Images.homeLogoPicture)
+    private let homeLogoText = CustomText(text: Text.homeLogo, fontSize: Constraints.homeLogoSize, textColor: Colors.white)
     private let homeCalendar = UIImageView(image: Images.homeCalendar)
-    private let chooseGameText = UIImageView(image: Images.chooseGameText)
-    private let chooseLearningText = UIImageView(image: Images.chooseLearningText)
-    
+    private let chooseGameText = CustomText(text: Text.chooseGame, fontSize: Constraints.selectorTextSize, textColor: Colors.white)
+    private let chooseLearningText = CustomText(text: Text.chooseLearning, fontSize: Constraints.selectorTextSize, textColor: Colors.white)
     var presenter: HomePresenterProtocol?
     
     override func viewDidLoad() {
@@ -50,11 +50,14 @@ final class HomeViewController: UIViewController, HomeViewProtocol{
     
     private func configureBackground() {
         view.backgroundColor = Colors.darkGray
-        view.addSubview(homeLogo)
+        view.addSubview(homeLogoPicture)
+        view.addSubview(homeLogoText)
         
         NSLayoutConstraint.activate([
-            homeLogo.pinCenterX(to: view),
-            homeLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Numbers.logoTop)
+            homeLogoPicture.pinCenterX(to: view),
+            homeLogoPicture.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.homeLogoPictureTop),
+            homeLogoText.pinCenterX(to: view),
+            homeLogoText.pinTop(to: homeLogoPicture.bottomAnchor, Constraints.homeLogoTextTop)
         ])
     }
     
@@ -63,7 +66,7 @@ final class HomeViewController: UIViewController, HomeViewProtocol{
         
         NSLayoutConstraint.activate([
             homeCalendar.pinCenterX(to: view),
-            homeCalendar.pinTop(to: homeLogo.bottomAnchor, Numbers.homeCalendarTop)
+            homeCalendar.pinTop(to: homeLogoText.bottomAnchor, Constraints.homeCalendarTop)
         ])
     }
     
@@ -80,9 +83,9 @@ final class HomeViewController: UIViewController, HomeViewProtocol{
             continueButton.pinCenterX(to: view),
             learningButton.pinCenterX(to: view),
             
-            newGameButton.pinTop(to: homeCalendar.bottomAnchor, Numbers.newGameButtonTop),
-            continueButton.pinTop(to: newGameButton.bottomAnchor, Numbers.continueButtonTop),
-            learningButton.pinTop(to: continueButton.bottomAnchor, Numbers.learningButtonTop)
+            newGameButton.pinTop(to: homeCalendar.bottomAnchor, Constraints.newGameButtonTop),
+            continueButton.pinTop(to: newGameButton.bottomAnchor, Constraints.continueButtonTop),
+            learningButton.pinTop(to: continueButton.bottomAnchor, Constraints.learningButtonTop)
         ])
         
         newGameButton.addTarget(self, action: #selector(showGameSelector(_:)), for: .touchUpInside)
@@ -101,13 +104,13 @@ final class HomeViewController: UIViewController, HomeViewProtocol{
     
     private func configureGameSelector() {
         gameSelectorView.backgroundColor = Colors.darkGray
-        gameSelectorView.layer.cornerRadius = Numbers.gameSelectorRadius
+        gameSelectorView.layer.cornerRadius = Constraints.gameSelectorRadius
         gameSelectorView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         gameSelectorView.clipsToBounds = false
         gameSelectorView.layer.shadowColor = UIColor.black.cgColor
-        gameSelectorView.layer.shadowOffset = CGSize(width: Numbers.gameSelectorShadowWidth,
-                                                     height: -Numbers.gameSelectorShadowHeight)
-        gameSelectorView.layer.shadowRadius = Numbers.gameSelectorShadowRadius
+        gameSelectorView.layer.shadowOffset = CGSize(width: Constraints.gameSelectorShadowWidth,
+                                                     height: -Constraints.gameSelectorShadowHeight)
+        gameSelectorView.layer.shadowRadius = Constraints.gameSelectorShadowRadius
         gameSelectorView.layer.shadowOpacity = Numbers.gameSelectorShadowUnvisible
         
         view.addSubview(gameSelectorView)
@@ -119,12 +122,12 @@ final class HomeViewController: UIViewController, HomeViewProtocol{
         NSLayoutConstraint.activate([
             gameSelectorView.pinLeft(to: view.leadingAnchor),
             gameSelectorView.pinRight(to: view.trailingAnchor),
-            gameSelectorView.setHeight(Numbers.gameSelectorHeight),
-            gameSelectorView.pinBottom(to: view.bottomAnchor, -Numbers.gameSelectorHeight),
+            gameSelectorView.setHeight(Constraints.gameSelectorHeight),
+            gameSelectorView.pinBottom(to: view.bottomAnchor, -Constraints.gameSelectorHeight),
             chooseGameText.pinCenterX(to: gameSelectorView),
-            chooseGameText.pinTop(to: gameSelectorView.topAnchor, Numbers.chooseTextTop),
+            chooseGameText.pinTop(to: gameSelectorView.topAnchor, Constraints.chooseTextTop),
             chooseLearningText.pinCenterX(to: gameSelectorView),
-            chooseLearningText.pinTop(to: gameSelectorView.topAnchor, Numbers.chooseTextTop)
+            chooseLearningText.pinTop(to: gameSelectorView.topAnchor, Constraints.chooseTextTop)
         ])
         
         configureGameSelectorButtons()
@@ -140,18 +143,18 @@ final class HomeViewController: UIViewController, HomeViewProtocol{
             chooseSudokuButton.pinCenterX(to: gameSelectorView),
             chooseQueensButton.pinCenterX(to: gameSelectorView),
             
-            chooseCrownsButton.pinTop(to: gameSelectorView.topAnchor, Numbers.chooseCrownsButtonTop),
-            chooseSudokuButton.pinTop(to: chooseCrownsButton.bottomAnchor, Numbers.chooseSudokuButtonTop),
-            chooseQueensButton.pinTop(to: chooseSudokuButton.bottomAnchor, Numbers.chooseQueensButtonTop)
+            chooseCrownsButton.pinTop(to: gameSelectorView.topAnchor, Constraints.chooseCrownsButtonTop),
+            chooseSudokuButton.pinTop(to: chooseCrownsButton.bottomAnchor, Constraints.chooseSudokuButtonTop),
+            chooseQueensButton.pinTop(to: chooseSudokuButton.bottomAnchor, Constraints.chooseQueensButtonTop)
         ])
     }
     
     @objc private func showGameSelector(_ sender: UIButton) {
         UIView.animate(withDuration: Numbers.gameSelectorAnimationDuration) {
             self.overlayView.alpha = Numbers.overlayVisible
-            self.gameSelectorView.transform = CGAffineTransform(translationX: 0, y: -Numbers.gameSelectorHeight)
+            self.gameSelectorView.transform = CGAffineTransform(translationX: 0, y: -Constraints.gameSelectorHeight)
             self.gameSelectorView.layer.shadowOpacity = Numbers.gameSelectorShadowVisible
-            if sender.tag == 0 {
+            if sender.tag == Numbers.newGameButtonTag {
                 self.chooseGameText.isHidden = false
                 self.chooseCrownsButton.addTarget(self, action: #selector(self.playCrowns), for: .touchUpInside)
                 self.chooseSudokuButton.addTarget(self, action: #selector(self.playSudoku), for: .touchUpInside)
@@ -179,26 +182,26 @@ final class HomeViewController: UIViewController, HomeViewProtocol{
     }
     
     @objc private func playCrowns() {
-        presenter?.playButtonTapped(for: Numbers.crownsTag)
+        presenter?.processPlayButton(for: Numbers.crownsTag)
     }
     
     @objc private func playSudoku() {
-        presenter?.playButtonTapped(for: Numbers.sudokuTag)
+        presenter?.processPlayButton(for: Numbers.sudokuTag)
     }
     
     @objc private func playQueens() {
-        presenter?.playButtonTapped(for: Numbers.queensTag)
+        presenter?.processPlayButton(for: Numbers.queensTag)
     }
     
     @objc private func learnCrowns() {
-        presenter?.learningButtonTapped(for: Numbers.crownsTag)
+        presenter?.processLearningButton(for: Numbers.crownsTag)
     }
     
     @objc private func learnSudoku() {
-        presenter?.learningButtonTapped(for: Numbers.sudokuTag)
+        presenter?.processLearningButton(for: Numbers.sudokuTag)
     }
     
     @objc private func learnQueens() {
-        presenter?.learningButtonTapped(for: Numbers.queensTag)
+        presenter?.processLearningButton(for: Numbers.queensTag)
     }
 }

@@ -13,7 +13,7 @@ protocol ChallengeViewProtocol: AnyObject {
 
 final class ChallengeViewController: UIViewController, ChallengeViewProtocol{
     
-    private let challengeLogo: UIImageView = UIImageView(image: Images.challengeLogo)
+    private let challengeLogo = CustomText(text: Text.challengeLogo, fontSize: Constraints.challengeLogoSize, textColor: Colors.white)
     private let lightning1: UIImageView = UIImageView(image: Images.lightning1)
     private let lightning2: UIImageView = UIImageView(image: Images.lightning2)
     private let lightningAnimation1: UIImageView = UIImageView(image: Images.lightning1)
@@ -63,25 +63,25 @@ final class ChallengeViewController: UIViewController, ChallengeViewProtocol{
         
         NSLayoutConstraint.activate([
             challengeLogo.pinCenterX(to: view),
-            challengeLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Numbers.logoTop),
-            lightning1.pinTop(to: view.topAnchor, Numbers.lightning1Top),
-            lightning1.pinLeft(to: view, Numbers.lightning1Left),
-            lightning2.pinTop(to: view.topAnchor, Numbers.lightning2Top),
-            lightning2.pinRight(to: view, Numbers.lightning2Right),
-            lightningAnimation1.pinTop(to: view.topAnchor, Numbers.lightningAnimation1Top),
-            lightningAnimation1.pinLeft(to: view, Numbers.lightningAnimation1Left),
-            lightningAnimation2.pinTop(to: view.topAnchor, Numbers.lightningAnimation2Top),
-            lightningAnimation2.pinRight(to: view, Numbers.lightningAnimation2Right),
-            challengeCat.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Numbers.challengeCatsTop),
-            challengeCat.pinLeft(to: view, Numbers.challengeCatsLeft),
-            challengeMice.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Numbers.challengeMiceTop),
-            challengeMice.pinRight(to: view, Numbers.challengeMiceRight),
+            challengeLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.challengeLogoTextTop),
+            lightning1.pinTop(to: view.topAnchor, Constraints.lightning1Top),
+            lightning1.pinLeft(to: view, Constraints.lightning1Left),
+            lightning2.pinTop(to: view.topAnchor, Constraints.lightning2Top),
+            lightning2.pinRight(to: view, Constraints.lightning2Right),
+            lightningAnimation1.pinTop(to: view.topAnchor, Constraints.lightningAnimation1Top),
+            lightningAnimation1.pinLeft(to: view, Constraints.lightningAnimation1Left),
+            lightningAnimation2.pinTop(to: view.topAnchor, Constraints.lightningAnimation2Top),
+            lightningAnimation2.pinRight(to: view, Constraints.lightningAnimation2Right),
+            challengeCat.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.challengeCatTop),
+            challengeCat.pinLeft(to: view, Constraints.challengeCatLeft),
+            challengeMice.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.challengeMiceTop),
+            challengeMice.pinRight(to: view, Constraints.challengeMiceRight),
             challengeCalendar.pinCenterX(to: view),
-            challengeCalendar.pinTop(to: challengeCat.bottomAnchor, 35),
+            challengeCalendar.pinTop(to: challengeCat.bottomAnchor, Constraints.challengeCalendarTop),
             challengeCrownsButton.pinCenterX(to: view),
-            challengeCrownsButton.pinTop(to: challengeCalendar.bottomAnchor, 35),
+            challengeCrownsButton.pinTop(to: challengeCalendar.bottomAnchor, Constraints.challengeCrownsButtonTop),
             challengeSudokuButton.pinCenterX(to: view),
-            challengeSudokuButton.pinTop(to: challengeCrownsButton.bottomAnchor, 15)
+            challengeSudokuButton.pinTop(to: challengeCrownsButton.bottomAnchor, Constraints.challengeSudokuButtonTop)
         ])
     }
     
@@ -113,9 +113,4 @@ final class ChallengeViewController: UIViewController, ChallengeViewProtocol{
             self.challengeCat.startBlinking()
         }
     }
-    
-    deinit {
-        timer?.invalidate()
-    }
-    
 }

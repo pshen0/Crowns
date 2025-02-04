@@ -8,9 +8,14 @@
 import UIKit
 
 protocol SudokuPlayRouterProtocol: AnyObject {
+    func navigateBack()
 }
 
 class SudokuPlayRouter:SudokuPlayRouterProtocol {
     weak var presenter: SudokuPlayPresenterProtocol?
     weak var viewController: UIViewController?
+    
+    func navigateBack() {
+        viewController?.navigationController?.popViewController(animated: false)
+    }
 }

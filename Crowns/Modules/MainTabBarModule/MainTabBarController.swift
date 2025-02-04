@@ -9,9 +9,9 @@ import UIKit
 
 final class MainTabBarController: UITabBarController {
     
-    private let homeTabBarItem: UITabBarItem = UITabBarItem(title: "Home", image: Images.homeBar, selectedImage: Images.homeBar)
-    private let challengeTabBarItem: UITabBarItem = UITabBarItem(title: "Challenges", image: Images.challengeBar, selectedImage: Images.challengeBar)
-    private let profileTabBarItem: UITabBarItem = UITabBarItem(title: "Profile", image: Images.profileBar, selectedImage: Images.profileBar)
+    private let homeTabBarItem: UITabBarItem = UITabBarItem(title: Text.homeTabBar, image: Images.homeBar, selectedImage: Images.homeBar)
+    private let challengeTabBarItem: UITabBarItem = UITabBarItem(title: Text.challengeTabBar, image: Images.challengeBar, selectedImage: Images.challengeBar)
+    private let profileTabBarItem: UITabBarItem = UITabBarItem(title: Text.profileTabBar, image: Images.profileBar, selectedImage: Images.profileBar)
     
     
     
@@ -24,7 +24,6 @@ final class MainTabBarController: UITabBarController {
     private let profileNavigator: UINavigationController
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-            // Инициализируем навигаторы
             homeNavigator = UINavigationController(rootViewController: homeVC)
             challengeNavigator = UINavigationController(rootViewController: challengeVC)
             profileNavigator = UINavigationController(rootViewController: profileVC)
@@ -34,7 +33,7 @@ final class MainTabBarController: UITabBarController {
     }
     
     required init?(coder: NSCoder) {
-                fatalError("init(coder:) has not been implemented")
+        fatalError(Text.initError)
     }
     
     override func viewDidLoad() {
@@ -55,7 +54,7 @@ final class MainTabBarController: UITabBarController {
             .foregroundColor: Colors.yellow
         ]
         
-        appearance.stackedLayoutAppearance.normal.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: Numbers.tabBarItemIndentation)
+        appearance.stackedLayoutAppearance.normal.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: Constraints.tabBarItemIndentation)
         
         tabBar.standardAppearance = appearance
     }

@@ -46,7 +46,7 @@ final class SudokuPlayViewController: UIViewController, SudokuPlayViewProtocol{
     }
     
     @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: false)
+        presenter?.processBackButton()
     }
     
 }

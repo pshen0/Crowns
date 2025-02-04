@@ -1,5 +1,5 @@
 //
-//  CrownsPlayRouter.swift
+//  SudokuLearningRouter.swift
 //  Crowns
 //
 //  Created by Анна Сазонова on 03.02.2025.
@@ -7,16 +7,15 @@
 
 import UIKit
 
-protocol CrownsPlayRouterProtocol: AnyObject {
+protocol SudokuLearningRouterProtocol: AnyObject {
     func navigateBack()
 }
 
-class CrownsPlayRouter: CrownsPlayRouterProtocol {
-    weak var presenter: CrownsPlayPresenterProtocol?
+class SudokuLearningRouter: SudokuLearningRouterProtocol {
+    weak var presenter: SudokuLearningPresenterProtocol?
     weak var viewController: UIViewController?
     
     func navigateBack() {
         viewController?.navigationController?.popViewController(animated: false)
     }
 }
-

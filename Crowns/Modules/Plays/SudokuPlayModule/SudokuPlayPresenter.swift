@@ -8,6 +8,7 @@
 import Foundation
 
 protocol SudokuPlayPresenterProtocol: AnyObject {
+    func processBackButton()
 }
 
 class SudokuPlayPresenter: SudokuPlayPresenterProtocol {
@@ -18,6 +19,10 @@ class SudokuPlayPresenter: SudokuPlayPresenterProtocol {
     init(interactor: SudokuPlayInteractorProtocol, router: SudokuPlayRouterProtocol) {
         self.interactor = interactor
         self.router = router
+    }
+    
+    func processBackButton() {
+        router.navigateBack()
     }
 
 }

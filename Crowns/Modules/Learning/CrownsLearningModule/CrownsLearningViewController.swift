@@ -7,12 +7,16 @@
 
 import UIKit
 
+protocol CrownsLearningViewProtocol: AnyObject {
+    
+}
 
-
-final class CrownsLearningViewController: UIViewController{
+final class CrownsLearningViewController: UIViewController, CrownsLearningViewProtocol{
     
     private let backButton: UIButton = CustomButton(button: UIImageView(image: Images.backButton),
                                                       tapped: UIImageView(image: Images.backButtonTap))
+    
+    var presenter: CrownsLearningPresenter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +46,6 @@ final class CrownsLearningViewController: UIViewController{
     }
     
     @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: false)
+        presenter?.processBackButton()
     }
-    
-    
 }

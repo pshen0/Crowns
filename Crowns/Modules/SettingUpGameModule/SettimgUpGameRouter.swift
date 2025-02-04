@@ -8,14 +8,15 @@
 import UIKit
 
 protocol SettingUpGameRouterProtocol: AnyObject {
-    func navigateToPlaying (for game: String)
+    func navigateToPlaying (for game: Int)
+    func navigateBack()
 }
 
 class SettingUpGameRouter: SettingUpGameRouterProtocol {
     weak var presenter: SettingUpGamePresenterProtocol?
     weak var viewController: UIViewController?
     
-    func navigateToPlaying (for game: String) {
+    func navigateToPlaying (for game: Int) {
         if game == Numbers.crownsTag {
             viewController?.navigationController?.pushViewController(CrownsPlayModuleBuilder.build(), animated: false)
         } else if game == Numbers.sudokuTag {
@@ -23,5 +24,9 @@ class SettingUpGameRouter: SettingUpGameRouterProtocol {
         } else {
             viewController?.navigationController?.pushViewController(QueensPlayModuleBuilder.build(), animated: false)
         }
+    }
+    
+    func navigateBack() {
+        viewController?.navigationController?.popViewController(animated: false)
     }
 }

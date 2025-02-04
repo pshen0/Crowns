@@ -7,10 +7,16 @@
 
 import UIKit
 
-final class QueensLearningViewController: UIViewController{
+protocol QueensLearningViewProtocol: AnyObject {
+    
+}
+
+final class QueensLearningViewController: UIViewController, QueensLearningViewProtocol{
     
     private let backButton: UIButton = CustomButton(button: UIImageView(image: Images.backButton),
                                                       tapped: UIImageView(image: Images.backButtonTap))
+    
+    var presenter: QueensLearningPresenter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +46,7 @@ final class QueensLearningViewController: UIViewController{
     }
     
     @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: false)
+        presenter?.processBackButton()
     }
     
     

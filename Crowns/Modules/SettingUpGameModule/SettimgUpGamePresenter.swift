@@ -9,7 +9,8 @@ import Foundation
 
 protocol SettingUpGamePresenterProtocol: AnyObject {
     func viewDidLoaded()
-    func startButtonTapped(for game: String)
+    func processStartButton(for game: Int)
+    func processBackButton()
 }
 
 class SettingUpGamePresenter: SettingUpGamePresenterProtocol {
@@ -26,8 +27,12 @@ class SettingUpGamePresenter: SettingUpGamePresenterProtocol {
         //
     }
     
-    func startButtonTapped(for game: String) {
+    func processStartButton(for game: Int) {
         router.navigateToPlaying(for: game)
+    }
+    
+    func processBackButton() {
+        router.navigateBack()
     }
 
 }

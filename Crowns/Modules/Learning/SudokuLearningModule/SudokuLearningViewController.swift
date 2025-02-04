@@ -7,12 +7,16 @@
 
 import UIKit
 
+protocol SudokuLearningViewProtocol: AnyObject {
+    
+}
 
-
-final class SudokuLearningViewController: UIViewController{
+final class SudokuLearningViewController: UIViewController, SudokuLearningViewProtocol{
     
     private let backButton: UIButton = CustomButton(button: UIImageView(image: Images.backButton),
                                                       tapped: UIImageView(image: Images.backButtonTap))
+    
+    var presenter: SudokuLearningPresenter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +46,7 @@ final class SudokuLearningViewController: UIViewController{
     }
     
     @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: false)
+        presenter?.processBackButton()
     }
     
     

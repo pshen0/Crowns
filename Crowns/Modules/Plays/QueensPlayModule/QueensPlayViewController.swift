@@ -46,7 +46,7 @@ final class QueensPlayViewController: UIViewController, QueensPlayViewProtocol{
     }
     
     @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: false)
+        presenter?.processBackButton()
     }
     
 }

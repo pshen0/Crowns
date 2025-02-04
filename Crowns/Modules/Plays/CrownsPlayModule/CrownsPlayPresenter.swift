@@ -8,6 +8,7 @@
 import Foundation
 
 protocol CrownsPlayPresenterProtocol: AnyObject {
+    func processBackButton()
 }
 
 class CrownsPlayPresenter: CrownsPlayPresenterProtocol {
@@ -18,6 +19,10 @@ class CrownsPlayPresenter: CrownsPlayPresenterProtocol {
     init(interactor: CrownsPlayInteractorProtocol, router: CrownsPlayRouterProtocol) {
         self.interactor = interactor
         self.router = router
+    }
+    
+    func processBackButton() {
+        router.navigateBack()
     }
 
 }

@@ -14,37 +14,43 @@ protocol SettingUpGameViewProtocol: AnyObject {
 
 final class SettingUpGameViewController: UIViewController, SettingUpGameViewProtocol{
     
-    private let gameLogoCrowns = UIImageView(image: Images.gameLogoCrowns)
-    private let gameLogoSudoku = UIImageView(image: Images.gameLogoSudoku)
-    private let gameLogoQueens = UIImageView(image: Images.gameLogoQueens)
     private let backButton: UIButton = CustomButton(button: UIImageView(image: Images.backButton),
                                                       tapped: UIImageView(image: Images.backButtonTap))
     private let startPlayButton: UIButton = CustomButton(button: UIImageView(image: Images.startPlayButton),
                                                          tapped: UIImageView(image: Images.startPlayButtonTap))
+    private let levelEasyButton: UIButton = UIButton()
+    private let levelMediumButton: UIButton = UIButton()
+    private let levelHardButton: UIButton = UIButton()
+    private let levelRandomButton: UIButton = UIButton()
     
     var presenter: SettingUpGamePresenterProtocol?
-    lazy var game: String = ""
+    lazy var game: Int = Numbers.crownsTag
+    lazy var gameLogo: UILabel = UILabel()
+    lazy var choosingDifficultyText: UILabel = UILabel()
     
-    init(for game: String) {
+    init(for game: Int) {
         super.init(nibName: nil, bundle: nil)
         self.game = game
         if game == Numbers.crownsTag {
-            configureCrownsSettings()
+            gameLogo = CustomText(text: Text.crownsGame, fontSize: Constraints.gameLogoSize, textColor: Colors.white)
+            choosingDifficultyText = CustomText(text: Text.chooseDifficulty, fontSize: Constraints.settingsTextSize, textColor: Colors.white)
         } else if game == Numbers.sudokuTag {
-            configureSudokuSettings()
+            gameLogo = CustomText(text: Text.sudokuGame, fontSize: Constraints.gameLogoSize, textColor: Colors.white)
+            choosingDifficultyText = CustomText(text: Text.chooseDifficulty, fontSize: Constraints.settingsTextSize, textColor: Colors.white)
         } else {
-            configureQueensSettings()
+            gameLogo = CustomText(text: Text.queensGame, fontSize: Constraints.gameLogoSize, textColor: Colors.white)
+            choosingDifficultyText = CustomText(text: Text.chooseFieldsSize, fontSize: Constraints.settingsTextSize, textColor: Colors.white)
         }
     }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Text.initError)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureBackground()
+        configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,52 +64,104 @@ final class SettingUpGameViewController: UIViewController, SettingUpGameViewProt
         tabBarController?.tabBar.isHidden = false
     }
     
+    private func configureUI() {
+        configureBackground()
+        if self.game == Numbers.queensTag {
+            configureQueensSettings()
+        } else {
+            configureCrownsOrSudokuSettings()
+        }
+    }
+    
     private func configureBackground() {
         view.backgroundColor = Colors.darkGray
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         let barButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = barButtonItem
         
+        view.addSubview(gameLogo)
+        view.addSubview(choosingDifficultyText)
         view.addSubview(startPlayButton)
         NSLayoutConstraint.activate([
+            gameLogo.pinCenterX(to: view),
+            gameLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.gameLogoTop),
+            choosingDifficultyText.pinCenterX(to: view),
+            choosingDifficultyText.pinTop(to: gameLogo.bottomAnchor, Constraints.choosingDifficultyTextTop),
             startPlayButton.pinCenterX(to: view),
-            startPlayButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, 30)
+            startPlayButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constraints.startPlayButtonBottom),
         ])
         startPlayButton.addTarget(self, action: #selector(startPlayButtonTapped), for: .touchUpInside)
+        
     }
     
-    private func configureCrownsSettings () {
-        view.addSubview(gameLogoCrowns)
+    private func configureCrownsOrSudokuSettings () {
+        levelEasyButton.setImage(Images.levelEasyButton, for: .normal)
+        levelMediumButton.setImage(Images.levelMediumButton, for: .normal)
+        levelHardButton.setImage(Images.levelHardButton, for: .normal)
+        levelRandomButton.setImage(Images.levelRandomButton, for: .normal)
+        levelEasyButton.tag = Numbers.levelEasyTag
+        levelMediumButton.tag = Numbers.levelMediumTag
+        levelHardButton.tag = Numbers.levelHardTag
+        levelRandomButton.tag = Numbers.levelRandomTag
         
+        view.addSubview(levelEasyButton)
+        view.addSubview(levelMediumButton)
+        view.addSubview(levelHardButton)
+        view.addSubview(levelRandomButton)
         NSLayoutConstraint.activate([
-            gameLogoCrowns.pinCenterX(to: view),
-            gameLogoCrowns.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Numbers.gameLogoTop)
+            levelEasyButton.pinCenterX(to: view),
+            levelMediumButton.pinCenterX(to: view),
+            levelHardButton.pinCenterX(to: view),
+            levelRandomButton.pinCenterX(to: view),
+            levelEasyButton.pinTop(to: choosingDifficultyText.bottomAnchor, 30),
+            levelMediumButton.pinTop(to: levelEasyButton.bottomAnchor, 10),
+            levelHardButton.pinTop(to: levelMediumButton.bottomAnchor, 10),
+            levelRandomButton.pinTop(to: levelHardButton.bottomAnchor, 10)
         ])
-    }
-    
-    private func configureSudokuSettings () {
-        view.addSubview(gameLogoSudoku)
         
-        NSLayoutConstraint.activate([
-            gameLogoSudoku.pinCenterX(to: view),
-            gameLogoSudoku.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Numbers.gameLogoTop)
-        ])
+        
+        
+        levelEasyButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
+        levelMediumButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
+        levelHardButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
+        levelRandomButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
+        
     }
     
     private func configureQueensSettings () {
-        view.addSubview(gameLogoQueens)
-        NSLayoutConstraint.activate([
-            gameLogoQueens.pinCenterX(to: view),
-            gameLogoQueens.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Numbers.gameLogoTop)
-        ])
+    
     }
     
     
     @objc private func backButtonTapped() {        
-        navigationController?.popViewController(animated: false)
+        presenter?.processBackButton()
     }
     
     @objc private func startPlayButtonTapped() {
-        presenter?.startButtonTapped(for: game)
+        presenter?.processStartButton(for: game)
+    }
+    
+    @objc private func levelButtonTapped(_ sender: UIButton) {
+        if sender.tag == Numbers.levelEasyTag {
+            levelEasyButton.setImage(Images.levelEasyButtonTap, for: .normal)
+            levelMediumButton.setImage(Images.levelMediumButton, for: .normal)
+            levelHardButton.setImage(Images.levelHardButton, for: .normal)
+            levelRandomButton.setImage(Images.levelRandomButton, for: .normal)
+        } else if sender.tag == Numbers.levelMediumTag {
+            levelEasyButton.setImage(Images.levelEasyButton, for: .normal)
+            levelMediumButton.setImage(Images.levelMediumButtonTap, for: .normal)
+            levelHardButton.setImage(Images.levelHardButton, for: .normal)
+            levelRandomButton.setImage(Images.levelRandomButton, for: .normal)
+        } else if sender.tag == Numbers.levelHardTag {
+            levelEasyButton.setImage(Images.levelEasyButton, for: .normal)
+            levelMediumButton.setImage(Images.levelMediumButton, for: .normal)
+            levelHardButton.setImage(Images.levelHardButtonTap, for: .normal)
+            levelRandomButton.setImage(Images.levelRandomButton, for: .normal)
+        } else {
+            levelEasyButton.setImage(Images.levelEasyButton, for: .normal)
+            levelMediumButton.setImage(Images.levelMediumButton, for: .normal)
+            levelHardButton.setImage(Images.levelHardButton, for: .normal)
+            levelRandomButton.setImage(Images.levelRandomButtonTap, for: .normal)
+        }
     }
 }

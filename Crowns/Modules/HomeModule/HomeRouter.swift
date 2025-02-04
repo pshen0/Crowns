@@ -8,8 +8,8 @@
 import UIKit
 
 protocol HomeRouterProtocol: AnyObject {
-    func navigateToLearning(for game: String)
-    func navigateToPlaySettings(for game: String)
+    func navigateToLearning(for game: Int)
+    func navigateToPlaySettings(for game: Int)
 }
 
 class HomeRouter: HomeRouterProtocol {
@@ -17,17 +17,17 @@ class HomeRouter: HomeRouterProtocol {
     weak var viewController: UIViewController?
     
     
-    func navigateToLearning(for game: String) {
+    func navigateToLearning(for game: Int) {
         if game == Numbers.crownsTag {
-            viewController?.navigationController?.pushViewController(CrownsLearningViewController(), animated: false)
+            viewController?.navigationController?.pushViewController(CrownsLearningModuleBuilder.build(), animated: false)
         } else if game == Numbers.sudokuTag {
-            viewController?.navigationController?.pushViewController(SudokuLearningViewController(), animated: false)
+            viewController?.navigationController?.pushViewController(SudokuLearningModuleBuilder.build(), animated: false)
         } else {
-            viewController?.navigationController?.pushViewController(QueensLearningViewController(), animated: false)
+            viewController?.navigationController?.pushViewController(QueensLearningModuleBuilder.build(), animated: false)
         }
     }
     
-    func navigateToPlaySettings(for game: String) {
+    func navigateToPlaySettings(for game: Int) {
         viewController?.navigationController?.pushViewController(SettingUpGameModuleBuilder.build(for: game), animated: false)
     }
 }

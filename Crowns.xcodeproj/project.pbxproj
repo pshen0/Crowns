@@ -43,6 +43,19 @@
 		0F2C54532D5051F00051AD13 /* QueensPlayPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54522D5051F00051AD13 /* QueensPlayPresenter.swift */; };
 		0F2C54552D5052030051AD13 /* QueensPlayRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54542D5052030051AD13 /* QueensPlayRouter.swift */; };
 		0F2C54572D5052120051AD13 /* QueensPlayModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54562D5052120051AD13 /* QueensPlayModuleBuilder.swift */; };
+		0F5F185E2D511BF700ED204B /* CrownsLearningInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F185D2D511BF700ED204B /* CrownsLearningInteractor.swift */; };
+		0F5F18602D511C0200ED204B /* CrownsLearningPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F185F2D511C0200ED204B /* CrownsLearningPresenter.swift */; };
+		0F5F18622D511CDD00ED204B /* CrownsLearningRoter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F18612D511CDD00ED204B /* CrownsLearningRoter.swift */; };
+		0F5F18642D511CEE00ED204B /* CrownsLearningModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F18632D511CEE00ED204B /* CrownsLearningModuleBuilder.swift */; };
+		0F5F18662D511D0900ED204B /* SudokuLearningInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F18652D511D0900ED204B /* SudokuLearningInteractor.swift */; };
+		0F5F18682D511D3600ED204B /* SudokuLearningPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F18672D511D3600ED204B /* SudokuLearningPresenter.swift */; };
+		0F5F186A2D511F2000ED204B /* SudokuLearningRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F18692D511F2000ED204B /* SudokuLearningRouter.swift */; };
+		0F5F186C2D511F3B00ED204B /* SudokuLearningModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F186B2D511F3B00ED204B /* SudokuLearningModuleBuilder.swift */; };
+		0F5F186E2D511F6000ED204B /* QueensLearningInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F186D2D511F6000ED204B /* QueensLearningInteractor.swift */; };
+		0F5F18702D511F7200ED204B /* QueensLearningPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F186F2D511F7200ED204B /* QueensLearningPresenter.swift */; };
+		0F5F18722D511F7C00ED204B /* QueensLearningRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F18712D511F7C00ED204B /* QueensLearningRouter.swift */; };
+		0F5F18742D511F8900ED204B /* QueensLearningModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F18732D511F8900ED204B /* QueensLearningModuleBuilder.swift */; };
+		0F5F18762D513E8600ED204B /* IrishGrover-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F5F18752D513E8600ED204B /* IrishGrover-Regular.ttf */; };
 		0F5F8C802D4177E2006A8164 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8C7F2D4177E2006A8164 /* AppDelegate.swift */; };
 		0F5F8C822D4177E2006A8164 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8C812D4177E2006A8164 /* SceneDelegate.swift */; };
 		0F5F8C842D4177E2006A8164 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F8C832D4177E2006A8164 /* HomeViewController.swift */; };
@@ -112,6 +125,19 @@
 		0F2C54522D5051F00051AD13 /* QueensPlayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensPlayPresenter.swift; sourceTree = "<group>"; };
 		0F2C54542D5052030051AD13 /* QueensPlayRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensPlayRouter.swift; sourceTree = "<group>"; };
 		0F2C54562D5052120051AD13 /* QueensPlayModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensPlayModuleBuilder.swift; sourceTree = "<group>"; };
+		0F5F185D2D511BF700ED204B /* CrownsLearningInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsLearningInteractor.swift; sourceTree = "<group>"; };
+		0F5F185F2D511C0200ED204B /* CrownsLearningPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsLearningPresenter.swift; sourceTree = "<group>"; };
+		0F5F18612D511CDD00ED204B /* CrownsLearningRoter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsLearningRoter.swift; sourceTree = "<group>"; };
+		0F5F18632D511CEE00ED204B /* CrownsLearningModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsLearningModuleBuilder.swift; sourceTree = "<group>"; };
+		0F5F18652D511D0900ED204B /* SudokuLearningInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuLearningInteractor.swift; sourceTree = "<group>"; };
+		0F5F18672D511D3600ED204B /* SudokuLearningPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuLearningPresenter.swift; sourceTree = "<group>"; };
+		0F5F18692D511F2000ED204B /* SudokuLearningRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuLearningRouter.swift; sourceTree = "<group>"; };
+		0F5F186B2D511F3B00ED204B /* SudokuLearningModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuLearningModuleBuilder.swift; sourceTree = "<group>"; };
+		0F5F186D2D511F6000ED204B /* QueensLearningInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensLearningInteractor.swift; sourceTree = "<group>"; };
+		0F5F186F2D511F7200ED204B /* QueensLearningPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensLearningPresenter.swift; sourceTree = "<group>"; };
+		0F5F18712D511F7C00ED204B /* QueensLearningRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensLearningRouter.swift; sourceTree = "<group>"; };
+		0F5F18732D511F8900ED204B /* QueensLearningModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensLearningModuleBuilder.swift; sourceTree = "<group>"; };
+		0F5F18752D513E8600ED204B /* IrishGrover-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IrishGrover-Regular.ttf"; sourceTree = "<group>"; };
 		0F5F8C7C2D4177E2006A8164 /* Crowns.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crowns.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F5F8C7F2D4177E2006A8164 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F5F8C812D4177E2006A8164 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -170,6 +196,7 @@
 		0F1A78D82D482DF600DAA4F0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0F5F18752D513E8600ED204B /* IrishGrover-Regular.ttf */,
 				0F5F8CBB2D41A7DE006A8164 /* Constants.swift */,
 				0F5F8C8A2D4177E4006A8164 /* LaunchScreen.storyboard */,
 				0F5F8C882D4177E4006A8164 /* Assets.xcassets */,
@@ -213,8 +240,8 @@
 		0F2C54202D49529D0051AD13 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				0F2C54302D4EF7240051AD13 /* Learning */,
 				0F2C542F2D4EF6E30051AD13 /* Plays */,
+				0F2C54302D4EF7240051AD13 /* Learning */,
 				0F2C542C2D4EF6870051AD13 /* SettingUpGameModule */,
 				0F1A78DC2D4841AA00DAA4F0 /* ChallengeModule */,
 				0F1A78E92D48575300DAA4F0 /* ProfileModule */,
@@ -228,6 +255,10 @@
 			isa = PBXGroup;
 			children = (
 				0F2C54222D4EEADC0051AD13 /* CrownsLearningViewController.swift */,
+				0F5F185D2D511BF700ED204B /* CrownsLearningInteractor.swift */,
+				0F5F185F2D511C0200ED204B /* CrownsLearningPresenter.swift */,
+				0F5F18612D511CDD00ED204B /* CrownsLearningRoter.swift */,
+				0F5F18632D511CEE00ED204B /* CrownsLearningModuleBuilder.swift */,
 			);
 			path = CrownsLearningModule;
 			sourceTree = "<group>";
@@ -236,6 +267,10 @@
 			isa = PBXGroup;
 			children = (
 				0F2C54262D4EF4600051AD13 /* SudokuLearningViewController.swift */,
+				0F5F18652D511D0900ED204B /* SudokuLearningInteractor.swift */,
+				0F5F18672D511D3600ED204B /* SudokuLearningPresenter.swift */,
+				0F5F18692D511F2000ED204B /* SudokuLearningRouter.swift */,
+				0F5F186B2D511F3B00ED204B /* SudokuLearningModuleBuilder.swift */,
 			);
 			path = SudokuLearningModule;
 			sourceTree = "<group>";
@@ -244,6 +279,10 @@
 			isa = PBXGroup;
 			children = (
 				0F2C54282D4EF4710051AD13 /* QueensLearningViewController.swift */,
+				0F5F186D2D511F6000ED204B /* QueensLearningInteractor.swift */,
+				0F5F186F2D511F7200ED204B /* QueensLearningPresenter.swift */,
+				0F5F18712D511F7C00ED204B /* QueensLearningRouter.swift */,
+				0F5F18732D511F8900ED204B /* QueensLearningModuleBuilder.swift */,
 			);
 			path = QueensLearningModule;
 			sourceTree = "<group>";
@@ -491,6 +530,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F5F8C8C2D4177E4006A8164 /* LaunchScreen.storyboard in Resources */,
+				0F5F18762D513E8600ED204B /* IrishGrover-Regular.ttf in Resources */,
 				0F5F8C892D4177E4006A8164 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -517,19 +557,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F1A78E02D4842AD00DAA4F0 /* ChallengeInteractor.swift in Sources */,
+				0F5F18662D511D0900ED204B /* SudokuLearningInteractor.swift in Sources */,
 				0F5F8CB72D418883006A8164 /* PinExtension.swift in Sources */,
 				0F2C54432D50512C0051AD13 /* CrownsPlayPresenter.swift in Sources */,
+				0F5F18642D511CEE00ED204B /* CrownsLearningModuleBuilder.swift in Sources */,
 				0F2C544F2D5051A10051AD13 /* SudokuPlayModuleBuilder.swift in Sources */,
 				0F2C54362D50185E0051AD13 /* SettimgUpGameRouter.swift in Sources */,
+				0F5F18742D511F8900ED204B /* QueensLearningModuleBuilder.swift in Sources */,
 				0F2C542E2D4EF6C60051AD13 /* SettingUpGameViewController.swift in Sources */,
 				0F2C54412D50511D0051AD13 /* CrownsPlayInteractor.swift in Sources */,
 				0F2C544B2D5051750051AD13 /* SudokuPlayPresenter.swift in Sources */,
 				0F5F8CBE2D41A865006A8164 /* CustomObjects.swift in Sources */,
+				0F5F18682D511D3600ED204B /* SudokuLearningPresenter.swift in Sources */,
 				0F2C54552D5052030051AD13 /* QueensPlayRouter.swift in Sources */,
 				0F2C54272D4EF4600051AD13 /* SudokuLearningViewController.swift in Sources */,
 				0F2C54452D50513A0051AD13 /* CrownsPlayRouter.swift in Sources */,
+				0F5F186E2D511F6000ED204B /* QueensLearningInteractor.swift in Sources */,
+				0F5F18622D511CDD00ED204B /* CrownsLearningRoter.swift in Sources */,
 				0F2C54512D5051E10051AD13 /* QueensPlayInteractor.swift in Sources */,
 				0F5F8CB42D417C9C006A8164 /* HomePresenter.swift in Sources */,
+				0F5F18702D511F7200ED204B /* QueensLearningPresenter.swift in Sources */,
 				0F2C54232D4EEADC0051AD13 /* CrownsLearningViewController.swift in Sources */,
 				0F1A78F12D4857AA00DAA4F0 /* ProfileRouter.swift in Sources */,
 				0F5F8CB02D417C6B006A8164 /* HomeRouter.swift in Sources */,
@@ -538,15 +585,20 @@
 				0F1A78DA2D4837C500DAA4F0 /* HomeModuleBuilder.swift in Sources */,
 				0F1A78E82D48522D00DAA4F0 /* Constants.swift in Sources */,
 				0F2C54342D5018510051AD13 /* SettimgUpGamePresenter.swift in Sources */,
+				0F5F185E2D511BF700ED204B /* CrownsLearningInteractor.swift in Sources */,
 				0F2C541E2D492EFD0051AD13 /* MainTabBarController.swift in Sources */,
 				0F2C54322D5018430051AD13 /* SettimgUpGameInteractor.swift in Sources */,
+				0F5F18722D511F7C00ED204B /* QueensLearningRouter.swift in Sources */,
 				0F1A78ED2D48577F00DAA4F0 /* ProfileInteractor.swift in Sources */,
 				0F1A78EB2D48577200DAA4F0 /* ProfileViewController.swift in Sources */,
 				0F2C54472D50514D0051AD13 /* CrownsPlayModuleBuilder.swift in Sources */,
 				0F2C54492D5051680051AD13 /* SudokuPlayInteractor.swift in Sources */,
+				0F5F186A2D511F2000ED204B /* SudokuLearningRouter.swift in Sources */,
+				0F5F186C2D511F3B00ED204B /* SudokuLearningModuleBuilder.swift in Sources */,
 				0F1A78E42D4842CD00DAA4F0 /* ChallengeRouter.swift in Sources */,
 				0F1A78E62D4842E500DAA4F0 /* ChallengeModuleBuilder.swift in Sources */,
 				0F2C544D2D50518E0051AD13 /* SudokuPlayRouter.swift in Sources */,
+				0F5F18602D511C0200ED204B /* CrownsLearningPresenter.swift in Sources */,
 				0F1A78EF2D48579A00DAA4F0 /* ProfilePresenter.swift in Sources */,
 				0F2C54382D5018780051AD13 /* SettimgUpGameModuleBuilder.swift in Sources */,
 				0F5F8CBA2D418B14006A8164 /* ColorExtension.swift in Sources */,

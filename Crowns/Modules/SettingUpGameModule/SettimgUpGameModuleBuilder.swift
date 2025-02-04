@@ -8,7 +8,7 @@
 import UIKit
 
 class SettingUpGameModuleBuilder {
-    static func build(for game: String) -> SettingUpGameViewController {
+    static func build(for game: Int) -> SettingUpGameViewController {
         let interactor = SettingUpGameInteractor()
         let router = SettingUpGameRouter()
         let presenter = SettingUpGamePresenter(interactor: interactor, router: router)
