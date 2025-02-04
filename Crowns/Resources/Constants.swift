@@ -41,36 +41,29 @@ enum Images {
     static let lightning1: UIImage? = UIImage(named: "lightning1")
     static let lightning2: UIImage? = UIImage(named: "lightning2")
     static let challengeMice: UIImage? = UIImage(named: "challengeMice")
-    static let cat1: UIImage? = UIImage(named: "cat1")
-    static let cat2: UIImage? = UIImage(named: "cat2")
-    static let cat3: UIImage? = UIImage(named: "cat3")
-    static let cat4: UIImage? = UIImage(named: "cat4")
-    static let cat5: UIImage? = UIImage(named: "cat5")
-    static let cat6: UIImage? = UIImage(named: "cat6")
-    static let cat7: UIImage? = UIImage(named: "cat7")
+    static let challengeBlinkingCat1: UIImage? = UIImage(named: "challengeBlinkingCat1")
+    static let challengeBlinkingCat2: UIImage? = UIImage(named: "challengeBlinkingCat2")
+    static let challengeBlinkingCat3: UIImage? = UIImage(named: "challengeBlinkingCat3")
+    static let challengeBlinkingCat4: UIImage? = UIImage(named: "challengeBlinkingCat4")
+    static let challengeBlinkingCat5: UIImage? = UIImage(named: "challengeBlinkingCat5")
+    static let challengeBlinkingCat6: UIImage? = UIImage(named: "challengeBlinkingCat6")
+    static let challengeBlinkingCat7: UIImage? = UIImage(named: "challengeBlinkingCat7")
+    static let blinkingCatArray = [Images.challengeBlinkingCat1, Images.challengeBlinkingCat2, Images.challengeBlinkingCat3, Images.challengeBlinkingCat4,
+                                    Images.challengeBlinkingCat5, Images.challengeBlinkingCat6, Images.challengeBlinkingCat7]
     static let challengeCrownsButton: UIImage? = UIImage(named: "challengeCrownsButton")
-    static let challengeCrownsButtonTap: UIImage? = UIImage(named: "challengeCrownsButtonTap")
     static let challengeSudokuButton: UIImage? = UIImage(named: "challengeSudokuButton")
-    static let challengeSudokuButtonTap: UIImage? = UIImage(named: "challengeSudokuButtonTap")
     static let challengeCompletedLevel: UIImage? = UIImage(named: "challengeCompletedLevel")
-    static let challengeCompletedLevelTap: UIImage? = UIImage(named: "challengeCompletedLevelTap")
     static let challengeCalendar: UIImage? = UIImage(named: "challengeCalendar")
     
     // HomeView
     static let homeLogoPicture: UIImage? = UIImage(named: "homeLogoPicture")
     static let newGameButton: UIImage? = UIImage(named: "newGameButton")
-    static let newGameButtonTap: UIImage? = UIImage(named: "newGameButtonTap")
     static let continueButton: UIImage? = UIImage(named: "continueButton")
-    static let continueButtonTap: UIImage? = UIImage(named: "continueButtonTap")
     static let learningButton: UIImage? = UIImage(named: "learningButton")
-    static let learningButtonTap: UIImage? = UIImage(named: "learningButtonTap")
     static let homeCalendar: UIImage? = UIImage(named: "homeCalendar")
     static let chooseCrownsButton: UIImage? = UIImage(named: "chooseCrownsButton")
-    static let chooseCrownsButtonTap: UIImage? = UIImage(named: "chooseCrownsButtonTap")
     static let chooseSudokuButton: UIImage? = UIImage(named: "chooseSudokuButton")
-    static let chooseSudokuButtonTap: UIImage? = UIImage(named: "chooseSudokuButtonTap")
     static let chooseQueensButton: UIImage? = UIImage(named: "chooseQueensButton")
-    static let chooseQueensButtonTap: UIImage? = UIImage(named: "chooseQueensButtonTap")
     
 
     
@@ -187,6 +180,8 @@ enum Constraints {
     static let gameLogoTop: CGFloat = 0
     static let settingsTextSize: CGFloat = 24
     static let choosingDifficultyTextTop: CGFloat = 25
+    static let levelEasyButtonTop: CGFloat = 30
+    static let levelButtonTop: CGFloat = 10
 }
 
 

@@ -7,12 +7,12 @@
 
 import UIKit
 
-class SettingUpGameModuleBuilder {
-    static func build(for game: Int) -> SettingUpGameViewController {
-        let interactor = SettingUpGameInteractor()
-        let router = SettingUpGameRouter()
-        let presenter = SettingUpGamePresenter(interactor: interactor, router: router)
-        let viewController = SettingUpGameViewController(for: game)
+class GameSettingsModuleBuilder {
+    static func build(for game: Int) -> GameSettingsViewController {
+        let interactor = GameSettingsInteractor()
+        let router = GameSettingsRouter()
+        let presenter = GameSettingsPresenter(interactor: interactor, router: router)
+        let viewController = GameSettingsViewController(for: game)
         viewController.presenter = presenter
         presenter.view = viewController
         interactor.presenter = presenter

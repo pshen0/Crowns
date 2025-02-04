@@ -9,6 +9,13 @@ import UIKit
 
 
 class CustomButton: UIButton {
+    init(button: UIImageView) {
+        super.init(frame: .zero)
+        if let image = button.image {
+            setImage(image, for: .normal)
+        }
+    }
+    
     init(button: UIImageView, tapped: UIImageView) {
         super.init(frame: .zero)
         if let image1 = button.image, let image2 = tapped.image {
@@ -59,43 +66,35 @@ class CustomText: UILabel {
 
 class BlinkingCatView: UIImageView {
     
-    private let catAnimation1: UIImage? = Images.cat1
-    private let catAnimation2: UIImage? = Images.cat2
-    private let catAnimation3: UIImage? = Images.cat3
-    private let catAnimation4: UIImage? = Images.cat4
-    private let catAnimation5: UIImage? = Images.cat5
-    private let catAnimation6: UIImage? = Images.cat6
-    private let catAnimation7: UIImage? = Images.cat7
+    private let animationFrames: [UIImage?]
     
-    init() {
+    init(images: [UIImage?], duration: TimeInterval, repeatCount: Int) {
+        self.animationFrames = images + images.reversed()
         super.init(frame: .zero)
-        setupAnimation()
+        setupAnimation(duration: duration, repeatCount: repeatCount)
     }
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError(Text.initError)
     }
-    
+        
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        fatalError("Use init(images:) instead")
     }
     
-    private func setupAnimation() {
-        self.image = catAnimation1
-        
-        if let image1 = catAnimation1, let image2 = catAnimation2, let image3 = catAnimation3, let image4 = catAnimation4,
-           let image5 = catAnimation5, let image6 = catAnimation6, let image7 = catAnimation7 {
-            self.animationImages = [image1, image2, image3, image4, image5, image6, image7,
-                                    image6, image5, image4, image3, image2, image1]
+    private func setupAnimation(duration: TimeInterval, repeatCount: Int) {
+        if let image = animationFrames.first {
+            self.image = image
         }
-
-        self.animationDuration = Numbers.blinkingAnimationDuration
-        self.animationRepeatCount = Numbers.blinkingRepeat
+        self.animationImages = animationFrames.compactMap { $0 }
+        self.animationDuration = duration
+        self.animationRepeatCount = repeatCount
     }
     
     func startBlinking() {
         self.startAnimating()
     }
+    
 }
 

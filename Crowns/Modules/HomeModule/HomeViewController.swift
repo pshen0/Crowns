@@ -15,18 +15,12 @@ final class HomeViewController: UIViewController, HomeViewProtocol{
     
     private let overlayView = UIView()
     private let gameSelectorView = UIView()
-    private let newGameButton: UIButton = CustomButton(button: UIImageView(image: Images.newGameButton),
-                                                      tapped: UIImageView(image: Images.newGameButtonTap))
-    private let continueButton: UIButton = CustomButton(button: UIImageView(image: Images.continueButton),
-                                                       tapped: UIImageView(image: Images.continueButtonTap))
-    private let learningButton: UIButton = CustomButton(button: UIImageView(image: Images.learningButton),
-                                                       tapped: UIImageView(image: Images.learningButtonTap))
-    private let chooseCrownsButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseCrownsButton),
-                                                           tapped: UIImageView(image: Images.chooseCrownsButtonTap))
-    private let chooseSudokuButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseSudokuButton),
-                                                           tapped: UIImageView(image: Images.chooseSudokuButtonTap))
-    private let chooseQueensButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseQueensButton),
-                                                           tapped: UIImageView(image: Images.chooseQueensButtonTap))
+    private let newGameButton: UIButton = CustomButton(button: UIImageView(image: Images.newGameButton))
+    private let continueButton: UIButton = CustomButton(button: UIImageView(image: Images.continueButton))
+    private let learningButton: UIButton = CustomButton(button: UIImageView(image: Images.learningButton))
+    private let chooseCrownsButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseCrownsButton))
+    private let chooseSudokuButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseSudokuButton))
+    private let chooseQueensButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseQueensButton))
     private let homeLogoPicture = UIImageView(image: Images.homeLogoPicture)
     private let homeLogoText = CustomText(text: Text.homeLogo, fontSize: Constraints.homeLogoSize, textColor: Colors.white)
     private let homeCalendar = UIImageView(image: Images.homeCalendar)

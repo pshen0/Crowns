@@ -7,13 +7,13 @@
 
 import UIKit
 
-protocol SettingUpGameRouterProtocol: AnyObject {
+protocol GameSettingsRouterProtocol: AnyObject {
     func navigateToPlaying (for game: Int)
     func navigateBack()
 }
 
-class SettingUpGameRouter: SettingUpGameRouterProtocol {
-    weak var presenter: SettingUpGamePresenterProtocol?
+class GameSettingsRouter: GameSettingsRouterProtocol {
+    weak var presenter: GameSettingsPresenterProtocol?
     weak var viewController: UIViewController?
     
     func navigateToPlaying (for game: Int) {

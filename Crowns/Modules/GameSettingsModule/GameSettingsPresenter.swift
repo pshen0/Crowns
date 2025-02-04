@@ -1,5 +1,5 @@
 //
-//  SettimgUpGamePresenter.swift
+//  GameSettingsPresenter.swift
 //  Crowns
 //
 //  Created by Анна Сазонова on 03.02.2025.
@@ -7,18 +7,18 @@
 
 import Foundation
 
-protocol SettingUpGamePresenterProtocol: AnyObject {
+protocol GameSettingsPresenterProtocol: AnyObject {
     func viewDidLoaded()
     func processStartButton(for game: Int)
     func processBackButton()
 }
 
-class SettingUpGamePresenter: SettingUpGamePresenterProtocol {
-    weak var view: SettingUpGameViewProtocol?
-    var router: SettingUpGameRouterProtocol
-    var interactor: SettingUpGameInteractorProtocol
+class GameSettingsPresenter: GameSettingsPresenterProtocol {
+    weak var view: GameSettingsViewProtocol?
+    var router: GameSettingsRouterProtocol
+    var interactor: GameSettingsInteractorProtocol
     
-    init(interactor: SettingUpGameInteractorProtocol, router: SettingUpGameRouterProtocol) {
+    init(interactor: GameSettingsInteractorProtocol, router: GameSettingsRouterProtocol) {
         self.interactor = interactor
         self.router = router
     }

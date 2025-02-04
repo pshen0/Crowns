@@ -18,14 +18,11 @@ final class ChallengeViewController: UIViewController, ChallengeViewProtocol{
     private let lightning2: UIImageView = UIImageView(image: Images.lightning2)
     private let lightningAnimation1: UIImageView = UIImageView(image: Images.lightning1)
     private let lightningAnimation2: UIImageView = UIImageView(image: Images.lightning2)
-    private let challengeCat: BlinkingCatView = BlinkingCatView()
+    private let challengeCat: BlinkingCatView = BlinkingCatView(images: Images.blinkingCatArray, duration: Numbers.blinkingAnimationDuration, repeatCount: Numbers.blinkingRepeat)
     private let challengeMice: UIImageView = UIImageView(image: Images.challengeMice)
-    private let challengeCrownsButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeCrownsButton),
-                                                      tapped: UIImageView(image: Images.challengeCrownsButtonTap))
-    private let challengeSudokuButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeSudokuButton),
-                                                       tapped: UIImageView(image: Images.challengeSudokuButtonTap))
-    private let challengeCompletedLevelButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeCompletedLevel),
-                                                       tapped: UIImageView(image: Images.challengeCompletedLevelTap))
+    private let challengeCrownsButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeCrownsButton))
+    private let challengeSudokuButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeSudokuButton))
+    private let challengeCompletedLevelButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeCompletedLevel))
     private let challengeCalendar: UIImageView = UIImageView(image: Images.challengeCalendar)
     
     var presenter: ChallengePresenterProtocol?

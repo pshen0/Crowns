@@ -1,5 +1,5 @@
 //
-//  SettingUpGameViewController.swift
+//  GameSettingsViewController.swift
 //  Crowns
 //
 //  Created by Анна Сазонова on 02.02.2025.
@@ -7,12 +7,12 @@
 
 import UIKit
 
-protocol SettingUpGameViewProtocol: AnyObject {
+protocol GameSettingsViewProtocol: AnyObject {
     
 }
 
 
-final class SettingUpGameViewController: UIViewController, SettingUpGameViewProtocol{
+final class GameSettingsViewController: UIViewController, GameSettingsViewProtocol{
     
     private let backButton: UIButton = CustomButton(button: UIImageView(image: Images.backButton),
                                                       tapped: UIImageView(image: Images.backButtonTap))
@@ -23,7 +23,7 @@ final class SettingUpGameViewController: UIViewController, SettingUpGameViewProt
     private let levelHardButton: UIButton = UIButton()
     private let levelRandomButton: UIButton = UIButton()
     
-    var presenter: SettingUpGamePresenterProtocol?
+    var presenter: GameSettingsPresenterProtocol?
     lazy var game: Int = Numbers.crownsTag
     lazy var gameLogo: UILabel = UILabel()
     lazy var choosingDifficultyText: UILabel = UILabel()
@@ -113,10 +113,10 @@ final class SettingUpGameViewController: UIViewController, SettingUpGameViewProt
             levelMediumButton.pinCenterX(to: view),
             levelHardButton.pinCenterX(to: view),
             levelRandomButton.pinCenterX(to: view),
-            levelEasyButton.pinTop(to: choosingDifficultyText.bottomAnchor, 30),
-            levelMediumButton.pinTop(to: levelEasyButton.bottomAnchor, 10),
-            levelHardButton.pinTop(to: levelMediumButton.bottomAnchor, 10),
-            levelRandomButton.pinTop(to: levelHardButton.bottomAnchor, 10)
+            levelEasyButton.pinTop(to: choosingDifficultyText.bottomAnchor, Constraints.levelEasyButtonTop),
+            levelMediumButton.pinTop(to: levelEasyButton.bottomAnchor, Constraints.levelButtonTop),
+            levelHardButton.pinTop(to: levelMediumButton.bottomAnchor, Constraints.levelButtonTop),
+            levelRandomButton.pinTop(to: levelHardButton.bottomAnchor, Constraints.levelButtonTop)
         ])
         
         

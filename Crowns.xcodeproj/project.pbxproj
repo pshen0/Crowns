@@ -23,11 +23,11 @@
 		0F2C54232D4EEADC0051AD13 /* CrownsLearningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54222D4EEADC0051AD13 /* CrownsLearningViewController.swift */; };
 		0F2C54272D4EF4600051AD13 /* SudokuLearningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54262D4EF4600051AD13 /* SudokuLearningViewController.swift */; };
 		0F2C54292D4EF4710051AD13 /* QueensLearningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54282D4EF4710051AD13 /* QueensLearningViewController.swift */; };
-		0F2C542E2D4EF6C60051AD13 /* SettingUpGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C542D2D4EF6C60051AD13 /* SettingUpGameViewController.swift */; };
-		0F2C54322D5018430051AD13 /* SettimgUpGameInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54312D5018430051AD13 /* SettimgUpGameInteractor.swift */; };
-		0F2C54342D5018510051AD13 /* SettimgUpGamePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54332D5018510051AD13 /* SettimgUpGamePresenter.swift */; };
-		0F2C54362D50185E0051AD13 /* SettimgUpGameRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54352D50185E0051AD13 /* SettimgUpGameRouter.swift */; };
-		0F2C54382D5018780051AD13 /* SettimgUpGameModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54372D5018780051AD13 /* SettimgUpGameModuleBuilder.swift */; };
+		0F2C542E2D4EF6C60051AD13 /* GameSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C542D2D4EF6C60051AD13 /* GameSettingsViewController.swift */; };
+		0F2C54322D5018430051AD13 /* GameSettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54312D5018430051AD13 /* GameSettingsInteractor.swift */; };
+		0F2C54342D5018510051AD13 /* GameSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54332D5018510051AD13 /* GameSettingsPresenter.swift */; };
+		0F2C54362D50185E0051AD13 /* GameSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54352D50185E0051AD13 /* GameSettingsRouter.swift */; };
+		0F2C54382D5018780051AD13 /* GameSettingsModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54372D5018780051AD13 /* GameSettingsModuleBuilder.swift */; };
 		0F2C543B2D50224B0051AD13 /* SudokuPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C543A2D50224B0051AD13 /* SudokuPlayViewController.swift */; };
 		0F2C543D2D50230F0051AD13 /* CrownsPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C543C2D50230F0051AD13 /* CrownsPlayViewController.swift */; };
 		0F2C543F2D50236C0051AD13 /* QueensPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C543E2D50236C0051AD13 /* QueensPlayViewController.swift */; };
@@ -105,11 +105,11 @@
 		0F2C54222D4EEADC0051AD13 /* CrownsLearningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsLearningViewController.swift; sourceTree = "<group>"; };
 		0F2C54262D4EF4600051AD13 /* SudokuLearningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuLearningViewController.swift; sourceTree = "<group>"; };
 		0F2C54282D4EF4710051AD13 /* QueensLearningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensLearningViewController.swift; sourceTree = "<group>"; };
-		0F2C542D2D4EF6C60051AD13 /* SettingUpGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingUpGameViewController.swift; sourceTree = "<group>"; };
-		0F2C54312D5018430051AD13 /* SettimgUpGameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettimgUpGameInteractor.swift; sourceTree = "<group>"; };
-		0F2C54332D5018510051AD13 /* SettimgUpGamePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettimgUpGamePresenter.swift; sourceTree = "<group>"; };
-		0F2C54352D50185E0051AD13 /* SettimgUpGameRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettimgUpGameRouter.swift; sourceTree = "<group>"; };
-		0F2C54372D5018780051AD13 /* SettimgUpGameModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettimgUpGameModuleBuilder.swift; sourceTree = "<group>"; };
+		0F2C542D2D4EF6C60051AD13 /* GameSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsViewController.swift; sourceTree = "<group>"; };
+		0F2C54312D5018430051AD13 /* GameSettingsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsInteractor.swift; sourceTree = "<group>"; };
+		0F2C54332D5018510051AD13 /* GameSettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsPresenter.swift; sourceTree = "<group>"; };
+		0F2C54352D50185E0051AD13 /* GameSettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsRouter.swift; sourceTree = "<group>"; };
+		0F2C54372D5018780051AD13 /* GameSettingsModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsModuleBuilder.swift; sourceTree = "<group>"; };
 		0F2C543A2D50224B0051AD13 /* SudokuPlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuPlayViewController.swift; sourceTree = "<group>"; };
 		0F2C543C2D50230F0051AD13 /* CrownsPlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsPlayViewController.swift; sourceTree = "<group>"; };
 		0F2C543E2D50236C0051AD13 /* QueensPlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensPlayViewController.swift; sourceTree = "<group>"; };
@@ -242,7 +242,7 @@
 			children = (
 				0F2C542F2D4EF6E30051AD13 /* Plays */,
 				0F2C54302D4EF7240051AD13 /* Learning */,
-				0F2C542C2D4EF6870051AD13 /* SettingUpGameModule */,
+				0F2C542C2D4EF6870051AD13 /* GameSettingsModule */,
 				0F1A78DC2D4841AA00DAA4F0 /* ChallengeModule */,
 				0F1A78E92D48575300DAA4F0 /* ProfileModule */,
 				0F5F8CB52D417CA6006A8164 /* HomeModule */,
@@ -311,16 +311,16 @@
 			path = QueensPlayModule;
 			sourceTree = "<group>";
 		};
-		0F2C542C2D4EF6870051AD13 /* SettingUpGameModule */ = {
+		0F2C542C2D4EF6870051AD13 /* GameSettingsModule */ = {
 			isa = PBXGroup;
 			children = (
-				0F2C542D2D4EF6C60051AD13 /* SettingUpGameViewController.swift */,
-				0F2C54312D5018430051AD13 /* SettimgUpGameInteractor.swift */,
-				0F2C54332D5018510051AD13 /* SettimgUpGamePresenter.swift */,
-				0F2C54352D50185E0051AD13 /* SettimgUpGameRouter.swift */,
-				0F2C54372D5018780051AD13 /* SettimgUpGameModuleBuilder.swift */,
+				0F2C542D2D4EF6C60051AD13 /* GameSettingsViewController.swift */,
+				0F2C54312D5018430051AD13 /* GameSettingsInteractor.swift */,
+				0F2C54332D5018510051AD13 /* GameSettingsPresenter.swift */,
+				0F2C54352D50185E0051AD13 /* GameSettingsRouter.swift */,
+				0F2C54372D5018780051AD13 /* GameSettingsModuleBuilder.swift */,
 			);
-			path = SettingUpGameModule;
+			path = GameSettingsModule;
 			sourceTree = "<group>";
 		};
 		0F2C542F2D4EF6E30051AD13 /* Plays */ = {
@@ -562,9 +562,9 @@
 				0F2C54432D50512C0051AD13 /* CrownsPlayPresenter.swift in Sources */,
 				0F5F18642D511CEE00ED204B /* CrownsLearningModuleBuilder.swift in Sources */,
 				0F2C544F2D5051A10051AD13 /* SudokuPlayModuleBuilder.swift in Sources */,
-				0F2C54362D50185E0051AD13 /* SettimgUpGameRouter.swift in Sources */,
+				0F2C54362D50185E0051AD13 /* GameSettingsRouter.swift in Sources */,
 				0F5F18742D511F8900ED204B /* QueensLearningModuleBuilder.swift in Sources */,
-				0F2C542E2D4EF6C60051AD13 /* SettingUpGameViewController.swift in Sources */,
+				0F2C542E2D4EF6C60051AD13 /* GameSettingsViewController.swift in Sources */,
 				0F2C54412D50511D0051AD13 /* CrownsPlayInteractor.swift in Sources */,
 				0F2C544B2D5051750051AD13 /* SudokuPlayPresenter.swift in Sources */,
 				0F5F8CBE2D41A865006A8164 /* CustomObjects.swift in Sources */,
@@ -584,10 +584,10 @@
 				0F2C543D2D50230F0051AD13 /* CrownsPlayViewController.swift in Sources */,
 				0F1A78DA2D4837C500DAA4F0 /* HomeModuleBuilder.swift in Sources */,
 				0F1A78E82D48522D00DAA4F0 /* Constants.swift in Sources */,
-				0F2C54342D5018510051AD13 /* SettimgUpGamePresenter.swift in Sources */,
+				0F2C54342D5018510051AD13 /* GameSettingsPresenter.swift in Sources */,
 				0F5F185E2D511BF700ED204B /* CrownsLearningInteractor.swift in Sources */,
 				0F2C541E2D492EFD0051AD13 /* MainTabBarController.swift in Sources */,
-				0F2C54322D5018430051AD13 /* SettimgUpGameInteractor.swift in Sources */,
+				0F2C54322D5018430051AD13 /* GameSettingsInteractor.swift in Sources */,
 				0F5F18722D511F7C00ED204B /* QueensLearningRouter.swift in Sources */,
 				0F1A78ED2D48577F00DAA4F0 /* ProfileInteractor.swift in Sources */,
 				0F1A78EB2D48577200DAA4F0 /* ProfileViewController.swift in Sources */,
@@ -600,7 +600,7 @@
 				0F2C544D2D50518E0051AD13 /* SudokuPlayRouter.swift in Sources */,
 				0F5F18602D511C0200ED204B /* CrownsLearningPresenter.swift in Sources */,
 				0F1A78EF2D48579A00DAA4F0 /* ProfilePresenter.swift in Sources */,
-				0F2C54382D5018780051AD13 /* SettimgUpGameModuleBuilder.swift in Sources */,
+				0F2C54382D5018780051AD13 /* GameSettingsModuleBuilder.swift in Sources */,
 				0F5F8CBA2D418B14006A8164 /* ColorExtension.swift in Sources */,
 				0F5F8C842D4177E2006A8164 /* HomeViewController.swift in Sources */,
 				0F1A78E22D4842BD00DAA4F0 /* ChallengePresenter.swift in Sources */,

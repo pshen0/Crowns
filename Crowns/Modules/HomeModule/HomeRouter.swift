@@ -28,6 +28,6 @@ class HomeRouter: HomeRouterProtocol {
     }
     
     func navigateToPlaySettings(for game: Int) {
-        viewController?.navigationController?.pushViewController(SettingUpGameModuleBuilder.build(for: game), animated: false)
+        viewController?.navigationController?.pushViewController(GameSettingsModuleBuilder.build(for: game), animated: false)
     }
 }
