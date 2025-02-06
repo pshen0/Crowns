@@ -33,7 +33,7 @@ final class MainTabBarController: UITabBarController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError(Text.initError)
+        fatalError(Text.initErrorCoder)
     }
     
     override func viewDidLoad() {

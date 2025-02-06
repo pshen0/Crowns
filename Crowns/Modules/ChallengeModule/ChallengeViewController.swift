@@ -34,6 +34,16 @@ final class ChallengeViewController: UIViewController, ChallengeViewProtocol{
         configureUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+    }
+    
     private func configureUI() {
         configureBackground()
         startTimer()
@@ -106,7 +116,7 @@ final class ChallengeViewController: UIViewController, ChallengeViewProtocol{
     }
     
     private func catStartsBlinking() {
-        Timer.scheduledTimer(withTimeInterval: Double.random(in: 3...5), repeats: true) { _ in
+        Timer.scheduledTimer(withTimeInterval: Double.random(in: 2...4), repeats: true) { _ in
             self.challengeCat.startBlinking()
         }
     }

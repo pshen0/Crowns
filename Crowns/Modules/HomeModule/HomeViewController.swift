@@ -176,26 +176,32 @@ final class HomeViewController: UIViewController, HomeViewProtocol{
     }
     
     @objc private func playCrowns() {
+        hideGameSelector()
         presenter?.processPlayButton(for: Numbers.crownsTag)
     }
     
     @objc private func playSudoku() {
+        hideGameSelector()
         presenter?.processPlayButton(for: Numbers.sudokuTag)
     }
     
     @objc private func playQueens() {
+        hideGameSelector()
         presenter?.processPlayButton(for: Numbers.queensTag)
     }
     
     @objc private func learnCrowns() {
+        hideGameSelector()
         presenter?.processLearningButton(for: Numbers.crownsTag)
     }
     
     @objc private func learnSudoku() {
+        hideGameSelector()
         presenter?.processLearningButton(for: Numbers.sudokuTag)
     }
     
     @objc private func learnQueens() {
+        hideGameSelector()
         presenter?.processLearningButton(for: Numbers.queensTag)
     }
 }

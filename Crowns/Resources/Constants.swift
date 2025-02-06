@@ -36,6 +36,8 @@ enum Images {
     static let levelHardButtonTap: UIImage? = UIImage(named: "levelHardButtonTap")
     static let levelRandomButton: UIImage? = UIImage(named: "levelRandomButton")
     static let levelRandomButtonTap: UIImage? = UIImage(named: "levelRandomButtonTap")
+    static let doneButton: UIImage? = UIImage(named: "doneButton")
+    static let doneButtonTap: UIImage? = UIImage(named: "doneButtonTap")
     
     //ChallengeView
     static let lightning1: UIImage? = UIImage(named: "lightning1")
@@ -98,16 +100,31 @@ enum Numbers {
     static let blinkingAnimationDuration: Double = 0.6
     static let blinkingRepeat: Int = 1
     
+    // CustomNumberPicker
+    static let numberPickerTintAlpha: Double = 0
+    static let numberPickerComponentsNumber: Int = 1
+    
+    // CustomTimePicker
+    static let timePickerStartPosition: String = "00"
+    static let timePickerMin: Int = 0
+    static let timePickerMax: Int = 59
+    static let timePickerFormat: String = "%02d"
+    static let timePickerTintAlpha: Double = 0
+    static let timePickerComponentsNumber: Int = 2
+    
     // GameSettingsView
     static let levelEasyTag: Int = 1
     static let levelMediumTag: Int = 2
     static let levelHardTag: Int = 3
     static let levelRandomTag: Int = 4
+    static let queensSizeMin: Int = 4
+    static let queensSizeMax: Int = 12
 }
 
 enum Text {
     // Common
-    static let initError: String = "init(coder:) has not been implemented"
+    static let initErrorCoder: String = "init(coder:) has not been implemented"
+    static let initErrorFrame: String = "init(frame:) has not been implemented"
     static let crownsGame: String = "Crowns"
     static let sudokuGame: String = "Killer-sudoku"
     static let queensGame: String = "N Queens problem"
@@ -129,6 +146,7 @@ enum Text {
     // GameSettingsView
     static let chooseDifficulty: String = "Choose the difficulty level:"
     static let chooseFieldsSize: String = "Set the field size:"
+    static let timerLabel: String = "Timer"
 }
 
 enum Constraints {
@@ -182,6 +200,13 @@ enum Constraints {
     static let choosingDifficultyTextTop: CGFloat = 25
     static let levelEasyButtonTop: CGFloat = 30
     static let levelButtonTop: CGFloat = 10
+    static let numberFieldRadius: CGFloat = 10
+    static let timerStackSpacing: CGFloat = 20
+    static let timerPickerWidth: CGFloat = 90
+    static let timerStackTop: CGFloat = 30
+    static let timerPickerTop: CGFloat = 30
+    static let numberFieldWidth: CGFloat = 30
+    static let numberFieldLeft: CGFloat = 15
 }
 
 
