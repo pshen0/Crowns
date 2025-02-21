@@ -7,16 +7,21 @@
 
 import UIKit
 
-protocol ProfileViewProtocol: AnyObject {
+final class ProfileViewController: UIViewController{
+    private let interactor: ProfileBusinessLogic
     
-}
-
-final class ProfileViewController: UIViewController, ProfileViewProtocol{
-    var presenter: ProfilePresenterProtocol?
+    init(interactor: ProfileBusinessLogic) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError(Text.initErrorCoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter?.viewDidLoaded()
         configureUI()
     }
     

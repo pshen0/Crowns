@@ -7,11 +7,15 @@
 
 import Foundation
 
-protocol ProfileInteractorProtocol: AnyObject {
+protocol ProfileBusinessLogic {
     
 }
 
-class ProfileInteractor: ProfileInteractorProtocol {
-    weak var presenter: ProfilePresenterProtocol?
-
+final class ProfileInteractor: ProfileBusinessLogic {
+    
+    private let presenter: ProfilePresentationLogic
+    
+    init(presenter: ProfilePresentationLogic) {
+        self.presenter = presenter
+    }
 }

@@ -7,22 +7,12 @@
 
 import Foundation
 
-protocol ProfilePresenterProtocol: AnyObject {
-    func viewDidLoaded()
+protocol ProfilePresentationLogic {
+    
 }
 
-class ProfilePresenter: ProfilePresenterProtocol {
-    weak var view: ProfileViewProtocol?
-    var router: ProfileRouterProtocol
-    var interactor: ProfileInteractorProtocol
+final class ProfilePresenter: ProfilePresentationLogic {
     
-    init(interactor: ProfileInteractorProtocol, router: ProfileRouterProtocol) {
-        self.interactor = interactor
-        self.router = router
-    }
+    weak var view: ProfileViewController?
     
-    func viewDidLoaded() {
-        //
-    }
-
 }

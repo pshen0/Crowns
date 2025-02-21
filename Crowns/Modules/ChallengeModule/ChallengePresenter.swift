@@ -5,24 +5,12 @@
 //  Created by Анна Сазонова on 28.01.2025.
 //
 
-import Foundation
-
-protocol ChallengePresenterProtocol: AnyObject {
-    func viewDidLoaded()
+protocol ChallengePresentationLogic {
+    
 }
 
-class ChallengePresenter: ChallengePresenterProtocol {
-    weak var view: ChallengeViewProtocol?
-    var router: ChallengeRouterProtocol
-    var interactor: ChallengeInteractorProtocol
+final class ChallengePresenter: ChallengePresentationLogic {
     
-    init(interactor: ChallengeInteractorProtocol, router: ChallengeRouterProtocol) {
-        self.interactor = interactor
-        self.router = router
-    }
+    weak var view: ChallengeViewController?
     
-    func viewDidLoaded() {
-        //
-    }
-
 }

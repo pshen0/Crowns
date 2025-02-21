@@ -63,12 +63,11 @@ enum Images {
     static let continueButton: UIImage? = UIImage(named: "continueButton")
     static let learningButton: UIImage? = UIImage(named: "learningButton")
     static let homeCalendar: UIImage? = UIImage(named: "homeCalendar")
+    
+    // GameSelector
     static let chooseCrownsButton: UIImage? = UIImage(named: "chooseCrownsButton")
     static let chooseSudokuButton: UIImage? = UIImage(named: "chooseSudokuButton")
     static let chooseQueensButton: UIImage? = UIImage(named: "chooseQueensButton")
-    
-
-    
 }
 
 enum Numbers {
@@ -87,14 +86,8 @@ enum Numbers {
     // MainTabBar
     static let tabBarSelectedIndex: Int = 1
     
-    // HomeView
-    static let overlayVisible: Double = 0.7
-    static let overlayUnvisible: Double = 0
-    static let gameSelectorAnimationDuration: TimeInterval = 0.3
-    static let gameSelectorShadowVisible: Float = 0.3
-    static let gameSelectorShadowUnvisible: Float = 0
-    static let newGameButtonTag: Int = 1
-    static let learningButtonTag: Int = 2
+    // GameSellector
+    static let gameSelectorOverlay: CGFloat = 0.3
     
     // BlinkingCat
     static let blinkingAnimationDuration: Double = 0.6
@@ -137,6 +130,8 @@ enum Text {
     
     // HomeView
     static let homeLogo: String = "CROWNS"
+    
+    // GameSellector
     static let chooseGame: String = "Choose game:"
     static let chooseLearning: String = "Choose learning:"
     
@@ -162,15 +157,14 @@ enum Constraints {
     static let continueButtonTop: CGFloat = 15
     static let learningButtonTop: CGFloat = 15
     static let tabBarItemIndentation: CGFloat = 10
-    static let gameSelectorHeight: CGFloat = 370
+    
+    // GameSellector
     static let gameSelectorRadius: CGFloat = 16
-    static let gameSelectorShadowHeight: CGFloat = 20
-    static let gameSelectorShadowWidth: CGFloat = 0
-    static let gameSelectorShadowRadius: CGFloat = 16
-    static let chooseCrownsButtonTop: CGFloat = 75
+    static let gameSelectorHeight: CGFloat = 363
+    static let chooseCrownsButtonTop: CGFloat = 50
     static let chooseSudokuButtonTop: CGFloat = 15
     static let chooseQueensButtonTop: CGFloat = 15
-    static let chooseTextTop: CGFloat = 25
+    static let chooseTextTop: CGFloat = 40
     static let selectorTextSize: CGFloat = 25
     
     // ChallengeView

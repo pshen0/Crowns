@@ -5,33 +5,46 @@
 //  Created by Анна Сазонова on 22.01.2025.
 //
 
-import Foundation
-
-protocol HomePresenterProtocol: AnyObject {
-    func viewDidLoaded()
-    func processLearningButton(for game: Int)
-    func processPlayButton(for game: Int)
+protocol HomePresentationLogic {
+    func routeToCrownsSettings(_ response: HomeModel.RouteToCrownsSettings.Response)
+    func routeToSudokuSettings(_ response: HomeModel.RouteToSudokuSettings.Response)
+    func routeToQueensSettings(_ response: HomeModel.RouteToQueensSettings.Response)
+    func routeToCrownsLearning(_ response: HomeModel.RouteToCrownsLearning.Response)
+    func routeToSudokuLearning(_ response: HomeModel.RouteToSudokuLearning.Response)
+    func routeToQueensLearning(_ response: HomeModel.RouteToQueensLearning.Response)
 }
 
-class HomePresenter: HomePresenterProtocol {
-    weak var view: HomeViewProtocol?
-    var router: HomeRouterProtocol
-    var interactor: HomeInteractorProtocol 
+final class HomePresenter: HomePresentationLogic {
     
-    init(interactor: HomeInteractorProtocol, router: HomeRouterProtocol) {
-        self.interactor = interactor
-        self.router = router 
+    weak var view: HomeViewController?
+    
+    func routeToCrownsSettings(_ response: HomeModel.RouteToCrownsSettings.Response) {
+        view?.hideGameSelector()
+        view?.navigationController?.pushViewController(CrownsSettingsBuilder.build(), animated: false)
     }
     
-    func viewDidLoaded() {
-        //
+    func routeToSudokuSettings(_ response: HomeModel.RouteToSudokuSettings.Response) {
+        view?.hideGameSelector()
+        view?.navigationController?.pushViewController(SudokuSettingsBuilder.build(), animated: false)
     }
     
-    func processLearningButton(for game: Int) {
-        router.navigateToLearning(for: game)
+    func routeToQueensSettings(_ response: HomeModel.RouteToQueensSettings.Response) {
+        view?.hideGameSelector()
+        view?.navigationController?.pushViewController(QueensSettingsBuilder.build(), animated: false)
     }
     
-    func processPlayButton(for game: Int) {
-        router.navigateToPlaySettings(for: game)
+    func routeToCrownsLearning(_ response: HomeModel.RouteToCrownsLearning.Response) {
+        view?.hideGameSelector()
+        view?.navigationController?.pushViewController(CrownsLearningBuilder.build(), animated: false)
+    }
+    
+    func routeToSudokuLearning(_ response: HomeModel.RouteToSudokuLearning.Response) {
+        view?.hideGameSelector()
+        view?.navigationController?.pushViewController(SudokuLearningBuilder.build(), animated: false)
+    }
+    
+    func routeToQueensLearning(_ response: HomeModel.RouteToQueensLearning.Response) {
+        view?.hideGameSelector()
+        view?.navigationController?.pushViewController(QueensLearningBuilder.build(), animated: false)
     }
 }

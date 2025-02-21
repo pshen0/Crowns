@@ -7,12 +7,9 @@
 
 import UIKit
 
-protocol ChallengeViewProtocol: AnyObject {
+final class ChallengeViewController: UIViewController {
     
-}
-
-final class ChallengeViewController: UIViewController, ChallengeViewProtocol{
-    
+    private let interactor: ChallengeBusinessLogic
     private let challengeLogo = CustomText(text: Text.challengeLogo, fontSize: Constraints.challengeLogoSize, textColor: Colors.white)
     private let lightning1: UIImageView = UIImageView(image: Images.lightning1)
     private let lightning2: UIImageView = UIImageView(image: Images.lightning2)
@@ -24,13 +21,21 @@ final class ChallengeViewController: UIViewController, ChallengeViewProtocol{
     private let challengeSudokuButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeSudokuButton))
     private let challengeCompletedLevelButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeCompletedLevel))
     private let challengeCalendar: UIImageView = UIImageView(image: Images.challengeCalendar)
-    
-    var presenter: ChallengePresenterProtocol?
+
     var timer: Timer?
+    
+    init(interactor: ChallengeBusinessLogic) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError(Text.initErrorCoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter?.viewDidLoaded()
         configureUI()
     }
     

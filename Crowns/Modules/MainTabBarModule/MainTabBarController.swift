@@ -15,9 +15,9 @@ final class MainTabBarController: UITabBarController {
     
     
     
-    private let homeVC: UIViewController = HomeModuleBuilder.build()
-    private let challengeVC: UIViewController = ChallengeModuleBuilder.build()
-    private let profileVC: UIViewController = ProfileModuleBuilder.build()
+    private let homeVC: UIViewController = HomeBuilder.build()
+    private let challengeVC: UIViewController = ChallengeBuilder.build()
+    private let profileVC: UIViewController = ProfileBuilder.build()
     
     private let homeNavigator: UINavigationController
     private let challengeNavigator: UINavigationController

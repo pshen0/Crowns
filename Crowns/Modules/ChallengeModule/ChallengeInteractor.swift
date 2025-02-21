@@ -5,13 +5,15 @@
 //  Created by Анна Сазонова on 28.01.2025.
 //
 
-import Foundation
-
-protocol ChallengeInteractorProtocol: AnyObject {
+protocol ChallengeBusinessLogic {
     
 }
 
-class ChallengeInteractor: ChallengeInteractorProtocol {
-    weak var presenter: ChallengePresenterProtocol?
-
+final class ChallengeInteractor: ChallengeBusinessLogic {
+    
+    private let presenter: ChallengePresentationLogic
+    
+    init(presenter: ChallengePresentationLogic) {
+        self.presenter = presenter
+    }
 }
