@@ -1,12 +1,10 @@
 Crowns
 =
-Описание
--
-
 Crown – мобильное приложение-игра на Swift (UIKit, Xcode) с архитектурой SVIP.
-
 -
-Основной экран - **Home**.
+
+
+Основной экран - **Home**. Добавлен FSCalendar и кнопки для начала игры и обучения.
 
 <div style="display: flex; justify-content: space-between;">
     <img src="Crowns/Resources/AppDiscriptionImages/home1.PNG" width="200">
@@ -15,7 +13,7 @@ Crown – мобильное приложение-игра на Swift (UIKit, Xc
 </div>
 
 
-Основной экран **Challenges**.
+Основной экран **Challenges**. Добавлены кнопки для прохождения ежедневных испытаний и календарь для отражения прогресса. Также добавлены элементы анимации.
 
 <div style="display: flex; justify-content: space-between;">
     <img src="Crowns/Resources/AppDiscriptionImages/challenges1.gif" width="200">
@@ -23,13 +21,18 @@ Crown – мобильное приложение-игра на Swift (UIKit, Xc
 
 Экраны **Settings** для трех видов игр.
 
+Экран для настройки игры "Crowns". Пользователю предлагается выбрать уровень сложности 
+игры и добавить по желанию таймер для ограничения времени прохождения уровня.
 <div style="display: flex; justify-content: space-between;">
     <img src="Crowns/Resources/AppDiscriptionImages/settings1.PNG" width="200">
     <img src="Crowns/Resources/AppDiscriptionImages/settings2.PNG" width="200">
 </div>
+Экран для настройки игры "Killer-sudoku", содержит аналогичный функционал, что и
+экран для "Crowns".
 <div style="display: flex; justify-content: space-between;">
     <img src="Crowns/Resources/AppDiscriptionImages/settings3.PNG" width="200">
 </div>
+Экран для игры в "N Queens" содержит текстовое поле для настройки размера игрового поля и таймер.
 <div style="display: flex; justify-content: space-between;">
     <img src="Crowns/Resources/AppDiscriptionImages/settings4.PNG" width="200">
     <img src="Crowns/Resources/AppDiscriptionImages/settings5.PNG" width="200">
