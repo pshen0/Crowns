@@ -22,15 +22,15 @@ final class TimePickerTextField: UITextField, UIPickerViewDelegate, UIPickerView
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        configureTextField()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setup()
+        configureTextField()
     }
     
-    private func setup() {
+    private func configureTextField() {
         self.backgroundColor = Colors.lightGray
         self.textAlignment = .center
         self.layer.cornerRadius = Constraints.numberFieldRadius
@@ -38,30 +38,24 @@ final class TimePickerTextField: UITextField, UIPickerViewDelegate, UIPickerView
         self.textColor = Colors.white
         self.tintColor = Colors.white.withAlphaComponent(Numbers.timePickerTintAlpha)
         self.font = UIFont(name: Text.fontIrishGrover, size: Constraints.selectorTextSize) ?? UIFont.systemFont(ofSize: Constraints.selectorTextSize)
+        
+        customButton.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
+        doneButton = UIBarButtonItem(customView: customButton)
+        
         timePicker.backgroundColor = Colors.lightGray
         timePicker.delegate = self
         timePicker.dataSource = self
         toolbar.sizeToFit()
-        customButton.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
-        doneButton = UIBarButtonItem(customView: customButton)
         toolbar.setItems([flexSpace, doneButton], animated: true)
         toolbar.barTintColor = Colors.lightGray
         self.inputAccessoryView = toolbar
         toolbar.isTranslucent = false
         self.keyboardType = .numberPad
         
-        self.autocorrectionType = .no
-        self.spellCheckingType = .no
-        self.smartQuotesType = .no
-        self.smartDashesType = .no
-        self.smartInsertDeleteType = .no
-        self.textContentType = .oneTimeCode
-        
         updateTextField()
     }
     
     private func updateTextField() {
-        
         self.text = "\(selectedMinute):\(selectedSecond)"
     }
     

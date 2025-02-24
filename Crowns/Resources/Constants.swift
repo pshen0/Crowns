@@ -106,10 +106,10 @@ enum Numbers {
     static let timePickerComponentsNumber: Int = 2
     
     // GameSettingsView
-    static let levelEasyTag: Int = 1
-    static let levelMediumTag: Int = 2
-    static let levelHardTag: Int = 3
-    static let levelRandomTag: Int = 4
+    static let levelEasyTag: Int = 0
+    static let levelMediumTag: Int = 1
+    static let levelHardTag: Int = 2
+    static let levelRandomTag: Int = 3
     static let queensSizeMin: Int = 4
     static let queensSizeMax: Int = 12
 }
@@ -137,6 +137,7 @@ enum Text {
     
     // ChallengeView
     static let challengeLogo: String = "The daily challenge\nCAT AND MOUSE"
+    static let streak: String = "Current streak: 0"
     
     // GameSettingsView
     static let chooseDifficulty: String = "Choose the difficulty level:"
@@ -151,8 +152,11 @@ enum Constraints {
     // HomeView
     static let homeLogoPictureTop: CGFloat = 0
     static let homeLogoTextTop: CGFloat = 5
+    static let homeLogoTextWidth: CGFloat = 350
     static let homeLogoSize: CGFloat = 75
     static let homeCalendarTop: CGFloat = 45
+    static let homeCalendarWidth: CGFloat = 350
+    static let homeCalendarHeight: CGFloat = 250
     static let newGameButtonTop: CGFloat = 45
     static let continueButtonTop: CGFloat = 15
     static let learningButtonTop: CGFloat = 15
@@ -160,31 +164,34 @@ enum Constraints {
     
     // GameSellector
     static let gameSelectorRadius: CGFloat = 16
-    static let gameSelectorHeight: CGFloat = 363
-    static let chooseCrownsButtonTop: CGFloat = 50
+    static let gameSelectorHeight: CGFloat = 310
+    static let chooseCrownsButtonTop: CGFloat = 30
     static let chooseSudokuButtonTop: CGFloat = 15
     static let chooseQueensButtonTop: CGFloat = 15
-    static let chooseTextTop: CGFloat = 40
+    static let chooseTextTop: CGFloat = 30
     static let selectorTextSize: CGFloat = 25
     
     // ChallengeView
     static let challengeLogoTextTop: CGFloat = 5
     static let challengeLogoSize: CGFloat = 35
-    static let lightning1Top: CGFloat = -30
-    static let lightning2Top: CGFloat = -40
+    static let lightning1Top: CGFloat = -100
+    static let lightning2Top: CGFloat = -110
     static let lightning1Left: CGFloat = -50
     static let lightning2Right: CGFloat = -20
-    static let lightningAnimation1Top: CGFloat = -40
-    static let lightningAnimation2Top: CGFloat = -50
+    static let lightningAnimation1Top: CGFloat = -70
+    static let lightningAnimation2Top: CGFloat = -80
     static let lightningAnimation1Left: CGFloat = 210
     static let lightningAnimation2Right: CGFloat = 210
     static let challengeCatTop: CGFloat = 130
     static let challengeCatLeft: CGFloat = 10
     static let challengeMiceTop: CGFloat = 160
     static let challengeMiceRight: CGFloat = 20
-    static let challengeCalendarTop: CGFloat = 35
-    static let challengeCrownsButtonTop: CGFloat = 35
+    static let challengeCalendarTop: CGFloat = 75
+    static let challengeCrownsButtonTop: CGFloat = 45
     static let challengeSudokuButtonTop: CGFloat = 15
+    static let challengeCalendarWidth: CGFloat = 350
+    static let challengeCalendarHeight: CGFloat = 200
+    static let streakTextSize: CGFloat = 17
     
     // GameSettingsView
     static let gameLogoSize: CGFloat = 34
@@ -192,8 +199,8 @@ enum Constraints {
     static let gameLogoTop: CGFloat = 0
     static let settingsTextSize: CGFloat = 24
     static let choosingDifficultyTextTop: CGFloat = 25
-    static let levelEasyButtonTop: CGFloat = 30
-    static let levelButtonTop: CGFloat = 10
+    static let settingsButtonStackTop: CGFloat = 30
+    static let settingsButtonStackSpacing: CGFloat = 10
     static let numberFieldRadius: CGFloat = 10
     static let timerStackSpacing: CGFloat = 20
     static let timerPickerWidth: CGFloat = 90

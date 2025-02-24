@@ -84,7 +84,19 @@
 		0F6AFAFD2D67F848007B8454 /* CustomText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AFAFC2D67F848007B8454 /* CustomText.swift */; };
 		0F6AFAFF2D67F869007B8454 /* BlinkingCat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AFAFE2D67F869007B8454 /* BlinkingCat.swift */; };
 		0F6AFB012D67F893007B8454 /* CustomNumberPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AFB002D67F893007B8454 /* CustomNumberPicker.swift */; };
-		0F6AFB032D67F8DC007B8454 /* TemePickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AFB022D67F8DC007B8454 /* TemePickerTextField.swift */; };
+		0F6AFB032D67F8DC007B8454 /* TimePickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AFB022D67F8DC007B8454 /* TimePickerTextField.swift */; };
+		0F6AFB062D6C0BED007B8454 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 0F6AFB052D6C0BED007B8454 /* FSCalendar */; };
+		0F6AFB082D6C0C5C007B8454 /* CustomCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6AFB072D6C0C5C007B8454 /* CustomCalendar.swift */; };
+		0F6AFB0A2D6C1F69007B8454 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0F6AFB092D6C1F69007B8454 /* README.md */; };
+		0F6AFB0D2D6C2214007B8454 /* home1.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 0F6AFB0C2D6C2214007B8454 /* home1.PNG */; };
+		0F6AFB0F2D6C221C007B8454 /* home2.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 0F6AFB0E2D6C221C007B8454 /* home2.PNG */; };
+		0F6AFB112D6C2223007B8454 /* home3.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 0F6AFB102D6C2223007B8454 /* home3.PNG */; };
+		0F6AFB132D6C2227007B8454 /* challenges1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0F6AFB122D6C2227007B8454 /* challenges1.gif */; };
+		0F6AFB152D6C222F007B8454 /* settings1.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 0F6AFB142D6C222F007B8454 /* settings1.PNG */; };
+		0F6AFB172D6C2232007B8454 /* settings2.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 0F6AFB162D6C2232007B8454 /* settings2.PNG */; };
+		0F6AFB192D6C2236007B8454 /* settings3.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 0F6AFB182D6C2236007B8454 /* settings3.PNG */; };
+		0F6AFB1B2D6C2239007B8454 /* settings4.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 0F6AFB1A2D6C2239007B8454 /* settings4.PNG */; };
+		0F6AFB1D2D6C223D007B8454 /* settings5.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 0F6AFB1C2D6C223D007B8454 /* settings5.PNG */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,7 +198,18 @@
 		0F6AFAFC2D67F848007B8454 /* CustomText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomText.swift; sourceTree = "<group>"; };
 		0F6AFAFE2D67F869007B8454 /* BlinkingCat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkingCat.swift; sourceTree = "<group>"; };
 		0F6AFB002D67F893007B8454 /* CustomNumberPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNumberPicker.swift; sourceTree = "<group>"; };
-		0F6AFB022D67F8DC007B8454 /* TemePickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemePickerTextField.swift; sourceTree = "<group>"; };
+		0F6AFB022D67F8DC007B8454 /* TimePickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerTextField.swift; sourceTree = "<group>"; };
+		0F6AFB072D6C0C5C007B8454 /* CustomCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendar.swift; sourceTree = "<group>"; };
+		0F6AFB092D6C1F69007B8454 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		0F6AFB0C2D6C2214007B8454 /* home1.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home1.PNG; sourceTree = "<group>"; };
+		0F6AFB0E2D6C221C007B8454 /* home2.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home2.PNG; sourceTree = "<group>"; };
+		0F6AFB102D6C2223007B8454 /* home3.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home3.PNG; sourceTree = "<group>"; };
+		0F6AFB122D6C2227007B8454 /* challenges1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = challenges1.gif; sourceTree = "<group>"; };
+		0F6AFB142D6C222F007B8454 /* settings1.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings1.PNG; sourceTree = "<group>"; };
+		0F6AFB162D6C2232007B8454 /* settings2.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings2.PNG; sourceTree = "<group>"; };
+		0F6AFB182D6C2236007B8454 /* settings3.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings3.PNG; sourceTree = "<group>"; };
+		0F6AFB1A2D6C2239007B8454 /* settings4.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings4.PNG; sourceTree = "<group>"; };
+		0F6AFB1C2D6C223D007B8454 /* settings5.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings5.PNG; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +217,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F6AFB062D6C0BED007B8454 /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +250,7 @@
 		0F1A78D82D482DF600DAA4F0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0F6AFB0B2D6C2019007B8454 /* AppDiscriptionImages */,
 				0F5F18752D513E8600ED204B /* IrishGrover-Regular.ttf */,
 				0F5F8CBB2D41A7DE006A8164 /* Constants.swift */,
 				0F5F8C8A2D4177E4006A8164 /* LaunchScreen.storyboard */,
@@ -356,6 +381,7 @@
 		0F5F8C732D4177E2006A8164 = {
 			isa = PBXGroup;
 			children = (
+				0F6AFB092D6C1F69007B8454 /* README.md */,
 				0F5F8C7E2D4177E2006A8164 /* Crowns */,
 				0F5F8C952D4177E4006A8164 /* CrownsTests */,
 				0F5F8C9F2D4177E4006A8164 /* CrownsUITests */,
@@ -496,10 +522,27 @@
 				0F6AFAFC2D67F848007B8454 /* CustomText.swift */,
 				0F6AFAFE2D67F869007B8454 /* BlinkingCat.swift */,
 				0F6AFB002D67F893007B8454 /* CustomNumberPicker.swift */,
-				0F6AFB022D67F8DC007B8454 /* TemePickerTextField.swift */,
+				0F6AFB022D67F8DC007B8454 /* TimePickerTextField.swift */,
 				0F5F8CBD2D41A865006A8164 /* GameSelector.swift */,
+				0F6AFB072D6C0C5C007B8454 /* CustomCalendar.swift */,
 			);
 			path = CustomObjects;
+			sourceTree = "<group>";
+		};
+		0F6AFB0B2D6C2019007B8454 /* AppDiscriptionImages */ = {
+			isa = PBXGroup;
+			children = (
+				0F6AFB0C2D6C2214007B8454 /* home1.PNG */,
+				0F6AFB0E2D6C221C007B8454 /* home2.PNG */,
+				0F6AFB102D6C2223007B8454 /* home3.PNG */,
+				0F6AFB122D6C2227007B8454 /* challenges1.gif */,
+				0F6AFB142D6C222F007B8454 /* settings1.PNG */,
+				0F6AFB162D6C2232007B8454 /* settings2.PNG */,
+				0F6AFB182D6C2236007B8454 /* settings3.PNG */,
+				0F6AFB1A2D6C2239007B8454 /* settings4.PNG */,
+				0F6AFB1C2D6C223D007B8454 /* settings5.PNG */,
+			);
+			path = AppDiscriptionImages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -518,6 +561,9 @@
 			dependencies = (
 			);
 			name = Crowns;
+			packageProductDependencies = (
+				0F6AFB052D6C0BED007B8454 /* FSCalendar */,
+			);
 			productName = Crowns;
 			productReference = 0F5F8C7C2D4177E2006A8164 /* Crowns.app */;
 			productType = "com.apple.product-type.application";
@@ -590,6 +636,9 @@
 				Base,
 			);
 			mainGroup = 0F5F8C732D4177E2006A8164;
+			packageReferences = (
+				0F6AFB042D6C0BED007B8454 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+			);
 			productRefGroup = 0F5F8C7D2D4177E2006A8164 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -607,8 +656,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F5F8C8C2D4177E4006A8164 /* LaunchScreen.storyboard in Resources */,
+				0F6AFB0F2D6C221C007B8454 /* home2.PNG in Resources */,
+				0F6AFB192D6C2236007B8454 /* settings3.PNG in Resources */,
+				0F6AFB132D6C2227007B8454 /* challenges1.gif in Resources */,
+				0F6AFB152D6C222F007B8454 /* settings1.PNG in Resources */,
+				0F6AFB1D2D6C223D007B8454 /* settings5.PNG in Resources */,
 				0F5F18762D513E8600ED204B /* IrishGrover-Regular.ttf in Resources */,
+				0F6AFB172D6C2232007B8454 /* settings2.PNG in Resources */,
+				0F6AFB112D6C2223007B8454 /* home3.PNG in Resources */,
+				0F6AFB0A2D6C1F69007B8454 /* README.md in Resources */,
+				0F6AFB1B2D6C2239007B8454 /* settings4.PNG in Resources */,
 				0F5F8C892D4177E4006A8164 /* Assets.xcassets in Resources */,
+				0F6AFB0D2D6C2214007B8454 /* home1.PNG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,6 +698,7 @@
 				0F6AFAF82D677D51007B8454 /* CrownsSettingsModel.swift in Sources */,
 				0F5F18662D511D0900ED204B /* SudokuLearningInteractor.swift in Sources */,
 				0F5F8CB72D418883006A8164 /* UIView+Pin.swift in Sources */,
+				0F6AFB082D6C0C5C007B8454 /* CustomCalendar.swift in Sources */,
 				0F2C54432D50512C0051AD13 /* CrownsPlayPresenter.swift in Sources */,
 				0F5F18642D511CEE00ED204B /* CrownsLearningBuilder.swift in Sources */,
 				0F2C544F2D5051A10051AD13 /* SudokuPlayBuilder.swift in Sources */,
@@ -703,7 +763,7 @@
 				0F6AFAFB2D67F817007B8454 /* CustomButton.swift in Sources */,
 				0F2C54572D5052120051AD13 /* QueensPlayBuilder.swift in Sources */,
 				0F2C54292D4EF4710051AD13 /* QueensLearningViewController.swift in Sources */,
-				0F6AFB032D67F8DC007B8454 /* TemePickerTextField.swift in Sources */,
+				0F6AFB032D67F8DC007B8454 /* TimePickerTextField.swift in Sources */,
 				0F1A78DE2D48425300DAA4F0 /* ChallengeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1039,6 +1099,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0F6AFB042D6C0BED007B8454 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0F6AFB052D6C0BED007B8454 /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0F6AFB042D6C0BED007B8454 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0F5F8C742D4177E2006A8164 /* Project object */;
 }

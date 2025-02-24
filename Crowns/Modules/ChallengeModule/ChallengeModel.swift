@@ -8,9 +8,13 @@
 import UIKit
 
 enum ChallengeModel {
-    enum Start {
+    enum RouteCrownsGame {
         struct Request { }
         struct Response { }
-        struct ViewModel { }
+    }
+    
+    enum RouteSudokuGame {
+        struct Request { }
+        struct Response { }
     }
 }

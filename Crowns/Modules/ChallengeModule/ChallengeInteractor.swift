@@ -6,7 +6,8 @@
 //
 
 protocol ChallengeBusinessLogic {
-    
+    func crownsButtonTapped(_ request: ChallengeModel.RouteCrownsGame.Request)
+    func sudokuButtonTapped(_ request: ChallengeModel.RouteSudokuGame.Request)
 }
 
 final class ChallengeInteractor: ChallengeBusinessLogic {
@@ -15,5 +16,13 @@ final class ChallengeInteractor: ChallengeBusinessLogic {
     
     init(presenter: ChallengePresentationLogic) {
         self.presenter = presenter
+    }
+    
+    func crownsButtonTapped(_ request: ChallengeModel.RouteCrownsGame.Request) {
+        presenter.routeCrownsGame(ChallengeModel.RouteCrownsGame.Response())
+    }
+    
+    func sudokuButtonTapped(_ request: ChallengeModel.RouteSudokuGame.Request) {
+        presenter.routeSudokuGame(ChallengeModel.RouteSudokuGame.Response())
     }
 }

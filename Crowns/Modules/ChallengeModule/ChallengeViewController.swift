@@ -20,7 +20,8 @@ final class ChallengeViewController: UIViewController {
     private let challengeCrownsButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeCrownsButton))
     private let challengeSudokuButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeSudokuButton))
     private let challengeCompletedLevelButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeCompletedLevel))
-    private let challengeCalendar: UIImageView = UIImageView(image: Images.challengeCalendar)
+    private let challengeCalendar = CustomCalendar()
+    private let streakText = CustomText(text: Text.streak, fontSize: Constraints.streakTextSize, textColor: Colors.white)
 
     var timer: Timer?
     
@@ -53,6 +54,8 @@ final class ChallengeViewController: UIViewController {
         configureBackground()
         startTimer()
         catStartsBlinking()
+        configureCalendar()
+        configureButtons()
     }
     
     private func configureBackground() {
@@ -62,39 +65,48 @@ final class ChallengeViewController: UIViewController {
         lightningAnimation1.alpha = Numbers.lightningAnimationUnvisible
         lightningAnimation2.alpha = Numbers.lightningAnimationUnvisible
         
-        view.addSubview(lightning1)
-        view.addSubview(lightning2)
-        view.addSubview(lightningAnimation1)
-        view.addSubview(lightningAnimation2)
-        view.addSubview(challengeLogo)
-        view.addSubview(challengeCat)
-        view.addSubview(challengeMice)
+        
+        for (subview, top) in zip([lightning1, lightning2, lightningAnimation1, lightningAnimation2, challengeLogo, challengeCat, challengeMice],
+                                  [Constraints.lightning1Top, Constraints.lightning2Top, Constraints.lightningAnimation1Top,
+                                   Constraints.lightningAnimation2Top, Constraints.challengeLogoTextTop, Constraints.challengeCatTop,
+                                   Constraints.challengeMiceTop]) {
+            view.addSubview(subview)
+            subview.pinTop(to: view.safeAreaLayoutGuide.topAnchor, top)
+        }
+        
+        challengeLogo.pinCenterX(to: view)
+        lightning1.pinLeft(to: view, Constraints.lightning1Left)
+        lightning2.pinRight(to: view, Constraints.lightning2Right)
+        lightningAnimation1.pinLeft(to: view, Constraints.lightningAnimation1Left)
+        lightningAnimation2.pinRight(to: view, Constraints.lightningAnimation2Right)
+        challengeCat.pinLeft(to: view, Constraints.challengeCatLeft)
+        challengeMice.pinRight(to: view, Constraints.challengeMiceRight)
+    }
+    
+    private func configureCalendar() {
         view.addSubview(challengeCalendar)
+        view.addSubview(streakText)
+        
+        challengeCalendar.setWidth(Constraints.challengeCalendarWidth)
+        challengeCalendar.setHeight(Constraints.challengeCalendarHeight)
+        challengeCalendar.pinCenterX(to: view)
+        challengeCalendar.pinTop(to: challengeCat.bottomAnchor, Constraints.challengeCalendarTop)
+        streakText.pinBottom(to: challengeCalendar.topAnchor, 10)
+        streakText.pinRight(to: challengeCalendar.trailingAnchor, 10)
+        
+    }
+    
+    private func configureButtons() {
         view.addSubview(challengeCrownsButton)
         view.addSubview(challengeSudokuButton)
         
-        NSLayoutConstraint.activate([
-            challengeLogo.pinCenterX(to: view),
-            challengeLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.challengeLogoTextTop),
-            lightning1.pinTop(to: view.topAnchor, Constraints.lightning1Top),
-            lightning1.pinLeft(to: view, Constraints.lightning1Left),
-            lightning2.pinTop(to: view.topAnchor, Constraints.lightning2Top),
-            lightning2.pinRight(to: view, Constraints.lightning2Right),
-            lightningAnimation1.pinTop(to: view.topAnchor, Constraints.lightningAnimation1Top),
-            lightningAnimation1.pinLeft(to: view, Constraints.lightningAnimation1Left),
-            lightningAnimation2.pinTop(to: view.topAnchor, Constraints.lightningAnimation2Top),
-            lightningAnimation2.pinRight(to: view, Constraints.lightningAnimation2Right),
-            challengeCat.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.challengeCatTop),
-            challengeCat.pinLeft(to: view, Constraints.challengeCatLeft),
-            challengeMice.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.challengeMiceTop),
-            challengeMice.pinRight(to: view, Constraints.challengeMiceRight),
-            challengeCalendar.pinCenterX(to: view),
-            challengeCalendar.pinTop(to: challengeCat.bottomAnchor, Constraints.challengeCalendarTop),
-            challengeCrownsButton.pinCenterX(to: view),
-            challengeCrownsButton.pinTop(to: challengeCalendar.bottomAnchor, Constraints.challengeCrownsButtonTop),
-            challengeSudokuButton.pinCenterX(to: view),
-            challengeSudokuButton.pinTop(to: challengeCrownsButton.bottomAnchor, Constraints.challengeSudokuButtonTop)
-        ])
+        challengeCrownsButton.pinCenterX(to: view)
+        challengeCrownsButton.pinTop(to: challengeCalendar.bottomAnchor, Constraints.challengeCrownsButtonTop)
+        challengeSudokuButton.pinCenterX(to: view)
+        challengeSudokuButton.pinTop(to: challengeCrownsButton.bottomAnchor, Constraints.challengeSudokuButtonTop)
+        
+        challengeCrownsButton.addTarget(self, action: #selector(crownsButtonTapped), for: .touchUpInside)
+        challengeSudokuButton.addTarget(self, action: #selector(sudokuButtonTapped), for: .touchUpInside)
     }
     
     private func startTimer() {
@@ -124,5 +136,15 @@ final class ChallengeViewController: UIViewController {
         Timer.scheduledTimer(withTimeInterval: Double.random(in: 2...4), repeats: true) { _ in
             self.challengeCat.startBlinking()
         }
+    }
+    
+    @objc
+    private func crownsButtonTapped() {
+        interactor.crownsButtonTapped(ChallengeModel.RouteCrownsGame.Request())
+    }
+    
+    @objc
+    private func sudokuButtonTapped() {
+        interactor.sudokuButtonTapped(ChallengeModel.RouteSudokuGame.Request())
     }
 }

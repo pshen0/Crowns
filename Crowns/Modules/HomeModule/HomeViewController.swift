@@ -17,7 +17,7 @@ final class HomeViewController: UIViewController{
     private let learningButton: UIButton = CustomButton(button: UIImageView(image: Images.learningButton))
     private let homeLogoPicture = UIImageView(image: Images.homeLogoPicture)
     private let homeLogoText = CustomText(text: Text.homeLogo, fontSize: Constraints.homeLogoSize, textColor: Colors.white)
-    private let homeCalendar = UIImageView(image: Images.homeCalendar)
+    private let homeCalendar = CustomCalendar()
     private var homeButtons: Array<UIButton> = []
     private var selectorButtons: Array<UIButton> = []
     
@@ -51,12 +51,15 @@ final class HomeViewController: UIViewController{
         homeLogoPicture.pinCenterX(to: view)
         homeLogoPicture.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.homeLogoPictureTop)
         homeLogoText.pinCenterX(to: view)
+        homeLogoText.setWidth(Constraints.homeLogoTextWidth)
         homeLogoText.pinTop(to: homeLogoPicture.bottomAnchor, Constraints.homeLogoTextTop)
     }
     
     private func configureCalendar() {
         view.addSubview(homeCalendar)
         
+        homeCalendar.setWidth(Constraints.homeCalendarWidth)
+        homeCalendar.setHeight(Constraints.homeCalendarHeight)
         homeCalendar.pinCenterX(to: view)
         homeCalendar.pinTop(to: homeLogoText.bottomAnchor, Constraints.homeCalendarTop)
     }

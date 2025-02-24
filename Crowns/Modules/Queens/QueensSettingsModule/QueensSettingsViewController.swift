@@ -9,6 +9,8 @@ import UIKit
 
 final class QueensSettingsViewController: UIViewController {
     
+    private let interactor: QueensSettingsBusinessLogic
+    
     private let backButton: UIButton = CustomButton(button: UIImageView(image: Images.backButton),
                                                     tapped: UIImageView(image: Images.backButtonTap))
     private let startPlayButton: UIButton = CustomButton(button: UIImageView(image: Images.startPlayButton),
@@ -17,13 +19,12 @@ final class QueensSettingsViewController: UIViewController {
     private let timerSwitch: UISwitch = UISwitch()
     private let timerLabel: UILabel = CustomText(text: Text.timerLabel, fontSize: Constraints.settingsTextSize, textColor: Colors.white)
     private let timerPicker: TimePickerTextField = TimePickerTextField()
-    
     private let gameLogo: UILabel = CustomText(text: Text.queensGame, fontSize: Constraints.gameLogoSize, textColor: Colors.white)
-    private let choosingDifficultyText: UILabel = CustomText(text: Text.chooseFieldsSize, fontSize: Constraints.settingsTextSize, textColor: Colors.white)
+    
+    let choosingDifficultyText: UILabel = CustomText(text: Text.chooseFieldsSize, fontSize: Constraints.settingsTextSize, textColor: Colors.white)
+    let blocker = UIView()
     lazy var timerStackView:UIStackView = UIStackView()
     lazy var barButtonItem = UIBarButtonItem()
-    
-    private let interactor: QueensSettingsBusinessLogic
     
     init(interactor: QueensSettingsBusinessLogic) {
         self.interactor = interactor
@@ -100,17 +101,23 @@ final class QueensSettingsViewController: UIViewController {
         numberField.pinLeft(to: choosingDifficultyText.trailingAnchor, Constraints.numberFieldLeft)
         timerStackView.pinTop(to: choosingDifficultyText.bottomAnchor, Constraints.timerStackTop)
         timerPicker.pinTop(to: timerStackView.bottomAnchor, Constraints.timerPickerTop)
+        
+        /*let tapGesture = UITapGestureRecognizer(target: self, action: #selector(blockNumberField))
+        numberField.addGestureRecognizer(tapGesture)*/
     }
     
-    @objc private func backButtonTapped() {
+    @objc
+    private func backButtonTapped() {
         interactor.backButtonTapped(QueensSettingsModel.RouteBack.Request())
     }
     
-    @objc private func startButtonTapped() {
+    @objc
+    private func startButtonTapped() {
         interactor.startButtonTapped(QueensSettingsModel.RouteBack.Request())
     }
     
-    @objc private func changedTimerSwitch() {
+    @objc
+    private func changedTimerSwitch() {
         if timerSwitch.isOn {
             timerPicker.isHidden = false
         } else {
@@ -118,4 +125,11 @@ final class QueensSettingsViewController: UIViewController {
         }
     }
     
+    @objc
+    private func blockNumberField() {
+        /*blocker.backgroundColor = .clear
+        blocker.setWidth(Constraints.numberFieldWidth)
+        view.addSubview(blocker)
+        blocker.pinCenter(to: numberField)*/
+    }
 }

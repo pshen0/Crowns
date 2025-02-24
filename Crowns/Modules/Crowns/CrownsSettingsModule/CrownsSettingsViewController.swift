@@ -24,9 +24,11 @@ final class CrownsSettingsViewController: UIViewController{
     private let timerPicker: TimePickerTextField = TimePickerTextField()
     private let gameLogo: UILabel = CustomText(text: Text.crownsGame, fontSize: Constraints.gameLogoSize, textColor: Colors.white)
     private let choosingDifficultyText: UILabel = CustomText(text: Text.chooseDifficulty, fontSize: Constraints.settingsTextSize, textColor: Colors.white)
+    private let timerStack:UIStackView = UIStackView()
+    private let buttonStack:UIStackView = UIStackView()
     
-    lazy var timerStackView:UIStackView = UIStackView()
     lazy var barButtonItem = UIBarButtonItem()
+    var choosenButton: Int = 0
     
     init(interactor: CrownsSettingsBusinessLogic) {
         self.interactor = interactor
@@ -57,14 +59,16 @@ final class CrownsSettingsViewController: UIViewController{
     private func configureUI() {
         configureTimer()
         configureBackground()
+        configureButtons()
         configureCrowns()
     }
     
     private func configureTimer() {
-        timerStackView = UIStackView(arrangedSubviews: [timerLabel, timerSwitch])
-        timerStackView.axis = .horizontal
-        timerStackView.spacing = Constraints.timerStackSpacing
-        timerStackView.alignment = .center
+        timerStack.addArrangedSubview(timerLabel)
+        timerStack.addArrangedSubview(timerSwitch)
+        timerStack.axis = .horizontal
+        timerStack.spacing = Constraints.timerStackSpacing
+        timerStack.alignment = .center
         timerSwitch.onTintColor = Colors.yellow
     }
     
@@ -75,57 +79,47 @@ final class CrownsSettingsViewController: UIViewController{
         navigationItem.leftBarButtonItem = barButtonItem
         timerPicker.isHidden = true
         
-        view.addSubview(gameLogo)
-        view.addSubview(choosingDifficultyText)
-        view.addSubview(startPlayButton)
-        view.addSubview(timerStackView)
-        view.addSubview(timerPicker)
+        for subview in [gameLogo, choosingDifficultyText, startPlayButton, timerStack, timerPicker] {
+            view.addSubview(subview)
+            subview.pinCenterX(to: view)
+        }
         
-        gameLogo.pinCenterX(to: view)
         gameLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.gameLogoTop)
-        choosingDifficultyText.pinCenterX(to: view)
         choosingDifficultyText.pinTop(to: gameLogo.bottomAnchor, Constraints.choosingDifficultyTextTop)
-        startPlayButton.pinCenterX(to: view)
         startPlayButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constraints.startPlayButtonBottom)
-        timerStackView.pinCenterX(to: view)
-        timerPicker.pinCenterX(to: view)
         timerPicker.setWidth(Constraints.timerPickerWidth)
         
         startPlayButton.addTarget(self, action: #selector(startPlayButtonTapped), for: .touchUpInside)
         timerSwitch.addTarget(self, action: #selector(changedTimerSwitch), for: .valueChanged)
     }
     
+    private func configureButtons() {
+        buttonStack.axis = .vertical
+        buttonStack.spacing = Constraints.settingsButtonStackSpacing
+        buttonStack.alignment = .center
+        
+        for ((button, image), tag) in zip(zip([levelEasyButton, levelMediumButton, levelHardButton, levelRandomButton],
+                                              [Images.levelEasyButton, Images.levelMediumButton, Images.levelHardButton, Images.levelRandomButton]),
+                                          [Numbers.levelEasyTag, Numbers.levelMediumTag, Numbers.levelHardTag, Numbers.levelRandomTag]) {
+            button.setImage(image, for: .normal)
+            button.tag = tag
+            buttonStack.addArrangedSubview(button)
+            button.pinCenterX(to: buttonStack)
+        }
+        
+        view.addSubview(buttonStack)
+        
+        levelEasyButton.addTarget(self, action: #selector(levelButtonTapped(_:)), for: .touchUpInside)
+        levelMediumButton.addTarget(self, action: #selector(levelButtonTapped(_:)), for: .touchUpInside)
+        levelHardButton.addTarget(self, action: #selector(levelButtonTapped(_:)), for: .touchUpInside)
+        levelRandomButton.addTarget(self, action: #selector(levelButtonTapped(_:)), for: .touchUpInside)
+    }
+    
     private func configureCrowns() {
-        levelEasyButton.setImage(Images.levelEasyButton, for: .normal)
-        levelMediumButton.setImage(Images.levelMediumButton, for: .normal)
-        levelHardButton.setImage(Images.levelHardButton, for: .normal)
-        levelRandomButton.setImage(Images.levelRandomButton, for: .normal)
-        levelEasyButton.tag = Numbers.levelEasyTag
-        levelMediumButton.tag = Numbers.levelMediumTag
-        levelHardButton.tag = Numbers.levelHardTag
-        levelRandomButton.tag = Numbers.levelRandomTag
-        
-        view.addSubview(levelEasyButton)
-        view.addSubview(levelMediumButton)
-        view.addSubview(levelHardButton)
-        view.addSubview(levelRandomButton)
-        
-        levelEasyButton.pinCenterX(to: view)
-        levelMediumButton.pinCenterX(to: view)
-        levelHardButton.pinCenterX(to: view)
-        levelRandomButton.pinCenterX(to: view)
-        levelEasyButton.pinTop(to: choosingDifficultyText.bottomAnchor, Constraints.levelEasyButtonTop)
-        levelMediumButton.pinTop(to: levelEasyButton.bottomAnchor, Constraints.levelButtonTop)
-        levelHardButton.pinTop(to: levelMediumButton.bottomAnchor, Constraints.levelButtonTop)
-        levelRandomButton.pinTop(to: levelHardButton.bottomAnchor, Constraints.levelButtonTop)
-        timerStackView.pinTop(to: levelRandomButton.bottomAnchor, Constraints.timerStackTop)
-        timerPicker.pinTop(to: timerStackView.bottomAnchor, Constraints.timerPickerTop)
-        
-        levelEasyButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
-        levelMediumButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
-        levelHardButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
-        levelRandomButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
-        
+        buttonStack.pinTop(to: choosingDifficultyText.bottomAnchor, Constraints.settingsButtonStackTop)
+        buttonStack.pinCenterX(to: view)
+        timerStack.pinTop(to: buttonStack.bottomAnchor, Constraints.timerStackTop)
+        timerPicker.pinTop(to: timerStack.bottomAnchor, Constraints.timerPickerTop)
     }
     
     @objc private func backButtonTapped() {
@@ -137,19 +131,12 @@ final class CrownsSettingsViewController: UIViewController{
     }
     
     @objc private func levelButtonTapped(_ sender: UIButton) {
-        levelEasyButton.setImage(Images.levelEasyButton, for: .normal)
-        levelMediumButton.setImage(Images.levelMediumButton, for: .normal)
-        levelHardButton.setImage(Images.levelHardButton, for: .normal)
-        levelRandomButton.setImage(Images.levelRandomButton, for: .normal)
-        if sender.tag == Numbers.levelEasyTag {
-            levelEasyButton.setImage(Images.levelEasyButtonTap, for: .normal)
-        } else if sender.tag == Numbers.levelMediumTag {
-            levelMediumButton.setImage(Images.levelMediumButtonTap, for: .normal)
-        } else if sender.tag == Numbers.levelHardTag {
-            levelHardButton.setImage(Images.levelHardButtonTap, for: .normal)
-        } else {
-            levelRandomButton.setImage(Images.levelRandomButtonTap, for: .normal)
-        }
+        let tappedImages = [Images.levelEasyButtonTap, Images.levelMediumButtonTap, Images.levelHardButtonTap, Images.levelRandomButtonTap]
+        let images = [Images.levelEasyButton, Images.levelMediumButton, Images.levelHardButton, Images.levelRandomButton]
+        let buttons = [levelEasyButton, levelMediumButton, levelHardButton, levelRandomButton]
+        buttons[choosenButton].setImage(images[choosenButton], for: .normal)
+        buttons[sender.tag].setImage(tappedImages[sender.tag], for: .normal)
+        choosenButton = sender.tag
     }
     
     @objc private func changedTimerSwitch() {
