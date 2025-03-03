@@ -7,6 +7,19 @@
 
 import UIKit
 
-enum Profile {
+enum ProfileModel {
+    enum RouteSettings {
+        struct Request { }
+        struct Response { }
+    }
     
+    enum RouteStatistics {
+        struct Request { }
+        struct Response { }
+    }
+    
+    enum RouteDeveloper {
+        struct Request { }
+        struct Response { }
+    }
 }

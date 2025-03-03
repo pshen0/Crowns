@@ -97,6 +97,22 @@
 		0F6AFB192D6C2236007B8454 /* settings3.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 0F6AFB182D6C2236007B8454 /* settings3.PNG */; };
 		0F6AFB1B2D6C2239007B8454 /* settings4.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 0F6AFB1A2D6C2239007B8454 /* settings4.PNG */; };
 		0F6AFB1D2D6C223D007B8454 /* settings5.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 0F6AFB1C2D6C223D007B8454 /* settings5.PNG */; };
+		0F7465372D76008A00959164 /* NameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7465362D76008A00959164 /* NameTextField.swift */; };
+		0F74653C2D7658B800959164 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F74653B2D7658B800959164 /* SettingsViewController.swift */; };
+		0F74653E2D7658D500959164 /* SettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F74653D2D7658D500959164 /* SettingsInteractor.swift */; };
+		0F7465402D7658E200959164 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F74653F2D7658E200959164 /* SettingsPresenter.swift */; };
+		0F7465422D7658F500959164 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7465412D7658F500959164 /* SettingsModel.swift */; };
+		0F7465442D76591400959164 /* SettingsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7465432D76591400959164 /* SettingsBuilder.swift */; };
+		0F7465462D765BCB00959164 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7465452D765BCB00959164 /* StatisticsViewController.swift */; };
+		0F7465482D765BD700959164 /* StatisticsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7465472D765BD700959164 /* StatisticsInteractor.swift */; };
+		0F74654A2D765BE200959164 /* StatisticsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7465492D765BE200959164 /* StatisticsPresenter.swift */; };
+		0F74654C2D765BED00959164 /* StatisticsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F74654B2D765BED00959164 /* StatisticsModel.swift */; };
+		0F74654E2D765BF600959164 /* StatisticsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F74654D2D765BF600959164 /* StatisticsBuilder.swift */; };
+		0F7465502D765CF300959164 /* DeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F74654F2D765CF300959164 /* DeveloperViewController.swift */; };
+		0F7465522D765D0200959164 /* DeveloperInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7465512D765D0200959164 /* DeveloperInteractor.swift */; };
+		0F7465542D765D1000959164 /* DeveloperPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7465532D765D1000959164 /* DeveloperPresenter.swift */; };
+		0F7465562D765D1900959164 /* DeveloperModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7465552D765D1900959164 /* DeveloperModel.swift */; };
+		0F7465582D765D2300959164 /* DeveloperBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7465572D765D2300959164 /* DeveloperBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -210,6 +226,22 @@
 		0F6AFB182D6C2236007B8454 /* settings3.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings3.PNG; sourceTree = "<group>"; };
 		0F6AFB1A2D6C2239007B8454 /* settings4.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings4.PNG; sourceTree = "<group>"; };
 		0F6AFB1C2D6C223D007B8454 /* settings5.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings5.PNG; sourceTree = "<group>"; };
+		0F7465362D76008A00959164 /* NameTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameTextField.swift; sourceTree = "<group>"; };
+		0F74653B2D7658B800959164 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		0F74653D2D7658D500959164 /* SettingsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInteractor.swift; sourceTree = "<group>"; };
+		0F74653F2D7658E200959164 /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
+		0F7465412D7658F500959164 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
+		0F7465432D76591400959164 /* SettingsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBuilder.swift; sourceTree = "<group>"; };
+		0F7465452D765BCB00959164 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
+		0F7465472D765BD700959164 /* StatisticsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsInteractor.swift; sourceTree = "<group>"; };
+		0F7465492D765BE200959164 /* StatisticsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsPresenter.swift; sourceTree = "<group>"; };
+		0F74654B2D765BED00959164 /* StatisticsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsModel.swift; sourceTree = "<group>"; };
+		0F74654D2D765BF600959164 /* StatisticsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsBuilder.swift; sourceTree = "<group>"; };
+		0F74654F2D765CF300959164 /* DeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperViewController.swift; sourceTree = "<group>"; };
+		0F7465512D765D0200959164 /* DeveloperInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInteractor.swift; sourceTree = "<group>"; };
+		0F7465532D765D1000959164 /* DeveloperPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperPresenter.swift; sourceTree = "<group>"; };
+		0F7465552D765D1900959164 /* DeveloperModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperModel.swift; sourceTree = "<group>"; };
+		0F7465572D765D2300959164 /* DeveloperBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +334,9 @@
 				0F6AFAD52D677143007B8454 /* Crowns */,
 				0F6AFAD62D677169007B8454 /* Sudoku */,
 				0F6AFAD72D67718D007B8454 /* Queens */,
+				0F7465382D76581900959164 /* SettingsModule */,
+				0F7465392D76584200959164 /* StatisticsModule */,
+				0F74653A2D76586E00959164 /* DeveloperModule */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -525,6 +560,7 @@
 				0F6AFB022D67F8DC007B8454 /* TimePickerTextField.swift */,
 				0F5F8CBD2D41A865006A8164 /* GameSelector.swift */,
 				0F6AFB072D6C0C5C007B8454 /* CustomCalendar.swift */,
+				0F7465362D76008A00959164 /* NameTextField.swift */,
 			);
 			path = CustomObjects;
 			sourceTree = "<group>";
@@ -543,6 +579,42 @@
 				0F6AFB1C2D6C223D007B8454 /* settings5.PNG */,
 			);
 			path = AppDiscriptionImages;
+			sourceTree = "<group>";
+		};
+		0F7465382D76581900959164 /* SettingsModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F74653B2D7658B800959164 /* SettingsViewController.swift */,
+				0F74653D2D7658D500959164 /* SettingsInteractor.swift */,
+				0F74653F2D7658E200959164 /* SettingsPresenter.swift */,
+				0F7465412D7658F500959164 /* SettingsModel.swift */,
+				0F7465432D76591400959164 /* SettingsBuilder.swift */,
+			);
+			path = SettingsModule;
+			sourceTree = "<group>";
+		};
+		0F7465392D76584200959164 /* StatisticsModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F7465452D765BCB00959164 /* StatisticsViewController.swift */,
+				0F7465472D765BD700959164 /* StatisticsInteractor.swift */,
+				0F7465492D765BE200959164 /* StatisticsPresenter.swift */,
+				0F74654B2D765BED00959164 /* StatisticsModel.swift */,
+				0F74654D2D765BF600959164 /* StatisticsBuilder.swift */,
+			);
+			path = StatisticsModule;
+			sourceTree = "<group>";
+		};
+		0F74653A2D76586E00959164 /* DeveloperModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F74654F2D765CF300959164 /* DeveloperViewController.swift */,
+				0F7465512D765D0200959164 /* DeveloperInteractor.swift */,
+				0F7465532D765D1000959164 /* DeveloperPresenter.swift */,
+				0F7465552D765D1900959164 /* DeveloperModel.swift */,
+				0F7465572D765D2300959164 /* DeveloperBuilder.swift */,
+			);
+			path = DeveloperModule;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -697,12 +769,18 @@
 				0F1A78E02D4842AD00DAA4F0 /* ChallengeInteractor.swift in Sources */,
 				0F6AFAF82D677D51007B8454 /* CrownsSettingsModel.swift in Sources */,
 				0F5F18662D511D0900ED204B /* SudokuLearningInteractor.swift in Sources */,
+				0F74654A2D765BE200959164 /* StatisticsPresenter.swift in Sources */,
 				0F5F8CB72D418883006A8164 /* UIView+Pin.swift in Sources */,
 				0F6AFB082D6C0C5C007B8454 /* CustomCalendar.swift in Sources */,
 				0F2C54432D50512C0051AD13 /* CrownsPlayPresenter.swift in Sources */,
+				0F74653C2D7658B800959164 /* SettingsViewController.swift in Sources */,
 				0F5F18642D511CEE00ED204B /* CrownsLearningBuilder.swift in Sources */,
 				0F2C544F2D5051A10051AD13 /* SudokuPlayBuilder.swift in Sources */,
+				0F7465542D765D1000959164 /* DeveloperPresenter.swift in Sources */,
 				0F6AFAF62D677D49007B8454 /* CrownsSettingsBuilder.swift in Sources */,
+				0F7465562D765D1900959164 /* DeveloperModel.swift in Sources */,
+				0F7465582D765D2300959164 /* DeveloperBuilder.swift in Sources */,
+				0F7465422D7658F500959164 /* SettingsModel.swift in Sources */,
 				0F5F18742D511F8900ED204B /* QueensLearningBuilder.swift in Sources */,
 				0F6AFAED2D677A39007B8454 /* SudokuSettingsModel.swift in Sources */,
 				0F2C54412D50511D0051AD13 /* CrownsPlayInteractor.swift in Sources */,
@@ -713,12 +791,15 @@
 				0F6AFADE2D67737E007B8454 /* QueensSettingsPresenter.swift in Sources */,
 				0F2C54552D5052030051AD13 /* QueensPlayModel.swift in Sources */,
 				0F2C54272D4EF4600051AD13 /* SudokuLearningViewController.swift in Sources */,
+				0F7465482D765BD700959164 /* StatisticsInteractor.swift in Sources */,
 				0F2C54452D50513A0051AD13 /* CrownsPlayModel.swift in Sources */,
 				0F6AFAFD2D67F848007B8454 /* CustomText.swift in Sources */,
 				0F5F186E2D511F6000ED204B /* QueensLearningInteractor.swift in Sources */,
 				0F5F18622D511CDD00ED204B /* CrownsLearningModel.swift in Sources */,
 				0F2C54512D5051E10051AD13 /* QueensPlayInteractor.swift in Sources */,
+				0F74653E2D7658D500959164 /* SettingsInteractor.swift in Sources */,
 				0F5F8CB42D417C9C006A8164 /* HomePresenter.swift in Sources */,
+				0F74654E2D765BF600959164 /* StatisticsBuilder.swift in Sources */,
 				0F5F18702D511F7200ED204B /* QueensLearningPresenter.swift in Sources */,
 				0F2C54232D4EEADC0051AD13 /* CrownsLearningViewController.swift in Sources */,
 				0F1A78F12D4857AA00DAA4F0 /* ProfileModel.swift in Sources */,
@@ -736,11 +817,14 @@
 				0F1A78ED2D48577F00DAA4F0 /* ProfileInteractor.swift in Sources */,
 				0F1A78EB2D48577200DAA4F0 /* ProfileViewController.swift in Sources */,
 				0F2C54472D50514D0051AD13 /* CrownsPlayBuilder.swift in Sources */,
+				0F7465372D76008A00959164 /* NameTextField.swift in Sources */,
 				0F2C54492D5051680051AD13 /* SudokuPlayInteractor.swift in Sources */,
 				0F5F186A2D511F2000ED204B /* SudokuLearningModel.swift in Sources */,
 				0F6AFAF42D677D3F007B8454 /* CrownsSettingsPresenter.swift in Sources */,
+				0F7465462D765BCB00959164 /* StatisticsViewController.swift in Sources */,
 				0F6AFAE52D6779F1007B8454 /* SudokuSettingsViewController.swift in Sources */,
 				0F5F186C2D511F3B00ED204B /* SudokuLearningBuilder.swift in Sources */,
+				0F7465522D765D0200959164 /* DeveloperInteractor.swift in Sources */,
 				0F1A78E42D4842CD00DAA4F0 /* ChallengeModel.swift in Sources */,
 				0F1A78E62D4842E500DAA4F0 /* ChallengeBuilder.swift in Sources */,
 				0F2C544D2D50518E0051AD13 /* SudokuPlayModel.swift in Sources */,
@@ -751,10 +835,12 @@
 				0F5F8C842D4177E2006A8164 /* HomeViewController.swift in Sources */,
 				0F6AFAE92D677A1A007B8454 /* SudokuSettingsPresenter.swift in Sources */,
 				0F1A78E22D4842BD00DAA4F0 /* ChallengePresenter.swift in Sources */,
+				0F7465402D7658E200959164 /* SettingsPresenter.swift in Sources */,
 				0F6AFAE22D677390007B8454 /* QueensSettingsBuilder.swift in Sources */,
 				0F5F8CB22D417C8C006A8164 /* HomeInteractor.swift in Sources */,
 				0F5F8C802D4177E2006A8164 /* AppDelegate.swift in Sources */,
 				0F1A78F32D4857BF00DAA4F0 /* ProfileBuilder.swift in Sources */,
+				0F74654C2D765BED00959164 /* StatisticsModel.swift in Sources */,
 				0F5F8C822D4177E2006A8164 /* SceneDelegate.swift in Sources */,
 				0F6AFAFF2D67F869007B8454 /* BlinkingCat.swift in Sources */,
 				0F2C54532D5051F00051AD13 /* QueensPlayPresenter.swift in Sources */,
@@ -763,6 +849,8 @@
 				0F6AFAFB2D67F817007B8454 /* CustomButton.swift in Sources */,
 				0F2C54572D5052120051AD13 /* QueensPlayBuilder.swift in Sources */,
 				0F2C54292D4EF4710051AD13 /* QueensLearningViewController.swift in Sources */,
+				0F7465442D76591400959164 /* SettingsBuilder.swift in Sources */,
+				0F7465502D765CF300959164 /* DeveloperViewController.swift in Sources */,
 				0F6AFB032D67F8DC007B8454 /* TimePickerTextField.swift in Sources */,
 				0F1A78DE2D48425300DAA4F0 /* ChallengeViewController.swift in Sources */,
 			);

@@ -43,7 +43,14 @@ final class CustomNumberPicker: UITextField, UIPickerViewDelegate, UIPickerViewD
         pickerView.backgroundColor = Colors.lightGray
         pickerView.delegate = self
         pickerView.dataSource = self
+        
         toolbar.sizeToFit()
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let screenWidth = windowScene.windows.first?.frame.width {
+                toolbar.frame.size.width = screenWidth
+                self.inputAccessoryView?.frame.size.width = screenWidth
+            }
+        }
         customButton.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
         doneButton = UIBarButtonItem(customView: customButton)
         toolbar.setItems([flexSpace, doneButton], animated: true)

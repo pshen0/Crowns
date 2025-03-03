@@ -11,14 +11,27 @@ final class GameSelector: UIViewController {
     let chooseCrownsButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseCrownsButton))
     let chooseSudokuButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseSudokuButton))
     let chooseQueensButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseQueensButton))
-    let chooseGameText = CustomText(text: Text.chooseGame, fontSize: Constraints.selectorTextSize, textColor: Colors.white)
-    let chooseLearningText = CustomText(text: Text.chooseLearning, fontSize: Constraints.selectorTextSize, textColor: Colors.white)
     private let dismissView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black.withAlphaComponent(Numbers.gameSelectorOverlay)
         return view
     }()
     private let buttonStack: UIView = UIView()
+    private var selectorText: CustomText = CustomText(text: "", fontSize: Constraints.selectorTextSize, textColor: Colors.white)
+    
+    init(logo: CustomText) {
+        self.selectorText = logo
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError(Text.initErrorCoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,16 +63,10 @@ final class GameSelector: UIViewController {
     }
     
     private func configureGameSelector() {
-        chooseGameText.isHidden = true
-        chooseLearningText.isHidden = true
+        buttonStack.addSubview(selectorText)
         
-        buttonStack.addSubview(chooseGameText)
-        buttonStack.addSubview(chooseLearningText)
-        
-        chooseGameText.pinCenterX(to: buttonStack)
-        chooseGameText.pinTop(to: buttonStack.topAnchor, Constraints.chooseTextTop)
-        chooseLearningText.pinCenterX(to: buttonStack)
-        chooseLearningText.pinTop(to: buttonStack.topAnchor, Constraints.chooseTextTop)
+        selectorText.pinCenterX(to: buttonStack)
+        selectorText.pinTop(to: buttonStack.topAnchor, Constraints.chooseTextTop)
     }
     
     private func configureButtons() {
@@ -68,14 +75,12 @@ final class GameSelector: UIViewController {
             button.pinCenterX(to: buttonStack)
         }
         
-        chooseCrownsButton.pinTop(to: chooseGameText.bottomAnchor, Constraints.chooseCrownsButtonTop)
+        chooseCrownsButton.pinTop(to: selectorText.bottomAnchor, Constraints.chooseCrownsButtonTop)
         chooseSudokuButton.pinTop(to: chooseCrownsButton.bottomAnchor, Constraints.chooseSudokuButtonTop)
         chooseQueensButton.pinTop(to: chooseSudokuButton.bottomAnchor, Constraints.chooseQueensButtonTop)
     }
     
     @objc private func dismissSelf() {
-        self.chooseLearningText.isHidden = true
-        self.chooseGameText.isHidden = true
         dismiss(animated: false)
     }
 }

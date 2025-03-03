@@ -11,7 +11,8 @@ final class HomeViewController: UIViewController{
     
     private let interactor: HomeBusinessLogic
     private let overlayView = UIView()
-    private let gameSelectorViewController = GameSelector()
+    private let chooseGameText = CustomText(text: Text.chooseGame, fontSize: Constraints.selectorTextSize, textColor: Colors.white)
+    private let chooseLearningText = CustomText(text: Text.chooseLearning, fontSize: Constraints.selectorTextSize, textColor: Colors.white)
     private let newGameButton: UIButton = CustomButton(button: UIImageView(image: Images.newGameButton))
     private let continueButton: UIButton = CustomButton(button: UIImageView(image: Images.continueButton))
     private let learningButton: UIButton = CustomButton(button: UIImageView(image: Images.learningButton))
@@ -20,9 +21,13 @@ final class HomeViewController: UIViewController{
     private let homeCalendar = CustomCalendar()
     private var homeButtons: Array<UIButton> = []
     private var selectorButtons: Array<UIButton> = []
+    private var gameSelectorViewController = GameSelector()
+    private var learningSelectorViewController = GameSelector()
     
     init(interactor: HomeBusinessLogic) {
         self.interactor = interactor
+        self.gameSelectorViewController = GameSelector(logo: chooseGameText)
+        self.learningSelectorViewController = GameSelector(logo: chooseLearningText)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -38,6 +43,7 @@ final class HomeViewController: UIViewController{
     
     private func configureUI() {
         gameSelectorViewController.modalPresentationStyle = .overFullScreen
+        learningSelectorViewController.modalPresentationStyle = .overFullScreen
         configureBackground()
         configureCalendar()
         configureButtons()
@@ -66,9 +72,7 @@ final class HomeViewController: UIViewController{
     
     private func configureButtons() {
         homeButtons = [newGameButton, continueButton, learningButton]
-        selectorButtons = [gameSelectorViewController.chooseCrownsButton, 
-                           gameSelectorViewController.chooseSudokuButton,
-                           gameSelectorViewController.chooseQueensButton]
+        
         for button in homeButtons {
             view.addSubview(button)
             button.pinCenterX(to: view)
@@ -80,31 +84,29 @@ final class HomeViewController: UIViewController{
         
         newGameButton.addTarget(self, action: #selector(gameSelectorTapped), for: .touchUpInside)
         learningButton.addTarget(self, action: #selector(learningSelectorTapped), for: .touchUpInside)
+        
+        gameSelectorViewController.chooseCrownsButton.addTarget(self, action: #selector(playCrownsTapped), for: .touchUpInside)
+        gameSelectorViewController.chooseSudokuButton.addTarget(self, action: #selector(playSudokuTapped), for: .touchUpInside)
+        gameSelectorViewController.chooseQueensButton.addTarget(self, action: #selector(playQueensTapped), for: .touchUpInside)
+        learningSelectorViewController.chooseCrownsButton.addTarget(self, action: #selector(learnCrownsTapped), for: .touchUpInside)
+        learningSelectorViewController.chooseSudokuButton.addTarget(self, action: #selector(learnSudokuTapped), for: .touchUpInside)
+        learningSelectorViewController.chooseQueensButton.addTarget(self, action: #selector(learnQueensTapped), for: .touchUpInside)
     }
     
     func hideGameSelector() {
         gameSelectorViewController.dismiss(animated: false)
-        for button in selectorButtons {
-            button.removeTarget(nil, action: nil, for: .allEvents)
-        }
-        gameSelectorViewController.chooseGameText.isHidden = true
-        gameSelectorViewController.chooseLearningText.isHidden = true
+    }
+    
+    func hideLearningSelector() {
+        learningSelectorViewController.dismiss(animated: false)
     }
     
     @objc private func gameSelectorTapped() {
         self.present(gameSelectorViewController, animated: false)
-        gameSelectorViewController.chooseGameText.isHidden = false
-        gameSelectorViewController.chooseCrownsButton.addTarget(self, action: #selector(self.playCrownsTapped), for: .touchUpInside)
-        gameSelectorViewController.chooseSudokuButton.addTarget(self, action: #selector(self.playSudokuTapped), for: .touchUpInside)
-        gameSelectorViewController.chooseQueensButton.addTarget(self, action: #selector(self.playQueensTapped), for: .touchUpInside)
     }
     
     @objc private func learningSelectorTapped() {
-        self.present(gameSelectorViewController, animated: false)
-        gameSelectorViewController.chooseLearningText.isHidden = false
-        gameSelectorViewController.chooseCrownsButton.addTarget(self, action: #selector(self.learnCrownsTapped), for: .touchUpInside)
-        gameSelectorViewController.chooseSudokuButton.addTarget(self, action: #selector(self.learnSudokuTapped), for: .touchUpInside)
-        gameSelectorViewController.chooseQueensButton.addTarget(self, action: #selector(self.learnQueensTapped), for: .touchUpInside)
+        self.present(learningSelectorViewController, animated: false)
     }
     
     @objc private func playCrownsTapped() {

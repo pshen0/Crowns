@@ -34,17 +34,17 @@ final class HomePresenter: HomePresentationLogic {
     }
     
     func routeToCrownsLearning(_ response: HomeModel.RouteToCrownsLearning.Response) {
-        view?.hideGameSelector()
+        view?.hideLearningSelector()
         view?.navigationController?.pushViewController(CrownsLearningBuilder.build(), animated: false)
     }
     
     func routeToSudokuLearning(_ response: HomeModel.RouteToSudokuLearning.Response) {
-        view?.hideGameSelector()
+        view?.hideLearningSelector()
         view?.navigationController?.pushViewController(SudokuLearningBuilder.build(), animated: false)
     }
     
     func routeToQueensLearning(_ response: HomeModel.RouteToQueensLearning.Response) {
-        view?.hideGameSelector()
+        view?.hideLearningSelector()
         view?.navigationController?.pushViewController(QueensLearningBuilder.build(), animated: false)
     }
 }

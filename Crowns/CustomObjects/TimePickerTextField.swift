@@ -29,7 +29,7 @@ final class TimePickerTextField: UITextField, UIPickerViewDelegate, UIPickerView
         super.init(coder: coder)
         configureTextField()
     }
-    
+
     private func configureTextField() {
         self.backgroundColor = Colors.lightGray
         self.textAlignment = .center
@@ -46,6 +46,12 @@ final class TimePickerTextField: UITextField, UIPickerViewDelegate, UIPickerView
         timePicker.delegate = self
         timePicker.dataSource = self
         toolbar.sizeToFit()
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let screenWidth = windowScene.windows.first?.frame.width {
+                toolbar.frame.size.width = screenWidth
+                self.inputAccessoryView?.frame.size.width = screenWidth
+            }
+        }
         toolbar.setItems([flexSpace, doneButton], animated: true)
         toolbar.barTintColor = Colors.lightGray
         self.inputAccessoryView = toolbar

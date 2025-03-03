@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 enum ProfileBuilder {
     static func build() -> ProfileViewController {
         let presenter = ProfilePresenter()

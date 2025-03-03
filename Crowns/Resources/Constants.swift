@@ -39,6 +39,12 @@ enum Images {
     static let doneButton: UIImage? = UIImage(named: "doneButton")
     static let doneButtonTap: UIImage? = UIImage(named: "doneButtonTap")
     
+    // ProfileView
+    static let startAvatarPicture: UIImage? = UIImage(named: "startAvatar")
+    static let settingsButton: UIImage? = UIImage(named: "settingsButton")
+    static let statisticsButton: UIImage? = UIImage(named: "statisticsButton")
+    static let developerButton: UIImage? = UIImage(named: "developerButton")
+    
     //ChallengeView
     static let lightning1: UIImage? = UIImage(named: "lightning1")
     static let lightning2: UIImage? = UIImage(named: "lightning2")
@@ -83,6 +89,9 @@ enum Numbers {
     static let lightningAnimationDuration: Double = 8.0
     static let lightningAppearanceDuration: Double = 0.5
     
+    // ProfileView
+    static let nameMaxLength: Int = 12
+    
     // MainTabBar
     static let tabBarSelectedIndex: Int = 1
     
@@ -112,6 +121,7 @@ enum Numbers {
     static let levelRandomTag: Int = 3
     static let queensSizeMin: Int = 4
     static let queensSizeMax: Int = 12
+    
 }
 
 enum Text {
@@ -130,6 +140,11 @@ enum Text {
     
     // HomeView
     static let homeLogo: String = "CROWNS"
+    
+    // ProfileView
+    static let profileLogo: String = "Profile"
+    static let changeAvatarButtonText: String = "Choose photo"
+    static let userNamePlaceholder: String = "User name"
     
     // GameSellector
     static let chooseGame: String = "Choose game:"
@@ -170,6 +185,19 @@ enum Constraints {
     static let chooseQueensButtonTop: CGFloat = 15
     static let chooseTextTop: CGFloat = 30
     static let selectorTextSize: CGFloat = 25
+    
+    // ProfileView
+    static let profileLogoSize: CGFloat = 35
+    static let profileLogoTextTop: CGFloat = 5
+    static let avatarImageFieldTop: CGFloat = 20
+    static let imageViewSize: CGFloat = 100
+    static let imageViewRadius: CGFloat = 50
+    static let nameTextFieldTop: CGFloat = 10
+    static let nameTextFieldWidth: CGFloat = 200
+    static let changeAvatarButtonTop: CGFloat = 10
+    static let changeAvatarButtonTextSize: CGFloat = 16
+    static let profileButtonStackSpacing: CGFloat = 15
+    static let profileButtonStackTop: CGFloat = 100
     
     // ChallengeView
     static let challengeLogoTextTop: CGFloat = 5
