@@ -48,6 +48,7 @@ enum Images {
     //ChallengeView
     static let lightning1: UIImage? = UIImage(named: "lightning1")
     static let lightning2: UIImage? = UIImage(named: "lightning2")
+    static let clouds: UIImage? = UIImage(named: "clouds")
     static let challengeMice: UIImage? = UIImage(named: "challengeMice")
     static let challengeBlinkingCat1: UIImage? = UIImage(named: "challengeBlinkingCat1")
     static let challengeBlinkingCat2: UIImage? = UIImage(named: "challengeBlinkingCat2")
@@ -172,9 +173,8 @@ enum Constraints {
     static let homeCalendarTop: CGFloat = 45
     static let homeCalendarWidth: CGFloat = 350
     static let homeCalendarHeight: CGFloat = 250
-    static let newGameButtonTop: CGFloat = 45
-    static let continueButtonTop: CGFloat = 15
-    static let learningButtonTop: CGFloat = 15
+    static let homeButtonStackTop: CGFloat = 45
+    static let homeButtonStackSpacing: CGFloat = 15
     static let tabBarItemIndentation: CGFloat = 10
     
     // GameSellector
@@ -200,21 +200,19 @@ enum Constraints {
     static let profileButtonStackTop: CGFloat = 100
     
     // ChallengeView
-    static let challengeLogoTextTop: CGFloat = 5
+    static let challengeLogoTextTop: CGFloat = 45
     static let challengeLogoSize: CGFloat = 35
-    static let lightning1Top: CGFloat = -100
-    static let lightning2Top: CGFloat = -110
     static let lightning1Left: CGFloat = -50
     static let lightning2Right: CGFloat = -20
-    static let lightningAnimation1Top: CGFloat = -70
-    static let lightningAnimation2Top: CGFloat = -80
+    static let lightningAnimation1Top: CGFloat = -110
+    static let lightningAnimation2Top: CGFloat = -120
     static let lightningAnimation1Left: CGFloat = 210
     static let lightningAnimation2Right: CGFloat = 210
-    static let challengeCatTop: CGFloat = 130
+    static let challengeCatTop: CGFloat = 150
     static let challengeCatLeft: CGFloat = 10
-    static let challengeMiceTop: CGFloat = 160
+    static let challengeMiceTop: CGFloat = 180
     static let challengeMiceRight: CGFloat = 20
-    static let challengeCalendarTop: CGFloat = 75
+    static let challengeCalendarTop: CGFloat = 55
     static let challengeCrownsButtonTop: CGFloat = 45
     static let challengeSudokuButtonTop: CGFloat = 15
     static let challengeCalendarWidth: CGFloat = 350

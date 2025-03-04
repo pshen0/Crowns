@@ -13,6 +13,7 @@ final class ChallengeViewController: UIViewController {
     private let challengeLogo = CustomText(text: Text.challengeLogo, fontSize: Constraints.challengeLogoSize, textColor: Colors.white)
     private let lightning1: UIImageView = UIImageView(image: Images.lightning1)
     private let lightning2: UIImageView = UIImageView(image: Images.lightning2)
+    private let clouds: UIImageView = UIImageView(image: Images.clouds)
     private let lightningAnimation1: UIImageView = UIImageView(image: Images.lightning1)
     private let lightningAnimation2: UIImageView = UIImageView(image: Images.lightning2)
     private let challengeCat: BlinkingCatView = BlinkingCatView(images: Images.blinkingCatArray, duration: Numbers.blinkingAnimationDuration, repeatCount: Numbers.blinkingRepeat)
@@ -60,14 +61,12 @@ final class ChallengeViewController: UIViewController {
     
     private func configureBackground() {
         view.backgroundColor = Colors.darkGray
-        lightning1.alpha = Numbers.lightningBackVisible
-        lightning2.alpha = Numbers.lightningBackVisible
         lightningAnimation1.alpha = Numbers.lightningAnimationUnvisible
         lightningAnimation2.alpha = Numbers.lightningAnimationUnvisible
         
         
-        for (subview, top) in zip([lightning1, lightning2, lightningAnimation1, lightningAnimation2, challengeLogo, challengeCat, challengeMice],
-                                  [Constraints.lightning1Top, Constraints.lightning2Top, Constraints.lightningAnimation1Top,
+        for (subview, top) in zip([clouds, lightningAnimation1, lightningAnimation2, challengeLogo, challengeCat, challengeMice],
+                                  [-140, Constraints.lightningAnimation1Top,
                                    Constraints.lightningAnimation2Top, Constraints.challengeLogoTextTop, Constraints.challengeCatTop,
                                    Constraints.challengeMiceTop]) {
             view.addSubview(subview)
@@ -75,12 +74,11 @@ final class ChallengeViewController: UIViewController {
         }
         
         challengeLogo.pinCenterX(to: view)
-        lightning1.pinLeft(to: view, Constraints.lightning1Left)
-        lightning2.pinRight(to: view, Constraints.lightning2Right)
         lightningAnimation1.pinLeft(to: view, Constraints.lightningAnimation1Left)
         lightningAnimation2.pinRight(to: view, Constraints.lightningAnimation2Right)
         challengeCat.pinLeft(to: view, Constraints.challengeCatLeft)
         challengeMice.pinRight(to: view, Constraints.challengeMiceRight)
+        clouds.pinCenterX(to: view)
     }
     
     private func configureCalendar() {

@@ -19,7 +19,7 @@ final class HomeViewController: UIViewController{
     private let homeLogoPicture = UIImageView(image: Images.homeLogoPicture)
     private let homeLogoText = CustomText(text: Text.homeLogo, fontSize: Constraints.homeLogoSize, textColor: Colors.white)
     private let homeCalendar = CustomCalendar()
-    private var homeButtons: Array<UIButton> = []
+    private let homeButtonsStack: UIStackView = UIStackView()
     private var selectorButtons: Array<UIButton> = []
     private var gameSelectorViewController = GameSelector()
     private var learningSelectorViewController = GameSelector()
@@ -71,16 +71,18 @@ final class HomeViewController: UIViewController{
     }
     
     private func configureButtons() {
-        homeButtons = [newGameButton, continueButton, learningButton]
+        homeButtonsStack.axis = .vertical
+        homeButtonsStack.alignment = .center
+        homeButtonsStack.spacing = Constraints.homeButtonStackSpacing
         
-        for button in homeButtons {
-            view.addSubview(button)
-            button.pinCenterX(to: view)
+        for button in [newGameButton, continueButton, learningButton] {
+            homeButtonsStack.addArrangedSubview(button)
         }
         
-        newGameButton.pinTop(to: homeCalendar.bottomAnchor, Constraints.newGameButtonTop)
-        continueButton.pinTop(to: newGameButton.bottomAnchor, Constraints.continueButtonTop)
-        learningButton.pinTop(to: continueButton.bottomAnchor, Constraints.learningButtonTop)
+        view.addSubview(homeButtonsStack)
+        
+        homeButtonsStack.pinCenterX(to: view)
+        homeButtonsStack.pinTop(to: homeCalendar.bottomAnchor, Constraints.homeButtonStackTop)
         
         newGameButton.addTarget(self, action: #selector(gameSelectorTapped), for: .touchUpInside)
         learningButton.addTarget(self, action: #selector(learningSelectorTapped), for: .touchUpInside)
