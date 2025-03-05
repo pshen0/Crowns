@@ -27,7 +27,7 @@ enum Images {
     
     // GameSettingsView
     static let startPlayButton: UIImage? = UIImage(named: "startPlayButton")
-    static let startPlayButtonTap: UIImage? = UIImage(named: "startPlayButtonTap")
+    static let startPlayCat: UIImage? = UIImage(named: "startPlayCat")
     static let levelEasyButton: UIImage? = UIImage(named: "levelEasyButton")
     static let levelEasyButtonTap: UIImage? = UIImage(named: "levelEasyButtonTap")
     static let levelMediumButton: UIImage? = UIImage(named: "levelMediumButton")
@@ -180,9 +180,8 @@ enum Constraints {
     // GameSellector
     static let gameSelectorRadius: CGFloat = 16
     static let gameSelectorHeight: CGFloat = 310
-    static let chooseCrownsButtonTop: CGFloat = 30
-    static let chooseSudokuButtonTop: CGFloat = 15
-    static let chooseQueensButtonTop: CGFloat = 15
+    static let gameSelectorButtonsStackTop: CGFloat = 30
+    static let gameSelectorButtonsStackSpacing: CGFloat = 15
     static let chooseTextTop: CGFloat = 30
     static let selectorTextSize: CGFloat = 25
     
@@ -202,8 +201,7 @@ enum Constraints {
     // ChallengeView
     static let challengeLogoTextTop: CGFloat = 45
     static let challengeLogoSize: CGFloat = 35
-    static let lightning1Left: CGFloat = -50
-    static let lightning2Right: CGFloat = -20
+    static let cloudsTop: CGFloat = -140
     static let lightningAnimation1Top: CGFloat = -110
     static let lightningAnimation2Top: CGFloat = -120
     static let lightningAnimation1Left: CGFloat = 210
@@ -218,10 +216,13 @@ enum Constraints {
     static let challengeCalendarWidth: CGFloat = 350
     static let challengeCalendarHeight: CGFloat = 200
     static let streakTextSize: CGFloat = 17
+    static let streakTextBottom: CGFloat = 10
+    static let streakTextRight: CGFloat = 10
     
     // GameSettingsView
     static let gameLogoSize: CGFloat = 34
     static let startPlayButtonBottom: CGFloat = 30
+    static let startPlayCatBottom: CGFloat = -25
     static let gameLogoTop: CGFloat = 0
     static let settingsTextSize: CGFloat = 24
     static let choosingDifficultyTextTop: CGFloat = 25

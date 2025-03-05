@@ -16,7 +16,14 @@ final class GameSelector: UIViewController {
         view.backgroundColor = UIColor.black.withAlphaComponent(Numbers.gameSelectorOverlay)
         return view
     }()
-    private let buttonStack: UIView = UIView()
+    private let gameSelectorView: UIView = UIView()
+    private let gameSelectorButtonsStack: UIStackView = {
+        let stack: UIStackView = UIStackView()
+        stack.axis = .vertical
+        stack.alignment = .center
+        stack.spacing = Constraints.gameSelectorButtonsStackSpacing
+        return stack
+    }()
     private var selectorText: CustomText = CustomText(text: "", fontSize: Constraints.selectorTextSize, textColor: Colors.white)
     
     init(logo: CustomText) {
@@ -46,38 +53,33 @@ final class GameSelector: UIViewController {
         
         view.addSubview(dismissView)
         
+        configureBackground()
         configureButtonsStack()
-        configureGameSelector()
-        configureButtons()
+    }
+    
+    private func configureBackground() {
+        gameSelectorView.backgroundColor = Colors.darkGray
+        gameSelectorView.layer.cornerRadius = Constraints.gameSelectorRadius
+        
+        view.addSubview(gameSelectorView)
+        gameSelectorView.addSubview(selectorText)
+        
+        gameSelectorView.setWidth(view.frame.width)
+        gameSelectorView.setHeight(Constraints.gameSelectorHeight)
+        gameSelectorView.pinBottom(to: view.bottomAnchor)
+        selectorText.pinCenterX(to: gameSelectorView)
+        selectorText.pinTop(to: gameSelectorView.topAnchor, Constraints.chooseTextTop)
     }
     
     private func configureButtonsStack() {
-        buttonStack.backgroundColor = Colors.darkGray
-        buttonStack.layer.cornerRadius = Constraints.gameSelectorRadius
-        
-        view.addSubview(buttonStack)
-        
-        buttonStack.setWidth(view.frame.width)
-        buttonStack.setHeight(Constraints.gameSelectorHeight)
-        buttonStack.pinBottom(to: view.bottomAnchor)
-    }
-    
-    private func configureGameSelector() {
-        buttonStack.addSubview(selectorText)
-        
-        selectorText.pinCenterX(to: buttonStack)
-        selectorText.pinTop(to: buttonStack.topAnchor, Constraints.chooseTextTop)
-    }
-    
-    private func configureButtons() {
         for button in [chooseCrownsButton, chooseSudokuButton, chooseQueensButton] {
-            buttonStack.addSubview(button)
-            button.pinCenterX(to: buttonStack)
+            gameSelectorButtonsStack.addArrangedSubview(button)
         }
         
-        chooseCrownsButton.pinTop(to: selectorText.bottomAnchor, Constraints.chooseCrownsButtonTop)
-        chooseSudokuButton.pinTop(to: chooseCrownsButton.bottomAnchor, Constraints.chooseSudokuButtonTop)
-        chooseQueensButton.pinTop(to: chooseSudokuButton.bottomAnchor, Constraints.chooseQueensButtonTop)
+        gameSelectorView.addSubview(gameSelectorButtonsStack)
+        
+        gameSelectorButtonsStack.pinCenterX(to: gameSelectorView)
+        gameSelectorButtonsStack.pinTop(to: selectorText.bottomAnchor, Constraints.gameSelectorButtonsStackTop)
     }
     
     @objc private func dismissSelf() {

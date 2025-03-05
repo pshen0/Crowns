@@ -31,6 +31,7 @@ final class NameTextField: UITextField, UITextFieldDelegate{
         self.delegate = self
         self.layer.cornerRadius = Constraints.numberFieldRadius
         self.textColor = Colors.white
+        self.tintColor = .clear
         self.font = UIFont(name: Text.fontIrishGrover, size: Constraints.selectorTextSize) ?? UIFont.systemFont(ofSize: Constraints.selectorTextSize)
         
         customButton.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)

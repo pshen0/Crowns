@@ -66,7 +66,7 @@ final class ChallengeViewController: UIViewController {
         
         
         for (subview, top) in zip([clouds, lightningAnimation1, lightningAnimation2, challengeLogo, challengeCat, challengeMice],
-                                  [-140, Constraints.lightningAnimation1Top,
+                                  [Constraints.cloudsTop, Constraints.lightningAnimation1Top,
                                    Constraints.lightningAnimation2Top, Constraints.challengeLogoTextTop, Constraints.challengeCatTop,
                                    Constraints.challengeMiceTop]) {
             view.addSubview(subview)
@@ -89,8 +89,8 @@ final class ChallengeViewController: UIViewController {
         challengeCalendar.setHeight(Constraints.challengeCalendarHeight)
         challengeCalendar.pinCenterX(to: view)
         challengeCalendar.pinTop(to: challengeCat.bottomAnchor, Constraints.challengeCalendarTop)
-        streakText.pinBottom(to: challengeCalendar.topAnchor, 10)
-        streakText.pinRight(to: challengeCalendar.trailingAnchor, 10)
+        streakText.pinBottom(to: challengeCalendar.topAnchor, Constraints.streakTextBottom)
+        streakText.pinRight(to: challengeCalendar.trailingAnchor, Constraints.streakTextRight)
         
     }
     

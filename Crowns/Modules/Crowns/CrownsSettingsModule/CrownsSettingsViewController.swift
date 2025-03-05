@@ -12,8 +12,8 @@ final class CrownsSettingsViewController: UIViewController{
     private let interactor: CrownsSettingsBusinessLogic
     private let backButton: UIButton = CustomButton(button: UIImageView(image: Images.backButton),
                                                     tapped: UIImageView(image: Images.backButtonTap))
-    private let startPlayButton: UIButton = CustomButton(button: UIImageView(image: Images.startPlayButton),
-                                                         tapped: UIImageView(image: Images.startPlayButtonTap))
+    private let startPlayButton: UIButton = CustomButton(button: UIImageView(image: Images.startPlayButton))
+    private let startPlayCat: UIImageView = UIImageView(image: Images.startPlayCat)
     private let levelEasyButton: UIButton = UIButton()
     private let levelMediumButton: UIButton = UIButton()
     private let levelHardButton: UIButton = UIButton()
@@ -79,7 +79,7 @@ final class CrownsSettingsViewController: UIViewController{
         navigationItem.leftBarButtonItem = barButtonItem
         timerPicker.isHidden = true
         
-        for subview in [gameLogo, choosingDifficultyText, startPlayButton, timerStack, timerPicker] {
+        for subview in [gameLogo, choosingDifficultyText, startPlayButton, timerStack, timerPicker, startPlayCat] {
             view.addSubview(subview)
             subview.pinCenterX(to: view)
         }
@@ -88,6 +88,7 @@ final class CrownsSettingsViewController: UIViewController{
         choosingDifficultyText.pinTop(to: gameLogo.bottomAnchor, Constraints.choosingDifficultyTextTop)
         startPlayButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constraints.startPlayButtonBottom)
         timerPicker.setWidth(Constraints.timerPickerWidth)
+        startPlayCat.pinBottom(to: startPlayButton.topAnchor, Constraints.startPlayCatBottom)
         
         startPlayButton.addTarget(self, action: #selector(startPlayButtonTapped), for: .touchUpInside)
         timerSwitch.addTarget(self, action: #selector(changedTimerSwitch), for: .valueChanged)

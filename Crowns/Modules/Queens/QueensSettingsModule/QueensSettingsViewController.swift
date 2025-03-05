@@ -13,8 +13,8 @@ final class QueensSettingsViewController: UIViewController {
     
     private let backButton: UIButton = CustomButton(button: UIImageView(image: Images.backButton),
                                                     tapped: UIImageView(image: Images.backButtonTap))
-    private let startPlayButton: UIButton = CustomButton(button: UIImageView(image: Images.startPlayButton),
-                                                         tapped: UIImageView(image: Images.startPlayButtonTap))
+    private let startPlayButton: UIButton = CustomButton(button: UIImageView(image: Images.startPlayButton))
+    private let startPlayCat: UIImageView = UIImageView(image: Images.startPlayCat)
     private let numberField: CustomNumberPicker = CustomNumberPicker()
     private let timerSwitch: UISwitch = UISwitch()
     private let timerLabel: UILabel = CustomText(text: Text.timerLabel, fontSize: Constraints.settingsTextSize, textColor: Colors.white)
@@ -73,21 +73,16 @@ final class QueensSettingsViewController: UIViewController {
         navigationItem.leftBarButtonItem = barButtonItem
         timerPicker.isHidden = true
         
-        view.addSubview(gameLogo)
-        view.addSubview(choosingDifficultyText)
-        view.addSubview(startPlayButton)
-        view.addSubview(timerStackView)
-        view.addSubview(timerPicker)
-        
-        gameLogo.pinCenterX(to: view)
+        for subview in [gameLogo, choosingDifficultyText, startPlayButton, timerStackView, timerPicker, startPlayCat] {
+            view.addSubview(subview)
+            subview.pinCenterX(to: view)
+        }
+
         gameLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.gameLogoTop)
-        choosingDifficultyText.pinCenterX(to: view)
         choosingDifficultyText.pinTop(to: gameLogo.bottomAnchor, Constraints.choosingDifficultyTextTop)
-        startPlayButton.pinCenterX(to: view)
         startPlayButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constraints.startPlayButtonBottom)
-        timerStackView.pinCenterX(to: view)
-        timerPicker.pinCenterX(to: view)
         timerPicker.setWidth(Constraints.timerPickerWidth)
+        startPlayCat.pinBottom(to: startPlayButton.topAnchor, Constraints.startPlayCatBottom)
         
         startPlayButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         timerSwitch.addTarget(self, action: #selector(changedTimerSwitch), for: .valueChanged)
@@ -101,9 +96,6 @@ final class QueensSettingsViewController: UIViewController {
         numberField.pinLeft(to: choosingDifficultyText.trailingAnchor, Constraints.numberFieldLeft)
         timerStackView.pinTop(to: choosingDifficultyText.bottomAnchor, Constraints.timerStackTop)
         timerPicker.pinTop(to: timerStackView.bottomAnchor, Constraints.timerPickerTop)
-        
-        /*let tapGesture = UITapGestureRecognizer(target: self, action: #selector(blockNumberField))
-        numberField.addGestureRecognizer(tapGesture)*/
     }
     
     @objc
@@ -123,13 +115,5 @@ final class QueensSettingsViewController: UIViewController {
         } else {
             timerPicker.isHidden = true
         }
-    }
-    
-    @objc
-    private func blockNumberField() {
-        /*blocker.backgroundColor = .clear
-        blocker.setWidth(Constraints.numberFieldWidth)
-        view.addSubview(blocker)
-        blocker.pinCenter(to: numberField)*/
     }
 }
