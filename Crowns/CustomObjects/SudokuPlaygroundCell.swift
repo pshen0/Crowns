@@ -10,15 +10,16 @@ import UIKit
 final class KillerSudokuBlock: UICollectionViewCell {
     static let identifier = "KillerSudokuCell"
     
-    private var collection: UICollectionView = {
+    var collection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 2
+        layout.minimumLineSpacing = 2
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = .clear
         return collection
     }()
     var onCellSelected: ((Int) -> Void)?
+    var data: [Int] = Array(repeating: 0, count: 9)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,7 +29,7 @@ final class KillerSudokuBlock: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Text.initErrorCoder)
     }
     
     private func configureBlock() {
@@ -40,6 +41,11 @@ final class KillerSudokuBlock: UICollectionViewCell {
         collection.pinCenterY(to: self)
         collection.setWidth(self.frame.width)
         collection.setHeight(self.frame.width)
+    }
+    
+    func configure(with data: [Int]) {
+        self.data = data
+        collection.reloadData()
     }
     
     func deselect() {
@@ -60,7 +66,8 @@ extension KillerSudokuBlock: UICollectionViewDataSource, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KillerSudokuCell.identifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KillerSudokuCell.identifier, for: indexPath) as! KillerSudokuCell
+        cell.configure(number: data[indexPath.item])
         return cell
     }
     
@@ -81,7 +88,7 @@ extension KillerSudokuBlock: UICollectionViewDataSource, UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let availableWidth = collectionView.frame.size.width
+        let availableWidth = collectionView.frame.size.width - 4
         let cellWidth = (availableWidth) / CGFloat(3)
         return CGSize(width: cellWidth, height: cellWidth)
     }
@@ -102,7 +109,7 @@ class KillerSudokuCell: UICollectionViewCell {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Text.initErrorCoder)
     }
     
     private func configureCell() {
@@ -110,8 +117,6 @@ class KillerSudokuCell: UICollectionViewCell {
         label.pinCenterX(to: contentView.centerXAnchor)
         label.pinCenterY(to: contentView.centerYAnchor)
         
-        contentView.layer.borderColor = Colors.darkGray.cgColor
-        contentView.layer.borderWidth = 1
         contentView.backgroundColor = Colors.lightGray
     }
     
@@ -121,9 +126,11 @@ class KillerSudokuCell: UICollectionViewCell {
     
     func select() {
         contentView.backgroundColor = Colors.yellow
+        label.textColor = Colors.darkGray
     }
     
     func deselect() {
         contentView.backgroundColor = Colors.lightGray
+        label.textColor = Colors.white
     }
 }

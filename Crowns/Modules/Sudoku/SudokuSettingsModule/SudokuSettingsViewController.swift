@@ -83,7 +83,7 @@ final class SudokuSettingsViewController: UIViewController{
             subview.pinCenterX(to: view)
         }
         
-        gameLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.gameLogoTop)
+        gameLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.gameSettingsLogoTop)
         choosingDifficultyText.pinTop(to: gameLogo.bottomAnchor, Constraints.choosingDifficultyTextTop)
         startPlayButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constraints.startPlayButtonBottom)
         timerPicker.setWidth(Constraints.timerPickerWidth)

@@ -211,10 +211,10 @@ enum Constraints {
     static let challengeMiceTop: CGFloat = 180
     static let challengeMiceRight: CGFloat = 20
     static let challengeCalendarTop: CGFloat = 55
-    static let challengeCrownsButtonTop: CGFloat = 45
+    static let challengeCrownsButtonTop: CGFloat = 35
     static let challengeSudokuButtonTop: CGFloat = 15
     static let challengeCalendarWidth: CGFloat = 350
-    static let challengeCalendarHeight: CGFloat = 200
+    static let challengeCalendarHeight: CGFloat = 220
     static let streakTextSize: CGFloat = 17
     static let streakTextBottom: CGFloat = 10
     static let streakTextRight: CGFloat = 10
@@ -223,7 +223,7 @@ enum Constraints {
     static let gameLogoSize: CGFloat = 34
     static let startPlayButtonBottom: CGFloat = 30
     static let startPlayCatBottom: CGFloat = -25
-    static let gameLogoTop: CGFloat = 0
+    static let gameSettingsLogoTop: CGFloat = 0
     static let settingsTextSize: CGFloat = 24
     static let choosingDifficultyTextTop: CGFloat = 25
     static let settingsButtonStackTop: CGFloat = 30
@@ -235,6 +235,9 @@ enum Constraints {
     static let timerPickerTop: CGFloat = 30
     static let numberFieldWidth: CGFloat = 30
     static let numberFieldLeft: CGFloat = 15
+    
+    // SudokuPlayView
+    static let gamePlayLogoTop: CGFloat = 0
 }
 
 

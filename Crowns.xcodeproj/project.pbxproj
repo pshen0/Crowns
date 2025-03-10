@@ -38,6 +38,7 @@
 		0F2C54532D5051F00051AD13 /* QueensPlayPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54522D5051F00051AD13 /* QueensPlayPresenter.swift */; };
 		0F2C54552D5052030051AD13 /* QueensPlayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54542D5052030051AD13 /* QueensPlayModel.swift */; };
 		0F2C54572D5052120051AD13 /* QueensPlayBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2C54562D5052120051AD13 /* QueensPlayBuilder.swift */; };
+		0F5144342D7E59CE007CC179 /* SudokuCageOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5144332D7E59CE007CC179 /* SudokuCageOverlay.swift */; };
 		0F5F185E2D511BF700ED204B /* CrownsLearningInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F185D2D511BF700ED204B /* CrownsLearningInteractor.swift */; };
 		0F5F18602D511C0200ED204B /* CrownsLearningPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F185F2D511C0200ED204B /* CrownsLearningPresenter.swift */; };
 		0F5F18622D511CDD00ED204B /* CrownsLearningModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F18612D511CDD00ED204B /* CrownsLearningModel.swift */; };
@@ -113,7 +114,8 @@
 		0F7465542D765D1000959164 /* DeveloperPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7465532D765D1000959164 /* DeveloperPresenter.swift */; };
 		0F7465562D765D1900959164 /* DeveloperModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7465552D765D1900959164 /* DeveloperModel.swift */; };
 		0F7465582D765D2300959164 /* DeveloperBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7465572D765D2300959164 /* DeveloperBuilder.swift */; };
-		0F74655C2D773B0D00959164 /* PlaygroundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F74655B2D773B0D00959164 /* PlaygroundCell.swift */; };
+		0F74655C2D773B0D00959164 /* SudokuPlaygroundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F74655B2D773B0D00959164 /* SudokuPlaygroundCell.swift */; };
+		0F8EED972D788FEC00F60BFA /* KillerSudokuGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8EED962D788FEC00F60BFA /* KillerSudokuGenerator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +166,7 @@
 		0F2C54522D5051F00051AD13 /* QueensPlayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensPlayPresenter.swift; sourceTree = "<group>"; };
 		0F2C54542D5052030051AD13 /* QueensPlayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensPlayModel.swift; sourceTree = "<group>"; };
 		0F2C54562D5052120051AD13 /* QueensPlayBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensPlayBuilder.swift; sourceTree = "<group>"; };
+		0F5144332D7E59CE007CC179 /* SudokuCageOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuCageOverlay.swift; sourceTree = "<group>"; };
 		0F5F185D2D511BF700ED204B /* CrownsLearningInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsLearningInteractor.swift; sourceTree = "<group>"; };
 		0F5F185F2D511C0200ED204B /* CrownsLearningPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsLearningPresenter.swift; sourceTree = "<group>"; };
 		0F5F18612D511CDD00ED204B /* CrownsLearningModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsLearningModel.swift; sourceTree = "<group>"; };
@@ -243,7 +246,8 @@
 		0F7465532D765D1000959164 /* DeveloperPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperPresenter.swift; sourceTree = "<group>"; };
 		0F7465552D765D1900959164 /* DeveloperModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperModel.swift; sourceTree = "<group>"; };
 		0F7465572D765D2300959164 /* DeveloperBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperBuilder.swift; sourceTree = "<group>"; };
-		0F74655B2D773B0D00959164 /* PlaygroundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundCell.swift; sourceTree = "<group>"; };
+		0F74655B2D773B0D00959164 /* SudokuPlaygroundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuPlaygroundCell.swift; sourceTree = "<group>"; };
+		0F8EED962D788FEC00F60BFA /* KillerSudokuGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillerSudokuGenerator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -439,6 +443,7 @@
 		0F5F8C7E2D4177E2006A8164 /* Crowns */ = {
 			isa = PBXGroup;
 			children = (
+				0F8EED952D788F6D00F60BFA /* PuzzleGenerators */,
 				0F2C54202D49529D0051AD13 /* Modules */,
 				0F1A78D72D482D9D00DAA4F0 /* Application */,
 				0F1A78D82D482DF600DAA4F0 /* Resources */,
@@ -563,7 +568,8 @@
 				0F5F8CBD2D41A865006A8164 /* GameSelector.swift */,
 				0F6AFB072D6C0C5C007B8454 /* CustomCalendar.swift */,
 				0F7465362D76008A00959164 /* NameTextField.swift */,
-				0F74655B2D773B0D00959164 /* PlaygroundCell.swift */,
+				0F74655B2D773B0D00959164 /* SudokuPlaygroundCell.swift */,
+				0F5144332D7E59CE007CC179 /* SudokuCageOverlay.swift */,
 			);
 			path = CustomObjects;
 			sourceTree = "<group>";
@@ -618,6 +624,14 @@
 				0F7465572D765D2300959164 /* DeveloperBuilder.swift */,
 			);
 			path = DeveloperModule;
+			sourceTree = "<group>";
+		};
+		0F8EED952D788F6D00F60BFA /* PuzzleGenerators */ = {
+			isa = PBXGroup;
+			children = (
+				0F8EED962D788FEC00F60BFA /* KillerSudokuGenerator.swift */,
+			);
+			path = PuzzleGenerators;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -788,7 +802,7 @@
 				0F6AFAED2D677A39007B8454 /* SudokuSettingsModel.swift in Sources */,
 				0F2C54412D50511D0051AD13 /* CrownsPlayInteractor.swift in Sources */,
 				0F2C544B2D5051750051AD13 /* SudokuPlayPresenter.swift in Sources */,
-				0F74655C2D773B0D00959164 /* PlaygroundCell.swift in Sources */,
+				0F74655C2D773B0D00959164 /* SudokuPlaygroundCell.swift in Sources */,
 				0F6AFAF02D677D2A007B8454 /* CrownsSettingsViewController.swift in Sources */,
 				0F5F8CBE2D41A865006A8164 /* GameSelector.swift in Sources */,
 				0F5F18682D511D3600ED204B /* SudokuLearningPresenter.swift in Sources */,
@@ -822,6 +836,7 @@
 				0F1A78EB2D48577200DAA4F0 /* ProfileViewController.swift in Sources */,
 				0F2C54472D50514D0051AD13 /* CrownsPlayBuilder.swift in Sources */,
 				0F7465372D76008A00959164 /* NameTextField.swift in Sources */,
+				0F5144342D7E59CE007CC179 /* SudokuCageOverlay.swift in Sources */,
 				0F2C54492D5051680051AD13 /* SudokuPlayInteractor.swift in Sources */,
 				0F5F186A2D511F2000ED204B /* SudokuLearningModel.swift in Sources */,
 				0F6AFAF42D677D3F007B8454 /* CrownsSettingsPresenter.swift in Sources */,
@@ -833,6 +848,7 @@
 				0F1A78E62D4842E500DAA4F0 /* ChallengeBuilder.swift in Sources */,
 				0F2C544D2D50518E0051AD13 /* SudokuPlayModel.swift in Sources */,
 				0F5F18602D511C0200ED204B /* CrownsLearningPresenter.swift in Sources */,
+				0F8EED972D788FEC00F60BFA /* KillerSudokuGenerator.swift in Sources */,
 				0F6AFAF22D677D36007B8454 /* CrownsSettingsInteractor.swift in Sources */,
 				0F1A78EF2D48579A00DAA4F0 /* ProfilePresenter.swift in Sources */,
 				0F5F8CBA2D418B14006A8164 /* UIView+Color.swift in Sources */,

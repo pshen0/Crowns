@@ -35,8 +35,8 @@ final class CustomCalendar: FSCalendar, FSCalendarDelegate, FSCalendarDataSource
         
         appearance.headerMinimumDissolvedAlpha = 0
         appearance.headerTitleFont = UIFont(name: Text.fontIrishGrover, size: 25)
-        appearance.weekdayFont = UIFont(name: Text.fontIrishGrover, size: 17)
-        appearance.titleFont = UIFont(name: Text.fontIrishGrover, size: 17)
+        appearance.weekdayFont = UIFont.boldSystemFont(ofSize: 17)
+        appearance.titleFont = UIFont.boldSystemFont(ofSize: 17)
         appearance.headerDateFormat = "MMMM yyyy"
         appearance.headerTitleColor = Colors.white
         appearance.weekdayTextColor = Colors.yellow
