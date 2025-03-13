@@ -24,11 +24,11 @@ final class MainTabBarController: UITabBarController {
     private let profileNavigator: UINavigationController
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-            homeNavigator = UINavigationController(rootViewController: homeVC)
-            challengeNavigator = UINavigationController(rootViewController: challengeVC)
-            profileNavigator = UINavigationController(rootViewController: profileVC)
-
-            super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        homeNavigator = UINavigationController(rootViewController: homeVC)
+        challengeNavigator = UINavigationController(rootViewController: challengeVC)
+        profileNavigator = UINavigationController(rootViewController: profileVC)
+        
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         configureTabBar()
     }
     
@@ -48,7 +48,7 @@ final class MainTabBarController: UITabBarController {
         appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
             .foregroundColor: Colors.white
         ]
-
+        
         appearance.stackedLayoutAppearance.selected.iconColor = Colors.yellow
         appearance.stackedLayoutAppearance.selected.titleTextAttributes = [
             .foregroundColor: Colors.yellow

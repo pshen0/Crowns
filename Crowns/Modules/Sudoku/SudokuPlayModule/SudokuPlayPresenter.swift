@@ -9,7 +9,8 @@ import UIKit
 
 protocol SudokuPlayPresentationLogic {
     func routeBack(_ response: SudokuPlayModel.RouteBack.Response)
-    func changeNumberCell(_ response: SudokuPlayModel.ChangeNumberCell.Response) -> SudokuPlayModel.ChangeNumberCell.ViewModel
+    func routeGameOver(_ response: SudokuPlayModel.RouteGameOver.Response)
+    func getCellPosition(_ response: SudokuPlayModel.ChangeCell.Response) -> SudokuPlayModel.ChangeCell.ViewModel
 }
 
 final class SudokuPlayPresenter: SudokuPlayPresentationLogic {
@@ -18,6 +19,12 @@ final class SudokuPlayPresenter: SudokuPlayPresentationLogic {
     
     func routeBack(_ response: SudokuPlayModel.RouteBack.Response) {
         view?.navigationController?.popToRootViewController(animated: false)
+    }
+    
+    func routeGameOver(_ response: SudokuPlayModel.RouteGameOver.Response) {
+        let gameOverViewController = SudokuGameOverBuilder.build()
+        gameOverViewController.isWin = response.isWin
+        view?.navigationController?.pushViewController(gameOverViewController, animated: false)
     }
     
     private func getTablePosition(_ index: Int) -> (Int, Int) {
@@ -31,7 +38,7 @@ final class SudokuPlayPresenter: SudokuPlayPresentationLogic {
         return (row, col)
     }
     
-    func changeNumberCell(_ response: SudokuPlayModel.ChangeNumberCell.Response) -> SudokuPlayModel.ChangeNumberCell.ViewModel {
+    func getCellPosition(_ response: SudokuPlayModel.ChangeCell.Response) -> SudokuPlayModel.ChangeCell.ViewModel {
         var arrayRow: Int = 0
         var arrayCol: Int = 0
         (arrayRow, arrayCol) = getTablePosition(response.index)
@@ -40,7 +47,7 @@ final class SudokuPlayPresenter: SudokuPlayPresentationLogic {
         let cellIndex = response.index % 9
         let blockIndexPath = IndexPath(item: blockIndex, section: 0)
         
-        let indexes: SudokuPlayModel.ChangeNumberCell.ViewModel = SudokuPlayModel.ChangeNumberCell.ViewModel(
+        let indexes: SudokuPlayModel.ChangeCell.ViewModel = SudokuPlayModel.ChangeCell.ViewModel(
             arrayRow: arrayRow,
             arrayCol: arrayCol,
             blockIndexPath: blockIndexPath,

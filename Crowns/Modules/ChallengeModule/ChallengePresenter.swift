@@ -19,6 +19,7 @@ final class ChallengePresenter: ChallengePresentationLogic {
     }
     
     func routeSudokuGame(_ response: ChallengeModel.RouteSudokuGame.Response) {
-        view?.navigationController?.pushViewController(SudokuPlayBuilder.build(), animated: false)
+        let difficultyLevel: String = ["Easy", "Medium", "Hard"].randomElement() ?? "Easy"
+        view?.navigationController?.pushViewController(SudokuPlayBuilder.build(SudokuPlayModel.BuildModule.BuildFoundation(difficultyLevel: difficultyLevel)), animated: false)
     }
 }

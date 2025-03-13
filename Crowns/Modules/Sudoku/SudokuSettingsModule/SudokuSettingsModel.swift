@@ -9,8 +9,12 @@ import Foundation
 
 enum SudokuSettingsModel {
     enum RouteSudokuGame {
-        struct Request { }
-        struct Response { }
+        struct Request { 
+            let buttonTag: Int
+        }
+        struct Response { 
+            let difficultyLevel: String
+        }
     }
     
     enum RouteBack {

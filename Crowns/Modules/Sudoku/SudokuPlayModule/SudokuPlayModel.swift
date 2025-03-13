@@ -8,12 +8,19 @@
 import UIKit
 
 enum SudokuPlayModel {
+    
+    enum BuildModule {
+        struct BuildFoundation {
+            let difficultyLevel: String
+        }
+    }
+    
     enum  RouteBack {
         struct Request { }
         struct Response { }
     }
     
-    enum ChangeNumberCell {
+    enum ChangeCell {
         struct Request {
             let index: Int
         }
@@ -26,6 +33,15 @@ enum SudokuPlayModel {
             let blockIndexPath: IndexPath
             var blockIndex: Int
             var cellIndex: Int
+        }
+    }
+    
+    enum RouteGameOver {
+        struct Request {
+            let isWin: Bool
+        }
+        struct Response {
+            let isWin: Bool
         }
     }
 }

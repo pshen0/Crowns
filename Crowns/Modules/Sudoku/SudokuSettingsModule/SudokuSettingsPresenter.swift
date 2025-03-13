@@ -17,7 +17,7 @@ final class SudokuSettingsPresenter: SudokuSettingsPresentationLogic {
     weak var view: SudokuSettingsViewController?
     
     func routeSudokuGame(_ response: SudokuSettingsModel.RouteSudokuGame.Response) {
-        view?.navigationController?.pushViewController(SudokuPlayBuilder.build(), animated: false)
+        view?.navigationController?.pushViewController(SudokuPlayBuilder.build(SudokuPlayModel.BuildModule.BuildFoundation(difficultyLevel: response.difficultyLevel)), animated: false)
     }
     
     func routeBack(_ response: SudokuSettingsModel.RouteBack.Response) {

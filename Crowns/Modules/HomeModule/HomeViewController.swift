@@ -82,7 +82,7 @@ final class HomeViewController: UIViewController{
         view.addSubview(homeButtonsStack)
         
         homeButtonsStack.pinCenterX(to: view)
-        homeButtonsStack.pinTop(to: homeCalendar.bottomAnchor, Constraints.homeButtonStackTop)
+        homeButtonsStack.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constraints.homeButtonStackBottom)
         
         newGameButton.addTarget(self, action: #selector(gameSelectorTapped), for: .touchUpInside)
         learningButton.addTarget(self, action: #selector(learningSelectorTapped), for: .touchUpInside)

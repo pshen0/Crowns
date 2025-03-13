@@ -23,12 +23,17 @@ final class ChallengeViewController: UIViewController {
     private let challengeCompletedLevelButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeCompletedLevel))
     private let challengeCalendar = CustomCalendar()
     private let streakText = CustomText(text: Text.streak, fontSize: Constraints.streakTextSize, textColor: Colors.white)
-
+    
     var timer: Timer?
     
     init(interactor: ChallengeBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    deinit {
+        timer?.invalidate()
+        timer = nil
     }
     
     @available(*, unavailable)
@@ -43,18 +48,16 @@ final class ChallengeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        startAnimateChallengesScreen()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        stopAnimateChallengesScreen()
     }
     
     private func configureUI() {
         configureBackground()
-        startTimer()
-        catStartsBlinking()
         configureCalendar()
         configureButtons()
     }
@@ -107,10 +110,17 @@ final class ChallengeViewController: UIViewController {
         challengeSudokuButton.addTarget(self, action: #selector(sudokuButtonTapped), for: .touchUpInside)
     }
     
-    private func startTimer() {
+    func startAnimateChallengesScreen() {
         timer = Timer.scheduledTimer(timeInterval: Numbers.lightningAnimationDuration, target: self, selector: #selector(animateLightnings), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(withTimeInterval: Double.random(in: 3...5), repeats: true) { _ in
+            self.challengeCat.startBlinking()
+        }
     }
     
+    func stopAnimateChallengesScreen() {
+        timer?.invalidate()
+        timer = nil
+    }
     
     @objc func animateLightnings() {
         UIView.animate(withDuration: Numbers.lightningAppearanceDuration) {
@@ -130,19 +140,11 @@ final class ChallengeViewController: UIViewController {
         }
     }
     
-    private func catStartsBlinking() {
-        Timer.scheduledTimer(withTimeInterval: Double.random(in: 2...4), repeats: true) { _ in
-            self.challengeCat.startBlinking()
-        }
-    }
-    
-    @objc
-    private func crownsButtonTapped() {
+    @objc private func crownsButtonTapped() {
         interactor.crownsButtonTapped(ChallengeModel.RouteCrownsGame.Request())
     }
     
-    @objc
-    private func sudokuButtonTapped() {
+    @objc private func sudokuButtonTapped() {
         interactor.sudokuButtonTapped(ChallengeModel.RouteSudokuGame.Request())
     }
 }

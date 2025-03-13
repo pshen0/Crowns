@@ -75,6 +75,18 @@ enum Images {
     static let chooseCrownsButton: UIImage? = UIImage(named: "chooseCrownsButton")
     static let chooseSudokuButton: UIImage? = UIImage(named: "chooseSudokuButton")
     static let chooseQueensButton: UIImage? = UIImage(named: "chooseQueensButton")
+    
+    // GamePlayView
+    static let undoButton: UIImage? = UIImage(named: "undoButton")
+    static let timerPicture: UIImage? = UIImage(named: "timer")
+    static let levelPicture: UIImage? = UIImage(named: "level")
+    static let hintButton: UIImage? = UIImage(named: "hintButton")
+    static let pauseButton: UIImage? = UIImage(named: "pauseButton")
+    static let cleanerButton: UIImage? = UIImage(named: "cleanerButton")
+    static let gamePlayCat: UIImage? = UIImage(named: "startPlayCat")
+    
+    // GameOverView
+    static let gameOverHomeButton: UIImage? = UIImage(named: "gameOverHomeButton")
 }
 
 enum Numbers {
@@ -170,11 +182,11 @@ enum Constraints {
     static let homeLogoTextTop: CGFloat = 5
     static let homeLogoTextWidth: CGFloat = 350
     static let homeLogoSize: CGFloat = 75
-    static let homeCalendarTop: CGFloat = 45
+    static let homeCalendarTop: CGFloat = 35
     static let homeCalendarWidth: CGFloat = 350
     static let homeCalendarHeight: CGFloat = 250
-    static let homeButtonStackTop: CGFloat = 45
-    static let homeButtonStackSpacing: CGFloat = 15
+    static let homeButtonStackBottom: CGFloat = 10
+    static let homeButtonStackSpacing: CGFloat = 8
     static let tabBarItemIndentation: CGFloat = 10
     
     // GameSellector
@@ -211,10 +223,10 @@ enum Constraints {
     static let challengeMiceTop: CGFloat = 180
     static let challengeMiceRight: CGFloat = 20
     static let challengeCalendarTop: CGFloat = 55
-    static let challengeCrownsButtonTop: CGFloat = 35
-    static let challengeSudokuButtonTop: CGFloat = 15
+    static let challengeCrownsButtonTop: CGFloat = 25
+    static let challengeSudokuButtonTop: CGFloat = 8
     static let challengeCalendarWidth: CGFloat = 350
-    static let challengeCalendarHeight: CGFloat = 220
+    static let challengeCalendarHeight: CGFloat = 200
     static let streakTextSize: CGFloat = 17
     static let streakTextBottom: CGFloat = 10
     static let streakTextRight: CGFloat = 10
@@ -238,6 +250,9 @@ enum Constraints {
     
     // SudokuPlayView
     static let gamePlayLogoTop: CGFloat = 0
+    
+    // GameOverView
+    
 }
 
 
