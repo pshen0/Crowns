@@ -33,7 +33,7 @@ final class CageOverlayView: UIView {
     private func drawCageBorder(for cage: SudokuCage) {
         let offsets: [(dx: Int, dy: Int)] = [(-1, 0), (0, -1)]
         
-        for cell in cage.cells {
+        for cell in cage.getCells() {
             let row = cell.row
             let col = cell.col
             
@@ -48,7 +48,7 @@ final class CageOverlayView: UIView {
                 let neighborRow = row + dy
                 let neighborCol = col + dx
                 
-                if !cage.cells.contains(where: { $0.row == neighborRow && $0.col == neighborCol }) {
+                if !cage.getCells().contains(where: { $0.row == neighborRow && $0.col == neighborCol }) {
                     let path = UIBezierPath()
                     var currentWidth: CGFloat = 1.0
 

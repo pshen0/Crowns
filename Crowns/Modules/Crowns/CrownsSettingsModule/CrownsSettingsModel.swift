@@ -8,9 +8,16 @@
 import Foundation
 
 enum CrownsSettingsModel {
+    
     enum RouteCrownsGame {
-        struct Request { }
-        struct Response { }
+        struct Request {
+            let buttonTag: Int
+            let timerLabel: String
+        }
+        struct Response {
+            let difficultyLevel: String
+            let timerLabel: String
+        }
     }
     
     enum RouteBack {

@@ -60,8 +60,6 @@ final class SudokuSettingsViewController: UIViewController{
     private func configureUI() {
         configureTimer()
         configureBackground()
-        configureButtons()
-        configureCrowns()
     }
     
     private func configureTimer() {
@@ -91,6 +89,13 @@ final class SudokuSettingsViewController: UIViewController{
         timerPicker.setWidth(Constraints.timerPickerWidth)
         startPlayCat.pinBottom(to: startPlayButton.topAnchor, Constraints.startPlayCatBottom)
         
+        configureButtons()
+        
+        buttonStack.pinTop(to: choosingDifficultyText.bottomAnchor, Constraints.settingsButtonStackTop)
+        buttonStack.pinCenterX(to: view)
+        timerStack.pinTop(to: buttonStack.bottomAnchor, Constraints.timerStackTop)
+        timerPicker.pinTop(to: timerStack.bottomAnchor, Constraints.timerPickerTop)
+        
         startPlayButton.addTarget(self, action: #selector(startPlayButtonTapped), for: .touchUpInside)
         timerSwitch.addTarget(self, action: #selector(changedTimerSwitch), for: .valueChanged)
     }
@@ -115,20 +120,20 @@ final class SudokuSettingsViewController: UIViewController{
         levelRandomButton.addTarget(self, action: #selector(randomButtonTapped), for: .touchUpInside)
     }
     
-    private func configureCrowns() {
-        buttonStack.pinTop(to: choosingDifficultyText.bottomAnchor, Constraints.settingsButtonStackTop)
-        buttonStack.pinCenterX(to: view)
-        timerStack.pinTop(to: buttonStack.bottomAnchor, Constraints.timerStackTop)
-        timerPicker.pinTop(to: timerStack.bottomAnchor, Constraints.timerPickerTop)
-    }
-    
-    
     @objc private func backButtonTapped() {
         interactor.backButtonTapped(SudokuSettingsModel.RouteBack.Request())
     }
     
     @objc private func startPlayButtonTapped() {
-        interactor.startButtonTapped(SudokuSettingsModel.RouteSudokuGame.Request(buttonTag: choosenButton))
+        if timerSwitch.isOn {
+            if let time = timerPicker.text {
+                interactor.startButtonTapped(SudokuSettingsModel.RouteSudokuGame.Request(buttonTag: choosenButton, timerLabel: time))
+            } else {
+                interactor.startButtonTapped(SudokuSettingsModel.RouteSudokuGame.Request(buttonTag: choosenButton, timerLabel: "00:00"))
+            }
+        } else {
+            interactor.startButtonTapped(SudokuSettingsModel.RouteSudokuGame.Request(buttonTag: choosenButton, timerLabel: "00:00"))
+        }
     }
     
     @objc private func easyButtonTapped() {

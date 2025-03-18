@@ -10,14 +10,14 @@ import UIKit
 final class TimePickerTextField: UITextField, UIPickerViewDelegate, UIPickerViewDataSource {
     
     private let timePicker: UIPickerView = UIPickerView()
-    private let minutesArray: [String] = Array(Numbers.timePickerMin...Numbers.timePickerMax).map { String(format: Numbers.timePickerFormat, $0) }
+    private let minutesArray: [String] = Array((Numbers.timePickerMin + 1)...Numbers.timePickerMax).map { String(format: Numbers.timePickerFormat, $0) }
     private let secondsArray: [String] = Array(Numbers.timePickerMin...Numbers.timePickerMax).map { String(format: Numbers.timePickerFormat, $0) }
     private let customButton = CustomButton(button: UIImageView(image: Images.doneButton), tapped: UIImageView(image: Images.doneButtonTap))
     private let toolbar = UIToolbar()
     let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     
-    private var selectedMinute: String = Numbers.timePickerStartPosition
-    private var selectedSecond: String = Numbers.timePickerStartPosition
+    private var selectedMinute: String = Numbers.timePickerStartMinPosition
+    private var selectedSecond: String = Numbers.timePickerStartSecPosition
     var doneButton: UIBarButtonItem = UIBarButtonItem()
     
     override init(frame: CGRect) {

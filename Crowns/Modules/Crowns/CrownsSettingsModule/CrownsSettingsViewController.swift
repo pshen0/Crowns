@@ -26,6 +26,8 @@ final class CrownsSettingsViewController: UIViewController{
     private let choosingDifficultyText: UILabel = CustomText(text: Text.chooseDifficulty, fontSize: Constraints.settingsTextSize, textColor: Colors.white)
     private let timerStack:UIStackView = UIStackView()
     private let buttonStack:UIStackView = UIStackView()
+    private let untappedImages = [Images.levelEasyButton, Images.levelMediumButton, Images.levelHardButton, Images.levelRandomButton]
+    private var levelButtons: [UIButton] = []
     
     lazy var barButtonItem = UIBarButtonItem()
     var choosenButton: Int = 0
@@ -33,6 +35,7 @@ final class CrownsSettingsViewController: UIViewController{
     init(interactor: CrownsSettingsBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
+        levelButtons = [levelEasyButton, levelMediumButton, levelHardButton, levelRandomButton]
     }
     
     @available(*, unavailable)
@@ -59,8 +62,6 @@ final class CrownsSettingsViewController: UIViewController{
     private func configureUI() {
         configureTimer()
         configureBackground()
-        configureButtons()
-        configureCrowns()
     }
     
     private func configureTimer() {
@@ -90,6 +91,13 @@ final class CrownsSettingsViewController: UIViewController{
         timerPicker.setWidth(Constraints.timerPickerWidth)
         startPlayCat.pinBottom(to: startPlayButton.topAnchor, Constraints.startPlayCatBottom)
         
+        configureButtons()
+        
+        buttonStack.pinTop(to: choosingDifficultyText.bottomAnchor, Constraints.settingsButtonStackTop)
+        buttonStack.pinCenterX(to: view)
+        timerStack.pinTop(to: buttonStack.bottomAnchor, Constraints.timerStackTop)
+        timerPicker.pinTop(to: timerStack.bottomAnchor, Constraints.timerPickerTop)
+        
         startPlayButton.addTarget(self, action: #selector(startPlayButtonTapped), for: .touchUpInside)
         timerSwitch.addTarget(self, action: #selector(changedTimerSwitch), for: .valueChanged)
     }
@@ -99,28 +107,19 @@ final class CrownsSettingsViewController: UIViewController{
         buttonStack.spacing = Constraints.settingsButtonStackSpacing
         buttonStack.alignment = .center
         
-        for ((button, image), tag) in zip(zip([levelEasyButton, levelMediumButton, levelHardButton, levelRandomButton],
-                                              [Images.levelEasyButton, Images.levelMediumButton, Images.levelHardButton, Images.levelRandomButton]),
-                                          [Numbers.levelEasyTag, Numbers.levelMediumTag, Numbers.levelHardTag, Numbers.levelRandomTag]) {
+        for (button, image) in zip([levelEasyButton, levelMediumButton, levelHardButton, levelRandomButton],
+                                   [Images.levelEasyButtonTap, Images.levelMediumButton, Images.levelHardButton, Images.levelRandomButton]) {
             button.setImage(image, for: .normal)
-            button.tag = tag
             buttonStack.addArrangedSubview(button)
             button.pinCenterX(to: buttonStack)
         }
         
         view.addSubview(buttonStack)
         
-        levelEasyButton.addTarget(self, action: #selector(levelButtonTapped(_:)), for: .touchUpInside)
-        levelMediumButton.addTarget(self, action: #selector(levelButtonTapped(_:)), for: .touchUpInside)
-        levelHardButton.addTarget(self, action: #selector(levelButtonTapped(_:)), for: .touchUpInside)
-        levelRandomButton.addTarget(self, action: #selector(levelButtonTapped(_:)), for: .touchUpInside)
-    }
-    
-    private func configureCrowns() {
-        buttonStack.pinTop(to: choosingDifficultyText.bottomAnchor, Constraints.settingsButtonStackTop)
-        buttonStack.pinCenterX(to: view)
-        timerStack.pinTop(to: buttonStack.bottomAnchor, Constraints.timerStackTop)
-        timerPicker.pinTop(to: timerStack.bottomAnchor, Constraints.timerPickerTop)
+        levelEasyButton.addTarget(self, action: #selector(easyButtonTapped), for: .touchUpInside)
+        levelMediumButton.addTarget(self, action: #selector(mediumButtonTapped), for: .touchUpInside)
+        levelHardButton.addTarget(self, action: #selector(hardButtonTapped), for: .touchUpInside)
+        levelRandomButton.addTarget(self, action: #selector(randomButtonTapped), for: .touchUpInside)
     }
     
     @objc private func backButtonTapped() {
@@ -128,16 +127,40 @@ final class CrownsSettingsViewController: UIViewController{
     }
     
     @objc private func startPlayButtonTapped() {
-        interactor.startButtonTapped(CrownsSettingsModel.RouteBack.Request())
+        if timerSwitch.isOn {
+            if let time = timerPicker.text {
+                interactor.startButtonTapped(CrownsSettingsModel.RouteCrownsGame.Request(buttonTag: choosenButton, timerLabel: time))
+            } else {
+                interactor.startButtonTapped(CrownsSettingsModel.RouteCrownsGame.Request(buttonTag: choosenButton, timerLabel: Text.startTimerLabel))
+            }
+        } else {
+            interactor.startButtonTapped(CrownsSettingsModel.RouteCrownsGame.Request(buttonTag: choosenButton, timerLabel: Text.startTimerLabel))
+        }
     }
     
-    @objc private func levelButtonTapped(_ sender: UIButton) {
-        let tappedImages = [Images.levelEasyButtonTap, Images.levelMediumButtonTap, Images.levelHardButtonTap, Images.levelRandomButtonTap]
-        let images = [Images.levelEasyButton, Images.levelMediumButton, Images.levelHardButton, Images.levelRandomButton]
-        let buttons = [levelEasyButton, levelMediumButton, levelHardButton, levelRandomButton]
-        buttons[choosenButton].setImage(images[choosenButton], for: .normal)
-        buttons[sender.tag].setImage(tappedImages[sender.tag], for: .normal)
-        choosenButton = sender.tag
+    @objc private func easyButtonTapped() {
+        levelEasyButton.setImage(Images.levelEasyButtonTap, for: .normal)
+        levelButtons[choosenButton].setImage(untappedImages[choosenButton], for: .normal)
+        choosenButton = Numbers.levelEasyTag
+    }
+    
+    @objc private func mediumButtonTapped() {
+        levelMediumButton.setImage(Images.levelMediumButtonTap, for: .normal)
+        levelButtons[choosenButton].setImage(untappedImages[choosenButton], for: .normal)
+        choosenButton = Numbers.levelMediumTag
+    }
+    
+    @objc private func hardButtonTapped() {
+        levelHardButton.setImage(Images.levelHardButtonTap, for: .normal)
+        levelButtons[choosenButton].setImage(untappedImages[choosenButton], for: .normal)
+        choosenButton = Numbers.levelHardTag
+    }
+    
+    @objc private func randomButtonTapped() {
+        levelRandomButton.setImage(Images.levelRandomButtonTap, for: .normal)
+        levelButtons[choosenButton].setImage(untappedImages[choosenButton], for: .normal)
+        choosenButton = Numbers.levelRandomTag
+        
     }
     
     @objc private func changedTimerSwitch() {

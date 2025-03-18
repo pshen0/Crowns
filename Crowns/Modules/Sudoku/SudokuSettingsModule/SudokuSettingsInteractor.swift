@@ -34,7 +34,7 @@ final class SudokuSettingsInteractor: SudokuSettingsBusinessLogic {
         default:
             chosenDifficultyLevel = ["Easy", "Medium", "Hard"].randomElement() ?? "Easy"
         }
-        presenter.routeSudokuGame(SudokuSettingsModel.RouteSudokuGame.Response(difficultyLevel: chosenDifficultyLevel))
+        presenter.routeSudokuGame(SudokuSettingsModel.RouteSudokuGame.Response(difficultyLevel: chosenDifficultyLevel, timerLabel: request.timerLabel))
     }
     
     func backButtonTapped(_ request: SudokuSettingsModel.RouteBack.Request) {

@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum ChallengeViewConstants {
+    static let animationDurMin: Double = 3.0
+    static let animationDurMax: Double = 5.0
+}
+
 final class ChallengeViewController: UIViewController {
     
     private let interactor: ChallengeBusinessLogic
@@ -24,7 +29,8 @@ final class ChallengeViewController: UIViewController {
     private let challengeCalendar = CustomCalendar()
     private let streakText = CustomText(text: Text.streak, fontSize: Constraints.streakTextSize, textColor: Colors.white)
     
-    var timer: Timer?
+    private var thunderTimer: Timer?
+    private var catTimer: Timer?
     
     init(interactor: ChallengeBusinessLogic) {
         self.interactor = interactor
@@ -32,8 +38,10 @@ final class ChallengeViewController: UIViewController {
     }
     
     deinit {
-        timer?.invalidate()
-        timer = nil
+        thunderTimer?.invalidate()
+        thunderTimer = nil
+        catTimer?.invalidate()
+        catTimer = nil
     }
     
     @available(*, unavailable)
@@ -111,15 +119,18 @@ final class ChallengeViewController: UIViewController {
     }
     
     func startAnimateChallengesScreen() {
-        timer = Timer.scheduledTimer(timeInterval: Numbers.lightningAnimationDuration, target: self, selector: #selector(animateLightnings), userInfo: nil, repeats: true)
-        Timer.scheduledTimer(withTimeInterval: Double.random(in: 3...5), repeats: true) { _ in
+        thunderTimer = Timer.scheduledTimer(timeInterval: Numbers.lightningAnimationDuration, target: self, selector: #selector(animateLightnings), userInfo: nil, repeats: true)
+        catTimer = Timer.scheduledTimer(withTimeInterval: Double.random(in: ChallengeViewConstants.animationDurMin...ChallengeViewConstants.animationDurMax), repeats: true) { _ in
             self.challengeCat.startBlinking()
         }
     }
     
     func stopAnimateChallengesScreen() {
-        timer?.invalidate()
-        timer = nil
+        challengeCat.stopBlinking()
+        catTimer?.invalidate()
+        thunderTimer?.invalidate()
+        thunderTimer = nil
+        catTimer = nil
     }
     
     @objc func animateLightnings() {

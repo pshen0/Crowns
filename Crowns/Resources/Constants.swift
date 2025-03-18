@@ -8,6 +8,19 @@
 import UIKit
 
 enum Colors {
+    enum CrownsColors {
+        static let lightBlue: UIColor = UIColor(hex: "95B8D1", alpha: 1.0)
+        static let lightGreen: UIColor = UIColor(hex: "A2C4AF", alpha: 1.0)
+        static let green: UIColor = UIColor(hex: "83A164", alpha: 1.0)
+        static let blue: UIColor = UIColor(hex: "619CD3", alpha: 1.0)
+        static let yellow : UIColor = UIColor(hex: "FFE49C", alpha: 1.0)
+        static let orange: UIColor = UIColor(hex: "F3B088", alpha: 1.0)
+        static let purple: UIColor = UIColor(hex: "7058D9", alpha: 1.0)
+        static let pink: UIColor = UIColor(hex: "B7A4B3", alpha: 1.0)
+        static let red: UIColor = UIColor(hex: "E67C73", alpha: 1.0)
+    }
+    
+    
     static let darkGray: UIColor = UIColor(hex: "1E1E1E", alpha: 1.0)
     static let lightGray: UIColor = UIColor(hex: "2E2E2E", alpha: 1.0)
     static let yellow: UIColor = UIColor(hex: "FEBE17", alpha: 1.0)
@@ -84,6 +97,8 @@ enum Images {
     static let pauseButton: UIImage? = UIImage(named: "pauseButton")
     static let cleanerButton: UIImage? = UIImage(named: "cleanerButton")
     static let gamePlayCat: UIImage? = UIImage(named: "startPlayCat")
+    static let crown: UIImage? = UIImage(named: "crown")
+    static let point: UIImage? = UIImage(named: "point")
     
     // GameOverView
     static let gameOverHomeButton: UIImage? = UIImage(named: "gameOverHomeButton")
@@ -101,6 +116,7 @@ enum Numbers {
     static let lightningAnimationVisible: Double = 1
     static let lightningAnimationDuration: Double = 8.0
     static let lightningAppearanceDuration: Double = 0.5
+    static let challengeTimerMinutes = 5
     
     // ProfileView
     static let nameMaxLength: Int = 12
@@ -120,7 +136,8 @@ enum Numbers {
     static let numberPickerComponentsNumber: Int = 1
     
     // CustomTimePicker
-    static let timePickerStartPosition: String = "00"
+    static let timePickerStartSecPosition: String = "00"
+    static let timePickerStartMinPosition: String = "01"
     static let timePickerMin: Int = 0
     static let timePickerMax: Int = 59
     static let timePickerFormat: String = "%02d"
@@ -171,6 +188,14 @@ enum Text {
     static let chooseDifficulty: String = "Choose the difficulty level:"
     static let chooseFieldsSize: String = "Set the field size:"
     static let timerLabel: String = "Timer"
+    static let easyTag = "Easy"
+    static let mediumTag = "Medium"
+    static let hardTag = "Hard"
+    static let startTimerLabel = "00:00"
+    
+    static let correctMode = "correct"
+    static let incorrectMode = "incorrect"
+    static let initionMode = "inition"
 }
 
 enum Constraints {
@@ -248,8 +273,10 @@ enum Constraints {
     static let numberFieldWidth: CGFloat = 30
     static let numberFieldLeft: CGFloat = 15
     
-    // SudokuPlayView
+    //PlayView
     static let gamePlayLogoTop: CGFloat = 0
+    static let gameplayLogoSize: CGFloat = 12
+    static let crownsPlaygroundSpacing: CGFloat = 2.0
     
     // GameOverView
     

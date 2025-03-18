@@ -8,9 +8,10 @@
 import UIKit
 
 enum CrownsPlayBuilder {
-    static func build() -> CrownsPlayViewController {
+    static func build(_ foundation: CrownsPlayModel.BuildModule.BuildFoundation) -> CrownsPlayViewController {
+        let crowns = Crowns()
         let presenter = CrownsPlayPresenter()
-        let interactor = CrownsPlayInteractor(presenter: presenter)
+        let interactor = CrownsPlayInteractor(presenter: presenter, crowns: crowns, time: foundation.time)
         let view = CrownsPlayViewController(interactor: interactor)
         presenter.view = view
         

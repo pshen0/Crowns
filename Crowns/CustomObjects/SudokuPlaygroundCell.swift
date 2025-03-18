@@ -25,7 +25,6 @@ final class KillerSudokuBlock: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         collection.register(KillerSudokuCell.self, forCellWithReuseIdentifier: KillerSudokuCell.identifier)
         configureBlock()
     }

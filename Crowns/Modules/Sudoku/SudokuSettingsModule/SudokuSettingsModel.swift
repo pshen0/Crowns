@@ -8,12 +8,15 @@
 import Foundation
 
 enum SudokuSettingsModel {
+    
     enum RouteSudokuGame {
         struct Request { 
             let buttonTag: Int
+            let timerLabel: String
         }
         struct Response { 
             let difficultyLevel: String
+            let timerLabel: String
         }
     }
     

@@ -7,40 +7,79 @@
 
 import Foundation
 
-struct Cell: Hashable {
+enum KillerSudokuConstants {
+    static let size: Int = 9
+    static let n: Int = 3
+    static let removableCounterEasy: Int = 45
+    static let removableCounterMedium: Int = 50
+    static let removableCounterHard: Int = 55
+    static let mixRepeat: Int = 100
+    static let cageSizeMin: Int = 2
+    static let cageSizeMax: Int = 5
+    
+    static let easyTag: String = "Easy"
+    static let mediumTag: String = "Medium"
+    static let hardTag: String = "Hard"
+}
+
+struct SudokuCell: Hashable {
     let row: Int
     let col: Int
     let value: Int
 }
 
 final class SudokuCage {
-    var cells: [Cell] = []
-    var sum: Int = 0
+    private var cells: [SudokuCell] = []
+    private var sum: Int = 0
     
-    init(cell: Cell) {
+    init(cell: SudokuCell) {
         cells.append(cell)
         sum += cell.value
     }
     
-    func addCell(_ cell: Cell) {
+    func addCell(_ cell: SudokuCell) {
         cells.append(cell)
         sum += cell.value
+    }
+    
+    func getCells() -> [SudokuCell] {
+        return cells
+    }
+    
+    func getSum() -> Int {
+        return sum
     }
 }
 
 final class KillerSudoku {
-    let n: Int = 3
-    let difficultyLevel: String
-    var table: [[Int]]
-    var cages: [SudokuCage] = []
+    private let size: Int = KillerSudokuConstants.size
+    private let n: Int = KillerSudokuConstants.n
+    private let difficultyLevel: String
+    private var table: [[Int]]
+    private var cages: [SudokuCage] = []
     var puzzle: [[Int]]
     var unsolvedPuzzle: [[Int]]
+    private var removableCounter: Int = KillerSudokuConstants.removableCounterEasy
+
     
-    init(difficultyLeve: String) {
-        self.difficultyLevel = difficultyLeve
-        table = Array(repeating: Array(repeating: 0, count: n * n), count: n * n)
-        puzzle = Array(repeating: Array(repeating: 0, count: n * n), count: n * n)
-        unsolvedPuzzle = Array(repeating: Array(repeating: 0, count: n * n), count: n * n)
+    init(difficultyLevel: String) {
+        self.difficultyLevel = difficultyLevel
+        table = Array(repeating: Array(repeating: 0, count: size), count: size)
+        puzzle = Array(repeating: Array(repeating: 0, count: size), count: size)
+        unsolvedPuzzle = Array(repeating: Array(repeating: 0, count: size), count: size)
+        
+        switch difficultyLevel {
+        case KillerSudokuConstants.easyTag:
+            removableCounter = KillerSudokuConstants.removableCounterEasy
+        case KillerSudokuConstants.mediumTag:
+            removableCounter = KillerSudokuConstants.removableCounterMedium
+        case KillerSudokuConstants.hardTag:
+            removableCounter = KillerSudokuConstants.removableCounterHard
+        default:
+            removableCounter = [KillerSudokuConstants.removableCounterEasy,
+                                KillerSudokuConstants.removableCounterMedium,
+                                KillerSudokuConstants.removableCounterHard].randomElement() ?? KillerSudokuConstants.removableCounterEasy
+        }
         
         generateBaseTable()
         mix()
@@ -48,23 +87,31 @@ final class KillerSudoku {
         generatePuzzle()
     }
     
+    func getPuzzle() -> [[Int]] {
+        return puzzle
+    }
+    
+    func getCages() -> [SudokuCage] {
+        return cages
+    }
+    
+    func getTable() -> [[Int]] {
+        return table
+    }
+    
     private func generateBaseTable() {
-        for i in 0..<(n * n) {
-            for j in 0..<(n * n) {
-                table[i][j] = (i * n + i / n + j) % (n * n) + 1
+        for i in 0..<(size) {
+            for j in 0..<(size) {
+                table[i][j] = (i * n + i / n + j) % (size) + 1
             }
         }
     }
     
-    func show() {
-        print(table)
+    private func transpose() {
+        table = (0..<(size)).map { i in (0..<(size)).map { j in table[j][i] } }
     }
     
-    func transpose() {
-        table = (0..<(n * n)).map { i in (0..<(n * n)).map { j in table[j][i] } }
-    }
-    
-    func swapRowsSmall() {
+    private func swapRowsSmall() {
         let area = Int.random(in: 0..<n)
         let line1 = Int.random(in: 0..<n)
         var line2 = Int.random(in: 0..<n)
@@ -76,13 +123,13 @@ final class KillerSudoku {
         table.swapAt(N1, N2)
     }
     
-    func swapColumnsSmall() {
+    private func swapColumnsSmall() {
         transpose()
         swapRowsSmall()
         transpose()
     }
     
-    func swapRowsArea() {
+    private func swapRowsArea() {
         let area1 = Int.random(in: 0..<n)
         var area2 = Int.random(in: 0..<n)
         while area1 == area2 {
@@ -93,13 +140,13 @@ final class KillerSudoku {
         }
     }
     
-    func swapColumnsArea() {
+    private func swapColumnsArea() {
         transpose()
         swapRowsArea()
         transpose()
     }
     
-    func mix(_ amt: Int = 100) {
+    private func mix(_ amt: Int = KillerSudokuConstants.mixRepeat) {
         let mixFunctions: [() -> Void] = [transpose, swapRowsSmall, swapColumnsSmall, swapRowsArea, swapColumnsArea]
         for _ in 0..<amt {
             mixFunctions.randomElement()?()
@@ -107,14 +154,14 @@ final class KillerSudoku {
     }
     
     private func generateCages() {
-        var remainingCells = Set((0..<n*n).flatMap { row in (0..<n*n).map { col in Cell(row: row, col: col, value: table[row][col]) } })
+        var remainingCells = Set((0..<size).flatMap { row in (0..<size).map { col in SudokuCell(row: row, col: col, value: table[row][col]) } })
         
         while !remainingCells.isEmpty {
             let startCell = remainingCells[remainingCells.startIndex]
             remainingCells.remove(startCell)
             let cage = SudokuCage(cell: startCell)
             
-            let cageSize = Int.random(in: 2...5)
+            let cageSize = Int.random(in: KillerSudokuConstants.cageSizeMin...KillerSudokuConstants.cageSizeMax)
             for _ in 1..<cageSize {
                 let neighbors = remainingCells.filter {
                     abs($0.row - startCell.row) + abs($0.col - startCell.col) == 1
@@ -130,52 +177,53 @@ final class KillerSudoku {
     
     private func generatePuzzle() {
         puzzle = table.map { $0 }
-        var removedCells = Set<Cell>()
-        var checkedPuzzles = Set<Cell>()
+        var remainingCells = Set((0..<size).flatMap { row in (0..<size).map { col in SudokuCell(row: row, col: col, value: table[row][col]) } })
+        var removedCells = Set<SudokuCell>()
+        var checkedPuzzles = Set<SudokuCell>()
         
-        removeCageCells(&removedCells, &checkedPuzzles)
-        removeSymmetricCells(&removedCells, &checkedPuzzles)
-        let indexes = Array(0..<9)
-        while removedCells.count < 50 {
-            let row = indexes.randomElement() ?? 0
-            let col = indexes.randomElement() ?? 0
-            tryDeleteCell(row, col, &removedCells, &checkedPuzzles)
+        removeCageCells(&removedCells, &checkedPuzzles, &remainingCells)
+        removeSymmetricCells(&removedCells, &checkedPuzzles, &remainingCells)
+        while removedCells.count < removableCounter && remainingCells.count > 0 {
+            if let cell = remainingCells.randomElement() {
+                tryDeleteCell(cell.row, cell.col, &removedCells, &checkedPuzzles, &remainingCells)
+            }
         }
         unsolvedPuzzle = puzzle.map { $0 }
     }
 
-    private func removeSymmetricCells(_ removedCells: inout Set<Cell>, _ checkedPuzzles: inout Set<Cell>) {
-        let indexes = Array(0..<9)
+    private func removeSymmetricCells(_ removedCells: inout Set<SudokuCell>, _ checkedPuzzles: inout Set<SudokuCell>, _ remainingCells: inout Set<SudokuCell>) {
+        let indexes = Array(0..<size)
 
-        for i in 0..<9 {
+        for i in 0..<size {
             let col = indexes.randomElement()!
-            tryDeleteCell(i, col, &removedCells, &checkedPuzzles)
-            tryDeleteCell(8 - i, 8 - col, &removedCells, &checkedPuzzles)
+            tryDeleteCell(i, col, &removedCells, &checkedPuzzles, &remainingCells)
+            tryDeleteCell(size - 1 - i, size - 1 - col, &removedCells, &checkedPuzzles, &remainingCells)
         }
 
-        for i in 0..<9 {
+        for i in 0..<size {
             let row = indexes.randomElement()!
-            tryDeleteCell(row, i, &removedCells, &checkedPuzzles)
-            tryDeleteCell(8 - row, 8 - i, &removedCells, &checkedPuzzles)
+            tryDeleteCell(row, i, &removedCells, &checkedPuzzles, &remainingCells)
+            tryDeleteCell(size - 1 - row, size - 1 - i, &removedCells, &checkedPuzzles, &remainingCells)
         }
     }
 
-    private func removeCageCells(_ removedCells: inout Set<Cell>, _ checkedPuzzles: inout Set<Cell>) {
+    private func removeCageCells(_ removedCells: inout Set<SudokuCell>, _ checkedPuzzles: inout Set<SudokuCell>, _ remainingCells: inout Set<SudokuCell>) {
         for cage in cages {
-            if let cell = cage.cells.randomElement() {
+            if removedCells.count > removableCounter { break }
+            if let cell = cage.getCells().randomElement() {
                 let row = cell.row
                 let col = cell.col
-                tryDeleteCell(row, col, &removedCells, &checkedPuzzles)
+                tryDeleteCell(row, col, &removedCells, &checkedPuzzles, &remainingCells)
             }
         }
     }
 
-    private func tryDeleteCell(_ row: Int, _ col: Int, _ removedCells: inout Set<Cell>, _ checkedPuzzles: inout Set<Cell>) {
+    private func tryDeleteCell(_ row: Int, _ col: Int, _ removedCells: inout Set<SudokuCell>, _ checkedPuzzles: inout Set<SudokuCell>, _ remainingCells: inout Set<SudokuCell>) {
         guard puzzle[row][col] != 0 else { return }
         
         let value = puzzle[row][col]
         puzzle[row][col] = 0
-        let cell = Cell(row: row, col: col, value: value)
+        let cell = SudokuCell(row: row, col: col, value: value)
         
         if checkedPuzzles.contains(cell) || !hasUniqueSolution(puzzle) {
             puzzle[row][col] = value
@@ -184,25 +232,28 @@ final class KillerSudoku {
             
         }
         checkedPuzzles.insert(cell)
+        remainingCells.remove(cell)
     }
     
     private func hasUniqueSolution(_ puzzle: [[Int]]) -> Bool {
         var solutionCount = 0
 
         func solve(_ board: inout [[Int]], _ row: Int, _ col: Int) -> Bool {
-            if row == 9 {
+            if row == size {
                 solutionCount += 1
                 return solutionCount > 1
             }
+            
+            if solutionCount > 1 { return false}
 
-            let nextRow = (col == 8) ? row + 1 : row
-            let nextCol = (col + 1) % 9
+            let nextRow = (col == size - 1) ? row + 1 : row
+            let nextCol = (col + 1) % size
 
             if board[row][col] != 0 {
                 return solve(&board, nextRow, nextCol)
             }
 
-            for num in 1...9 {
+            for num in 1...size {
                 if isValid(board, row, col, num) {
                     board[row][col] = num
                     if solve(&board, nextRow, nextCol) {
@@ -221,19 +272,12 @@ final class KillerSudoku {
     }
     
     private func isValid(_ board: [[Int]], _ row: Int, _ col: Int, _ num: Int) -> Bool {
-        for i in 0..<9 {
-            if board[row][i] == num || board[i][col] == num {
-                return false
-            }
-        }
+        let boxRow = (row / n) * n
+        let boxCol = (col / n) * n
         
-        let startRow = (row / 3) * 3
-        let startCol = (col / 3) * 3
-        for i in 0..<3 {
-            for j in 0..<3 {
-                if board[startRow + i][startCol + j] == num {
-                    return false
-                }
+        for i in 0..<size {
+            if board[row][i] == num || board[i][col] == num || board[boxRow + i / n][boxCol + i % n] == num {
+                return false
             }
         }
         return true

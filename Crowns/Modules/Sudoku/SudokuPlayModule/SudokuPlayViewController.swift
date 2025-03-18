@@ -22,6 +22,8 @@ final class SudokuPlayViewController: UIViewController {
                                                     tapped: UIImageView(image: Images.backButtonTap))
     private let undoButton: UIButton = CustomButton(button: UIImageView(image: Images.undoButton))
     private let timerPicture: UIImageView = UIImageView(image: Images.timerPicture)
+    private let timerLabel: UILabel = CustomText(text: "", fontSize: 12, textColor: Colors.white)
+    private let timerView = UIView()
     private let levelPicture:  UIImageView = UIImageView(image: Images.levelPicture)
     private let hintButton:  UIButton = CustomButton(button: UIImageView(image: Images.hintButton))
     private let pauseButton:  UIButton = CustomButton(button: UIImageView(image: Images.pauseButton))
@@ -68,7 +70,6 @@ final class SudokuPlayViewController: UIViewController {
     }
     
     private func configureUI() {
-        print(sudokuBoard.table)
         configureBackground()
         configurePlayground()
         configurePlaygroundButtons()
@@ -80,7 +81,8 @@ final class SudokuPlayViewController: UIViewController {
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         let rightBarButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = rightBarButtonItem
-        let leftBarButtonItem = UIBarButtonItem(customView: timerPicture)
+        configureTimer()
+        let leftBarButtonItem = UIBarButtonItem(customView: timerView)
         navigationItem.rightBarButtonItem = leftBarButtonItem
         
         
@@ -91,6 +93,15 @@ final class SudokuPlayViewController: UIViewController {
         
         gameLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.gamePlayLogoTop)
         gamePlayCat.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor)
+    }
+    
+    private func configureTimer() {
+        timerView.setWidth(timerPicture.frame.width)
+        timerView.addSubview(timerPicture)
+        timerView.addSubview(timerLabel)
+        timerPicture.pinCenter(to: timerView)
+        timerLabel.pinCenterX(to: timerPicture)
+        timerLabel.pinTop(to: timerPicture.bottomAnchor, 5)
     }
     
     private func configurePlayground() {
@@ -107,7 +118,8 @@ final class SudokuPlayViewController: UIViewController {
         playground.setWidth(availableWidth)
         playground.setHeight(availableWidth)
         
-        let overlayView = CageOverlayView(sudokuBoard.cages, (cellSize - 4.0) / 3.0)
+        let cages = interactor.getCages(SudokuPlayModel.GetCages.Request())
+        let overlayView = CageOverlayView(cages, (cellSize - 4.0) / 3.0)
         overlayView.isUserInteractionEnabled = false
         overlayView.frame = playground.bounds
         playground.addSubview(overlayView)
@@ -131,6 +143,7 @@ final class SudokuPlayViewController: UIViewController {
         cleanerButton.pinRight(to: playground.trailingAnchor, 10)
         
         cleanerButton.addTarget(self, action: #selector(cleanerButtonTapped), for: .touchUpInside)
+        pauseButton.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
     }
     
     private func configureNumberButtons() {
@@ -157,108 +170,42 @@ final class SudokuPlayViewController: UIViewController {
         numberButtonsStackView.pinCenterX(to: view)
     }
     
-    private func isChangeCorrect(row: Int, col: Int, number: Int) -> String {
-        if number == 0 {
-            return "correct"
-        }
-        for i in 0..<9 {
-            if i != col &&  i != row {
-                if sudokuBoard.puzzle[row][i] == number ||  sudokuBoard.puzzle[i][col] == number {
-                    return "incorrect"
-                }
-            }
-        }
-        
-        for i in (row / 3 * 3)...(row / 3 * 3 + 2) {
-            for j in (col / 3 * 3)...(col / 3 * 3 + 2) {
-                if i != col &&  i != row {
-                    if sudokuBoard.puzzle[i][j] == number {
-                        return "incorrect"
-                    }
-                }
-            }
-        }
-        
-        if let targetCage = sudokuBoard.cages.first(where: { cage in
-            cage.cells.contains { $0.row == row && $0.col == col }
-        }) {
-            var sum = 0
-            var filledCells = 0
-            for cell in targetCage.cells {
-                if sudokuBoard.puzzle[cell.row][cell.col] != 0 {
-                    sum += sudokuBoard.puzzle[cell.row][cell.col]
-                    filledCells += 1
-                }
-                if sum > targetCage.sum {
-                    return "incorrect"
-                }
-                if filledCells == targetCage.cells.count && sum != targetCage.sum {
-                    return "incorrect"
-                }
-            }
-        }
-        return "correct"
+    func setTimerLabel(_ viewModel: SudokuPlayModel.SetTime.ViewModel) {
+        timerLabel.text = viewModel.timerLabel
     }
     
     @objc private func numberButtonTapped(_ sender: UIButton) {
         guard let index = selectedCellIndex else { return }
-        let indexes = interactor.cellChanged(SudokuPlayModel.ChangeCell.Request(index: index))
         
-        if sudokuBoard.unsolvedPuzzle[indexes.arrayRow][indexes.arrayCol] == 0 {
-            sudokuBoard.puzzle[indexes.arrayRow][indexes.arrayCol] = sender.tag
-            for i in 0...8 {
-                for j in 0...8 {
-                    let blockIndex = (i / 3) * 3 + (j / 3)
-                    let cellIndex = (i % 3) * 3 + (j % 3)
-                    if sudokuBoard.unsolvedPuzzle[i][j] == 0 {
-                        let mode: String = isChangeCorrect(row: i, col: j, number: sudokuBoard.puzzle[i][j])
-                        let blockIndexPath = IndexPath(item: blockIndex, section: 0)
-                        if let block = playground.cellForItem(at: blockIndexPath) as? KillerSudokuBlock {
-                            let cellIndexPath = IndexPath(item: cellIndex, section: 0)
-                            if let cell = block.collection.cellForItem(at: cellIndexPath) as? KillerSudokuCell {
-                                cell.configure(number: sudokuBoard.puzzle[i][j], mode: mode)
-                            }
-                        }
-                    }
+        let changedCells = interactor.numberButtonTapped(SudokuPlayModel.ChangeCellNumber.Request(index: index, number: sender.tag))
+        
+        for changedCell in changedCells {
+            if let block = playground.cellForItem(at: changedCell.blockIndex) as? KillerSudokuBlock {
+                if let cell = block.collection.cellForItem(at: changedCell.cellIndex) as? KillerSudokuCell {
+                    cell.configure(number: changedCell.number, mode: changedCell.mode)
                 }
             }
         }
         
-        if sudokuBoard.table == sudokuBoard.puzzle {
-            interactor.playFinished(SudokuPlayModel.RouteGameOver.Request(isWin: true))
-        }
+        interactor.isPlayFinished(SudokuPlayModel.CheckGameOver.Request())
     }
     
     @objc private func cleanerButtonTapped() {
         guard let index = selectedCellIndex else { return }
-        let indexes = interactor.cellChanged(SudokuPlayModel.ChangeCell.Request(index: index))
         
-        if sudokuBoard.unsolvedPuzzle[indexes.arrayRow][indexes.arrayCol] == 0 {
-            sudokuBoard.puzzle[indexes.arrayRow][indexes.arrayCol] = 0
-            let blockIndexPath = IndexPath(item: indexes.blockIndex, section: 0)
-            if let block = playground.cellForItem(at: blockIndexPath) as? KillerSudokuBlock {
-                let cellIndexPath = IndexPath(item: indexes.cellIndex, section: 0)
-                if let cell = block.collection.cellForItem(at: cellIndexPath) as? KillerSudokuCell {
-                    cell.configure(number: 0, mode: "correct")
-                }
-            }
-            for i in 0...8 {
-                for j in 0...8 {
-                    let blockIndex = (i / 3) * 3 + (j / 3)
-                    let cellIndex = (i % 3) * 3 + (j % 3)
-                    if sudokuBoard.unsolvedPuzzle[i][j] == 0 {
-                        let mode: String = isChangeCorrect(row: i, col: j, number: sudokuBoard.puzzle[i][j])
-                        let blockIndexPath = IndexPath(item: blockIndex, section: 0)
-                        if let block = playground.cellForItem(at: blockIndexPath) as? KillerSudokuBlock {
-                            let cellIndexPath = IndexPath(item: cellIndex, section: 0)
-                            if let cell = block.collection.cellForItem(at: cellIndexPath) as? KillerSudokuCell {
-                                cell.configure(number: sudokuBoard.puzzle[i][j], mode: mode)
-                            }
-                        }
-                    }
+        let changedCells = interactor.cleanButtonTapped(SudokuPlayModel.DeleteCellNumber.Request(index: index))
+        
+        for changedCell in changedCells {
+            if let block = playground.cellForItem(at: changedCell.blockIndex) as? KillerSudokuBlock {
+                if let cell = block.collection.cellForItem(at: changedCell.cellIndex) as? KillerSudokuCell {
+                    cell.configure(number: changedCell.number, mode: changedCell.mode)
                 }
             }
         }
+    }
+    
+    @objc private func pauseButtonTapped() {
+        interactor.pauseButtonTapped(SudokuPlayModel.PauseGame.Request())
     }
     
     @objc private func backButtonTapped() {
@@ -274,33 +221,9 @@ extension SudokuPlayViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KillerSudokuBlock.identifier, for: indexPath) as! KillerSudokuBlock
         
-        let blockRow = indexPath.item / gridSize
-        let blockCol = indexPath.item % gridSize
-        var blockData = [Int]()
-        var cellsWithSum = [(cellPath: IndexPath, sum: Int)]()
+        let data = interactor.determineCellsWithSum(SudokuPlayModel.DetermineCellsWithSum.Request(index: indexPath.item))
         
-        for i in 0 ..< 3 {
-            for j in 0 ..< 3 {
-                let row = blockRow * 3 + i
-                let col = blockCol * 3 + j
-                blockData.append(sudokuBoard.puzzle[row][col])
-            }
-        }
-        
-        for cage in sudokuBoard.cages {
-            if let minCageCell = cage.cells.min(by: {
-                $0.row < $1.row || ($0.row == $1.row && $0.col < $1.col)
-            }) {
-                let blockIndex = (minCageCell.row / 3) * 3 + (minCageCell.col / 3)
-                let cellIndex = (minCageCell.row % 3) * 3 + (minCageCell.col) % 3
-                
-                if blockIndex == indexPath.item {
-                    let cellIndexPath = IndexPath(item: cellIndex, section: 0)
-                    cellsWithSum.append((cellPath: cellIndexPath, sum: cage.sum))
-                }
-            }
-        }
-        cell.configure(with: blockData, cellsWithSum)
+        cell.configure(with: data.blockData, data.cellsWithSum)
         
         cell.onCellSelected = { innerIndex in
             self.selectedCellIndex = indexPath.item * 9 + innerIndex

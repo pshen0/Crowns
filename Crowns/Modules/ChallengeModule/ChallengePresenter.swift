@@ -15,11 +15,12 @@ final class ChallengePresenter: ChallengePresentationLogic {
     weak var view: ChallengeViewController?
     
     func routeCrownsGame(_ response: ChallengeModel.RouteCrownsGame.Response) {
-        view?.navigationController?.pushViewController(CrownsPlayBuilder.build(), animated: false)
+        let difficultyLevel: String = [Text.easyTag, Text.mediumTag, Text.hardTag].randomElement() ?? Text.easyTag
+        view?.navigationController?.pushViewController(CrownsPlayBuilder.build(CrownsPlayModel.BuildModule.BuildFoundation(difficultyLevel: difficultyLevel, time: CrownsPlayModel.Time(minutes: Numbers.challengeTimerMinutes, seconds: 0))), animated: false)
     }
     
     func routeSudokuGame(_ response: ChallengeModel.RouteSudokuGame.Response) {
-        let difficultyLevel: String = ["Easy", "Medium", "Hard"].randomElement() ?? "Easy"
-        view?.navigationController?.pushViewController(SudokuPlayBuilder.build(SudokuPlayModel.BuildModule.BuildFoundation(difficultyLevel: difficultyLevel)), animated: false)
+        let difficultyLevel: String = [Text.easyTag, Text.mediumTag, Text.hardTag].randomElement() ?? Text.easyTag
+        view?.navigationController?.pushViewController(SudokuPlayBuilder.build(SudokuPlayModel.BuildModule.BuildFoundation(difficultyLevel: difficultyLevel, time: SudokuPlayModel.Time(minutes: Numbers.challengeTimerMinutes, seconds: 0))), animated: false)
     }
 }

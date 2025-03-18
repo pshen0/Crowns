@@ -10,7 +10,7 @@ import UIKit
 protocol SudokuPlayPresentationLogic {
     func routeBack(_ response: SudokuPlayModel.RouteBack.Response)
     func routeGameOver(_ response: SudokuPlayModel.RouteGameOver.Response)
-    func getCellPosition(_ response: SudokuPlayModel.ChangeCell.Response) -> SudokuPlayModel.ChangeCell.ViewModel
+    func presentTime (_ response: SudokuPlayModel.SetTime.Response)
 }
 
 final class SudokuPlayPresenter: SudokuPlayPresentationLogic {
@@ -27,34 +27,10 @@ final class SudokuPlayPresenter: SudokuPlayPresentationLogic {
         view?.navigationController?.pushViewController(gameOverViewController, animated: false)
     }
     
-    private func getTablePosition(_ index: Int) -> (Int, Int) {
-        var position = index
-        var row = (position / 27) * 3
-        position = position % 27
-        var col = (position / 9) * 3
-        position = position % 9
-        row += position / 3
-        col += position % 3
-        return (row, col)
-    }
-    
-    func getCellPosition(_ response: SudokuPlayModel.ChangeCell.Response) -> SudokuPlayModel.ChangeCell.ViewModel {
-        var arrayRow: Int = 0
-        var arrayCol: Int = 0
-        (arrayRow, arrayCol) = getTablePosition(response.index)
-        
-        let blockIndex = response.index / 9
-        let cellIndex = response.index % 9
-        let blockIndexPath = IndexPath(item: blockIndex, section: 0)
-        
-        let indexes: SudokuPlayModel.ChangeCell.ViewModel = SudokuPlayModel.ChangeCell.ViewModel(
-            arrayRow: arrayRow,
-            arrayCol: arrayCol,
-            blockIndexPath: blockIndexPath,
-            blockIndex: blockIndex,
-            cellIndex: cellIndex
-        )
-        
-        return indexes
+    func presentTime (_ response: SudokuPlayModel.SetTime.Response) {
+        let minutesStr = response.time.minutes < 10 ? "0\(response.time.minutes)" : "\(response.time.minutes)"
+        let secondsStr = response.time.seconds < 10 ? "0\(response.time.seconds)" : "\(response.time.seconds)"
+        let timerLabel = minutesStr + ":" + secondsStr
+        view?.setTimerLabel(SudokuPlayModel.SetTime.ViewModel(timerLabel: timerLabel))
     }
 }

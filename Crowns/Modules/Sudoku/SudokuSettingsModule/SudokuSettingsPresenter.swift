@@ -17,7 +17,16 @@ final class SudokuSettingsPresenter: SudokuSettingsPresentationLogic {
     weak var view: SudokuSettingsViewController?
     
     func routeSudokuGame(_ response: SudokuSettingsModel.RouteSudokuGame.Response) {
-        view?.navigationController?.pushViewController(SudokuPlayBuilder.build(SudokuPlayModel.BuildModule.BuildFoundation(difficultyLevel: response.difficultyLevel)), animated: false)
+        var time: SudokuPlayModel.Time = SudokuPlayModel.Time(minutes: 0, seconds: 0)
+        if let minutes = Int(response.timerLabel.prefix(2)) {
+            if let seconds = Int(response.timerLabel.suffix(2)) {
+                time = SudokuPlayModel.Time(minutes: minutes, seconds: seconds)
+            }
+        } else {
+            time = SudokuPlayModel.Time(minutes: 0, seconds: 0)
+        }
+        
+        view?.navigationController?.pushViewController(SudokuPlayBuilder.build(SudokuPlayModel.BuildModule.BuildFoundation(difficultyLevel: response.difficultyLevel, time: time)), animated: false)
     }
     
     func routeBack(_ response: SudokuSettingsModel.RouteBack.Response) {
