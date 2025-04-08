@@ -44,7 +44,7 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
             time.seconds = 59
             presenter.presentTime(CrownsPlayModel.SetTime.Response(time: time))
         } else {
-            playFinished(isWin: false)
+            playFinished(isWin: "lose")
         }
     }
     
@@ -72,7 +72,7 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
         }
         print(counter)
         if counter == 9 {
-            playFinished(isWin: true)
+            playFinished(isWin: "win")
         }
     }
     
@@ -87,7 +87,7 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
         }
     }
     
-    private func playFinished(isWin: Bool) {
+    private func playFinished(isWin: String) {
         presenter.routeGameOver(CrownsPlayModel.RouteGameOver.Response(isWin: isWin))
     }
     

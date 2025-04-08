@@ -20,8 +20,7 @@ final class CrownsPlayPresenter: CrownsPlayPresentationLogic {
     }
     
     func routeGameOver(_ response: CrownsPlayModel.RouteGameOver.Response) {
-        let gameOverViewController = SudokuGameOverBuilder.build()
-        gameOverViewController.isWin = response.isWin
+        let gameOverViewController = CrownsGameOverBuilder.build(isWin: response.isWin)
         view?.navigationController?.pushViewController(gameOverViewController, animated: false)
     }
     

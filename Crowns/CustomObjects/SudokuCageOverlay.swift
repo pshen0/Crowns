@@ -58,10 +58,10 @@ final class CageOverlayView: UIView {
                     }
 
                     switch (dx, dy) {
-                    case (-1, 0): // Левая
+                    case (-1, 0):
                         path.move(to: CGPoint(x: cellFrame.minX, y: cellFrame.minY))
                         path.addLine(to: CGPoint(x: cellFrame.minX, y: cellFrame.maxY))
-                    case (0, -1):  // Верхняя граница
+                    case (0, -1):
                         path.move(to: CGPoint(x: cellFrame.minX, y: cellFrame.minY))
                         path.addLine(to: CGPoint(x: cellFrame.maxX, y: cellFrame.minY))
                     default:

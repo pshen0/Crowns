@@ -210,7 +210,7 @@ enum Constraints {
     static let homeCalendarTop: CGFloat = 35
     static let homeCalendarWidth: CGFloat = 350
     static let homeCalendarHeight: CGFloat = 250
-    static let homeButtonStackBottom: CGFloat = 10
+    static let homeButtonStackTop: CGFloat = 30
     static let homeButtonStackSpacing: CGFloat = 8
     static let tabBarItemIndentation: CGFloat = 10
     

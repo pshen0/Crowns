@@ -36,7 +36,7 @@ enum CrownsPlayModel {
     enum RouteGameOver {
         struct Request { }
         struct Response {
-            let isWin: Bool
+            let isWin: String
         }
     }
     

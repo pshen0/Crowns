@@ -195,13 +195,13 @@ final class KillerSudoku {
         let indexes = Array(0..<size)
 
         for i in 0..<size {
-            let col = indexes.randomElement()!
+            let col = indexes.randomElement() ?? 0
             tryDeleteCell(i, col, &removedCells, &checkedPuzzles, &remainingCells)
             tryDeleteCell(size - 1 - i, size - 1 - col, &removedCells, &checkedPuzzles, &remainingCells)
         }
 
         for i in 0..<size {
-            let row = indexes.randomElement()!
+            let row = indexes.randomElement() ?? 0
             tryDeleteCell(row, i, &removedCells, &checkedPuzzles, &remainingCells)
             tryDeleteCell(size - 1 - row, size - 1 - i, &removedCells, &checkedPuzzles, &remainingCells)
         }

@@ -124,6 +124,12 @@
 		0F7465582D765D2300959164 /* DeveloperBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7465572D765D2300959164 /* DeveloperBuilder.swift */; };
 		0F74655C2D773B0D00959164 /* SudokuPlaygroundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F74655B2D773B0D00959164 /* SudokuPlaygroundCell.swift */; };
 		0F8EED972D788FEC00F60BFA /* KillerSudokuGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8EED962D788FEC00F60BFA /* KillerSudokuGenerator.swift */; };
+		0F9BA2FD2DA15F6300C2ACFD /* DataModels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0F9BA2FB2DA15F6300C2ACFD /* DataModels.xcdatamodeld */; };
+		0F9BA3002DA1638500C2ACFD /* CrownsGameOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9BA2FF2DA1638500C2ACFD /* CrownsGameOverViewController.swift */; };
+		0F9BA3022DA1639000C2ACFD /* CrownsGameOverInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9BA3012DA1639000C2ACFD /* CrownsGameOverInteractor.swift */; };
+		0F9BA3042DA1639A00C2ACFD /* CrownsGameOverPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9BA3032DA1639A00C2ACFD /* CrownsGameOverPresenter.swift */; };
+		0F9BA3062DA163A400C2ACFD /* CrownsGameOverModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9BA3052DA163A400C2ACFD /* CrownsGameOverModel.swift */; };
+		0F9BA3082DA163CE00C2ACFD /* CrownsGameOverBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9BA3072DA163CE00C2ACFD /* CrownsGameOverBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -264,6 +270,12 @@
 		0F7465572D765D2300959164 /* DeveloperBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperBuilder.swift; sourceTree = "<group>"; };
 		0F74655B2D773B0D00959164 /* SudokuPlaygroundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuPlaygroundCell.swift; sourceTree = "<group>"; };
 		0F8EED962D788FEC00F60BFA /* KillerSudokuGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillerSudokuGenerator.swift; sourceTree = "<group>"; };
+		0F9BA2FC2DA15F6300C2ACFD /* DataModels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModels.xcdatamodel; sourceTree = "<group>"; };
+		0F9BA2FF2DA1638500C2ACFD /* CrownsGameOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsGameOverViewController.swift; sourceTree = "<group>"; };
+		0F9BA3012DA1639000C2ACFD /* CrownsGameOverInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsGameOverInteractor.swift; sourceTree = "<group>"; };
+		0F9BA3032DA1639A00C2ACFD /* CrownsGameOverPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsGameOverPresenter.swift; sourceTree = "<group>"; };
+		0F9BA3052DA163A400C2ACFD /* CrownsGameOverModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsGameOverModel.swift; sourceTree = "<group>"; };
+		0F9BA3072DA163CE00C2ACFD /* CrownsGameOverBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsGameOverBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -471,6 +483,7 @@
 		0F5F8C7E2D4177E2006A8164 /* Crowns */ = {
 			isa = PBXGroup;
 			children = (
+				0F9BA2FA2DA15F2900C2ACFD /* CoreData */,
 				0F8EED952D788F6D00F60BFA /* PuzzleGenerators */,
 				0F2C54202D49529D0051AD13 /* Modules */,
 				0F1A78D72D482D9D00DAA4F0 /* Application */,
@@ -522,6 +535,7 @@
 		0F6AFAD52D677143007B8454 /* Crowns */ = {
 			isa = PBXGroup;
 			children = (
+				0F9BA2FE2DA1635100C2ACFD /* CrownsGameOverViewModule */,
 				0F6AFAEE2D677CE7007B8454 /* CrownsSettingsModule */,
 				0F2C54212D4EEA5F0051AD13 /* CrownsLearningModule */,
 				0F2C542A2D4EF57B0051AD13 /* CrownsPlayModule */,
@@ -664,6 +678,26 @@
 				0F33AB272D847948004B9739 /* CrownsGenerator.swift */,
 			);
 			path = PuzzleGenerators;
+			sourceTree = "<group>";
+		};
+		0F9BA2FA2DA15F2900C2ACFD /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				0F9BA2FB2DA15F6300C2ACFD /* DataModels.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		0F9BA2FE2DA1635100C2ACFD /* CrownsGameOverViewModule */ = {
+			isa = PBXGroup;
+			children = (
+				0F9BA2FF2DA1638500C2ACFD /* CrownsGameOverViewController.swift */,
+				0F9BA3012DA1639000C2ACFD /* CrownsGameOverInteractor.swift */,
+				0F9BA3032DA1639A00C2ACFD /* CrownsGameOverPresenter.swift */,
+				0F9BA3052DA163A400C2ACFD /* CrownsGameOverModel.swift */,
+				0F9BA3072DA163CE00C2ACFD /* CrownsGameOverBuilder.swift */,
+			);
+			path = CrownsGameOverViewModule;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -826,6 +860,7 @@
 				0F5F18642D511CEE00ED204B /* CrownsLearningBuilder.swift in Sources */,
 				0F2C544F2D5051A10051AD13 /* SudokuPlayBuilder.swift in Sources */,
 				0F7465542D765D1000959164 /* DeveloperPresenter.swift in Sources */,
+				0F9BA3062DA163A400C2ACFD /* CrownsGameOverModel.swift in Sources */,
 				0F6AFAF62D677D49007B8454 /* CrownsSettingsBuilder.swift in Sources */,
 				0F7465562D765D1900959164 /* DeveloperModel.swift in Sources */,
 				0F7465582D765D2300959164 /* DeveloperBuilder.swift in Sources */,
@@ -845,12 +880,14 @@
 				0F7465482D765BD700959164 /* StatisticsInteractor.swift in Sources */,
 				0F2C54452D50513A0051AD13 /* CrownsPlayModel.swift in Sources */,
 				0F33AB282D847948004B9739 /* CrownsGenerator.swift in Sources */,
+				0F9BA3042DA1639A00C2ACFD /* CrownsGameOverPresenter.swift in Sources */,
 				0F6AFAFD2D67F848007B8454 /* CustomText.swift in Sources */,
 				0F5F186E2D511F6000ED204B /* QueensLearningInteractor.swift in Sources */,
 				0F5F18622D511CDD00ED204B /* CrownsLearningModel.swift in Sources */,
 				0F4349642D80D5CA00333BB6 /* SudokuGameOverBuilder.swift in Sources */,
 				0F4349622D80D5C000333BB6 /* SudokuGameOverModel.swift in Sources */,
 				0F2C54512D5051E10051AD13 /* QueensPlayInteractor.swift in Sources */,
+				0F9BA3002DA1638500C2ACFD /* CrownsGameOverViewController.swift in Sources */,
 				0F74653E2D7658D500959164 /* SettingsInteractor.swift in Sources */,
 				0F5F8CB42D417C9C006A8164 /* HomePresenter.swift in Sources */,
 				0F74654E2D765BF600959164 /* StatisticsBuilder.swift in Sources */,
@@ -861,9 +898,11 @@
 				0F6AFADA2D677329007B8454 /* QueensSettingsViewController.swift in Sources */,
 				0F2C543F2D50236C0051AD13 /* QueensPlayViewController.swift in Sources */,
 				0F2C543D2D50230F0051AD13 /* CrownsPlayViewController.swift in Sources */,
+				0F9BA2FD2DA15F6300C2ACFD /* DataModels.xcdatamodeld in Sources */,
 				0F1A78DA2D4837C500DAA4F0 /* HomeBuilder.swift in Sources */,
 				0F1A78E82D48522D00DAA4F0 /* Constants.swift in Sources */,
 				0F6AFAE72D677A01007B8454 /* SudokuSettingsInteractor.swift in Sources */,
+				0F9BA3082DA163CE00C2ACFD /* CrownsGameOverBuilder.swift in Sources */,
 				0F6AFAEB2D677A29007B8454 /* SudokuSettingsBuilder.swift in Sources */,
 				0F5F185E2D511BF700ED204B /* CrownsLearningInteractor.swift in Sources */,
 				0F43495E2D80D5A800333BB6 /* SudokuGameOverInteractor.swift in Sources */,
@@ -894,6 +933,7 @@
 				0F6AFAE92D677A1A007B8454 /* SudokuSettingsPresenter.swift in Sources */,
 				0F1A78E22D4842BD00DAA4F0 /* ChallengePresenter.swift in Sources */,
 				0F43495C2D80D55100333BB6 /* SudokuGameOverViewController.swift in Sources */,
+				0F9BA3022DA1639000C2ACFD /* CrownsGameOverInteractor.swift in Sources */,
 				0F7465402D7658E200959164 /* SettingsPresenter.swift in Sources */,
 				0F33AB2A2D848566004B9739 /* CrownsPlaygroundCell.swift in Sources */,
 				0F6AFAE22D677390007B8454 /* QueensSettingsBuilder.swift in Sources */,
@@ -1094,6 +1134,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1122,6 +1163,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1266,6 +1308,19 @@
 			productName = FSCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		0F9BA2FB2DA15F6300C2ACFD /* DataModels.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0F9BA2FC2DA15F6300C2ACFD /* DataModels.xcdatamodel */,
+			);
+			currentVersion = 0F9BA2FC2DA15F6300C2ACFD /* DataModels.xcdatamodel */;
+			path = DataModels.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0F5F8C742D4177E2006A8164 /* Project object */;
 }

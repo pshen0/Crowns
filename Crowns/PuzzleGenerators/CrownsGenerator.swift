@@ -115,7 +115,7 @@ final class Crowns {
             let uncoloredNeighborhood = neighborhood.filter { colorGrid[$0[0]][$0[1]] == -1 }
             
             if !uncoloredNeighborhood.isEmpty {
-                let chosenNeighbor = uncoloredNeighborhood.randomElement()!
+                let chosenNeighbor = uncoloredNeighborhood.randomElement() ?? uncoloredNeighborhood[0]
                 colorGrid[chosenNeighbor[0]][chosenNeighbor[1]] = color
             }
         }
