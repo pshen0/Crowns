@@ -11,6 +11,7 @@ protocol ProfilePresentationLogic {
     func routeSettings(_ response: ProfileModel.RouteSettings.Response)
     func routeStatistics(_ response: ProfileModel.RouteStatistics.Response)
     func routeDeveloper(_ response: ProfileModel.RouteDeveloper.Response)
+    func transferProfileData(_ viewModel: ProfileModel.LoadProfile.Response)
 }
 
 final class ProfilePresenter: ProfilePresentationLogic {
@@ -27,5 +28,9 @@ final class ProfilePresenter: ProfilePresentationLogic {
     
     func routeDeveloper(_ response: ProfileModel.RouteDeveloper.Response) {
         view?.navigationController?.pushViewController(DeveloperBuilder.build(), animated: false)
+    }
+    
+    func transferProfileData(_ response: ProfileModel.LoadProfile.Response) {
+        view?.loadProfile(ProfileModel.LoadProfile.ViewModel(name: response.name, avatar: response.avatar))
     }
 }

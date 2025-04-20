@@ -22,4 +22,23 @@ enum ProfileModel {
         struct Request { }
         struct Response { }
     }
+    
+    enum LoadProfile {
+        struct Request { }
+        struct Response { 
+            let name: String
+            let avatar: UIImage
+        }
+        struct ViewModel { 
+            let name: String
+            let avatar: UIImage
+        }
+    }
+    
+    enum SaveProfile {
+        struct Request {
+            let name: String?
+            let avatar: UIImage?
+        }
+    }
 }

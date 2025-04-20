@@ -17,16 +17,20 @@ final class CrownsSettingsPresenter: CrownsSettingsPresentationLogic {
     weak var view: CrownsSettingsViewController?
     
     func routeCrownsGame(_ response: CrownsSettingsModel.RouteCrownsGame.Response) {
-        var time: CrownsPlayModel.Time = CrownsPlayModel.Time(minutes: 0, seconds: 0)
+        var time: Int = 0
         if let minutes = Int(response.timerLabel.prefix(2)) {
             if let seconds = Int(response.timerLabel.suffix(2)) {
-                time = CrownsPlayModel.Time(minutes: minutes, seconds: seconds)
+                time = minutes * 60 + seconds
             }
-        } else {
-            time = CrownsPlayModel.Time(minutes: 0, seconds: 0)
         }
         
-        view?.navigationController?.pushViewController(CrownsPlayBuilder.build(CrownsPlayModel.BuildModule.BuildFoundation(difficultyLevel: response.difficultyLevel, time: time)), animated: false)
+        view?.navigationController?.pushViewController(CrownsPlayBuilder.build(CrownsPlayModel.BuildModule.BuildFoundation(
+            crowns: Crowns(response.difficultyLevel),
+            elapsedTime: 0,
+            initialTime: time,
+            isTimerUsed: time == 0 ? false : true,
+            placements: Array(repeating: Array(repeating: 0, count: 9), count: 9))),
+                                                       animated: false)
     }
     
     func routeBack(_ response: CrownsSettingsModel.RouteBack.Response) {

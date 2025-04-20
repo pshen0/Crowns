@@ -36,4 +36,14 @@ enum HomeModel {
         struct Request { }
         struct Response { }
     }
+    
+    enum GetUnfinishedCrownsGame {
+        struct Request { }
+        struct Response { 
+            let foundation: CrownsPlayModel.BuildModule.BuildFoundation
+        }
+        struct ViewModel {
+            let foundation: UnfinishedCrownsModel.BuildModule.BuildFoundation
+        }
+    }
 }

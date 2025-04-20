@@ -12,6 +12,7 @@ protocol HomeBusinessLogic {
      func learnCrownsTapped(_ request: HomeModel.RouteToCrownsLearning.Request)
      func learnSudokuTapped(_ request: HomeModel.RouteToSudokuLearning.Request)
      func learnQueensTapped(_ request: HomeModel.RouteToQueensLearning.Request)
+    func getUnfinishedCrownsGame(_ request: HomeModel.GetUnfinishedCrownsGame.Request)
 }
 
 final class HomeInteractor: HomeBusinessLogic {
@@ -44,5 +45,11 @@ final class HomeInteractor: HomeBusinessLogic {
     
      func learnQueensTapped(_ request: HomeModel.RouteToQueensLearning.Request) {
         presenter.routeToQueensLearning(HomeModel.RouteToQueensLearning.Response())
+    }
+    
+    func getUnfinishedCrownsGame(_ request: HomeModel.GetUnfinishedCrownsGame.Request) {
+        if let unfinishedCrownsGame = CoreDataCrownsProgressStack.shared.fetchProgress() {
+            presenter.showUnfinishedGame(HomeModel.GetUnfinishedCrownsGame.Response(foundation: unfinishedCrownsGame))
+        }
     }
 }

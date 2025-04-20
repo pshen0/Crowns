@@ -12,7 +12,6 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
     
     private let profileLogoText = CustomText(text: Text.profileLogo, fontSize: Constraints.profileLogoSize, textColor: Colors.white)
     private let nameTextField = NameTextField()
-    private let settingsButton: UIButton = CustomButton(button: UIImageView(image: Images.settingsButton))
     private let statisticsButton: UIButton = CustomButton(button: UIImageView(image: Images.statisticsButton))
     private let developerButton: UIButton = CustomButton(button: UIImageView(image: Images.developerButton))
     private let profileButtonStack: UIStackView = UIStackView()
@@ -54,6 +53,7 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
     private func configureUI() {
         view.backgroundColor = Colors.darkGray
         configureProfile()
+        interactor.loadProfileData(ProfileModel.LoadProfile.Request())
         configureButtonStack()
     }
     
@@ -70,6 +70,12 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
         nameTextField.setWidth(Constraints.nameTextFieldWidth)
         
         changeAvatarButton.addTarget(self, action: #selector(selectAvatar), for: .touchUpInside)
+        nameTextField.addTarget(self, action: #selector(nameChanged), for: .editingDidEnd)
+    }
+    
+    func loadProfile(_ viewModel: ProfileModel.LoadProfile.ViewModel) {
+        nameTextField.text = viewModel.name
+        avatarImageField.image = viewModel.avatar
     }
     
     private func configureButtonStack() {
@@ -77,7 +83,7 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
         profileButtonStack.spacing = Constraints.profileButtonStackSpacing
         profileButtonStack.alignment = .center
         
-        for button in [settingsButton, statisticsButton, developerButton] {
+        for button in [statisticsButton, developerButton] {
             profileButtonStack.addArrangedSubview(button)
         }
         
@@ -86,7 +92,6 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
         profileButtonStack.pinCenterX(to: view)
         profileButtonStack.pinTop(to: nameTextField.bottomAnchor, Constraints.profileButtonStackTop)
         
-        settingsButton.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
         statisticsButton.addTarget(self, action: #selector(statisticsButtonTapped), for: .touchUpInside)
         developerButton.addTarget(self, action: #selector(developerButtonTapped), for: .touchUpInside)
     }
@@ -94,12 +99,12 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
             avatarImageField.image = selectedImage
+            interactor.saveProfileData(ProfileModel.SaveProfile.Request(name: nameTextField.text, avatar: avatarImageField.image))
         }
         picker.dismiss(animated: true)
     }
     
-    @objc 
-    private func selectAvatar() {
+    @objc private func selectAvatar() {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = .photoLibrary
@@ -107,18 +112,15 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
         present(picker, animated: true)
     }
     
-    @objc
-    private func settingsButtonTapped() {
-        interactor.settingsButtonTapped(ProfileModel.RouteSettings.Request())
+    @objc private func nameChanged() {
+        interactor.saveProfileData(ProfileModel.SaveProfile.Request(name: nameTextField.text, avatar: avatarImageField.image))
     }
     
-    @objc
-    private func statisticsButtonTapped() {
+    @objc private func statisticsButtonTapped() {
         interactor.statisticsButtonTapped(ProfileModel.RouteStatistics.Request())
     }
     
-    @objc
-    private func developerButtonTapped() {
+    @objc private func developerButtonTapped() {
         interactor.developerButtonTapped(ProfileModel.RouteDeveloper.Request())
     }
 }

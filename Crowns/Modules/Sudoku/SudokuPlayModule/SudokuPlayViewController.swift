@@ -28,6 +28,7 @@ final class SudokuPlayViewController: UIViewController {
     private let hintButton:  UIButton = CustomButton(button: UIImageView(image: Images.hintButton))
     private let pauseButton:  UIButton = CustomButton(button: UIImageView(image: Images.pauseButton))
     private let cleanerButton:  UIButton = CustomButton(button: UIImageView(image: Images.cleanerButton))
+    private let learningButton:  UIButton = CustomButton(button: UIImageView(image: Images.gameLearningButton))
     private let gameLogo: UILabel = CustomText(text: Text.sudokuGame, fontSize: Constraints.gameLogoSize, textColor: Colors.white)
     private let gamePlayCat: UIImageView = UIImageView(image: Images.gamePlayCat)
     private let gridSize = 3
@@ -131,7 +132,7 @@ final class SudokuPlayViewController: UIViewController {
             subview.pinBottom(to: playground.topAnchor, 10)
         }
         
-        for subview in [undoButton, cleanerButton] {
+        for subview in [undoButton, cleanerButton, learningButton] {
             view.addSubview(subview)
             subview.pinTop(to: playground.bottomAnchor, 10)
         }
@@ -140,7 +141,9 @@ final class SudokuPlayViewController: UIViewController {
         pauseButton.pinCenterX(to: playground)
         undoButton.pinLeft(to: playground.leadingAnchor, 10)
         hintButton.pinRight(to: playground.trailingAnchor, 10)
-        cleanerButton.pinRight(to: playground.trailingAnchor, 10)
+        cleanerButton.pinCenterX(to: playground)
+        learningButton.pinRight(to: playground.trailingAnchor, 10)
+        
         
         cleanerButton.addTarget(self, action: #selector(cleanerButtonTapped), for: .touchUpInside)
         pauseButton.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)

@@ -38,6 +38,14 @@ final class HomeViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if UserDefaults.standard.bool(forKey: UserDefaultsKeys.unfinishedCrownsGame) {
+            interactor.getUnfinishedCrownsGame(HomeModel.GetUnfinishedCrownsGame.Request())
+        }
     }
     
     private func configureUI() {
@@ -88,10 +96,10 @@ final class HomeViewController: UIViewController{
         
         gameSelectorViewController.chooseCrownsButton.addTarget(self, action: #selector(playCrownsTapped), for: .touchUpInside)
         gameSelectorViewController.chooseSudokuButton.addTarget(self, action: #selector(playSudokuTapped), for: .touchUpInside)
-        gameSelectorViewController.chooseQueensButton.addTarget(self, action: #selector(playQueensTapped), for: .touchUpInside)
+        //gameSelectorViewController.chooseQueensButton.addTarget(self, action: #selector(playQueensTapped), for: .touchUpInside)
         learningSelectorViewController.chooseCrownsButton.addTarget(self, action: #selector(learnCrownsTapped), for: .touchUpInside)
         learningSelectorViewController.chooseSudokuButton.addTarget(self, action: #selector(learnSudokuTapped), for: .touchUpInside)
-        learningSelectorViewController.chooseQueensButton.addTarget(self, action: #selector(learnQueensTapped), for: .touchUpInside)
+        //learningSelectorViewController.chooseQueensButton.addTarget(self, action: #selector(learnQueensTapped), for: .touchUpInside)
     }
     
     func hideGameSelector() {
@@ -100,6 +108,13 @@ final class HomeViewController: UIViewController{
     
     func hideLearningSelector() {
         learningSelectorViewController.dismiss(animated: false)
+    }
+    
+    func showUnfinishedGameView(_ viewModel: UnfinishedCrownsModel.BuildModule.BuildFoundation) {
+        let unfinishedGameView = UnfinishedCrownsBuilder.build(foundation: viewModel)
+        unfinishedGameView.modalPresentationStyle = .overFullScreen
+        unfinishedGameView.delegate = self
+        self.present(unfinishedGameView, animated: false)
     }
     
     @objc private func gameSelectorTapped() {
@@ -132,5 +147,11 @@ final class HomeViewController: UIViewController{
     
     @objc private func learnQueensTapped() {
         interactor.learnQueensTapped(HomeModel.RouteToQueensLearning.Request())
+    }
+}
+
+extension HomeViewController: UnfinishedCrownsViewControllerDelegate {
+    func unfinishedCrownsDidRequestToContinue(with foundation: CrownsPlayModel.BuildModule.BuildFoundation) {
+        navigationController?.pushViewController(CrownsPlayBuilder.build(foundation) , animated: true)
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 final class GameSelector: UIViewController {
     let chooseCrownsButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseCrownsButton))
     let chooseSudokuButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseSudokuButton))
-    let chooseQueensButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseQueensButton))
+    //let chooseQueensButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseQueensButton))
     private let dismissView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black.withAlphaComponent(Numbers.gameSelectorOverlay)
@@ -72,7 +72,7 @@ final class GameSelector: UIViewController {
     }
     
     private func configureButtonsStack() {
-        for button in [chooseCrownsButton, chooseSudokuButton, chooseQueensButton] {
+        for button in [chooseCrownsButton, chooseSudokuButton] {
             gameSelectorButtonsStack.addArrangedSubview(button)
         }
         

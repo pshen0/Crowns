@@ -7,17 +7,38 @@
 
 import UIKit
 
+enum CoreData {
+    static let containerName = "DataModels"
+    static let loadError = "Ошибка загрузки"
+    static let deleteError = "Ошибка удаления"
+    static let saveError = "Ошибка сохранения"
+}
+
+enum UserDefaultsKeys {
+    static let unfinishedCrownsGame = "UnfinishedCrownsGame"
+}
+
 enum Colors {
     enum CrownsColors {
-        static let lightBlue: UIColor = UIColor(hex: "95B8D1", alpha: 1.0)
-        static let lightGreen: UIColor = UIColor(hex: "A2C4AF", alpha: 1.0)
-        static let green: UIColor = UIColor(hex: "83A164", alpha: 1.0)
-        static let blue: UIColor = UIColor(hex: "619CD3", alpha: 1.0)
-        static let yellow : UIColor = UIColor(hex: "FFE49C", alpha: 1.0)
-        static let orange: UIColor = UIColor(hex: "F3B088", alpha: 1.0)
-        static let purple: UIColor = UIColor(hex: "7058D9", alpha: 1.0)
-        static let pink: UIColor = UIColor(hex: "B7A4B3", alpha: 1.0)
-        static let red: UIColor = UIColor(hex: "E67C73", alpha: 1.0)
+        static let lightBlue: UIColorCodable = UIColorCodable(UIColor(red: 149/255, green: 184/255, blue: 209/255, alpha: 1))
+        static let lightGreen: UIColorCodable = UIColorCodable(UIColor(red: 162/255, green: 196/255, blue: 175/255, alpha: 1))
+        static let green: UIColorCodable = UIColorCodable(UIColor(red: 131/255, green: 161/255, blue: 100/255, alpha: 1))
+        static let blue: UIColorCodable = UIColorCodable(UIColor(red: 97/255, green: 156/255, blue: 211/255, alpha: 1))
+        static let yellow: UIColorCodable = UIColorCodable(UIColor(red: 255/255, green: 228/255, blue: 156/255, alpha: 1))
+        static let orange: UIColorCodable = UIColorCodable(UIColor(red: 247/255, green: 176/255, blue: 136/255, alpha: 1))
+        static let purple: UIColorCodable = UIColorCodable(UIColor(red: 112/255, green: 88/255, blue: 217/255, alpha: 1))
+        static let pink: UIColorCodable = UIColorCodable(UIColor(red: 199/255, green: 131/255, blue: 185/255, alpha: 1))
+        static let red: UIColorCodable = UIColorCodable(UIColor(red: 253/255, green: 127/255, blue: 116/255, alpha: 1))
+        static let clear: UIColorCodable = UIColorCodable(UIColor(red: 1, green: 1, blue: 1, alpha: 1))
+//        static let lightBlue: UIColor = UIColor(hex: "95B8D1", alpha: 1.0)
+//        static let lightGreen: UIColor = UIColor(hex: "A2C4AF", alpha: 1.0)
+//        static let green: UIColor = UIColor(hex: "83A164", alpha: 1.0)
+//        static let blue: UIColor = UIColor(hex: "619CD3", alpha: 1.0)
+//        static let yellow : UIColor = UIColor(hex: "FFE49C", alpha: 1.0)
+//        static let orange: UIColor = UIColor(hex: "F3B088", alpha: 1.0)
+//        static let purple: UIColor = UIColor(hex: "7058D9", alpha: 1.0)
+//        static let pink: UIColor = UIColor(hex: "B7A4B3", alpha: 1.0)
+//        static let red: UIColor = UIColor(hex: "E67C73", alpha: 1.0)
     }
     
     
@@ -82,7 +103,7 @@ enum Images {
     static let newGameButton: UIImage? = UIImage(named: "newGameButton")
     static let continueButton: UIImage? = UIImage(named: "continueButton")
     static let learningButton: UIImage? = UIImage(named: "learningButton")
-    static let homeCalendar: UIImage? = UIImage(named: "homeCalendar")
+    static let smallCat: UIImage? = UIImage(named: "smallCat")
     
     // GameSelector
     static let chooseCrownsButton: UIImage? = UIImage(named: "chooseCrownsButton")
@@ -96,6 +117,7 @@ enum Images {
     static let hintButton: UIImage? = UIImage(named: "hintButton")
     static let pauseButton: UIImage? = UIImage(named: "pauseButton")
     static let cleanerButton: UIImage? = UIImage(named: "cleanerButton")
+    static let gameLearningButton: UIImage? = UIImage(named: "gameLearningButton")
     static let gamePlayCat: UIImage? = UIImage(named: "startPlayCat")
     static let crown: UIImage? = UIImage(named: "crown")
     static let point: UIImage? = UIImage(named: "point")
@@ -114,9 +136,10 @@ enum Numbers {
     static let lightningBackVisible: Double  = 0.2
     static let lightningAnimationUnvisible: Double = 0
     static let lightningAnimationVisible: Double = 1
-    static let lightningAnimationDuration: Double = 8.0
+    static let lightningAnimationDuration: Double = 6.0
     static let lightningAppearanceDuration: Double = 0.5
     static let challengeTimerMinutes = 5
+    static let challengeTime = 300
     
     // ProfileView
     static let nameMaxLength: Int = 12
@@ -170,6 +193,9 @@ enum Text {
     
     // HomeView
     static let homeLogo: String = "CROWNS"
+    static let unfinishedCrowns: String = "You have one unfinished crowns game"
+    static let unfinishedSudoku: String = "You have one unfinished sudoku game"
+    static let continueGameText: String = "Continue the game"
     
     // ProfileView
     static let profileLogo: String = "Profile"
@@ -213,6 +239,12 @@ enum Constraints {
     static let homeButtonStackTop: CGFloat = 30
     static let homeButtonStackSpacing: CGFloat = 8
     static let tabBarItemIndentation: CGFloat = 10
+    static let unfinishedViewLogoTop: CGFloat = 15
+    static let unfinishedViewLogoWidth: CGFloat = 280
+    static let unfinishedViewStackSpacing: CGFloat = 8
+    static let discriptionUnfinishedCrownsTop: CGFloat = 20
+    static let discriptionUnfinishedCrownsL: CGFloat = 20
+    static let discriptionTextSize: CGFloat = 20
     
     // GameSellector
     static let gameSelectorRadius: CGFloat = 16

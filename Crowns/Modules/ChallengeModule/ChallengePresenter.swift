@@ -16,7 +16,13 @@ final class ChallengePresenter: ChallengePresentationLogic {
     
     func routeCrownsGame(_ response: ChallengeModel.RouteCrownsGame.Response) {
         let difficultyLevel: String = [Text.easyTag, Text.mediumTag, Text.hardTag].randomElement() ?? Text.easyTag
-        view?.navigationController?.pushViewController(CrownsPlayBuilder.build(CrownsPlayModel.BuildModule.BuildFoundation(difficultyLevel: difficultyLevel, time: CrownsPlayModel.Time(minutes: Numbers.challengeTimerMinutes, seconds: 0))), animated: false)
+        let crownsFoundation: CrownsPlayModel.BuildModule.BuildFoundation = CrownsPlayModel.BuildModule.BuildFoundation(
+            crowns: Crowns(difficultyLevel),
+            elapsedTime: 0,
+            initialTime: 5 * 60,
+            isTimerUsed: true,
+            placements: Array(repeating: Array(repeating: 0, count: 9), count: 9))
+        view?.navigationController?.pushViewController(CrownsPlayBuilder.build(crownsFoundation), animated: false)
     }
     
     func routeSudokuGame(_ response: ChallengeModel.RouteSudokuGame.Response) {

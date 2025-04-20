@@ -12,6 +12,7 @@ protocol HomePresentationLogic {
     func routeToCrownsLearning(_ response: HomeModel.RouteToCrownsLearning.Response)
     func routeToSudokuLearning(_ response: HomeModel.RouteToSudokuLearning.Response)
     func routeToQueensLearning(_ response: HomeModel.RouteToQueensLearning.Response)
+    func showUnfinishedGame(_ response: HomeModel.GetUnfinishedCrownsGame.Response)
 }
 
 final class HomePresenter: HomePresentationLogic {
@@ -46,5 +47,16 @@ final class HomePresenter: HomePresentationLogic {
     func routeToQueensLearning(_ response: HomeModel.RouteToQueensLearning.Response) {
         view?.hideLearningSelector()
         view?.navigationController?.pushViewController(QueensLearningBuilder.build(), animated: false)
+    }
+    
+    func showUnfinishedGame(_ response: HomeModel.GetUnfinishedCrownsGame.Response) {
+        let foundation: UnfinishedCrownsModel.BuildModule.BuildFoundation =
+        UnfinishedCrownsModel.BuildModule.BuildFoundation(
+            crowns: response.foundation.crowns,
+            elapsedTime: response.foundation.elapsedTime,
+            initialTime: response.foundation.initialTime,
+            isTimerUsed: response.foundation.isTimerUsed,
+            placements: response.foundation.placements)
+        view?.showUnfinishedGameView(foundation)
     }
 }

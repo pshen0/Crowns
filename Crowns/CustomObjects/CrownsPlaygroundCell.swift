@@ -34,13 +34,20 @@ final class CrownsPlaygroundCell: UICollectionViewCell {
         pointImage.isHidden = true
     }
 
-    func configure(color: UIColor, hasCrown: Bool, mode: String) {
-        if mode == "inition" && hasCrown {
+    func configure(color: UIColor, value: Int, mode: String) {
+        if mode == "inition" && value == 2 {
             self.mode = mode
         }
         contentView.backgroundColor = color
-        if hasCrown {
+        if value ==  2 {
             crownImage.isHidden = false
+            pointImage.isHidden = true
+        } else if value == 1 {
+            crownImage.isHidden = true
+            pointImage.isHidden = false
+        } else {
+            crownImage.isHidden = true
+            pointImage.isHidden = true
         }
     }
     
@@ -67,7 +74,13 @@ final class CrownsPlaygroundCell: UICollectionViewCell {
         }
     }
     
-    func isCrownPlaced() -> Bool {
-        return crownImage.isHidden == false
+    func isCrownPlaced() -> Int {
+        if crownImage.isHidden == false {
+            return 2
+        } else if pointImage.isHidden == false {
+            return 1
+        } else {
+            return 0
+        }
     }
 }

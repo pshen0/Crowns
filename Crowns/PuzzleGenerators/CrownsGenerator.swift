@@ -8,18 +8,41 @@
 import UIKit
 
 enum CrownsConstants {
-    static let crownsToRemove: Int = 7
+    static let crownsToRemove: Int = 9
     static let directions = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
 }
 
-struct CrownsCell: Hashable {
+struct CrownsCell: Codable {
     let row: Int
     let col: Int
-    var color: UIColor
+    var color: UIColorCodable
     var hasCrown: Bool = false
 }
 
-final class CrownsCage {
+struct UIColorCodable: Codable & Equatable {
+    let red: CGFloat
+    let green: CGFloat
+    let blue: CGFloat
+    let alpha: CGFloat
+    
+    init(_ color: UIColor) {
+        red = color.cgColor.components?[0] ?? 0
+        green = color.cgColor.components?[1] ?? 0
+        blue = color.cgColor.components?[2] ?? 0
+        alpha = color.cgColor.alpha
+    }
+    
+    var uiColor: UIColor {
+        UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
+}
+
+struct Cell: Hashable {
+    let row: Int
+    let col: Int
+}
+
+final class CrownsCage: Codable {
     var cells: [CrownsCell] = []
     
     init(cell: CrownsCell) {
@@ -31,14 +54,16 @@ final class CrownsCage {
     }
 }
 
-final class Crowns {
-    let size = 9
+final class Crowns: Codable {
+    var size = 9
     var table: [[CrownsCell]] = []
     var puzzle: [[CrownsCell]] = []
     var cages: [CrownsCage] = []
+    var difficultyLevel: String
     private var crownsCells: [CrownsCell] = []
     
-    init() {
+    init(_ difficultyLevel: String) {
+        self.difficultyLevel = difficultyLevel
         generateTable()
         generateCages()
         removeCrowns()
@@ -50,7 +75,7 @@ final class Crowns {
         for row in 0..<size {
             var rowCells: [CrownsCell] = []
             for col in 0..<size {
-                rowCells.append(CrownsCell(row: row, col: col, color: .clear))
+                rowCells.append(CrownsCell(row: row, col: col, color: Colors.CrownsColors.clear))
             }
             tempTable.append(rowCells)
         }
@@ -61,7 +86,7 @@ final class Crowns {
     private func generateCages() {
         var queensCoord: [Int: Int] = [:]
         var colOrder = Array(0..<size)
-        let colors: [UIColor] = [Colors.CrownsColors.blue, Colors.CrownsColors.green, Colors.CrownsColors.lightBlue,
+        let colors: [UIColorCodable] = [Colors.CrownsColors.blue, Colors.CrownsColors.green, Colors.CrownsColors.lightBlue,
                                  Colors.CrownsColors.lightGreen, Colors.CrownsColors.orange, Colors.CrownsColors.purple,
                                  Colors.CrownsColors.pink, Colors.CrownsColors.red, Colors.CrownsColors.yellow]
         
@@ -70,7 +95,7 @@ final class Crowns {
             colOrder.shuffle()
             isColOrderGood = true
             for i in 0..<size - 1 {
-                if abs(colOrder[i] - colOrder[i + 1]) <= 2 {
+                if abs(colOrder[i] - colOrder[i + 1]) < 2 {
                     isColOrderGood = false
                     break
                 }
@@ -217,6 +242,7 @@ final class Crowns {
             }
             var wasFounded = false
             for cell in crownsCells {
+                fillNeighbors(&placements)
                 if tempBoard[cell.row][cell.col].hasCrown == false {
                     if inRow(&placements, row: cell.row) == true ||
                         inCol(&placements, col: cell.col) == true ||
@@ -224,6 +250,7 @@ final class Crowns {
                         fillRow(&placements, row: cell.row)
                         fillCol(&placements, col: cell.col)
                         fillCage(&placements, row: cell.row, col: cell.col)
+                        
                         tempBoard[cell.row][cell.col].hasCrown = true
                         wasFounded = true
                         counter += 1
@@ -266,7 +293,7 @@ final class Crowns {
     
     private func inCage(_ placements: inout [[Bool]], row: Int, col: Int) -> Bool {
         var counter = 0
-        var tempCage: CrownsCage = CrownsCage(cell: CrownsCell(row: 0, col: 0, color: .clear))
+        var tempCage: CrownsCage = CrownsCage(cell: CrownsCell(row: 0, col: 0, color: Colors.CrownsColors.clear))
         
         for cage in cages {
             for cell in cage.cells {
@@ -298,7 +325,7 @@ final class Crowns {
     }
     
     private func fillCage(_ placements: inout [[Bool]], row: Int, col: Int) {
-        var tempCage: CrownsCage = CrownsCage(cell: CrownsCell(row: 0, col: 0, color: .clear))
+        var tempCage: CrownsCage = CrownsCage(cell: CrownsCell(row: 0, col: 0, color: Colors.CrownsColors.clear))
         
         for cage in cages {
             for cell in cage.cells {
@@ -322,6 +349,46 @@ final class Crowns {
                 placements[newRow][newCol] = false
             }
         }
+    }
+    
+    private func fillNeighbors(_ placements: inout [[Bool]]) {
+        for cage in cages {
+            var allNeighbors: [Set<Cell>] = []
+
+            for cell in cage.cells {
+                if placements[cell.row][cell.col] {
+                    let neighbors = getNeighbors(row: cell.row, col: cell.col)
+                    allNeighbors.append(neighbors)
+                }
+            }
+            
+            if !allNeighbors.isEmpty {
+                var commonNeighbors: Set<Cell> = allNeighbors[0]
+
+                for tempNeighbors in allNeighbors {
+                    commonNeighbors = commonNeighbors.intersection(tempNeighbors)
+                }
+                
+                for cell in commonNeighbors {
+                    placements[cell.row][cell.col] = false
+                }
+            }
+        }
+    }
+
+    private func getNeighbors(row: Int, col: Int) -> Set<Cell> {
+        var neighbors: Set<Cell> = []
+        
+        let directions: [(Int, Int)] = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)]
+        for (dx, dy) in directions {
+            let newRow = row + dx
+            let newCol = col + dy
+            if newRow >= 0, newRow < size, newCol >= 0, newCol < size {
+                neighbors.insert(Cell(row: newRow, col: newCol))
+            }
+        }
+        
+        return neighbors
     }
 
     private func isElemIn2DArray(_ elem: Int, arr: [[Int]]) -> Bool {

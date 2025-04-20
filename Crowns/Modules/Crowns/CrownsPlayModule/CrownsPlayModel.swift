@@ -5,16 +5,16 @@
 //  Created by Анна Сазонова on 03.02.2025.
 //
 
+import UIKit
+
 enum CrownsPlayModel {
-    struct Time {
-        var minutes: Int
-        var seconds: Int
-    }
-    
     enum BuildModule {
         struct BuildFoundation {
-            let difficultyLevel: String
-            let time: Time
+            let crowns: Crowns
+            let elapsedTime: Int
+            let initialTime: Int
+            let isTimerUsed: Bool
+            let placements: [[Int]]
         }
     }
     
@@ -27,10 +27,12 @@ enum CrownsPlayModel {
         struct Request { }
     }
     
+    enum  GetPlacements {
+        struct Request { }
+    }
+    
     enum CheckGameOver {
-        struct Request {
-            let crownsPlacements: [[Bool]]
-        }
+        struct Request { }
     }
     
     enum RouteGameOver {
@@ -42,15 +44,67 @@ enum CrownsPlayModel {
     
     enum SetTime {
         struct Response {
-            let time: Time
+            let time: Int
         }
         struct ViewModel {
             let timerLabel: String
         }
     }
     
+    enum PlaceCrown {
+        struct Request {
+            let row: Int
+            let col: Int
+            let isPlaced: Int
+        }
+    }
+    
+    enum LeaveGame {
+        struct Request { }
+    }
+    
     enum PauseGame {
         struct Request { }
+    }
+    
+    enum GameIsWon {
+        struct Request { }
+    }
+    
+    enum StartTimer {
+        struct Request { }
+    }
+    
+    enum GetHint {
+        struct Request { }
+        struct Response {
+            let row: Int
+            let col: Int
+            let color: UIColor
+        }
+    }
+    
+    enum UndoMove {
+        struct Request { }
+        struct Response {
+            let move: CrownsMove
+            let color: UIColor
+        }
+    }
+    
+    enum UpdateCrownsPlayground {
+        struct ViewModel {
+            let indexPath: IndexPath
+            let color: UIColor
+            let mode: String
+            let value: Int
+        }
+    }
+    
+    enum SaveMove {
+        struct Request {
+            let move: CrownsMove
+        }
     }
 }
 
