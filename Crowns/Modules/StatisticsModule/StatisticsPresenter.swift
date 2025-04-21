@@ -16,6 +16,6 @@ final class StatisticsPresenter: StatisticsPresentationLogic {
     weak var view: StatisticsViewController?
     
     func routeBack(_ response: StatisticsModel.RouteBack.Response) {
-        view?.navigationController?.popViewController(animated: false)
+        view?.navigationController?.popToRootViewController(animated: false)
     }
 }

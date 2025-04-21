@@ -38,7 +38,8 @@ enum CrownsPlayModel {
     enum RouteGameOver {
         struct Request { }
         struct Response {
-            let isWin: String
+            let isWin: Bool
+            let time: Int
         }
     }
     
@@ -98,6 +99,16 @@ enum CrownsPlayModel {
             let color: UIColor
             let mode: String
             let value: Int
+        }
+    }
+    
+    enum GetLevel {
+        struct Request { }
+        struct Response {
+            let image: UIImage?
+        }
+        struct ViewModel { 
+            let image: UIImage?
         }
     }
     

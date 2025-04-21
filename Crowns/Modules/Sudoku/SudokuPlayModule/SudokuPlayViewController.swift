@@ -24,7 +24,7 @@ final class SudokuPlayViewController: UIViewController {
     private let timerPicture: UIImageView = UIImageView(image: Images.timerPicture)
     private let timerLabel: UILabel = CustomText(text: "", fontSize: 12, textColor: Colors.white)
     private let timerView = UIView()
-    private let levelPicture:  UIImageView = UIImageView(image: Images.levelPicture)
+    private let levelPicture:  UIImageView = UIImageView(image: Images.easyLevel)
     private let hintButton:  UIButton = CustomButton(button: UIImageView(image: Images.hintButton))
     private let pauseButton:  UIButton = CustomButton(button: UIImageView(image: Images.pauseButton))
     private let cleanerButton:  UIButton = CustomButton(button: UIImageView(image: Images.cleanerButton))

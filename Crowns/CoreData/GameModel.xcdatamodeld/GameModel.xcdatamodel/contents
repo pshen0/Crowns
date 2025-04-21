@@ -7,8 +7,37 @@
         <attribute name="isTimerUsed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="placements" optional="YES" attributeType="Binary"/>
     </entity>
+    <entity name="CrownsStatistic" representedClassName="CrownsStatistic" syncable="YES" codeGenerationType="class">
+        <attribute name="averageTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="bestTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="easyWins" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="gamesWithTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hardWins" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="mediumWins" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalStarted" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalWins" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="winRate" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="ProfileData" representedClassName="ProfileData" syncable="YES" codeGenerationType="class">
         <attribute name="userAvatar" optional="YES" attributeType="Binary"/>
         <attribute name="userName" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="SudokuProgress" representedClassName="SudokuProgress" syncable="YES" codeGenerationType="class">
+        <attribute name="elapsedTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="initialTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isTimerUsed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="placements" optional="YES" attributeType="Binary"/>
+        <attribute name="sudoku" optional="YES" attributeType="Binary"/>
+    </entity>
+    <entity name="SudokuStatistic" representedClassName="SudokuStatistic" syncable="YES" codeGenerationType="class">
+        <attribute name="averageTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="bestTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="easyWins" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="gamesWithTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hardWins" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="mediumWins" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalStarted" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalWins" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="winRate" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
 </model>

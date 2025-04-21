@@ -13,6 +13,7 @@ protocol CrownsPlayPresentationLogic {
     func presentTime (_ response: CrownsPlayModel.SetTime.Response)
     func showHint(_ response: CrownsPlayModel.GetHint.Response)
     func showUndoMove(_ response: CrownsPlayModel.UndoMove.Response)
+    func setLevelImage(_ response: CrownsPlayModel.GetLevel.Response)
 }
 
 final class CrownsPlayPresenter: CrownsPlayPresentationLogic {
@@ -24,17 +25,20 @@ final class CrownsPlayPresenter: CrownsPlayPresentationLogic {
     }
     
     func routeGameOver(_ response: CrownsPlayModel.RouteGameOver.Response) {
-        let gameOverViewController = CrownsGameOverBuilder.build(isWin: response.isWin)
-        view?.navigationController?.pushViewController(gameOverViewController, animated: false)
+        view?.navigationController?.pushViewController(CrownsGameOverBuilder.build(isWin: response.isWin, time: getStringTime(response.time)), animated: false)
     }
     
-    func presentTime(_ response: CrownsPlayModel.SetTime.Response) {
-        let minutes = response.time / 60
-        let seconds = response.time % 60
+    private func getStringTime(_ time: Int) -> String {
+        let minutes = time / 60
+        let seconds = time % 60
         let minutesStr = minutes < 10 ? "0\(minutes)" : "\(minutes)"
         let secondsStr = seconds < 10 ? "0\(seconds)" : "\(seconds)"
         let timerLabel = minutesStr + ":" + secondsStr
-        view?.setTimerLabel(CrownsPlayModel.SetTime.ViewModel(timerLabel: timerLabel))
+        return timerLabel
+    }
+    
+    func presentTime(_ response: CrownsPlayModel.SetTime.Response) {
+        view?.setTimerLabel(CrownsPlayModel.SetTime.ViewModel(timerLabel: getStringTime(response.time)))
     }
     
     func showHint(_ response: CrownsPlayModel.GetHint.Response) {
@@ -44,5 +48,9 @@ final class CrownsPlayPresenter: CrownsPlayPresentationLogic {
     
     func showUndoMove(_ response: CrownsPlayModel.UndoMove.Response) {
         view?.updateCrownsPlayground(CrownsPlayModel.UpdateCrownsPlayground.ViewModel(indexPath: response.move.indexPath, color: response.color, mode: "undo", value: response.move.value))
+    }
+    
+    func setLevelImage(_ response: CrownsPlayModel.GetLevel.Response) {
+        view?.setLevelPicture(CrownsPlayModel.GetLevel.ViewModel(image: response.image))
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 
 protocol CrownsGameOverPresentationLogic {
     func routeHome(_ response: CrownsGameOverModel.RouteHome.Response)
+    func routeStatistics(_ response: CrownsGameOverModel.RouteStatistics.Response)
 }
 
 final class CrownsGameOverPresenter: CrownsGameOverPresentationLogic {
@@ -19,4 +20,7 @@ final class CrownsGameOverPresenter: CrownsGameOverPresentationLogic {
         view?.navigationController?.popToRootViewController(animated: false)
     }
     
+    func routeStatistics(_ response: CrownsGameOverModel.RouteStatistics.Response) {
+        view?.navigationController?.pushViewController(StatisticsBuilder.build(), animated: false)
+    }
 }

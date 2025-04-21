@@ -7,8 +7,6 @@
 
 import CoreData
 
-
-
 final class CoreDataCrownsProgressStack {
     static let shared = CoreDataCrownsProgressStack()
     let context = CoreDataStack.shared.context

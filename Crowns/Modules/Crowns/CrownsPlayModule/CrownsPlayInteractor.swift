@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol CrownsPlayBusinessLogic {
     func backButtonTapped(_ request: CrownsPlayModel.RouteBack.Request)
@@ -21,6 +22,7 @@ protocol CrownsPlayBusinessLogic {
     func hintButtonTapped(_ request: CrownsPlayModel.GetHint.Request)
     func saveMove(_ request: CrownsPlayModel.SaveMove.Request)
     func undoButtonTapped(_ request: CrownsPlayModel.UndoMove.Request)
+    func getLevelPictute(_ request: CrownsPlayModel.GetLevel.Request)
 }
 
 struct CrownsMove {
@@ -58,7 +60,7 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
             elapsedTime += 1
             presenter.presentTime(CrownsPlayModel.SetTime.Response(time: initialTime - elapsedTime))
         } else {
-            playFinished(isWin: "lose")
+            playFinished(isWin: false)
         }
     }
     
@@ -127,7 +129,8 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
     }
     
     func gameIsWon(_ request: CrownsPlayModel.GameIsWon.Request) {
-        playFinished(isWin: "win")
+        playFinished(isWin: true)
+        CoreDataCrownsStatisticStack.shared.recordWin(difficulty: crowns.difficultyLevel, time: Int32(elapsedTime))
     }
     
     func pauseButtonTapped(_ request: CrownsPlayModel.PauseGame.Request) {
@@ -160,8 +163,23 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
         print(savedMoves)
     }
     
-    private func playFinished(isWin: String) {
-        presenter.routeGameOver(CrownsPlayModel.RouteGameOver.Response(isWin: isWin))
+    func getLevelPictute(_ request: CrownsPlayModel.GetLevel.Request) {
+        var image: UIImage?
+        switch crowns.difficultyLevel {
+        case "Hard":
+            image = Images.hardLevel
+        case "Medium":
+            image = Images.mediumLevel
+        default:
+            image = Images.easyLevel
+        }
+        
+        presenter.setLevelImage(CrownsPlayModel.GetLevel.Response(image: image))
+    }
+    
+    private func playFinished(isWin: Bool) {
+        deinitTimer()
+        presenter.routeGameOver(CrownsPlayModel.RouteGameOver.Response(isWin: isWin, time: elapsedTime))
     }
     
     private func initTimer() {

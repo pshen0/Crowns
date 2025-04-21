@@ -16,7 +16,7 @@ final class CrownsPlayViewController: UIViewController{
     private let timerPicture: UIImageView = UIImageView(image: Images.timerPicture)
     private let timerLabel: UILabel = CustomText(text: "", fontSize: Constraints.gameplayLogoSize, textColor: Colors.white)
     private let timerView = UIView()
-    private let levelPicture:  UIImageView = UIImageView(image: Images.levelPicture)
+    private var levelPicture:  UIImageView = UIImageView()
     private let hintButton:  UIButton = CustomButton(button: UIImageView(image: Images.hintButton))
     private let pauseButton:  UIButton = CustomButton(button: UIImageView(image: Images.pauseButton))
     private let cleanerButton:  UIButton = CustomButton(button: UIImageView(image: Images.cleanerButton))
@@ -33,6 +33,7 @@ final class CrownsPlayViewController: UIViewController{
         collection.register(CrownsPlaygroundCell.self, forCellWithReuseIdentifier: CrownsPlaygroundCell.identifier)
         return collection
     }()
+    private var pauseOverlayView: UIView?
     private var cellSize: CGFloat = 0
     private let gridSize: Int = 9
     
@@ -55,6 +56,9 @@ final class CrownsPlayViewController: UIViewController{
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
         navigationItem.hidesBackButton = true
+        
+        let rBarButtonItem = UIBarButtonItem(customView: timerView)
+        navigationItem.rightBarButtonItem = rBarButtonItem
         interactor.startTimer(CrownsPlayModel.StartTimer.Request())
     }
 
@@ -75,11 +79,9 @@ final class CrownsPlayViewController: UIViewController{
     private func configureBackground() {
         view.backgroundColor = Colors.darkGray
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        let rightBarButtonItem = UIBarButtonItem(customView: backButton)
-        navigationItem.leftBarButtonItem = rightBarButtonItem
+        let lBarButtonItem = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItem = lBarButtonItem
         configureTimer()
-        let leftBarButtonItem = UIBarButtonItem(customView: timerView)
-        navigationItem.rightBarButtonItem = leftBarButtonItem
         
         for subview in [gameLogo, gamePlayCat] {
             view.addSubview(subview)
@@ -115,6 +117,8 @@ final class CrownsPlayViewController: UIViewController{
     }
     
     private func configurePlaygroundButtons() {
+        interactor.getLevelPictute(CrownsPlayModel.GetLevel.Request())
+        
         for subview in [levelPicture, pauseButton, hintButton] {
             view.addSubview(subview)
             subview.pinBottom(to: playground.topAnchor, 10)
@@ -134,10 +138,33 @@ final class CrownsPlayViewController: UIViewController{
         pauseButton.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
         hintButton.addTarget(self, action: #selector(hintButtonTapped), for: .touchUpInside)
         undoButton.addTarget(self, action: #selector(undoButtonTapped), for: .touchUpInside)
+        learningButton.addTarget(self, action: #selector(learningButtonTapped), for: .touchUpInside)
+    }
+    
+    private func showPauseOverlay() {
+        let overlay = UIView(frame: view.bounds)
+        overlay.backgroundColor = Colors.darkGray.withAlphaComponent(0.9)
+
+        let continueButton: UIButton = CustomButton(button: UIImageView(image: UIImage.button))
+        let continueButtonText = CustomText(text: Text.continueGameText, fontSize: Constraints.selectorTextSize, textColor: Colors.white)
+        
+        continueButton.addSubview(continueButtonText)
+        overlay.addSubview(continueButton)
+        view.addSubview(overlay)
+        
+        continueButtonText.pinCenterX(to: continueButton)
+        continueButtonText.pinCenterY(to: continueButton, -4)
+        continueButton.pinCenterX(to: overlay)
+        continueButton.pinCenterY(to: overlay)
+        
+        pauseOverlayView = overlay
+        continueButton.addTarget(self, action: #selector(hidePauseOverlay), for: .touchUpInside)
     }
     
     func setTimerLabel(_ viewModel: CrownsPlayModel.SetTime.ViewModel) {
-        timerLabel.text = viewModel.timerLabel
+        DispatchQueue.main.async {
+            self.timerLabel.text = viewModel.timerLabel
+        }
     }
     
     func updateCrownsPlayground(_ viewModel: CrownsPlayModel.UpdateCrownsPlayground.ViewModel) {
@@ -149,7 +176,18 @@ final class CrownsPlayViewController: UIViewController{
         }
     }
     
+    func setLevelPicture(_ viewModel: CrownsPlayModel.GetLevel.ViewModel) {
+        levelPicture = UIImageView(image: viewModel.image)
+    }
+    
     @objc private func pauseButtonTapped() {
+        interactor.pauseButtonTapped(CrownsPlayModel.PauseGame.Request())
+        showPauseOverlay()
+    }
+    
+    @objc private func hidePauseOverlay() {
+        pauseOverlayView?.removeFromSuperview()
+        pauseOverlayView = nil
         interactor.pauseButtonTapped(CrownsPlayModel.PauseGame.Request())
     }
     
@@ -163,6 +201,14 @@ final class CrownsPlayViewController: UIViewController{
     
     @objc private func undoButtonTapped() {
         interactor.undoButtonTapped(CrownsPlayModel.UndoMove.Request())
+    }
+    
+    @objc private func learningButtonTapped() {
+        let vc = CrownsLearningBuilder.build()
+        present(vc, animated: true)
+        for _ in 0...2 {
+            vc.systemTouchNextButton()
+        }
     }
 }
 

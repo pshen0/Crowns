@@ -13,6 +13,12 @@ final class CrownsLearningViewController: UIViewController{
                                                       tapped: UIImageView(image: Images.backButtonTap))
     
     private let interactor: CrownsLearningBusinessLogic
+    private var imageViews: [UIImageView] = []
+    private var catViews: [UIImageView] = []
+    let imagesStack: UIStackView = UIStackView()
+    private var currentIndex = 0
+    private let nextButton: UIButton = CustomButton(button: UIImageView(image: Images.nextButton),
+                                                    tapped: UIImageView(image: Images.nextButtonTap))
     
     init(interactor: CrownsLearningBusinessLogic) {
         self.interactor = interactor
@@ -42,16 +48,86 @@ final class CrownsLearningViewController: UIViewController{
     
     private func configureUI() {
         configureBackground()
+        configureImages()
     }
     
     private func configureBackground() {
         view.backgroundColor = Colors.darkGray
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        let barButtonItem = UIBarButtonItem(customView: backButton)
-        navigationItem.leftBarButtonItem = barButtonItem
+        let lBarButtonItem = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItem = lBarButtonItem
+        
+        view.addSubview(nextButton)
+        
+        nextButton.pinCenterX(to: view)
+        nextButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, 5)
+
+        nextButton.addTarget(self, action: #selector(nextTapped), for: .touchUpInside)
+    }
+    
+    private func configureImages() {
+        let imageNames = ["crownsRule1", "crownsRule2", "crownsRule3", "crownsRule4"]
+        imagesStack.axis = .vertical
+        imagesStack.alignment = .center
+        imagesStack.spacing = 10
+        view.addSubview(imagesStack)
+        
+        for name in imageNames {
+            let imageView = UIImageView(image: UIImage(named: name))
+            let catView = UIImageView(image: UIImage(named: "ruleCat"))
+            imageView.contentMode = .scaleAspectFit
+            imageView.alpha = 0
+            catView.contentMode = .scaleAspectFit
+            catView.alpha = 0
+            imagesStack.addArrangedSubview(imageView)
+            view.addSubview(catView)
+            
+            catView.pinCenterY(to: imageView)
+            catView.pinLeft(to: imageView.trailingAnchor)
+        
+            imageViews.append(imageView)
+            catViews.append(catView)
+        }
+        
+        imagesStack.pinCenter(to: view)
+        
+        if let first = imageViews.first, let cat = catViews.first {
+            first.alpha = 1
+            cat.alpha = 1
+        }
     }
     
     @objc private func backButtonTapped() {
         interactor.backButtonTapped(CrownsLearningModel.RouteBack.Request())
+    }
+    
+    @objc private func nextTapped() {
+        let nextImage = imageViews[currentIndex + 1]
+        let currentCat = catViews[currentIndex]
+        let nextCat = catViews[currentIndex + 1]
+        
+        UIView.transition(with: nextImage, duration: 0.4, options: .transitionCrossDissolve, animations: {
+            nextImage.alpha = 1
+        }, completion: nil)
+        
+        UIView.transition(with: currentCat, duration: 0.4, options: .transitionCrossDissolve, animations: {
+            currentCat.alpha = 0
+        }, completion: nil)
+        
+        if currentIndex < 2 {
+            UIView.transition(with: nextCat, duration: 0.4, options: .transitionCrossDissolve, animations: {
+                nextCat.alpha = 1
+            }, completion: nil)
+        }
+
+        currentIndex += 1
+        guard currentIndex < imageViews.count - 1 else {
+            nextButton.isHidden = true
+            return
+        }
+    }
+    
+    func systemTouchNextButton() {
+        nextButton.sendActions(for: .touchUpInside)
     }
 }

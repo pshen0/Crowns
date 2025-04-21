@@ -67,6 +67,7 @@ final class Crowns: Codable {
         generateTable()
         generateCages()
         removeCrowns()
+        CoreDataCrownsStatisticStack.shared.recordGameStarted()
     }
     
     private func generateTable() {

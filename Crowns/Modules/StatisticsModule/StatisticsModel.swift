@@ -8,6 +8,17 @@
 import Foundation
 
 enum StatisticsModel {
+    
+    enum GameType {
+        case crowns
+        case killerSudoku
+    }
+
+    struct StatisticItem {
+        let title: String
+        let value: String
+    }
+    
     enum RouteBack {
         struct Request { }
         struct Response { }

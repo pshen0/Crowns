@@ -113,7 +113,9 @@ enum Images {
     // GamePlayView
     static let undoButton: UIImage? = UIImage(named: "undoButton")
     static let timerPicture: UIImage? = UIImage(named: "timer")
-    static let levelPicture: UIImage? = UIImage(named: "level")
+    static let easyLevel: UIImage? = UIImage(named: "easy")
+    static let mediumLevel: UIImage? = UIImage(named: "medium")
+    static let hardLevel: UIImage? = UIImage(named: "hard")
     static let hintButton: UIImage? = UIImage(named: "hintButton")
     static let pauseButton: UIImage? = UIImage(named: "pauseButton")
     static let cleanerButton: UIImage? = UIImage(named: "cleanerButton")
@@ -124,6 +126,15 @@ enum Images {
     
     // GameOverView
     static let gameOverHomeButton: UIImage? = UIImage(named: "gameOverHomeButton")
+    static let winningCat: UIImage? = UIImage(named: "winningCat")
+    static let losingCat: UIImage? = UIImage(named: "losingCat")
+    
+    // Learning
+    static let nextButton: UIImage? = UIImage(named: "nextButton")
+    static let nextButtonTap: UIImage? = UIImage(named: "nextButtonTapped")
+    
+    //Statistics
+    static let statisticCat: UIImage? = UIImage(named: "statisticsCat")
 }
 
 enum Numbers {
