@@ -12,4 +12,17 @@ enum SudokuGameOverModel {
         struct Request { }
         struct Response { }
     }
+    
+    enum RouteStatistics {
+        struct Request { }
+        struct Response { }
+    }
+    
+    enum IsWin {
+        struct Request { }
+    }
+    
+    enum getTime {
+        struct Request { }
+    }
 }

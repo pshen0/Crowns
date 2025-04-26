@@ -59,7 +59,7 @@ final class Crowns: Codable {
     var table: [[CrownsCell]] = []
     var puzzle: [[CrownsCell]] = []
     var cages: [CrownsCage] = []
-    var difficultyLevel: String
+    let difficultyLevel: String
     private var crownsCells: [CrownsCell] = []
     
     init(_ difficultyLevel: String) {

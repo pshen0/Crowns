@@ -27,6 +27,11 @@ final class ChallengePresenter: ChallengePresentationLogic {
     
     func routeSudokuGame(_ response: ChallengeModel.RouteSudokuGame.Response) {
         let difficultyLevel: String = [Text.easyTag, Text.mediumTag, Text.hardTag].randomElement() ?? Text.easyTag
-        view?.navigationController?.pushViewController(SudokuPlayBuilder.build(SudokuPlayModel.BuildModule.BuildFoundation(difficultyLevel: difficultyLevel, time: SudokuPlayModel.Time(minutes: Numbers.challengeTimerMinutes, seconds: 0))), animated: false)
+        let sudokuFoundation = SudokuPlayModel.BuildModule.BuildFoundation(
+            killerSudoku: KillerSudoku(difficultyLevel: difficultyLevel),
+            elapsedTime: 0,
+            initialTime: 5 * 60,
+            isTimerUsed: true)
+        view?.navigationController?.pushViewController(SudokuPlayBuilder.build(sudokuFoundation), animated: false)
     }
 }

@@ -22,13 +22,13 @@ enum KillerSudokuConstants {
     static let hardTag: String = "Hard"
 }
 
-struct SudokuCell: Hashable {
+struct SudokuCell: Hashable & Codable {
     let row: Int
     let col: Int
     let value: Int
 }
 
-final class SudokuCage {
+final class SudokuCage: Codable {
     private var cells: [SudokuCell] = []
     private var sum: Int = 0
     
@@ -51,11 +51,11 @@ final class SudokuCage {
     }
 }
 
-final class KillerSudoku {
-    private let size: Int = KillerSudokuConstants.size
-    private let n: Int = KillerSudokuConstants.n
-    private let difficultyLevel: String
-    private var table: [[Int]]
+final class KillerSudoku: Codable {
+    private var size: Int = KillerSudokuConstants.size
+    private var n: Int = KillerSudokuConstants.n
+    let difficultyLevel: String
+    var table: [[Int]]
     private var cages: [SudokuCage] = []
     var puzzle: [[Int]]
     var unsolvedPuzzle: [[Int]]
@@ -85,6 +85,7 @@ final class KillerSudoku {
         mix()
         generateCages()
         generatePuzzle()
+        CoreDataSudokuStatisticStack.shared.recordGameStarted()
     }
     
     func getPuzzle() -> [[Int]] {

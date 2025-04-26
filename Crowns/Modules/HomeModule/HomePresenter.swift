@@ -12,7 +12,8 @@ protocol HomePresentationLogic {
     func routeToCrownsLearning(_ response: HomeModel.RouteToCrownsLearning.Response)
     func routeToSudokuLearning(_ response: HomeModel.RouteToSudokuLearning.Response)
     func routeToQueensLearning(_ response: HomeModel.RouteToQueensLearning.Response)
-    func showUnfinishedGame(_ response: HomeModel.GetUnfinishedCrownsGame.Response)
+    func showUnfinishedCrowns(_ response: HomeModel.GetUnfinishedCrownsGame.Response)
+    func showUnfinishedSudoku(_ response: HomeModel.GetUnfinishedSudokuGame.Response)
 }
 
 final class HomePresenter: HomePresentationLogic {
@@ -49,14 +50,26 @@ final class HomePresenter: HomePresentationLogic {
         view?.navigationController?.pushViewController(QueensLearningBuilder.build(), animated: false)
     }
     
-    func showUnfinishedGame(_ response: HomeModel.GetUnfinishedCrownsGame.Response) {
-        let foundation: UnfinishedCrownsModel.BuildModule.BuildFoundation =
+    func showUnfinishedCrowns(_ response: HomeModel.GetUnfinishedCrownsGame.Response) {
+        let foundation = response.foundation
+        let responseFoundation: UnfinishedCrownsModel.BuildModule.BuildFoundation =
         UnfinishedCrownsModel.BuildModule.BuildFoundation(
-            crowns: response.foundation.crowns,
-            elapsedTime: response.foundation.elapsedTime,
-            initialTime: response.foundation.initialTime,
-            isTimerUsed: response.foundation.isTimerUsed,
-            placements: response.foundation.placements)
-        view?.showUnfinishedGameView(foundation)
+            crowns: foundation.crowns,
+            elapsedTime: foundation.elapsedTime,
+            initialTime: foundation.initialTime,
+            isTimerUsed: foundation.isTimerUsed,
+            placements: foundation.placements)
+        view?.showUnfinishedCrowns(responseFoundation)
+    }
+    
+    func showUnfinishedSudoku(_ response: HomeModel.GetUnfinishedSudokuGame.Response) {
+        let foundation = response.foundation
+        let responseFoundation: UnfinishedSudokuModel.BuildModule.BuildFoundation =
+        UnfinishedSudokuModel.BuildModule.BuildFoundation(
+            killerSudoku: foundation.killerSudoku,
+            elapsedTime: foundation.elapsedTime,
+            initialTime: foundation.initialTime,
+            isTimerUsed: foundation.isTimerUsed)
+        view?.showUnfinishedSudoku(responseFoundation)
     }
 }

@@ -45,6 +45,8 @@ final class HomeViewController: UIViewController{
         super.viewDidAppear(animated)
         if UserDefaults.standard.bool(forKey: UserDefaultsKeys.unfinishedCrownsGame) {
             interactor.getUnfinishedCrownsGame(HomeModel.GetUnfinishedCrownsGame.Request())
+        } else if UserDefaults.standard.bool(forKey: UserDefaultsKeys.unfinishedSudokuGame) {
+            interactor.getUnfinishedSudokuGame(HomeModel.GetUnfinishedSudokuGame.Request())
         }
     }
     
@@ -110,8 +112,15 @@ final class HomeViewController: UIViewController{
         learningSelectorViewController.dismiss(animated: false)
     }
     
-    func showUnfinishedGameView(_ viewModel: UnfinishedCrownsModel.BuildModule.BuildFoundation) {
+    func showUnfinishedCrowns(_ viewModel: UnfinishedCrownsModel.BuildModule.BuildFoundation) {
         let unfinishedGameView = UnfinishedCrownsBuilder.build(foundation: viewModel)
+        unfinishedGameView.modalPresentationStyle = .overFullScreen
+        unfinishedGameView.delegate = self
+        self.present(unfinishedGameView, animated: false)
+    }
+    
+    func showUnfinishedSudoku(_ viewModel: UnfinishedSudokuModel.BuildModule.BuildFoundation) {
+        let unfinishedGameView = UnfinishedSudokuBuilder.build(foundation: viewModel)
         unfinishedGameView.modalPresentationStyle = .overFullScreen
         unfinishedGameView.delegate = self
         self.present(unfinishedGameView, animated: false)
@@ -150,8 +159,13 @@ final class HomeViewController: UIViewController{
     }
 }
 
-extension HomeViewController: UnfinishedCrownsViewControllerDelegate {
+extension HomeViewController: UnfinishedCrownsViewControllerDelegate,  UnfinishedSudokuViewControllerDelegate {
+    func unfinishedSudokuDidRequestToContinue(with foundation: SudokuPlayModel.BuildModule.BuildFoundation) {
+        navigationController?.pushViewController(SudokuPlayBuilder.build(foundation) , animated: true)
+    }
+    
     func unfinishedCrownsDidRequestToContinue(with foundation: CrownsPlayModel.BuildModule.BuildFoundation) {
         navigationController?.pushViewController(CrownsPlayBuilder.build(foundation) , animated: true)
     }
 }
+

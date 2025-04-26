@@ -8,6 +8,12 @@
 import UIKit
 
 enum CrownsPlayModel {
+    
+    struct CrownsMove {
+        let indexPath: IndexPath
+        let value: Int
+    }
+    
     enum BuildModule {
         struct BuildFoundation {
             let crowns: Crowns

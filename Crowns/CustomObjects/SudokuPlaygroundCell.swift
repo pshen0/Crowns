@@ -54,10 +54,10 @@ final class KillerSudokuBlock: UICollectionViewCell {
         collection.collectionViewLayout.invalidateLayout()
     }
     
-    func configure(with data: [Int], _ cellsWithSum: [(cellPath: IndexPath, sum: Int)]) {
+    func configure(data: [Int], initData: [Int], _ cellsWithSum: [(cellPath: IndexPath, sum: Int)]) {
         self.data = data
         self.cellsWithSum = cellsWithSum
-        initiallyFilledCells = Set(data.enumerated().compactMap { $0.element != 0 ? $0.offset : nil })
+        initiallyFilledCells = Set(initData.enumerated().compactMap { $0.element != 0 ? $0.offset : nil })
         collection.reloadData()
     }
     

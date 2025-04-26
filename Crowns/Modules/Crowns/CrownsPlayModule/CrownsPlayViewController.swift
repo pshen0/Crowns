@@ -65,6 +65,7 @@ final class CrownsPlayViewController: UIViewController{
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
+        
         if !interactor.isPlayFinished(CrownsPlayModel.CheckGameOver.Request()) && !interactor.timeIsUp() {
             interactor.leaveGame(CrownsPlayModel.LeaveGame.Request())
         }
@@ -239,7 +240,7 @@ extension CrownsPlayViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? CrownsPlaygroundCell {
-            interactor.saveMove(CrownsPlayModel.SaveMove.Request(move: CrownsMove(indexPath: indexPath, value: cell.isCrownPlaced())))
+            interactor.saveMove(CrownsPlayModel.SaveMove.Request(move: CrownsPlayModel.CrownsMove(indexPath: indexPath, value: cell.isCrownPlaced())))
             cell.select()
             interactor.placeCrown(CrownsPlayModel.PlaceCrown.Request(row: indexPath.item / 9,
                                                                       col: indexPath.item % 9,

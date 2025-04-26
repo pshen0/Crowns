@@ -24,7 +24,7 @@ final class SudokuPlayViewController: UIViewController {
     private let timerPicture: UIImageView = UIImageView(image: Images.timerPicture)
     private let timerLabel: UILabel = CustomText(text: "", fontSize: 12, textColor: Colors.white)
     private let timerView = UIView()
-    private let levelPicture:  UIImageView = UIImageView(image: Images.easyLevel)
+    private var levelPicture:  UIImageView = UIImageView(image: Images.easyLevel)
     private let hintButton:  UIButton = CustomButton(button: UIImageView(image: Images.hintButton))
     private let pauseButton:  UIButton = CustomButton(button: UIImageView(image: Images.pauseButton))
     private let cleanerButton:  UIButton = CustomButton(button: UIImageView(image: Images.cleanerButton))
@@ -43,6 +43,7 @@ final class SudokuPlayViewController: UIViewController {
         return collection
     }()
     private var cellSize: CGFloat = 0
+    private var pauseOverlayView: UIView?
     
     init(interactor: SudokuPlayBusinessLogic) {
         self.interactor = interactor
@@ -63,11 +64,21 @@ final class SudokuPlayViewController: UIViewController {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
         navigationItem.hidesBackButton = true
+        
+        let rBarButtonItem = UIBarButtonItem(customView: timerView)
+        navigationItem.rightBarButtonItem = rBarButtonItem
+        interactor.startTimer(SudokuPlayModel.StartTimer.Request())
+        
+        playground.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
+        
+        if !interactor.isPlayFinished(SudokuPlayModel.CheckGameOver.Request()) && !interactor.timeIsUp() {
+            interactor.leaveGame(SudokuPlayModel.LeaveGame.Request())
+        }
     }
     
     private func configureUI() {
@@ -127,6 +138,8 @@ final class SudokuPlayViewController: UIViewController {
     }
     
     private func configurePlaygroundButtons() {
+        interactor.getLevelPictute(SudokuPlayModel.GetLevel.Request())
+        
         for subview in [levelPicture, pauseButton, hintButton] {
             view.addSubview(subview)
             subview.pinBottom(to: playground.topAnchor, 10)
@@ -147,6 +160,9 @@ final class SudokuPlayViewController: UIViewController {
         
         cleanerButton.addTarget(self, action: #selector(cleanerButtonTapped), for: .touchUpInside)
         pauseButton.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
+        hintButton.addTarget(self, action: #selector(hintButtonTapped), for: .touchUpInside)
+        undoButton.addTarget(self, action: #selector(undoButtonTapped), for: .touchUpInside)
+        learningButton.addTarget(self, action: #selector(learningButtonTapped), for: .touchUpInside)
     }
     
     private func configureNumberButtons() {
@@ -173,46 +189,96 @@ final class SudokuPlayViewController: UIViewController {
         numberButtonsStackView.pinCenterX(to: view)
     }
     
+    private func showPauseOverlay() {
+        let overlay = UIView(frame: view.bounds)
+        overlay.backgroundColor = Colors.darkGray.withAlphaComponent(0.9)
+
+        let continueButton: UIButton = CustomButton(button: UIImageView(image: UIImage.button))
+        let continueButtonText = CustomText(text: Text.continueGameText, fontSize: Constraints.selectorTextSize, textColor: Colors.white)
+        
+        continueButton.addSubview(continueButtonText)
+        overlay.addSubview(continueButton)
+        view.addSubview(overlay)
+        
+        continueButtonText.pinCenterX(to: continueButton)
+        continueButtonText.pinCenterY(to: continueButton, -4)
+        continueButton.pinCenterX(to: overlay)
+        continueButton.pinCenterY(to: overlay)
+        
+        pauseOverlayView = overlay
+        continueButton.addTarget(self, action: #selector(hidePauseOverlay), for: .touchUpInside)
+    }
+    
+    @objc private func hidePauseOverlay() {
+        pauseOverlayView?.removeFromSuperview()
+        pauseOverlayView = nil
+        interactor.pauseButtonTapped(SudokuPlayModel.PauseGame.Request())
+    }
+    
     func setTimerLabel(_ viewModel: SudokuPlayModel.SetTime.ViewModel) {
-        timerLabel.text = viewModel.timerLabel
+        DispatchQueue.main.async {
+            self.timerLabel.text = viewModel.timerLabel
+        }
+    }
+    
+    func presentChanges(_ viewModel: SudokuPlayModel.ChangeCell.ViewModel) {
+        for changedCell in viewModel.changes {
+            if let block = playground.cellForItem(at: changedCell.blockIndex) as? KillerSudokuBlock {
+                if let cell = block.collection.cellForItem(at: changedCell.cellIndex) as? KillerSudokuCell {
+                    cell.configure(number: changedCell.number, mode: changedCell.mode)
+                }
+            }
+        }
+    }
+    
+    func setLevelPicture(_ viewModel: SudokuPlayModel.GetLevel.ViewModel) {
+        levelPicture = UIImageView(image: viewModel.image)
     }
     
     @objc private func numberButtonTapped(_ sender: UIButton) {
         guard let index = selectedCellIndex else { return }
         
-        let changedCells = interactor.numberButtonTapped(SudokuPlayModel.ChangeCellNumber.Request(index: index, number: sender.tag))
+        interactor.saveMove(SudokuPlayModel.SaveMove.Request(index: index))
+        interactor.numberButtonTapped(SudokuPlayModel.ChangeCellNumber.Request(index: index, number: sender.tag))
         
-        for changedCell in changedCells {
-            if let block = playground.cellForItem(at: changedCell.blockIndex) as? KillerSudokuBlock {
-                if let cell = block.collection.cellForItem(at: changedCell.cellIndex) as? KillerSudokuCell {
-                    cell.configure(number: changedCell.number, mode: changedCell.mode)
-                }
-            }
+        if interactor.isPlayFinished(SudokuPlayModel.CheckGameOver.Request()) {
+            interactor.gameIsWon(SudokuPlayModel.GameIsWon.Request())
         }
-        
-        interactor.isPlayFinished(SudokuPlayModel.CheckGameOver.Request())
     }
     
     @objc private func cleanerButtonTapped() {
         guard let index = selectedCellIndex else { return }
-        
-        let changedCells = interactor.cleanButtonTapped(SudokuPlayModel.DeleteCellNumber.Request(index: index))
-        
-        for changedCell in changedCells {
-            if let block = playground.cellForItem(at: changedCell.blockIndex) as? KillerSudokuBlock {
-                if let cell = block.collection.cellForItem(at: changedCell.cellIndex) as? KillerSudokuCell {
-                    cell.configure(number: changedCell.number, mode: changedCell.mode)
-                }
-            }
-        }
+
+        interactor.saveMove(SudokuPlayModel.SaveMove.Request(index: index))
+        interactor.cleanButtonTapped(SudokuPlayModel.DeleteCellNumber.Request(index: index))
     }
     
     @objc private func pauseButtonTapped() {
         interactor.pauseButtonTapped(SudokuPlayModel.PauseGame.Request())
+        showPauseOverlay()
+    }
+    
+    @objc private func hintButtonTapped() {
+        interactor.hintButtonTapped(SudokuPlayModel.GetHint.Request())
+        if interactor.isPlayFinished(SudokuPlayModel.CheckGameOver.Request()) {
+            interactor.gameIsWon(SudokuPlayModel.GameIsWon.Request())
+        }
     }
     
     @objc private func backButtonTapped() {
         interactor.backButtonTapped(SudokuPlayModel.RouteBack.Request())
+    }
+    
+    @objc private func undoButtonTapped() {
+        interactor.undoButtonTapped(SudokuPlayModel.UndoMove.Request())
+    }
+    
+    @objc private func learningButtonTapped() {
+        let vc = SudokuLearningBuilder.build()
+        present(vc, animated: true)
+        for _ in 0...2 {
+            vc.systemTouchNextButton()
+        }
     }
 }
 
@@ -226,7 +292,7 @@ extension SudokuPlayViewController: UICollectionViewDelegate, UICollectionViewDa
         
         let data = interactor.determineCellsWithSum(SudokuPlayModel.DetermineCellsWithSum.Request(index: indexPath.item))
         
-        cell.configure(with: data.blockData, data.cellsWithSum)
+        cell.configure(data: data.blockData, initData: data.initData, data.cellsWithSum)
         
         cell.onCellSelected = { innerIndex in
             self.selectedCellIndex = indexPath.item * 9 + innerIndex

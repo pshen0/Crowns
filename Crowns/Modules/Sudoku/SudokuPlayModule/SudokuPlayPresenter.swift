@@ -11,6 +11,8 @@ protocol SudokuPlayPresentationLogic {
     func routeBack(_ response: SudokuPlayModel.RouteBack.Response)
     func routeGameOver(_ response: SudokuPlayModel.RouteGameOver.Response)
     func presentTime (_ response: SudokuPlayModel.SetTime.Response)
+    func setPlaygroundChanges(_ response: SudokuPlayModel.ChangeCell.Response)
+    func setLevelImage(_ response: SudokuPlayModel.GetLevel.Response)
 }
 
 final class SudokuPlayPresenter: SudokuPlayPresentationLogic {
@@ -22,15 +24,27 @@ final class SudokuPlayPresenter: SudokuPlayPresentationLogic {
     }
     
     func routeGameOver(_ response: SudokuPlayModel.RouteGameOver.Response) {
-        let gameOverViewController = SudokuGameOverBuilder.build()
-        gameOverViewController.isWin = response.isWin
-        view?.navigationController?.pushViewController(gameOverViewController, animated: false)
+        view?.navigationController?.pushViewController(SudokuGameOverBuilder.build(isWin: response.isWin, time: getStringTime(response.time )), animated: false)
+    }
+    
+    private func getStringTime(_ time: Int) -> String {
+        let minutes = time / 60
+        let seconds = time % 60
+        let minutesStr = minutes < 10 ? "0\(minutes)" : "\(minutes)"
+        let secondsStr = seconds < 10 ? "0\(seconds)" : "\(seconds)"
+        let timerLabel = minutesStr + ":" + secondsStr
+        return timerLabel
     }
     
     func presentTime (_ response: SudokuPlayModel.SetTime.Response) {
-        let minutesStr = response.time.minutes < 10 ? "0\(response.time.minutes)" : "\(response.time.minutes)"
-        let secondsStr = response.time.seconds < 10 ? "0\(response.time.seconds)" : "\(response.time.seconds)"
-        let timerLabel = minutesStr + ":" + secondsStr
-        view?.setTimerLabel(SudokuPlayModel.SetTime.ViewModel(timerLabel: timerLabel))
+        view?.setTimerLabel(SudokuPlayModel.SetTime.ViewModel(timerLabel: getStringTime(response.time)))
+    }
+    
+    func setPlaygroundChanges(_ response: SudokuPlayModel.ChangeCell.Response) {
+        view?.presentChanges(SudokuPlayModel.ChangeCell.ViewModel(changes: response.changes))
+    }
+    
+    func setLevelImage(_ response: SudokuPlayModel.GetLevel.Response) {
+        view?.setLevelPicture(SudokuPlayModel.GetLevel.ViewModel(image: response.image))
     }
 }

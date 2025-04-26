@@ -16,6 +16,7 @@ enum CoreData {
 
 enum UserDefaultsKeys {
     static let unfinishedCrownsGame = "UnfinishedCrownsGame"
+    static let unfinishedSudokuGame = "UnfinishedSudokuGame"
 }
 
 enum Colors {
@@ -253,8 +254,8 @@ enum Constraints {
     static let unfinishedViewLogoTop: CGFloat = 15
     static let unfinishedViewLogoWidth: CGFloat = 280
     static let unfinishedViewStackSpacing: CGFloat = 8
-    static let discriptionUnfinishedCrownsTop: CGFloat = 20
-    static let discriptionUnfinishedCrownsL: CGFloat = 20
+    static let discriptionUnfinishedTop: CGFloat = 20
+    static let discriptionUnfinishedL: CGFloat = 20
     static let discriptionTextSize: CGFloat = 20
     
     // GameSellector

@@ -25,11 +25,6 @@ protocol CrownsPlayBusinessLogic {
     func getLevelPictute(_ request: CrownsPlayModel.GetLevel.Request)
 }
 
-struct CrownsMove {
-    let indexPath: IndexPath
-    let value: Int
-}
-
 final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
     
     private let presenter: CrownsPlayPresentationLogic
@@ -40,7 +35,7 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
     private var placements: [[Int]]
     private var timer: Timer? = Timer()
     private var timeGoes: Bool = true
-    private var savedMoves: [CrownsMove] = []
+    private var savedMoves: [CrownsPlayModel.CrownsMove] = []
     
     init(presenter: CrownsPlayPresentationLogic, foundation: CrownsPlayModel.BuildModule.BuildFoundation) {
         self.presenter = presenter
@@ -133,6 +128,11 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
         CoreDataCrownsStatisticStack.shared.recordWin(difficulty: crowns.difficultyLevel, time: Int32(elapsedTime))
     }
     
+    private func playFinished(isWin: Bool) {
+        deinitTimer()
+        presenter.routeGameOver(CrownsPlayModel.RouteGameOver.Response(isWin: isWin, time: elapsedTime))
+    }
+    
     func pauseButtonTapped(_ request: CrownsPlayModel.PauseGame.Request) {
         if timeGoes {
             deinitTimer()
@@ -160,7 +160,6 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
             savedMoves.remove(at: 0)
         }
         savedMoves.append(request.move)
-        print(savedMoves)
     }
     
     func getLevelPictute(_ request: CrownsPlayModel.GetLevel.Request) {
@@ -175,11 +174,6 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
         }
         
         presenter.setLevelImage(CrownsPlayModel.GetLevel.Response(image: image))
-    }
-    
-    private func playFinished(isWin: Bool) {
-        deinitTimer()
-        presenter.routeGameOver(CrownsPlayModel.RouteGameOver.Response(isWin: isWin, time: elapsedTime))
     }
     
     private func initTimer() {

@@ -9,6 +9,7 @@ import Foundation
 
 protocol SudokuGameOverPresentationLogic {
     func routeHome(_ response: SudokuGameOverModel.RouteHome.Response)
+    func routeStatistics(_ response: SudokuGameOverModel.RouteStatistics.Response)
 }
 
 final class SudokuGameOverPresenter: SudokuGameOverPresentationLogic {
@@ -19,4 +20,7 @@ final class SudokuGameOverPresenter: SudokuGameOverPresentationLogic {
         view?.navigationController?.popToRootViewController(animated: false)
     }
     
+    func routeStatistics(_ response: SudokuGameOverModel.RouteStatistics.Response) {
+        view?.navigationController?.pushViewController(StatisticsBuilder.build(), animated: false)
+    }
 }

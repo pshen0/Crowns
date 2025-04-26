@@ -6,13 +6,14 @@
 //
 
 protocol HomeBusinessLogic {
-     func playCrownsTapped(_ request: HomeModel.RouteToCrownsSettings.Request)
-     func playSudokuTapped(_ request: HomeModel.RouteToSudokuSettings.Request)
-     func playQueensTapped(_ request: HomeModel.RouteToQueensSettings.Request)
-     func learnCrownsTapped(_ request: HomeModel.RouteToCrownsLearning.Request)
-     func learnSudokuTapped(_ request: HomeModel.RouteToSudokuLearning.Request)
-     func learnQueensTapped(_ request: HomeModel.RouteToQueensLearning.Request)
+    func playCrownsTapped(_ request: HomeModel.RouteToCrownsSettings.Request)
+    func playSudokuTapped(_ request: HomeModel.RouteToSudokuSettings.Request)
+    func playQueensTapped(_ request: HomeModel.RouteToQueensSettings.Request)
+    func learnCrownsTapped(_ request: HomeModel.RouteToCrownsLearning.Request)
+    func learnSudokuTapped(_ request: HomeModel.RouteToSudokuLearning.Request)
+    func learnQueensTapped(_ request: HomeModel.RouteToQueensLearning.Request)
     func getUnfinishedCrownsGame(_ request: HomeModel.GetUnfinishedCrownsGame.Request)
+    func getUnfinishedSudokuGame(_ request: HomeModel.GetUnfinishedSudokuGame.Request)
 }
 
 final class HomeInteractor: HomeBusinessLogic {
@@ -49,7 +50,13 @@ final class HomeInteractor: HomeBusinessLogic {
     
     func getUnfinishedCrownsGame(_ request: HomeModel.GetUnfinishedCrownsGame.Request) {
         if let unfinishedCrownsGame = CoreDataCrownsProgressStack.shared.fetchProgress() {
-            presenter.showUnfinishedGame(HomeModel.GetUnfinishedCrownsGame.Response(foundation: unfinishedCrownsGame))
+            presenter.showUnfinishedCrowns(HomeModel.GetUnfinishedCrownsGame.Response(foundation: unfinishedCrownsGame))
+        }
+    }
+    
+    func getUnfinishedSudokuGame(_ request: HomeModel.GetUnfinishedSudokuGame.Request) {
+        if let unfinishedSudokuGame = CoreDataSudokuProgressStack.shared.fetchProgress() {
+            presenter.showUnfinishedSudoku(HomeModel.GetUnfinishedSudokuGame.Response(foundation: unfinishedSudokuGame))
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  UnfinishedCrownsView.swift
+//  UnfinishedSudokuView.swift
 //  Crowns
 //
 //  Created by Анна Сазонова on 16.04.2025.
@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol UnfinishedCrownsViewControllerDelegate: AnyObject {
-    func unfinishedCrownsDidRequestToContinue(with foundation: CrownsPlayModel.BuildModule.BuildFoundation)
+protocol UnfinishedSudokuViewControllerDelegate: AnyObject {
+    func unfinishedSudokuDidRequestToContinue(with foundation: SudokuPlayModel.BuildModule.BuildFoundation)
 }
 
-final class UnfinishedCrownsViewController: UIViewController {
+final class UnfinishedSudokuViewController: UIViewController {
     
-    private let interactor: UnfinishedCrownsBusinessLogic
-    weak var delegate: UnfinishedCrownsViewControllerDelegate?
+    private let interactor: UnfinishedSudokuBusinessLogic
+    weak var delegate: UnfinishedSudokuViewControllerDelegate?
     
     private let dismissView: UIView = {
         let view = UIView()
@@ -24,11 +24,11 @@ final class UnfinishedCrownsViewController: UIViewController {
     private let backButton: UIButton = CustomButton(button: UIImageView(image: Images.backButton),
                                                       tapped: UIImageView(image: Images.backButtonTap))
     private let continueView: UIView = UIView()
-    private let viewLogo: CustomText = CustomText(text: Text.unfinishedCrowns, fontSize: Constraints.selectorTextSize, textColor: Colors.white)
+    private let viewLogo: CustomText = CustomText(text: Text.unfinishedSudoku, fontSize: Constraints.selectorTextSize, textColor: Colors.white)
     private let discriptionStack = UIStackView()
     private let continueButton: UIButton = CustomButton(button: UIImageView(image: UIImage.button))
     
-    init(interactor: UnfinishedCrownsBusinessLogic) {
+    init(interactor: UnfinishedSudokuBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
@@ -51,7 +51,7 @@ final class UnfinishedCrownsViewController: UIViewController {
         view.addSubview(dismissView)
         
         configureBackground()
-        interactor.getDiscriptionParametrs(UnfinishedCrownsModel.AddDiscription.Request())
+        interactor.getDiscriptionParametrs(UnfinishedSudokuModel.AddDiscription.Request())
         configureButton()
     }
     
@@ -77,7 +77,7 @@ final class UnfinishedCrownsViewController: UIViewController {
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
     
-    func configureDiscription(_ viewModel: UnfinishedCrownsModel.AddDiscription.ViewModel) {
+    func configureDiscription(_ viewModel: UnfinishedSudokuModel.AddDiscription.ViewModel) {
         let difficultyLabel = CustomText(text: viewModel.difficultyLabel, fontSize: Constraints.discriptionTextSize, textColor: Colors.white)
         let timeLabel = CustomText(text: viewModel.timeLabel, fontSize: Constraints.discriptionTextSize, textColor: Colors.white)
         let catImage: UIImageView = UIImageView(image: Images.smallCat)
@@ -115,14 +115,14 @@ final class UnfinishedCrownsViewController: UIViewController {
     
     @objc func backButtonTapped() {
         dismiss(animated: false)
-        interactor.deleteProgress(UnfinishedCrownsModel.DeleteProgress.Request())
+        interactor.deleteProgress(UnfinishedSudokuModel.DeleteProgress.Request())
     }
     
     @objc func continueButtonTapped() {
         dismiss(animated: false) {
-            self.delegate?.unfinishedCrownsDidRequestToContinue(with: self.interactor.getCrownsFoundation())
+            self.delegate?.unfinishedSudokuDidRequestToContinue(with: self.interactor.getSudokuFoundation())
         }
-        interactor.deleteProgress(UnfinishedCrownsModel.DeleteProgress.Request())
+        interactor.deleteProgress(UnfinishedSudokuModel.DeleteProgress.Request())
     }
 }
 

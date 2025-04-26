@@ -9,46 +9,70 @@ import UIKit
 
 protocol SudokuPlayBusinessLogic {
     func getCages(_ request: SudokuPlayModel.GetCages.Request) -> [SudokuCage]
-    func numberButtonTapped(_ request: SudokuPlayModel.ChangeCellNumber.Request) -> [SudokuPlayModel.ChangeCellNumber.ViewModel]
-    func cleanButtonTapped(_ request: SudokuPlayModel.DeleteCellNumber.Request) -> [SudokuPlayModel.DeleteCellNumber.ViewModel]
+    func numberButtonTapped(_ request: SudokuPlayModel.ChangeCellNumber.Request)
+    func cleanButtonTapped(_ request: SudokuPlayModel.DeleteCellNumber.Request)
     func determineCellsWithSum(_ request: SudokuPlayModel.DetermineCellsWithSum.Request) -> SudokuPlayModel.DetermineCellsWithSum.ViewModel
-    func isPlayFinished(_ request: SudokuPlayModel.CheckGameOver.Request)
+    func isPlayFinished(_ request: SudokuPlayModel.CheckGameOver.Request) -> Bool
     func pauseButtonTapped(_ request: SudokuPlayModel.PauseGame.Request)
     func backButtonTapped(_ request: SudokuPlayModel.RouteBack.Request)
+    func startTimer(_ request: SudokuPlayModel.StartTimer.Request)
+    func timeIsUp() -> Bool
+    func leaveGame(_ request: SudokuPlayModel.LeaveGame.Request)
+    func gameIsWon(_ request: SudokuPlayModel.GameIsWon.Request)
+    func hintButtonTapped(_ request: SudokuPlayModel.GetHint.Request)
+    func undoButtonTapped(_ request: SudokuPlayModel.UndoMove.Request)
+    func saveMove(_ request: SudokuPlayModel.SaveMove.Request)
+    func getLevelPictute(_ request: SudokuPlayModel.GetLevel.Request)
 }
 
 final class SudokuPlayInteractor: SudokuPlayBusinessLogic {
     
     private let presenter: SudokuPlayPresentationLogic
     private let killerSudoku: KillerSudoku
-    private var time: SudokuPlayModel.Time
+    private var elapsedTime: Int
+    private var initialTime: Int
+    private var isTimerUsed: Bool
     private var timer: Timer? = Timer()
     private var timeGoes: Bool = true
+    private var savedMoves: [SudokuPlayModel.SudokuMove] = []
     
-    init(presenter: SudokuPlayPresentationLogic, killerSudoku: KillerSudoku, time: SudokuPlayModel.Time) {
+    init(presenter: SudokuPlayPresentationLogic, foundation: SudokuPlayModel.BuildModule.BuildFoundation) {
         self.presenter = presenter
-        self.killerSudoku = killerSudoku
-        self.time = time
-        startTimer()
+        self.killerSudoku = foundation.killerSudoku
+        self.initialTime = foundation.initialTime
+        self.elapsedTime = foundation.elapsedTime
+        self.isTimerUsed = foundation.isTimerUsed
     }
     
-    private func startTimer() {
-        if time.minutes != 0 || time.seconds != 0 {
-            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(changeTime), userInfo: nil, repeats: true)
+    func startTimer(_ request: SudokuPlayModel.StartTimer.Request) {
+        initTimer()
+    }
+    
+    private func initTimer() {
+        timeGoes = true
+        if isTimerUsed {
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(reverseTimeChange), userInfo: nil, repeats: true)
+        } else {
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(forwardTimeChange), userInfo: nil, repeats: true)
         }
     }
     
-    @objc private func changeTime() {
-        if time.seconds > 0 {
-            time.seconds -= 1
-            presenter.presentTime(SudokuPlayModel.SetTime.Response(time: time))
-        } else if time.minutes > 0 {
-            time.minutes -= 1
-            time.seconds = 59
-            presenter.presentTime(SudokuPlayModel.SetTime.Response(time: time))
+    @objc private func reverseTimeChange() {
+        if initialTime - elapsedTime > 0 {
+            elapsedTime += 1
+            presenter.presentTime(SudokuPlayModel.SetTime.Response(time: initialTime - elapsedTime))
         } else {
             playFinished(isWin: false)
         }
+    }
+    
+    @objc private func forwardTimeChange() {
+        elapsedTime += 1
+        presenter.presentTime(SudokuPlayModel.SetTime.Response(time: elapsedTime))
+    }
+    
+    func timeIsUp() -> Bool {
+        return elapsedTime >= initialTime && isTimerUsed
     }
     
     private func isChangeCorrect(row: Int, col: Int, number: Int) -> String {
@@ -112,73 +136,58 @@ final class SudokuPlayInteractor: SudokuPlayBusinessLogic {
     }
     
     func backButtonTapped(_ request: SudokuPlayModel.RouteBack.Request) {
-        timer?.invalidate()
-        timer = nil
+        deinitTimer()
         presenter.routeBack(SudokuPlayModel.RouteBack.Response())
     }
     
-    func numberButtonTapped(_ request: SudokuPlayModel.ChangeCellNumber.Request) -> [SudokuPlayModel.ChangeCellNumber.ViewModel] {
-        var changedCells = [SudokuPlayModel.ChangeCellNumber.ViewModel]()
+    func numberButtonTapped(_ request: SudokuPlayModel.ChangeCellNumber.Request) {
+        var changedCells = [SudokuPlayModel.ChangeCell.Change]()
         let (row, col) = getTablePosition(request.index)
         
         if killerSudoku.unsolvedPuzzle[row][col] == 0 {
             killerSudoku.puzzle[row][col] = request.number
-            for i in 0...8 {
-                for j in 0...8 {
-                    let blockIndex = (i / 3) * 3 + (j / 3)
-                    let cellIndex = (i % 3) * 3 + (j % 3)
-                    if killerSudoku.unsolvedPuzzle[i][j] == 0 {
-                        let mode: String = isChangeCorrect(row: i, col: j, number: killerSudoku.puzzle[i][j])
-                        let blockIndexPath = IndexPath(item: blockIndex, section: 0)
-                        let cellIndexPath = IndexPath(item: cellIndex, section: 0)
-                        let changedCell = SudokuPlayModel.ChangeCellNumber.ViewModel(blockIndex: blockIndexPath, cellIndex: cellIndexPath, number: killerSudoku.puzzle[i][j], mode: mode)
-                        changedCells.append(changedCell)
-                    }
-                }
-            }
+            changedCells = findChanges()
         }
-        return changedCells
+        
+        presenter.setPlaygroundChanges(SudokuPlayModel.ChangeCell.Response(changes: changedCells))
     }
     
-    func cleanButtonTapped(_ request: SudokuPlayModel.DeleteCellNumber.Request) -> [SudokuPlayModel.DeleteCellNumber.ViewModel] {
-        var changedCells = [SudokuPlayModel.DeleteCellNumber.ViewModel]()
+    func cleanButtonTapped(_ request: SudokuPlayModel.DeleteCellNumber.Request) {
+        var changedCells = [SudokuPlayModel.ChangeCell.Change]()
         let (row, col) = getTablePosition(request.index)
         
         if killerSudoku.unsolvedPuzzle[row][col] == 0 {
             killerSudoku.puzzle[row][col] = 0
-            var blockIndex = (row / 3) * 3 + (col / 3)
-            var cellIndex = (row % 3) * 3 + (col % 3)
-            var blockIndexPath = IndexPath(item: blockIndex, section: 0)
-            var cellIndexPath = IndexPath(item: cellIndex, section: 0)
-            var changedCell = SudokuPlayModel.DeleteCellNumber.ViewModel(blockIndex: blockIndexPath, cellIndex: cellIndexPath, number: 0, mode: "correct")
+            let blockIndex = (row / 3) * 3 + (col / 3)
+            let cellIndex = (row % 3) * 3 + (col % 3)
+            let blockIndexPath = IndexPath(item: blockIndex, section: 0)
+            let cellIndexPath = IndexPath(item: cellIndex, section: 0)
+            let changedCell = SudokuPlayModel.ChangeCell.Change(blockIndex: blockIndexPath, cellIndex: cellIndexPath, number: 0, mode: "correct")
             changedCells.append(changedCell)
-            for i in 0...8 {
-                for j in 0...8 {
-                    blockIndex = (i / 3) * 3 + (j / 3)
-                    cellIndex = (i % 3) * 3 + (j % 3)
-                    if killerSudoku.unsolvedPuzzle[i][j] == 0 {
-                        let mode: String = isChangeCorrect(row: i, col: j, number: killerSudoku.puzzle[i][j])
-                        blockIndexPath = IndexPath(item: blockIndex, section: 0)
-                        cellIndexPath = IndexPath(item: cellIndex, section: 0)
-                        changedCell = SudokuPlayModel.DeleteCellNumber.ViewModel(blockIndex: blockIndexPath, cellIndex: cellIndexPath, number: killerSudoku.puzzle[i][j], mode: mode)
-                        changedCells.append(changedCell)
-                    }
-                }
-            }
+            
+            changedCells = findChanges()
         }
-        return changedCells
+        
+        presenter.setPlaygroundChanges(SudokuPlayModel.ChangeCell.Response(changes: changedCells))
     }
     
-    func isPlayFinished(_ request: SudokuPlayModel.CheckGameOver.Request) {
-        if killerSudoku.getTable() == killerSudoku.puzzle {
-            playFinished(isWin: true)
+    func undoButtonTapped(_ request: SudokuPlayModel.UndoMove.Request) {
+        if !savedMoves.isEmpty {
+            if let sudokuMove = savedMoves.last {
+                let (row, col) = getTablePosition(sudokuMove.index)
+                killerSudoku.puzzle[row][col] = sudokuMove.value
+                let changedCells = findChanges()
+                savedMoves.remove(at: savedMoves.count - 1)
+                presenter.setPlaygroundChanges(SudokuPlayModel.ChangeCell.Response(changes: changedCells))
+            }
         }
     }
     
     func determineCellsWithSum(_ request: SudokuPlayModel.DetermineCellsWithSum.Request) -> SudokuPlayModel.DetermineCellsWithSum.ViewModel {
         let blockRow = request.index / 3
         let blockCol = request.index % 3
-        var blockData = [Int]()
+        var blockData: [Int] = []
+        var initData: [Int] = []
         var cellsWithSum = [(IndexPath, Int)]()
         
         for i in 0 ..< 3 {
@@ -186,6 +195,7 @@ final class SudokuPlayInteractor: SudokuPlayBusinessLogic {
                 let row = blockRow * 3 + i
                 let col = blockCol * 3 + j
                 blockData.append(killerSudoku.puzzle[row][col])
+                initData.append(killerSudoku.unsolvedPuzzle[row][col])
             }
         }
         
@@ -203,28 +213,109 @@ final class SudokuPlayInteractor: SudokuPlayBusinessLogic {
             }
         }
         
-        return SudokuPlayModel.DetermineCellsWithSum.ViewModel(cellsWithSum: cellsWithSum, blockData: blockData)
+        return SudokuPlayModel.DetermineCellsWithSum.ViewModel(cellsWithSum: cellsWithSum, blockData: blockData, initData: initData)
     }
     
     func pauseButtonTapped(_ request: SudokuPlayModel.PauseGame.Request) {
         if timeGoes {
-            timeGoes = false
-            timer?.invalidate()
-            timer = nil
+            deinitTimer()
         } else {
-            timeGoes = true
-            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(changeTime), userInfo: nil, repeats: true)
+            initTimer()
         }
     }
     
+    func hintButtonTapped(_ request: SudokuPlayModel.GetHint.Request) {
+        var hintFounded = false
+        for i in 0...8 {
+            for j in 0...8 {
+                if killerSudoku.puzzle[i][j] == 0 {
+                    killerSudoku.puzzle[i][j] = killerSudoku.table[i][j]
+                    hintFounded = true
+                    break
+                }
+            }
+            if hintFounded { break }
+        }
+        
+        let changedCells = findChanges()
+        presenter.setPlaygroundChanges(SudokuPlayModel.ChangeCell.Response(changes: changedCells))
+    }
+    
+    private func findChanges() -> [SudokuPlayModel.ChangeCell.Change] {
+        var changedCells = [SudokuPlayModel.ChangeCell.Change]()
+        
+        for i in 0...8 {
+            for j in 0...8 {
+                let blockIndex = (i / 3) * 3 + (j / 3)
+                let cellIndex = (i % 3) * 3 + (j % 3)
+                if killerSudoku.unsolvedPuzzle[i][j] == 0 {
+                    let mode: String = isChangeCorrect(row: i, col: j, number: killerSudoku.puzzle[i][j])
+                    let blockIndexPath = IndexPath(item: blockIndex, section: 0)
+                    let cellIndexPath = IndexPath(item: cellIndex, section: 0)
+                    let changedCell = SudokuPlayModel.ChangeCell.Change(blockIndex: blockIndexPath, cellIndex: cellIndexPath, number: killerSudoku.puzzle[i][j], mode: mode)
+                    changedCells.append(changedCell)
+                }
+            }
+        }
+        
+        return changedCells
+    }
+    
+    func isPlayFinished(_ request: SudokuPlayModel.CheckGameOver.Request) -> Bool {
+        return killerSudoku.getTable() == killerSudoku.puzzle
+    }
+    
+    func gameIsWon(_ request: SudokuPlayModel.GameIsWon.Request) {
+        playFinished(isWin: true)
+        CoreDataSudokuStatisticStack.shared.recordWin(difficulty: killerSudoku.difficultyLevel, time: Int32(elapsedTime))
+    }
+    
     private func playFinished(isWin: Bool) {
-        timer?.invalidate()
-        timer = nil
-        presenter.routeGameOver(SudokuPlayModel.RouteGameOver.Response(isWin: isWin))
+        deinitTimer()
+        presenter.routeGameOver(SudokuPlayModel.RouteGameOver.Response(isWin: isWin, time: elapsedTime))
+    }
+    
+    func leaveGame(_ request: SudokuPlayModel.LeaveGame.Request) {
+        deinitTimer()
+        CoreDataSudokuProgressStack.shared.saveProgress(isTimerUsed: self.isTimerUsed,
+                                                        initialTime: Int32(self.initialTime),
+                                                        elapsedTime: Int32(self.elapsedTime),
+                                                        killerSudoku: self.killerSudoku)
+        UserDefaults.standard.set(true, forKey: UserDefaultsKeys.unfinishedSudokuGame)
     }
     
     deinit {
         timer?.invalidate()
         timer = nil
+    }
+    
+    private func deinitTimer() {
+        timeGoes = false
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    func saveMove(_ request: SudokuPlayModel.SaveMove.Request) {
+        let (row, col) = getTablePosition(request.index)
+        
+        if savedMoves.count > 10 {
+            savedMoves.remove(at: 0)
+        }
+        
+        savedMoves.append(SudokuPlayModel.SudokuMove(index: request.index, value: killerSudoku.puzzle[row][col]))
+    }
+    
+    func getLevelPictute(_ request: SudokuPlayModel.GetLevel.Request) {
+        var image: UIImage?
+        switch killerSudoku.difficultyLevel {
+        case "Hard":
+            image = Images.hardLevel
+        case "Medium":
+            image = Images.mediumLevel
+        default:
+            image = Images.easyLevel
+        }
+        
+        presenter.setLevelImage(SudokuPlayModel.GetLevel.Response(image: image))
     }
 }

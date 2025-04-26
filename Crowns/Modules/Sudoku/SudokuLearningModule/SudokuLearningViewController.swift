@@ -127,4 +127,8 @@ final class SudokuLearningViewController: UIViewController {
             return
         }
     }
+    
+    func systemTouchNextButton() {
+        nextButton.sendActions(for: .touchUpInside)
+    }
 }
