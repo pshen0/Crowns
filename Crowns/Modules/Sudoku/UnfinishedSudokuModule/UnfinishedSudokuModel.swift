@@ -17,7 +17,7 @@ enum UnfinishedSudokuModel {
         }
     }
     
-    enum AddDiscription {
+    enum AddDescription {
         struct Request { }
         struct Response {
             let difficulty: String

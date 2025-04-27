@@ -9,6 +9,7 @@ import Foundation
 
 protocol StatisticsPresentationLogic {
     func routeBack(_ response: StatisticsModel.RouteBack.Response)
+    func setGameType(_ response: StatisticsModel.OpenStatistics.Response)
 }
 
 final class StatisticsPresenter: StatisticsPresentationLogic {
@@ -17,5 +18,9 @@ final class StatisticsPresenter: StatisticsPresentationLogic {
     
     func routeBack(_ response: StatisticsModel.RouteBack.Response) {
         view?.navigationController?.popToRootViewController(animated: false)
+    }
+    
+    func setGameType(_ response: StatisticsModel.OpenStatistics.Response) {
+        view?.setGameType(StatisticsModel.OpenStatistics.ViewModel(gameType: response.gameType))
     }
 }

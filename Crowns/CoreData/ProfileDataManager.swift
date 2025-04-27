@@ -25,6 +25,4 @@ final class CoreDataProfileStack {
         let request: NSFetchRequest<ProfileData> = ProfileData.fetchRequest()
         return try? context.fetch(request).first
     }
-    
-    
 }

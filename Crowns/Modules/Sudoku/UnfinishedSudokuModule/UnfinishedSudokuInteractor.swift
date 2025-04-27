@@ -8,7 +8,7 @@
 import Foundation
 
 protocol UnfinishedSudokuBusinessLogic {
-    func getDiscriptionParametrs(_ request: UnfinishedSudokuModel.AddDiscription.Request)
+    func getDescriptionParametrs(_ request: UnfinishedSudokuModel.AddDescription.Request)
     func deleteProgress(_ request: UnfinishedSudokuModel.DeleteProgress.Request)
     func getSudokuFoundation() -> SudokuPlayModel.BuildModule.BuildFoundation
 }
@@ -23,8 +23,8 @@ final class UnfinishedSudokuInteractor: UnfinishedSudokuBusinessLogic {
         self.foundation = foundation
     }
     
-    func getDiscriptionParametrs(_ request: UnfinishedSudokuModel.AddDiscription.Request) {
-        presenter.getDiscriptionLabels(UnfinishedSudokuModel.AddDiscription.Response(
+    func getDescriptionParametrs(_ request: UnfinishedSudokuModel.AddDescription.Request) {
+        presenter.getDescriptionLabels(UnfinishedSudokuModel.AddDescription.Response(
             difficulty: foundation.killerSudoku.difficultyLevel,
             time: foundation.elapsedTime))
     }

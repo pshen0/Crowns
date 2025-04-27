@@ -23,7 +23,7 @@ final class ProfilePresenter: ProfilePresentationLogic {
     }
     
     func routeStatistics(_ response: ProfileModel.RouteStatistics.Response) {
-        view?.navigationController?.pushViewController(StatisticsBuilder.build(), animated: false)
+        view?.navigationController?.pushViewController(StatisticsBuilder.build(game: StatisticsModel.GameType.crowns), animated: false)
     }
     
     func routeDeveloper(_ response: ProfileModel.RouteDeveloper.Response) {

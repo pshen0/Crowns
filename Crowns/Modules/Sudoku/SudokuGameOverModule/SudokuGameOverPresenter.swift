@@ -21,6 +21,6 @@ final class SudokuGameOverPresenter: SudokuGameOverPresentationLogic {
     }
     
     func routeStatistics(_ response: SudokuGameOverModel.RouteStatistics.Response) {
-        view?.navigationController?.pushViewController(StatisticsBuilder.build(), animated: false)
+        view?.navigationController?.pushViewController(StatisticsBuilder.build(game: StatisticsModel.GameType.killerSudoku), animated: false)
     }
 }

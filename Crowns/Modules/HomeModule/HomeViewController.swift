@@ -55,6 +55,7 @@ final class HomeViewController: UIViewController{
         learningSelectorViewController.modalPresentationStyle = .overFullScreen
         configureBackground()
         configureCalendar()
+        homeCalendar.updateMarkedDates()
         configureButtons()
     }
     

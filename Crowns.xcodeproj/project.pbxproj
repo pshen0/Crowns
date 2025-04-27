@@ -140,6 +140,8 @@
 		0F89CBFD2DBD6B5F0062E0BF /* UnfinishedSudokuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F89CBFC2DBD6B5F0062E0BF /* UnfinishedSudokuPresenter.swift */; };
 		0F89CBFF2DBD6B6D0062E0BF /* UnfinishedSudokuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F89CBFE2DBD6B6D0062E0BF /* UnfinishedSudokuModel.swift */; };
 		0F89CC012DBD6B7B0062E0BF /* UnfinishedSudokuBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F89CC002DBD6B7B0062E0BF /* UnfinishedSudokuBuilder.swift */; };
+		0F89CC032DBD8EAD0062E0BF /* CalendarDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F89CC022DBD8EAD0062E0BF /* CalendarDataManager.swift */; };
+		0F89CC052DBDC2310062E0BF /* JumpingCat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F89CC042DBDC2310062E0BF /* JumpingCat.swift */; };
 		0F8EED972D788FEC00F60BFA /* KillerSudokuGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8EED962D788FEC00F60BFA /* KillerSudokuGenerator.swift */; };
 		0F9BA3002DA1638500C2ACFD /* CrownsGameOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9BA2FF2DA1638500C2ACFD /* CrownsGameOverViewController.swift */; };
 		0F9BA3022DA1639000C2ACFD /* CrownsGameOverInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9BA3012DA1639000C2ACFD /* CrownsGameOverInteractor.swift */; };
@@ -302,6 +304,8 @@
 		0F89CBFC2DBD6B5F0062E0BF /* UnfinishedSudokuPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfinishedSudokuPresenter.swift; sourceTree = "<group>"; };
 		0F89CBFE2DBD6B6D0062E0BF /* UnfinishedSudokuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfinishedSudokuModel.swift; sourceTree = "<group>"; };
 		0F89CC002DBD6B7B0062E0BF /* UnfinishedSudokuBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfinishedSudokuBuilder.swift; sourceTree = "<group>"; };
+		0F89CC022DBD8EAD0062E0BF /* CalendarDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDataManager.swift; sourceTree = "<group>"; };
+		0F89CC042DBDC2310062E0BF /* JumpingCat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpingCat.swift; sourceTree = "<group>"; };
 		0F8EED962D788FEC00F60BFA /* KillerSudokuGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillerSudokuGenerator.swift; sourceTree = "<group>"; };
 		0F9BA2FF2DA1638500C2ACFD /* CrownsGameOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsGameOverViewController.swift; sourceTree = "<group>"; };
 		0F9BA3012DA1639000C2ACFD /* CrownsGameOverInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownsGameOverInteractor.swift; sourceTree = "<group>"; };
@@ -640,6 +644,7 @@
 				0F6AFAFA2D67F817007B8454 /* CustomButton.swift */,
 				0F6AFAFC2D67F848007B8454 /* CustomText.swift */,
 				0F6AFAFE2D67F869007B8454 /* BlinkingCat.swift */,
+				0F89CC042DBDC2310062E0BF /* JumpingCat.swift */,
 				0F6AFB002D67F893007B8454 /* CustomNumberPicker.swift */,
 				0F6AFB022D67F8DC007B8454 /* TimePickerTextField.swift */,
 				0F5F8CBD2D41A865006A8164 /* GameSelector.swift */,
@@ -741,13 +746,14 @@
 		0F9BA2FA2DA15F2900C2ACFD /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				0F768F992DAFDCAE00743ABF /* GameModel.xcdatamodeld */,
 				0F768F9C2DAFDE7600743ABF /* CoreDataManager.swift */,
 				0F768F8F2DAD654800743ABF /* ProfileDataManager.swift */,
 				0F768F912DADA63D00743ABF /* CrownsProgressManager.swift */,
 				0F89CBF52DBD646B0062E0BF /* SudokuProgressManager.swift */,
-				0F768F992DAFDCAE00743ABF /* GameModel.xcdatamodeld */,
 				0F89CBCB2DB67F9F0062E0BF /* CrownsStatisticManager.swift */,
 				0F89CBCD2DB69EDE0062E0BF /* SudokuStatisticManager.swift */,
+				0F89CC022DBD8EAD0062E0BF /* CalendarDataManager.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -914,6 +920,7 @@
 				0F6AFB012D67F893007B8454 /* CustomNumberPicker.swift in Sources */,
 				0F6AFADC2D67733E007B8454 /* QueensSettingsInteractor.swift in Sources */,
 				0F89CBFD2DBD6B5F0062E0BF /* UnfinishedSudokuPresenter.swift in Sources */,
+				0F89CC032DBD8EAD0062E0BF /* CalendarDataManager.swift in Sources */,
 				0F1A78E02D4842AD00DAA4F0 /* ChallengeInteractor.swift in Sources */,
 				0F6AFAF82D677D51007B8454 /* CrownsSettingsModel.swift in Sources */,
 				0F5F18662D511D0900ED204B /* SudokuLearningInteractor.swift in Sources */,
@@ -992,6 +999,7 @@
 				0F2C54492D5051680051AD13 /* SudokuPlayInteractor.swift in Sources */,
 				0F5F186A2D511F2000ED204B /* SudokuLearningModel.swift in Sources */,
 				0F6AFAF42D677D3F007B8454 /* CrownsSettingsPresenter.swift in Sources */,
+				0F89CC052DBDC2310062E0BF /* JumpingCat.swift in Sources */,
 				0F7465462D765BCB00959164 /* StatisticsViewController.swift in Sources */,
 				0F89CBCE2DB69EDE0062E0BF /* SudokuStatisticManager.swift in Sources */,
 				0F6AFAE52D6779F1007B8454 /* SudokuSettingsViewController.swift in Sources */,

@@ -25,7 +25,7 @@ final class UnfinishedCrownsViewController: UIViewController {
                                                       tapped: UIImageView(image: Images.backButtonTap))
     private let continueView: UIView = UIView()
     private let viewLogo: CustomText = CustomText(text: Text.unfinishedCrowns, fontSize: Constraints.selectorTextSize, textColor: Colors.white)
-    private let discriptionStack = UIStackView()
+    private let descriptionStack = UIStackView()
     private let continueButton: UIButton = CustomButton(button: UIImageView(image: UIImage.button))
     
     init(interactor: UnfinishedCrownsBusinessLogic) {
@@ -51,7 +51,7 @@ final class UnfinishedCrownsViewController: UIViewController {
         view.addSubview(dismissView)
         
         configureBackground()
-        interactor.getDiscriptionParametrs(UnfinishedCrownsModel.AddDiscription.Request())
+        interactor.getDescriptionParametrs(UnfinishedCrownsModel.AddDescription.Request())
         configureButton()
     }
     
@@ -77,25 +77,25 @@ final class UnfinishedCrownsViewController: UIViewController {
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
     
-    func configureDiscription(_ viewModel: UnfinishedCrownsModel.AddDiscription.ViewModel) {
-        let difficultyLabel = CustomText(text: viewModel.difficultyLabel, fontSize: Constraints.discriptionTextSize, textColor: Colors.white)
-        let timeLabel = CustomText(text: viewModel.timeLabel, fontSize: Constraints.discriptionTextSize, textColor: Colors.white)
+    func configureDescription(_ viewModel: UnfinishedCrownsModel.AddDescription.ViewModel) {
+        let difficultyLabel = CustomText(text: viewModel.difficultyLabel, fontSize: Constraints.descriptionTextSize, textColor: Colors.white)
+        let timeLabel = CustomText(text: viewModel.timeLabel, fontSize: Constraints.descriptionTextSize, textColor: Colors.white)
         let catImage: UIImageView = UIImageView(image: Images.smallCat)
         
-        discriptionStack.axis = .vertical
-        discriptionStack.alignment = .leading
-        discriptionStack.spacing = Constraints.unfinishedViewStackSpacing
+        descriptionStack.axis = .vertical
+        descriptionStack.alignment = .leading
+        descriptionStack.spacing = Constraints.unfinishedViewStackSpacing
         
         for subview in [difficultyLabel, timeLabel] {
-            discriptionStack.addArrangedSubview(subview)
+            descriptionStack.addArrangedSubview(subview)
         }
         
-        view.addSubview(discriptionStack)
+        view.addSubview(descriptionStack)
         view.addSubview(catImage)
         
-        discriptionStack.pinTop(to: viewLogo.bottomAnchor, Constraints.discriptionUnfinishedTop)
-        discriptionStack.pinLeft(to: view.safeAreaLayoutGuide.leadingAnchor, Constraints.discriptionUnfinishedL)
-        catImage.pinRight(to: view.safeAreaLayoutGuide.trailingAnchor, Constraints.discriptionUnfinishedL)
+        descriptionStack.pinTop(to: viewLogo.bottomAnchor, Constraints.descriptionUnfinishedTop)
+        descriptionStack.pinLeft(to: view.safeAreaLayoutGuide.leadingAnchor, Constraints.descriptionUnfinishedL)
+        catImage.pinRight(to: view.safeAreaLayoutGuide.trailingAnchor, Constraints.descriptionUnfinishedL)
         catImage.pinBottom(to: timeLabel.bottomAnchor, 10)
     }
     
@@ -108,7 +108,7 @@ final class UnfinishedCrownsViewController: UIViewController {
         continueButtonText.pinCenterX(to: continueButton)
         continueButtonText.pinCenterY(to: continueButton, -4)
         continueButton.pinCenterX(to: view)
-        continueButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constraints.discriptionUnfinishedTop)
+        continueButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constraints.descriptionUnfinishedTop)
         
         continueButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
     }

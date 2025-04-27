@@ -21,6 +21,6 @@ final class CrownsGameOverPresenter: CrownsGameOverPresentationLogic {
     }
     
     func routeStatistics(_ response: CrownsGameOverModel.RouteStatistics.Response) {
-        view?.navigationController?.pushViewController(StatisticsBuilder.build(), animated: false)
+        view?.navigationController?.pushViewController(StatisticsBuilder.build(game: StatisticsModel.GameType.crowns), animated: false)
     }
 }

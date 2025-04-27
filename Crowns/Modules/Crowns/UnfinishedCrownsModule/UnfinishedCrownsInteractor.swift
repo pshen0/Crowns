@@ -8,7 +8,7 @@
 import Foundation
 
 protocol UnfinishedCrownsBusinessLogic {
-    func getDiscriptionParametrs(_ request: UnfinishedCrownsModel.AddDiscription.Request)
+    func getDescriptionParametrs(_ request: UnfinishedCrownsModel.AddDescription.Request)
     func deleteProgress(_ request: UnfinishedCrownsModel.DeleteProgress.Request)
     func getCrownsFoundation() -> CrownsPlayModel.BuildModule.BuildFoundation
 }
@@ -23,8 +23,8 @@ final class UnfinishedCrownsInteractor: UnfinishedCrownsBusinessLogic {
         self.foundation = foundation
     }
     
-    func getDiscriptionParametrs(_ request: UnfinishedCrownsModel.AddDiscription.Request) {
-        presenter.getDiscriptionLabels(UnfinishedCrownsModel.AddDiscription.Response(
+    func getDescriptionParametrs(_ request: UnfinishedCrownsModel.AddDescription.Request) {
+        presenter.getDescriptionLabels(UnfinishedCrownsModel.AddDescription.Response(
             difficulty: foundation.crowns.difficultyLevel,
             time: foundation.elapsedTime))
     }

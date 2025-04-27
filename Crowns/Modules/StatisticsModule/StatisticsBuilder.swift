@@ -8,9 +8,9 @@
 import UIKit
 
 enum StatisticsBuilder {
-    static func build() -> StatisticsViewController {
+    static func build(game: StatisticsModel.GameType) -> StatisticsViewController {
         let presenter = StatisticsPresenter()
-        let interactor = StatisticsInteractor(presenter: presenter)
+        let interactor = StatisticsInteractor(presenter: presenter, game: game)
         let view = StatisticsViewController(interactor: interactor)
         presenter.view = view
         

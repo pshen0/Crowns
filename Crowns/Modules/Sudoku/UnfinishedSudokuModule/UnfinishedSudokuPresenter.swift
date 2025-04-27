@@ -8,21 +8,21 @@
 import Foundation
 
 protocol UnfinishedSudokuPresentationLogic {
-    func getDiscriptionLabels(_ response: UnfinishedSudokuModel.AddDiscription.Response)
+    func getDescriptionLabels(_ response: UnfinishedSudokuModel.AddDescription.Response)
 }
 
 final class UnfinishedSudokuPresenter: UnfinishedSudokuPresentationLogic {
     
     weak var view: UnfinishedSudokuViewController?
     
-    func getDiscriptionLabels(_ response: UnfinishedSudokuModel.AddDiscription.Response) {
+    func getDescriptionLabels(_ response: UnfinishedSudokuModel.AddDescription.Response) {
         let difficultyLabel = "Difficulty: \(response.difficulty)"
         let minutes = response.time / 60
         let minutesString = minutes > 9 ? String(minutes) : "0\(minutes)"
         let seconds = response.time % 60
         let secondsString = seconds > 9 ? String(seconds) : "0\(seconds)"
         let timeLabel = "Time spent: \(minutesString):\(secondsString)"
-        view?.configureDiscription(UnfinishedSudokuModel.AddDiscription.ViewModel(
+        view?.configureDescription(UnfinishedSudokuModel.AddDescription.ViewModel(
             difficultyLabel: difficultyLabel,
             timeLabel: timeLabel))
     }

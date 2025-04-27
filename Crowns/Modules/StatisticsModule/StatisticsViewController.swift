@@ -33,6 +33,7 @@ final class StatisticsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        interactor.getGameType(StatisticsModel.OpenStatistics.Request())
         updateStatistics(game: currentGameType)
     }
     
@@ -94,6 +95,16 @@ final class StatisticsViewController: UIViewController {
         tableView.pinLeft(to: view.leadingAnchor)
         tableView.pinRight(to: view.trailingAnchor)
         tableView.pinBottom(to: statisticCat.topAnchor, 20)
+    }
+    
+    func setGameType(_ viewModel: StatisticsModel.OpenStatistics.ViewModel) {
+        currentGameType = viewModel.gameType
+        if currentGameType == .crowns {
+            segmentedControl.selectedSegmentIndex = 0
+        } else {
+            segmentedControl.selectedSegmentIndex = 1
+        }
+        updateStatistics(game: currentGameType)
     }
     
     @objc private func backButtonTapped() {

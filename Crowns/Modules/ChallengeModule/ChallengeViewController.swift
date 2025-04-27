@@ -119,6 +119,7 @@ final class ChallengeViewController: UIViewController {
     }
     
     func startAnimateChallengesScreen() {
+        self.challengeCat.startBlinking()
         thunderTimer = Timer.scheduledTimer(timeInterval: Numbers.lightningAnimationDuration, target: self, selector: #selector(animateLightnings), userInfo: nil, repeats: true)
         catTimer = Timer.scheduledTimer(withTimeInterval: Double.random(in: ChallengeViewConstants.animationDurMin...ChallengeViewConstants.animationDurMax), repeats: true) { _ in
             self.challengeCat.startBlinking()

@@ -23,4 +23,14 @@ enum StatisticsModel {
         struct Request { }
         struct Response { }
     }
+    
+    enum OpenStatistics {
+        struct Request { }
+        struct Response { 
+            let gameType: GameType
+        }
+        struct ViewModel { 
+            let gameType: GameType
+        }
+    }
 }
