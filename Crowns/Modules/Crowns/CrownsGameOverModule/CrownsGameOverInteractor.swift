@@ -36,12 +36,17 @@ final class CrownsGameOverInteractor: CrownsGameOverBusinessLogic {
     }
     
     func isWin(_ request: CrownsGameOverModel.IsWin.Request) -> (String, UIImage?) {
-        let text = isWin ? "Victory!" : "Defeat"
-        let image = isWin ? Images.winningCat : Images.losingCat
+        let text = isWin ? Constants.victoty : Constants.defeat
+        let image = isWin ? UIImage.winningCat : UIImage.losingCat
         return (text, image)
     }
     
     func timerLabel(_ request: CrownsGameOverModel.getTime.Request) -> String {
         return timerLabel
+    }
+    
+    private enum Constants {
+        static let victoty = "Victory!"
+        static let defeat = "Defeat"
     }
 }

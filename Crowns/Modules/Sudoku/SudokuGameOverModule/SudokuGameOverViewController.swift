@@ -10,26 +10,26 @@ import UIKit
 final class SudokuGameOverViewController: UIViewController {
     
     private let interactor: SudokuGameOverBusinessLogic
-    private let gameLogo: UILabel = CustomText(text: Text.sudokuGame, fontSize: Constraints.gameLogoSize, textColor: Colors.white)
-    private var gameResult: UILabel = UILabel()
-    private var gameTime: UILabel = UILabel()
+    private let logo: UILabel = CustomText(text: Constants.logoText, fontSize: Constants.logoTextSize, textColor: Colors.white)
+    private var result: UILabel = UILabel()
+    private var time: UILabel = UILabel()
     private var catImage: UIImageView = UIImageView()
-    private let homeButton: UIButton = CustomButton(button: UIImageView(image: Images.gameOverHomeButton))
-    private let statisticsButton: UIButton = CustomButton(button: UIImageView(image: Images.statisticsButton))
+    private let homeButton: UIButton = CustomButton(button: UIImageView(image: UIImage.gameOverHomeButton))
+    private let statisticsButton: UIButton = CustomButton(button: UIImageView(image: UIImage.statisticsButton))
     
     init(interactor: SudokuGameOverBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
         let result = interactor.isWin(SudokuGameOverModel.IsWin.Request())
-        gameResult = CustomText(text: result.0, fontSize: Constraints.gameLogoSize, textColor: Colors.white)
+        self.result = CustomText(text: result.0, fontSize: Constants.logoTextSize, textColor: Colors.white)
         let timerLabel = interactor.timerLabel(SudokuGameOverModel.getTime.Request())
-        gameTime = CustomText(text: "Elapsed time: \(timerLabel)", fontSize: 20, textColor: Colors.white)
+        time = CustomText(text: "\(Constants.gameTimeText) \(timerLabel)", fontSize: Constants.gameTimeTextSize, textColor: Colors.white)
         catImage = UIImageView(image: result.1)
     }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,17 +55,17 @@ final class SudokuGameOverViewController: UIViewController {
     private func configureBackground() {
         view.backgroundColor = Colors.darkGray
         
-        for subview in [gameLogo, gameResult, gameTime, catImage, homeButton, statisticsButton] {
+        for subview in [logo, result, time, catImage, homeButton, statisticsButton] {
             view.addSubview(subview)
             subview.pinCenterX(to: view)
         }
         
-        gameLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
-        gameResult.pinTop(to: gameLogo.bottomAnchor, 20)
-        gameTime.pinTop(to: gameResult.bottomAnchor, 20)
-        catImage.pinTop(to: gameTime.bottomAnchor, 50)
-        homeButton.pinTop(to: catImage.bottomAnchor, 50)
-        statisticsButton.pinTop(to: homeButton.bottomAnchor, 10)
+        logo.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
+        result.pinTop(to: logo.bottomAnchor, Constants.gameResultTop)
+        time.pinTop(to: result.bottomAnchor, Constants.gameTimeTop)
+        catImage.pinTop(to: time.bottomAnchor, Constants.catImageTop)
+        homeButton.pinTop(to: catImage.bottomAnchor, Constants.homeButtonTop)
+        statisticsButton.pinTop(to: homeButton.bottomAnchor, Constants.statisticsButtonTop)
         
         homeButton.addTarget(self, action: #selector(homeButtonTapped), for: .touchUpInside)
         statisticsButton.addTarget(self, action: #selector(statisticsButtonTapped), for: .touchUpInside)
@@ -77,6 +77,20 @@ final class SudokuGameOverViewController: UIViewController {
     
     @objc private func statisticsButtonTapped() {
         interactor.statisticsButtonTapped(SudokuGameOverModel.RouteStatistics.Request())
+    }
+    
+    private enum Constants {
+        static let logoText = "Sudoku"
+        static let gameTimeText = "Elapsed time:"
+        
+        static let gameResultTop = 20.0
+        static let gameTimeTop = 20.0
+        static let catImageTop = 50.0
+        static let homeButtonTop = 50.0
+        static let statisticsButtonTop = 10.0
+        
+        static let logoTextSize: CGFloat = 34
+        static let gameTimeTextSize: CGFloat = 20
     }
 }
 

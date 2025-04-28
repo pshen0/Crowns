@@ -19,11 +19,11 @@ final class BlinkingCatView: UIImageView {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     override init(frame: CGRect) {
-        fatalError(Text.initErrorFrame)
+        fatalError(Errors.initErrorFrame)
     }
     
     private func setupAnimation(duration: TimeInterval, repeatCount: Int) {

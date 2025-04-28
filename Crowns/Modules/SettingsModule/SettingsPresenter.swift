@@ -1,21 +1,21 @@
+////
+////  SettingsPresenter.swift
+////  Crowns
+////
+////  Created by Анна Сазонова on 04.03.2025.
+////
 //
-//  SettingsPresenter.swift
-//  Crowns
+//import Foundation
 //
-//  Created by Анна Сазонова on 04.03.2025.
+//protocol SettingsPresentationLogic {
+//    func routeBack(_ response: SettingsModel.RouteBack.Response)
+//}
 //
-
-import Foundation
-
-protocol SettingsPresentationLogic {
-    func routeBack(_ response: SettingsModel.RouteBack.Response)
-}
-
-final class SettingsPresenter: SettingsPresentationLogic {
-    
-    weak var view: SettingsViewController?
-    
-    func routeBack(_ response: SettingsModel.RouteBack.Response) {
-        view?.navigationController?.popViewController(animated: false)
-    }
-}
+//final class SettingsPresenter: SettingsPresentationLogic {
+//    
+//    weak var view: SettingsViewController?
+//    
+//    func routeBack(_ response: SettingsModel.RouteBack.Response) {
+//        view?.navigationController?.popViewController(animated: false)
+//    }
+//}

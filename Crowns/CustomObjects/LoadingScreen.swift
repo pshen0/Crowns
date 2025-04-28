@@ -9,7 +9,7 @@ import UIKit
 
 final class LoadingScreen: UIViewController {
     
-    private let startPlayCat: UIImageView = UIImageView(image: Images.startPlayCat)
+    private let startPlayCat: UIImageView = UIImageView(image: UIImage.startPlayCat)
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     
     init() {
@@ -18,7 +18,7 @@ final class LoadingScreen: UIViewController {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     override func viewDidLoad() {

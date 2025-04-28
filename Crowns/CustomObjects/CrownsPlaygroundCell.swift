@@ -8,9 +8,9 @@
 import UIKit
 
 final class CrownsPlaygroundCell: UICollectionViewCell {
-    static let identifier = "CrownsCell"
-    private let crownImage: UIImageView = UIImageView(image: Images.crown)
-    private let pointImage: UIImageView = UIImageView(image: Images.point)
+    static let identifier = CellsID.crownsCellId
+    private let crownImage: UIImageView = UIImageView(image: UIImage.crown)
+    private let pointImage: UIImageView = UIImageView(image: UIImage.point)
     private var mode = ""
     
     override init(frame: CGRect) {
@@ -19,7 +19,7 @@ final class CrownsPlaygroundCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     private func configureCell() {
@@ -35,14 +35,14 @@ final class CrownsPlaygroundCell: UICollectionViewCell {
     }
 
     func configure(color: UIColor, value: Int, mode: String) {
-        if mode == "inition" && value == 2 {
+        if mode == CrownsCellMode.inition && value == CrownsCellContent.crown {
             self.mode = mode
         }
         contentView.backgroundColor = color
-        if value ==  2 {
+        if value == CrownsCellContent.crown {
             crownImage.isHidden = false
             pointImage.isHidden = true
-        } else if value == 1 {
+        } else if value == CrownsCellContent.cross {
             crownImage.isHidden = true
             pointImage.isHidden = false
         } else {
@@ -60,7 +60,7 @@ final class CrownsPlaygroundCell: UICollectionViewCell {
     }
     
     func select() {
-        if mode == "inition" {
+        if mode == CrownsCellMode.inition {
             return
         } else {
             if crownImage.isHidden && pointImage.isHidden {
@@ -76,11 +76,11 @@ final class CrownsPlaygroundCell: UICollectionViewCell {
     
     func isCrownPlaced() -> Int {
         if crownImage.isHidden == false {
-            return 2
+            return CrownsCellContent.crown
         } else if pointImage.isHidden == false {
-            return 1
+            return CrownsCellContent.cross
         } else {
-            return 0
+            return CrownsCellContent.empty
         }
     }
 }

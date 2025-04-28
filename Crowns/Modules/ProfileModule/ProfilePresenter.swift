@@ -8,7 +8,6 @@
 import Foundation
 
 protocol ProfilePresentationLogic {
-    func routeSettings(_ response: ProfileModel.RouteSettings.Response)
     func routeStatistics(_ response: ProfileModel.RouteStatistics.Response)
     func routeDeveloper(_ response: ProfileModel.RouteDeveloper.Response)
     func transferProfileData(_ viewModel: ProfileModel.LoadProfile.Response)
@@ -17,10 +16,6 @@ protocol ProfilePresentationLogic {
 final class ProfilePresenter: ProfilePresentationLogic {
     
     weak var view: ProfileViewController?
-    
-    func routeSettings(_ response: ProfileModel.RouteSettings.Response) {
-        view?.navigationController?.pushViewController(SettingsBuilder.build(), animated: false)
-    }
     
     func routeStatistics(_ response: ProfileModel.RouteStatistics.Response) {
         view?.navigationController?.pushViewController(StatisticsBuilder.build(game: StatisticsModel.GameType.crowns), animated: false)

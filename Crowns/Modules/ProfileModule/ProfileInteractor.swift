@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 protocol ProfileBusinessLogic {
-    func settingsButtonTapped(_ request: ProfileModel.RouteSettings.Request)
     func statisticsButtonTapped(_ request: ProfileModel.RouteStatistics.Request)
     func developerButtonTapped(_ request: ProfileModel.RouteDeveloper.Request)
     func loadProfileData(_ request: ProfileModel.LoadProfile.Request)
@@ -22,10 +21,6 @@ final class ProfileInteractor: ProfileBusinessLogic {
     
     init(presenter: ProfilePresentationLogic) {
         self.presenter = presenter
-    }
-    
-    func settingsButtonTapped(_ request: ProfileModel.RouteSettings.Request) {
-        presenter.routeSettings(ProfileModel.RouteSettings.Response())
     }
     
     func statisticsButtonTapped(_ request: ProfileModel.RouteStatistics.Request) {

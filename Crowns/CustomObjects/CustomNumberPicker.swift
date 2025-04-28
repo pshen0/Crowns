@@ -11,8 +11,8 @@ final class CustomNumberPicker: UITextField, UIPickerViewDelegate, UIPickerViewD
     
     private let pickerView = UIPickerView()
     private let toolbar = UIToolbar()
-    private let numbers = Array(Numbers.queensSizeMin...Numbers.queensSizeMax)
-    private let customButton = CustomButton(button: UIImageView(image: Images.doneButton), tapped: UIImageView(image: Images.doneButtonTap))
+    private let numbers = Array(Constants.queensSizeMin...Constants.queensSizeMax)
+    private let customButton = CustomButton(button: UIImageView(image: UIImage.doneButton), tapped: UIImageView(image: UIImage.doneButtonTap))
     let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     
     var doneButton: UIBarButtonItem = UIBarButtonItem()
@@ -35,11 +35,11 @@ final class CustomNumberPicker: UITextField, UIPickerViewDelegate, UIPickerViewD
     private func configureUI() {
         self.backgroundColor = Colors.lightGray
         self.textAlignment = .center
-        self.layer.cornerRadius = Constraints.numberFieldRadius
+        self.layer.cornerRadius = Constants.numberFieldRadius
         self.inputView = pickerView
         self.textColor = Colors.white
-        self.tintColor = Colors.white.withAlphaComponent(Numbers.numberPickerTintAlpha)
-        self.font = UIFont(name: Text.fontIrishGrover, size: Constraints.selectorTextSize) ?? UIFont.systemFont(ofSize: Constraints.selectorTextSize)
+        self.tintColor = Colors.white.withAlphaComponent(Constants.numberPickerTintAlpha)
+        self.font = UIFont(name: Fonts.IrishGrover, size: Constants.selectorTextSize) ?? UIFont.systemFont(ofSize: Constants.selectorTextSize)
         pickerView.backgroundColor = Colors.lightGray
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -59,7 +59,7 @@ final class CustomNumberPicker: UITextField, UIPickerViewDelegate, UIPickerViewD
         toolbar.isTranslucent = false
     }
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int { return Numbers.numberPickerComponentsNumber }
+    func numberOfComponents(in pickerView: UIPickerView) -> Int { return Constants.numberPickerComponentsNumber }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return numbers.count
@@ -78,7 +78,7 @@ final class CustomNumberPicker: UITextField, UIPickerViewDelegate, UIPickerViewD
         label.text = "\(numbers[row])"
         label.textColor = Colors.white
         label.textAlignment = .center
-        label.font = UIFont(name: Text.fontIrishGrover, size: Constraints.selectorTextSize) ?? UIFont.systemFont(ofSize: Constraints.selectorTextSize)
+        label.font = UIFont(name: Fonts.IrishGrover, size: Constants.selectorTextSize) ?? UIFont.systemFont(ofSize: Constants.selectorTextSize)
         
         return label
     }
@@ -91,5 +91,15 @@ final class CustomNumberPicker: UITextField, UIPickerViewDelegate, UIPickerViewD
     
     @objc private func doneTapped() {
         self.resignFirstResponder()
+    }
+    
+    private enum Constants {
+        static let selectorTextSize: CGFloat = 25
+        
+        static let queensSizeMin: Int = 4
+        static let queensSizeMax: Int = 12
+        static let numberPickerTintAlpha: Double = 0
+        static let numberPickerComponentsNumber: Int = 1
+        static let numberFieldRadius = 5.0
     }
 }

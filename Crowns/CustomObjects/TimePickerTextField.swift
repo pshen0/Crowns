@@ -10,14 +10,14 @@ import UIKit
 final class TimePickerTextField: UITextField, UIPickerViewDelegate, UIPickerViewDataSource {
     
     private let timePicker: UIPickerView = UIPickerView()
-    private let minutesArray: [String] = Array((Numbers.timePickerMin + 1)...Numbers.timePickerMax).map { String(format: Numbers.timePickerFormat, $0) }
-    private let secondsArray: [String] = Array(Numbers.timePickerMin...Numbers.timePickerMax).map { String(format: Numbers.timePickerFormat, $0) }
-    private let customButton = CustomButton(button: UIImageView(image: Images.doneButton), tapped: UIImageView(image: Images.doneButtonTap))
+    private let minutesArray: [String] = Array((Constants.timePickerMin + 1)...Constants.timePickerMax).map { String(format: Constants.timePickerFormat, $0) }
+    private let secondsArray: [String] = Array(Constants.timePickerMin...Constants.timePickerMax).map { String(format: Constants.timePickerFormat, $0) }
+    private let customButton = CustomButton(button: UIImageView(image: UIImage.doneButton), tapped: UIImageView(image: UIImage.doneButtonTap))
     private let toolbar = UIToolbar()
     let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     
-    private var selectedMinute: String = Numbers.timePickerStartMinPosition
-    private var selectedSecond: String = Numbers.timePickerStartSecPosition
+    private var selectedMinute: String = Constants.timePickerStartMinPosition
+    private var selectedSecond: String = Constants.timePickerStartSecPosition
     var doneButton: UIBarButtonItem = UIBarButtonItem()
     
     override init(frame: CGRect) {
@@ -33,11 +33,11 @@ final class TimePickerTextField: UITextField, UIPickerViewDelegate, UIPickerView
     private func configureTextField() {
         self.backgroundColor = Colors.lightGray
         self.textAlignment = .center
-        self.layer.cornerRadius = Constraints.numberFieldRadius
+        self.layer.cornerRadius = Constants.numberFieldRadius
         self.inputView = timePicker
         self.textColor = Colors.white
-        self.tintColor = Colors.white.withAlphaComponent(Numbers.timePickerTintAlpha)
-        self.font = UIFont(name: Text.fontIrishGrover, size: Constraints.selectorTextSize) ?? UIFont.systemFont(ofSize: Constraints.selectorTextSize)
+        self.tintColor = Colors.white.withAlphaComponent(Constants.numberPickerTintAlpha)
+        self.font = UIFont(name: Fonts.IrishGrover, size: Constants.selectorTextSize) ?? UIFont.systemFont(ofSize: Constants.selectorTextSize)
         
         customButton.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
         doneButton = UIBarButtonItem(customView: customButton)
@@ -67,7 +67,7 @@ final class TimePickerTextField: UITextField, UIPickerViewDelegate, UIPickerView
     
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return Numbers.timePickerComponentsNumber
+        return Constants.timePickerComponentsNumber
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -84,7 +84,7 @@ final class TimePickerTextField: UITextField, UIPickerViewDelegate, UIPickerView
         let text = component == 0 ? minutesArray[row] : secondsArray[row]
         label.text = text
         label.textAlignment = .center
-        label.font = UIFont(name: Text.fontIrishGrover, size: Constraints.selectorTextSize) ?? UIFont.systemFont(ofSize: Constraints.selectorTextSize)
+        label.font = UIFont(name: Fonts.IrishGrover, size: Constants.selectorTextSize) ?? UIFont.systemFont(ofSize: Constants.selectorTextSize)
         label.textColor = Colors.white
         
         return label
@@ -113,5 +113,21 @@ final class TimePickerTextField: UITextField, UIPickerViewDelegate, UIPickerView
     
     @objc private func doneTapped() {
         self.resignFirstResponder()
+    }
+    
+    private enum Constants {
+        static let selectorTextSize: CGFloat = 25
+        
+        static let timePickerStartSecPosition: String = "00"
+        static let timePickerStartMinPosition: String = "01"
+        static let timePickerMin: Int = 0
+        static let timePickerMax: Int = 59
+        static let timePickerFormat: String = "%02d"
+        static let timePickerTintAlpha: Double = 0
+        static let timePickerComponentsNumber: Int = 2
+        static let numberFieldRadius = 10.0
+
+        static let numberPickerTintAlpha: Double = 0
+        static let numberPickerComponentsNumber: Int = 1
     }
 }

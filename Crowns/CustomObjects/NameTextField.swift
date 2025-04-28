@@ -9,7 +9,7 @@ import UIKit
 
 final class NameTextField: UITextField, UITextFieldDelegate{
     
-    private let customButton = CustomButton(button: UIImageView(image: Images.doneButton ?? UIImage()), tapped: UIImageView(image: Images.doneButtonTap ?? UIImage()))
+    private let customButton = CustomButton(button: UIImageView(image: UIImage.doneButton), tapped: UIImageView(image: UIImage.doneButtonTap))
     private let toolbar = UIToolbar()
     let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     var doneButton: UIBarButtonItem = UIBarButtonItem()
@@ -27,12 +27,12 @@ final class NameTextField: UITextField, UITextFieldDelegate{
     private func configureTextField() {
         self.backgroundColor = Colors.lightGray
         self.textAlignment = .center
-        self.placeholder = Text.userNamePlaceholder
+        self.placeholder = Constants.userNamePlaceholder
         self.delegate = self
-        self.layer.cornerRadius = Constraints.numberFieldRadius
+        self.layer.cornerRadius = Constants.numberFieldRadius
         self.textColor = Colors.white
         self.tintColor = .clear
-        self.font = UIFont(name: Text.fontIrishGrover, size: Constraints.selectorTextSize) ?? UIFont.systemFont(ofSize: Constraints.selectorTextSize)
+        self.font = UIFont(name: Fonts.IrishGrover, size: Constants.selectorTextSize) ?? UIFont.systemFont(ofSize: Constants.selectorTextSize)
         
         customButton.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
         
@@ -64,6 +64,15 @@ final class NameTextField: UITextField, UITextFieldDelegate{
         let currentText = textField.text ?? ""
         let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
         
-        return newText.count <= Numbers.nameMaxLength
+        return newText.count <= Constants.nameMaxLength
+    }
+    
+    private enum Constants {
+        static let userNamePlaceholder: String = "User name"
+        
+        static let selectorTextSize: CGFloat = 25
+        
+        static let numberFieldRadius: CGFloat = 10
+        static let nameMaxLength: Int = 12
     }
 }

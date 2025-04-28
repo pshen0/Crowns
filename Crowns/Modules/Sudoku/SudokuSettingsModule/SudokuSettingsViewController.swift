@@ -4,41 +4,39 @@
 //
 //  Created by Анна Сазонова on 20.02.2025.
 //
-
 import UIKit
 
 final class SudokuSettingsViewController: UIViewController{
     
     private let interactor: SudokuSettingsBusinessLogic
-    private let backButton: UIButton = CustomButton(button: UIImageView(image: Images.backButton),
-                                                    tapped: UIImageView(image: Images.backButtonTap))
-    private let startPlayButton: UIButton = CustomButton(button: UIImageView(image: Images.startPlayButton))
-    private let startPlayCat: UIImageView = UIImageView(image: Images.startPlayCat)
-    private let levelEasyButton: UIButton = UIButton()
-    private let levelMediumButton: UIButton = UIButton()
-    private let levelHardButton: UIButton = UIButton()
-    private let levelRandomButton: UIButton = UIButton()
+    private let backButton: UIButton = CustomButton(button: UIImageView(image: UIImage.backButton),
+                                                    tapped: UIImageView(image: UIImage.backButtonTap))
+    private let startPlayButton: UIButton = CustomButton(button: UIImageView(image: UIImage.startPlayButton))
+    private let startPlayCat: UIImageView = UIImageView(image: UIImage.startPlayCat)
+    private let easyButton: UIButton = UIButton()
+    private let mediumButton: UIButton = UIButton()
+    private let hardButton: UIButton = UIButton()
+    private let randomButton: UIButton = UIButton()
     private let timerSwitch: UISwitch = UISwitch()
-    private let timerLabel: UILabel = CustomText(text: Text.timerLabel, fontSize: Constraints.settingsTextSize, textColor: Colors.white)
+    private let timerLabel: UILabel = CustomText(text: Constants.timerText, fontSize: Constants.settingsTextSize, textColor: Colors.white)
     private let timerPicker: TimePickerTextField = TimePickerTextField()
-    private let gameLogo: UILabel = CustomText(text: Text.sudokuGame, fontSize: Constraints.gameLogoSize, textColor: Colors.white)
-    private let choosingDifficultyText: UILabel = CustomText(text: Text.chooseDifficulty, fontSize: Constraints.settingsTextSize, textColor: Colors.white)
+    private let logo: UILabel = CustomText(text: Constants.logoText, fontSize: Constants.logoTextSize, textColor: Colors.white)
+    private let chooseDifficulty: UILabel = CustomText(text: Constants.chooseDifficultyText, fontSize: Constants.settingsTextSize, textColor: Colors.white)
     private let timerStack:UIStackView = UIStackView()
     private let buttonStack:UIStackView = UIStackView()
-    private let untappedImages = [Images.levelEasyButton, Images.levelMediumButton, Images.levelHardButton, Images.levelRandomButton]
     private var levelButtons: [UIButton] = []
     lazy var barButtonItem = UIBarButtonItem()
-    private var choosenButton: Int = 0
+    private var choosenButton: Int = Constants.choosenButton
     
     init(interactor: SudokuSettingsBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
-        levelButtons = [levelEasyButton, levelMediumButton, levelHardButton, levelRandomButton]
+        levelButtons = [easyButton, mediumButton, hardButton, randomButton]
     }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     override func viewDidLoad() {
@@ -66,7 +64,7 @@ final class SudokuSettingsViewController: UIViewController{
         timerStack.addArrangedSubview(timerLabel)
         timerStack.addArrangedSubview(timerSwitch)
         timerStack.axis = .horizontal
-        timerStack.spacing = Constraints.timerStackSpacing
+        timerStack.spacing = Constants.timerStackSpacing
         timerStack.alignment = .center
         timerSwitch.onTintColor = Colors.yellow
     }
@@ -78,23 +76,23 @@ final class SudokuSettingsViewController: UIViewController{
         navigationItem.leftBarButtonItem = barButtonItem
         timerPicker.isHidden = true
         
-        for subview in [gameLogo, choosingDifficultyText, startPlayButton, timerStack, timerPicker, startPlayCat] {
+        for subview in [logo, chooseDifficulty, startPlayButton, timerStack, timerPicker, startPlayCat] {
             view.addSubview(subview)
             subview.pinCenterX(to: view)
         }
         
-        gameLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.gameSettingsLogoTop)
-        choosingDifficultyText.pinTop(to: gameLogo.bottomAnchor, Constraints.choosingDifficultyTextTop)
-        startPlayButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constraints.startPlayButtonBottom)
-        timerPicker.setWidth(Constraints.timerPickerWidth)
-        startPlayCat.pinBottom(to: startPlayButton.topAnchor, Constraints.startPlayCatBottom)
+        logo.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
+        chooseDifficulty.pinTop(to: logo.bottomAnchor, Constants.chooseDifficultyTop)
+        startPlayButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constants.startPlayButtonBottom)
+        timerPicker.setWidth(Constants.timerPickerWidth)
+        startPlayCat.pinBottom(to: startPlayButton.topAnchor, Constants.startPlayCatBottom)
         
         configureButtons()
         
-        buttonStack.pinTop(to: choosingDifficultyText.bottomAnchor, Constraints.settingsButtonStackTop)
+        buttonStack.pinTop(to: chooseDifficulty.bottomAnchor, Constants.buttonsStackTop)
         buttonStack.pinCenterX(to: view)
-        timerStack.pinTop(to: buttonStack.bottomAnchor, Constraints.timerStackTop)
-        timerPicker.pinTop(to: timerStack.bottomAnchor, Constraints.timerPickerTop)
+        timerStack.pinTop(to: buttonStack.bottomAnchor, Constants.timerStackTop)
+        timerPicker.pinTop(to: timerStack.bottomAnchor, Constants.timerPickerTop)
         
         startPlayButton.addTarget(self, action: #selector(startPlayButtonTapped), for: .touchUpInside)
         timerSwitch.addTarget(self, action: #selector(changedTimerSwitch), for: .valueChanged)
@@ -102,11 +100,11 @@ final class SudokuSettingsViewController: UIViewController{
     
     private func configureButtons() {
         buttonStack.axis = .vertical
-        buttonStack.spacing = Constraints.settingsButtonStackSpacing
+        buttonStack.spacing = Constants.buttonsStackSpacing
         buttonStack.alignment = .center
         
-        for (button, image) in zip([levelEasyButton, levelMediumButton, levelHardButton, levelRandomButton],
-                                   [Images.levelEasyButtonTap, Images.levelMediumButton, Images.levelHardButton, Images.levelRandomButton]) {
+        for (button, image) in zip([easyButton, mediumButton, hardButton, randomButton],
+                                   [UIImage.levelEasyButtonTap, UIImage.levelMediumButton, UIImage.levelHardButton, UIImage.levelRandomButton]) {
             button.setImage(image, for: .normal)
             buttonStack.addArrangedSubview(button)
             button.pinCenterX(to: buttonStack)
@@ -114,10 +112,10 @@ final class SudokuSettingsViewController: UIViewController{
         
         view.addSubview(buttonStack)
         
-        levelEasyButton.addTarget(self, action: #selector(easyButtonTapped), for: .touchUpInside)
-        levelMediumButton.addTarget(self, action: #selector(mediumButtonTapped), for: .touchUpInside)
-        levelHardButton.addTarget(self, action: #selector(hardButtonTapped), for: .touchUpInside)
-        levelRandomButton.addTarget(self, action: #selector(randomButtonTapped), for: .touchUpInside)
+        easyButton.addTarget(self, action: #selector(easyButtonTapped), for: .touchUpInside)
+        mediumButton.addTarget(self, action: #selector(mediumButtonTapped), for: .touchUpInside)
+        hardButton.addTarget(self, action: #selector(hardButtonTapped), for: .touchUpInside)
+        randomButton.addTarget(self, action: #selector(randomButtonTapped), for: .touchUpInside)
     }
     
     @objc private func backButtonTapped() {
@@ -129,35 +127,35 @@ final class SudokuSettingsViewController: UIViewController{
             if let time = timerPicker.text {
                 interactor.startButtonTapped(SudokuSettingsModel.RouteSudokuGame.Request(buttonTag: choosenButton, timerLabel: time))
             } else {
-                interactor.startButtonTapped(SudokuSettingsModel.RouteSudokuGame.Request(buttonTag: choosenButton, timerLabel: "00:00"))
+                interactor.startButtonTapped(SudokuSettingsModel.RouteSudokuGame.Request(buttonTag: choosenButton, timerLabel: Constants.startTimerLabel))
             }
         } else {
-            interactor.startButtonTapped(SudokuSettingsModel.RouteSudokuGame.Request(buttonTag: choosenButton, timerLabel: "00:00"))
+            interactor.startButtonTapped(SudokuSettingsModel.RouteSudokuGame.Request(buttonTag: choosenButton, timerLabel: Constants.startTimerLabel))
         }
     }
     
     @objc private func easyButtonTapped() {
-        levelEasyButton.setImage(Images.levelEasyButtonTap, for: .normal)
-        levelButtons[choosenButton].setImage(untappedImages[choosenButton], for: .normal)
-        choosenButton = Numbers.levelEasyTag
+        easyButton.setImage(UIImage.levelEasyButtonTap, for: .normal)
+        levelButtons[choosenButton].setImage(Constants.untappedImages[choosenButton], for: .normal)
+        choosenButton = Constants.easyTag
     }
     
     @objc private func mediumButtonTapped() {
-        levelMediumButton.setImage(Images.levelMediumButtonTap, for: .normal)
-        levelButtons[choosenButton].setImage(untappedImages[choosenButton], for: .normal)
-        choosenButton = Numbers.levelMediumTag
+        mediumButton.setImage(UIImage.levelMediumButtonTap, for: .normal)
+        levelButtons[choosenButton].setImage(Constants.untappedImages[choosenButton], for: .normal)
+        choosenButton = Constants.mediumTag
     }
     
     @objc private func hardButtonTapped() {
-        levelHardButton.setImage(Images.levelHardButtonTap, for: .normal)
-        levelButtons[choosenButton].setImage(untappedImages[choosenButton], for: .normal)
-        choosenButton = Numbers.levelHardTag
+        hardButton.setImage(UIImage.levelHardButtonTap, for: .normal)
+        levelButtons[choosenButton].setImage(Constants.untappedImages[choosenButton], for: .normal)
+        choosenButton = Constants.hardTag
     }
     
     @objc private func randomButtonTapped() {
-        levelRandomButton.setImage(Images.levelRandomButtonTap, for: .normal)
-        levelButtons[choosenButton].setImage(untappedImages[choosenButton], for: .normal)
-        choosenButton = Numbers.levelRandomTag
+        randomButton.setImage(UIImage.levelRandomButtonTap, for: .normal)
+        levelButtons[choosenButton].setImage(Constants.untappedImages[choosenButton], for: .normal)
+        choosenButton = Constants.randomTag
         
     }
     
@@ -169,4 +167,31 @@ final class SudokuSettingsViewController: UIViewController{
         }
     }
     
+    private enum Constants {
+        static let logoText: String = "Sudoku"
+        static let timerText: String = "Timer"
+        static let chooseDifficultyText: String = "Choose the difficulty level:"
+        static let startTimerLabel = "00:00"
+        
+        static let logoTextSize: CGFloat = 34
+        static let settingsTextSize: CGFloat = 24
+        static let timerStackSpacing: CGFloat = 20
+        static let timerPickerWidth: CGFloat = 90
+        static let buttonsStackSpacing: CGFloat = 10
+        
+        static let chooseDifficultyTop: CGFloat = 25
+        static let startPlayButtonBottom: CGFloat = 30
+        static let startPlayCatBottom: CGFloat = -25
+        static let buttonsStackTop: CGFloat = 30
+        static let timerStackTop: CGFloat = 30
+        static let timerPickerTop: CGFloat = 30
+        
+        static let choosenButton = 0
+        static let easyTag: Int = 0
+        static let mediumTag: Int = 1
+        static let hardTag: Int = 2
+        static let randomTag: Int = 3
+        
+        static let untappedImages = [UIImage.levelEasyButton, UIImage.levelMediumButton, UIImage.levelHardButton, UIImage.levelRandomButton]
+    }
 }

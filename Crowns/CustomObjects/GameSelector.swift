@@ -8,12 +8,11 @@
 import UIKit
 
 final class GameSelector: UIViewController {
-    let chooseCrownsButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseCrownsButton))
-    let chooseSudokuButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseSudokuButton))
-    //let chooseQueensButton: UIButton = CustomButton(button: UIImageView(image: Images.chooseQueensButton))
+    let chooseCrownsButton: UIButton = CustomButton(button: UIImageView(image: UIImage.chooseCrownsButton))
+    let chooseSudokuButton: UIButton = CustomButton(button: UIImageView(image: UIImage.chooseSudokuButton))
     private let dismissView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.black.withAlphaComponent(Numbers.gameSelectorOverlay)
+        view.backgroundColor = UIColor.black.withAlphaComponent(Constants.overlayAlpha)
         return view
     }()
     private let gameSelectorView: UIView = UIView()
@@ -21,10 +20,10 @@ final class GameSelector: UIViewController {
         let stack: UIStackView = UIStackView()
         stack.axis = .vertical
         stack.alignment = .center
-        stack.spacing = Constraints.gameSelectorButtonsStackSpacing
+        stack.spacing = Constants.gameSelectorButtonsStackSpacing
         return stack
     }()
-    private var selectorText: CustomText = CustomText(text: "", fontSize: Constraints.selectorTextSize, textColor: Colors.white)
+    private var selectorText: CustomText = CustomText(text: "", fontSize: Constants.selectorTextSize, textColor: Colors.white)
     
     init(logo: CustomText) {
         self.selectorText = logo
@@ -37,7 +36,7 @@ final class GameSelector: UIViewController {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     override func viewDidLoad() {
@@ -59,16 +58,16 @@ final class GameSelector: UIViewController {
     
     private func configureBackground() {
         gameSelectorView.backgroundColor = Colors.darkGray
-        gameSelectorView.layer.cornerRadius = Constraints.gameSelectorRadius
+        gameSelectorView.layer.cornerRadius = Constants.gameSelectorRadius
         
         view.addSubview(gameSelectorView)
         gameSelectorView.addSubview(selectorText)
         
         gameSelectorView.setWidth(view.frame.width)
-        gameSelectorView.setHeight(Constraints.gameSelectorHeight)
+        gameSelectorView.setHeight(Constants.gameSelectorHeight)
         gameSelectorView.pinBottom(to: view.bottomAnchor)
         selectorText.pinCenterX(to: gameSelectorView)
-        selectorText.pinTop(to: gameSelectorView.topAnchor, Constraints.chooseTextTop)
+        selectorText.pinTop(to: gameSelectorView.topAnchor, Constants.chooseTextTop)
     }
     
     private func configureButtonsStack() {
@@ -79,11 +78,23 @@ final class GameSelector: UIViewController {
         gameSelectorView.addSubview(gameSelectorButtonsStack)
         
         gameSelectorButtonsStack.pinCenterX(to: gameSelectorView)
-        gameSelectorButtonsStack.pinTop(to: selectorText.bottomAnchor, Constraints.gameSelectorButtonsStackTop)
+        gameSelectorButtonsStack.pinTop(to: selectorText.bottomAnchor, Constants.gameSelectorButtonsStackTop)
     }
     
     @objc private func dismissSelf() {
         dismiss(animated: false)
+    }
+    
+    private enum Constants {
+        static let selectorTextSize: CGFloat = 25
+        static let gameSelectorHeight: CGFloat = 310
+        
+        static let chooseTextTop: CGFloat = 30
+        
+        static let gameSelectorRadius: CGFloat = 16
+        static let overlayAlpha = 0.3
+        static let gameSelectorButtonsStackSpacing: CGFloat = 15
+        static let gameSelectorButtonsStackTop: CGFloat = 30
     }
 }
 

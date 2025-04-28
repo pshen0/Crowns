@@ -14,29 +14,29 @@ final class SudokuPlayViewController: UIViewController {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.alignment = .center
-        stack.spacing = 4
+        stack.spacing = Constants.numberButtonStackSpacing
         return stack
     }()
     
-    private let backButton: UIButton = CustomButton(button: UIImageView(image: Images.backButton),
-                                                    tapped: UIImageView(image: Images.backButtonTap))
-    private let undoButton: UIButton = CustomButton(button: UIImageView(image: Images.undoButton))
-    private let timerPicture: UIImageView = UIImageView(image: Images.timerPicture)
-    private let timerLabel: UILabel = CustomText(text: "", fontSize: 12, textColor: Colors.white)
+    private let backButton: UIButton = CustomButton(button: UIImageView(image: UIImage.backButton),
+                                                    tapped: UIImageView(image: UIImage.backButtonTap))
+    private let undoButton: UIButton = CustomButton(button: UIImageView(image: UIImage.undoButton))
+    private let timerPicture: UIImageView = UIImageView(image: UIImage.timer)
+    private let timerLabel: UILabel = CustomText(text: "", fontSize: Constants.timerTextSize, textColor: Colors.white)
     private let timerView = UIView()
-    private var levelPicture:  UIImageView = UIImageView(image: Images.easyLevel)
-    private let hintButton:  UIButton = CustomButton(button: UIImageView(image: Images.hintButton))
-    private let pauseButton:  UIButton = CustomButton(button: UIImageView(image: Images.pauseButton))
-    private let cleanerButton:  UIButton = CustomButton(button: UIImageView(image: Images.cleanerButton))
-    private let learningButton:  UIButton = CustomButton(button: UIImageView(image: Images.gameLearningButton))
-    private let gameLogo: UILabel = CustomText(text: Text.sudokuGame, fontSize: Constraints.gameLogoSize, textColor: Colors.white)
-    private let gamePlayCat: UIImageView = UIImageView(image: Images.gamePlayCat)
-    private let gridSize = 3
+    private var levelPicture:  UIImageView = UIImageView(image: UIImage.easy)
+    private let hintButton:  UIButton = CustomButton(button: UIImageView(image: UIImage.hintButton))
+    private let pauseButton:  UIButton = CustomButton(button: UIImageView(image: UIImage.pauseButton))
+    private let cleanerButton:  UIButton = CustomButton(button: UIImageView(image: UIImage.cleanerButton))
+    private let learningButton:  UIButton = CustomButton(button: UIImageView(image: UIImage.gameLearningButton))
+    private let gameLogo: UILabel = CustomText(text: Constants.logoText, fontSize: Constants.logoTextSize, textColor: Colors.white)
+    private let gamePlayCat: UIImageView = UIImageView(image: UIImage.startPlayCat)
+    private let size = Constants.size
     private var selectedCellIndex: Int? = 0
     private var playground: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 5.0
-        layout.minimumLineSpacing = 5.0
+        layout.minimumInteritemSpacing = Constants.playgroundSpacing
+        layout.minimumLineSpacing = Constants.playgroundSpacing
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = .clear
         collection.register(KillerSudokuBlock.self, forCellWithReuseIdentifier: KillerSudokuBlock.identifier)
@@ -52,7 +52,7 @@ final class SudokuPlayViewController: UIViewController {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     override func viewDidLoad() {
@@ -76,7 +76,13 @@ final class SudokuPlayViewController: UIViewController {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
         
-        if !interactor.isPlayFinished(SudokuPlayModel.CheckGameOver.Request()) && !interactor.timeIsUp() {
+        let isFinished = interactor.isPlayFinished(SudokuPlayModel.CheckGameOver.Request())
+        let timeIsUp = interactor.timeIsUp()
+        let isChallenge = interactor.isPlayChallenge(SudokuPlayModel.CheckChallenge.Request())
+        
+        UserDefaults.standard.set(false, forKey: UserDefaultsKeys.sudokuChallengeGoes)
+        
+        if !isFinished && !timeIsUp && !isChallenge {
             interactor.leaveGame(SudokuPlayModel.LeaveGame.Request())
         }
     }
@@ -103,35 +109,35 @@ final class SudokuPlayViewController: UIViewController {
             subview.pinCenterX(to: view)
         }
         
-        gameLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.gamePlayLogoTop)
+        gameLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         gamePlayCat.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor)
     }
     
     private func configureTimer() {
         timerView.setWidth(timerPicture.frame.width)
         timerView.addSubview(timerPicture)
-        timerView.addSubview(timerLabel)
+        view.addSubview(timerLabel)
         timerPicture.pinCenter(to: timerView)
-        timerLabel.pinCenterX(to: timerPicture)
-        timerLabel.pinTop(to: timerPicture.bottomAnchor, 5)
+        timerLabel.pinRight(to: view.trailingAnchor, Constants.timerLabelRight)
+        timerLabel.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.timerLabelTop)
     }
     
     private func configurePlayground() {
-        let availableWidth = view.frame.width - 7.0
-        let padding: CGFloat = 5.0 * (CGFloat(gridSize) - 1.0)
-        cellSize = (availableWidth - padding) / CGFloat(gridSize)
+        let availableWidth = view.frame.width - Constants.playgroundPadding
+        let padding: CGFloat = Constants.playgroundSpacing * (CGFloat(size) - 1.0)
+        cellSize = (availableWidth - padding) / CGFloat(size)
         playground.delegate = self
         playground.dataSource = self
         
         view.addSubview(playground)
         
         playground.pinCenterX(to: view)
-        playground.pinTop(to: gameLogo.bottomAnchor, 75)
+        playground.pinTop(to: gameLogo.bottomAnchor, Constants.playgroundTop)
         playground.setWidth(availableWidth)
         playground.setHeight(availableWidth)
         
         let cages = interactor.getCages(SudokuPlayModel.GetCages.Request())
-        let overlayView = CageOverlayView(cages, (cellSize - 4.0) / 3.0)
+        let overlayView = CageOverlayView(cages, (cellSize - Constants.cellPadding) / CGFloat(size))
         overlayView.isUserInteractionEnabled = false
         overlayView.frame = playground.bounds
         playground.addSubview(overlayView)
@@ -142,20 +148,20 @@ final class SudokuPlayViewController: UIViewController {
         
         for subview in [levelPicture, pauseButton, hintButton] {
             view.addSubview(subview)
-            subview.pinBottom(to: playground.topAnchor, 10)
+            subview.pinBottom(to: playground.topAnchor, Constants.buttonsPadding)
         }
         
         for subview in [undoButton, cleanerButton, learningButton] {
             view.addSubview(subview)
-            subview.pinTop(to: playground.bottomAnchor, 10)
+            subview.pinTop(to: playground.bottomAnchor, Constants.buttonsPadding)
         }
         
-        levelPicture.pinLeft(to: playground.leadingAnchor, 10)
+        levelPicture.pinLeft(to: playground.leadingAnchor, Constants.buttonsPadding)
         pauseButton.pinCenterX(to: playground)
-        undoButton.pinLeft(to: playground.leadingAnchor, 10)
-        hintButton.pinRight(to: playground.trailingAnchor, 10)
+        undoButton.pinLeft(to: playground.leadingAnchor, Constants.buttonsPadding)
+        hintButton.pinRight(to: playground.trailingAnchor, Constants.buttonsPadding)
         cleanerButton.pinCenterX(to: playground)
-        learningButton.pinRight(to: playground.trailingAnchor, 10)
+        learningButton.pinRight(to: playground.trailingAnchor, Constants.buttonsPadding)
         
         
         cleanerButton.addTarget(self, action: #selector(cleanerButtonTapped), for: .touchUpInside)
@@ -166,42 +172,42 @@ final class SudokuPlayViewController: UIViewController {
     }
     
     private func configureNumberButtons() {
-        for i in 1...9 {
+        for i in Constants.digits {
             let button = UIButton(type: .system)
             button.setTitle("\(i)", for: .normal)
-            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: Constants.numberBittonTextSize)
             button.setTitleColor(Colors.white, for: .normal)
             button.backgroundColor = Colors.lightGray
-            button.layer.cornerRadius = 8
+            button.layer.cornerRadius = Constants.numberButtonRadius
             button.tag = i
             
             numberButtonsStackView.addArrangedSubview(button)
             
-            button.setHeight((view.frame.width - 50.0) / 9.0)
-            button.setWidth((view.frame.width - 50.0) / 9.0)
+            button.setHeight((view.frame.width - Constants.numberStackPadding) / CGFloat(Constants.digits.count))
+            button.setWidth((view.frame.width - Constants.numberStackPadding) / CGFloat(Constants.digits.count))
             
             button.addTarget(self, action: #selector(numberButtonTapped(_:)), for: .touchUpInside)
         }
         
         view.addSubview(numberButtonsStackView)
         
-        numberButtonsStackView.pinTop(to: undoButton.bottomAnchor, 10)
+        numberButtonsStackView.pinTop(to: undoButton.bottomAnchor, Constants.buttonsPadding)
         numberButtonsStackView.pinCenterX(to: view)
     }
     
     private func showPauseOverlay() {
         let overlay = UIView(frame: view.bounds)
-        overlay.backgroundColor = Colors.darkGray.withAlphaComponent(0.9)
+        overlay.backgroundColor = Colors.darkGray.withAlphaComponent(Constants.pauseOverlayAlpha)
 
         let continueButton: UIButton = CustomButton(button: UIImageView(image: UIImage.button))
-        let continueButtonText = CustomText(text: Text.continueGameText, fontSize: Constraints.selectorTextSize, textColor: Colors.white)
+        let continueButtonText = CustomText(text: Constants.continueButtonText, fontSize: Constants.continueButtonTextSize, textColor: Colors.white)
         
         continueButton.addSubview(continueButtonText)
         overlay.addSubview(continueButton)
         view.addSubview(overlay)
         
         continueButtonText.pinCenterX(to: continueButton)
-        continueButtonText.pinCenterY(to: continueButton, -4)
+        continueButtonText.pinCenterY(to: continueButton, Constants.continueButtonY)
         continueButton.pinCenterX(to: overlay)
         continueButton.pinCenterY(to: overlay)
         
@@ -276,7 +282,7 @@ final class SudokuPlayViewController: UIViewController {
     @objc private func learningButtonTapped() {
         let vc = SudokuLearningBuilder.build()
         present(vc, animated: true)
-        for _ in 0...2 {
+        for _ in 0...Constants.tapNumbers {
             vc.systemTouchNextButton()
         }
     }
@@ -284,7 +290,7 @@ final class SudokuPlayViewController: UIViewController {
 
 extension SudokuPlayViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return gridSize * gridSize
+        return size * size
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -295,7 +301,7 @@ extension SudokuPlayViewController: UICollectionViewDelegate, UICollectionViewDa
         cell.configure(data: data.blockData, initData: data.initData, data.cellsWithSum)
         
         cell.onCellSelected = { innerIndex in
-            self.selectedCellIndex = indexPath.item * 9 + innerIndex
+            self.selectedCellIndex = indexPath.item * (self.size * self.size) + innerIndex
             for section in 0 ..< self.playground.numberOfSections {
                 for item in 0 ..< self.playground.numberOfItems(inSection: section) {
                     let curIndexPath = IndexPath(item: item, section: section)
@@ -312,5 +318,32 @@ extension SudokuPlayViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: cellSize, height: cellSize)
+    }
+    
+    private enum Constants {
+        static let logoText: String = "Sudoku"
+        static let continueButtonText: String = "Continue the game"
+        
+        static let numberButtonStackSpacing = 4.0
+        static let playgroundSpacing = 5.0
+        static let logoTextSize: CGFloat = 34
+        static let timerTextSize: CGFloat = 12
+        static let continueButtonTextSize: CGFloat = 20
+        static let numberBittonTextSize = 24.0
+        static let numberButtonRadius = 8.0
+        
+        static let timerLabelRight: CGFloat = 22
+        static let timerLabelTop: CGFloat = 10
+        static let playgroundTop: CGFloat = 75
+        static let buttonsPadding = 10.0
+        static let playgroundPadding = 7.0
+        static let continueButtonY: CGFloat = -4
+        static let numberStackPadding = 50.0
+        
+        static let size = 3
+        static let pauseOverlayAlpha = 0.9
+        static let tapNumbers = 2
+        static let digits = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        static let cellPadding = 4.0
     }
 }

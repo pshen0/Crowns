@@ -9,9 +9,9 @@ import UIKit
 
 final class MainTabBarController: UITabBarController {
     
-    private let homeTabBarItem: UITabBarItem = UITabBarItem(title: Text.homeTabBar, image: Images.homeBar, selectedImage: Images.homeBar)
-    private let challengeTabBarItem: UITabBarItem = UITabBarItem(title: Text.challengeTabBar, image: Images.challengeBar, selectedImage: Images.challengeBar)
-    private let profileTabBarItem: UITabBarItem = UITabBarItem(title: Text.profileTabBar, image: Images.profileBar, selectedImage: Images.profileBar)
+    private let homeTabBarItem: UITabBarItem = UITabBarItem(title: Constants.homeTab, image: UIImage.homeBar, selectedImage: UIImage.homeBar)
+    private let challengeTabBarItem: UITabBarItem = UITabBarItem(title: Constants.challengeTab, image: UIImage.challengeBar, selectedImage: UIImage.challengeBar)
+    private let profileTabBarItem: UITabBarItem = UITabBarItem(title: Constants.profileTab, image: UIImage.profileBar, selectedImage: UIImage.profileBar)
     
     
     
@@ -23,17 +23,17 @@ final class MainTabBarController: UITabBarController {
     private let challengeNavigator: UINavigationController
     private let profileNavigator: UINavigationController
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    init() {
         homeNavigator = UINavigationController(rootViewController: homeVC)
         challengeNavigator = UINavigationController(rootViewController: challengeVC)
         profileNavigator = UINavigationController(rootViewController: profileVC)
-        
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        super.init(nibName: nil, bundle: nil)
         configureTabBar()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     override func viewDidLoad() {
@@ -54,7 +54,7 @@ final class MainTabBarController: UITabBarController {
             .foregroundColor: Colors.yellow
         ]
         
-        appearance.stackedLayoutAppearance.normal.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: Constraints.tabBarItemIndentation)
+        appearance.stackedLayoutAppearance.normal.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: Constants.tabBarItemIndentation)
         
         tabBar.standardAppearance = appearance
     }
@@ -70,6 +70,15 @@ final class MainTabBarController: UITabBarController {
         profileNavigator.tabBarItem = profileTabBarItem
         
         viewControllers = [challengeNavigator, homeNavigator, profileNavigator]
-        selectedIndex = Numbers.tabBarSelectedIndex
+        selectedIndex = Constants.selectedIndex
+    }
+    
+    private enum Constants {
+        static let homeTab: String = "Home"
+        static let challengeTab: String = "Challenges"
+        static let profileTab: String = "Profile"
+        
+        static let selectedIndex: Int = 1
+        static let tabBarItemIndentation: CGFloat = 10
     }
 }

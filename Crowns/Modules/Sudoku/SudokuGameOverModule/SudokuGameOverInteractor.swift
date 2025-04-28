@@ -35,12 +35,17 @@ final class SudokuGameOverInteractor: SudokuGameOverBusinessLogic {
     }
     
     func isWin(_ request: SudokuGameOverModel.IsWin.Request) -> (String, UIImage?) {
-        let text = isWin ? "Victory!" : "Defeat"
-        let image = isWin ? Images.winningCat : Images.losingCat
+        let text = isWin ? Constants.victoty : Constants.defeat
+        let image = isWin ? UIImage.winningCat : UIImage.losingCat
         return (text, image)
     }
     
     func timerLabel(_ request: SudokuGameOverModel.getTime.Request) -> String {
         return timerLabel
+    }
+    
+    private enum Constants {
+        static let victoty = "Victory!"
+        static let defeat = "Defeat"
     }
 }

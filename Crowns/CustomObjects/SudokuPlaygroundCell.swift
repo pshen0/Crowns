@@ -8,7 +8,7 @@
 import UIKit
 
 final class KillerSudokuBlock: UICollectionViewCell {
-    static let identifier = "KillerSudokuCell"
+    static let identifier = CellsID.sudokuCellId
     
     var collection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -30,7 +30,7 @@ final class KillerSudokuBlock: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     private func configureBlock() {
@@ -80,7 +80,7 @@ extension KillerSudokuBlock: UICollectionViewDataSource, UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KillerSudokuCell.identifier, for: indexPath) as! KillerSudokuCell
-        let mode = initiallyFilledCells.contains(indexPath.item) ? "inition" : "correct"
+        let mode = initiallyFilledCells.contains(indexPath.item) ? SudokuCellMode.inition : SudokuCellMode.correct
         cell.configure(number: data[indexPath.item], mode: mode)
         if let foundCell = cellsWithSum.first(where: { $0.cellPath.item == indexPath.item }) {
             cell.addSumLabel(sum: foundCell.sum)
@@ -112,7 +112,7 @@ extension KillerSudokuBlock: UICollectionViewDataSource, UICollectionViewDelegat
 }
 
 final class KillerSudokuCell: UICollectionViewCell {
-    static let identifier = "KillerSudokuCell"
+    static let identifier = CellsID.sudokuCellId
     private let valueLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
@@ -136,7 +136,7 @@ final class KillerSudokuCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     private func configureCell() {
@@ -157,11 +157,11 @@ final class KillerSudokuCell: UICollectionViewCell {
         valueLabel.text = number == 0 ? "" : "\(number)"
         self.mode = mode
         switch self.mode {
-        case "inition":
+        case SudokuCellMode.correct:
             sumLabel.textColor = Colors.white
             valueLabel.textColor = Colors.yellow
             contentView.backgroundColor = Colors.lightGray
-        case "incorrect":
+        case SudokuCellMode.incorrect:
             valueLabel.textColor = .red
         default:
             if self.selectedMode {
@@ -192,9 +192,9 @@ final class KillerSudokuCell: UICollectionViewCell {
     func select() {
         selectedMode = true
         switch mode {
-        case "inition":
+        case SudokuCellMode.inition:
             return
-        case "incorrect":
+        case SudokuCellMode.incorrect:
             contentView.backgroundColor = Colors.yellow
             sumLabel.textColor = Colors.darkGray
         default:
@@ -207,9 +207,9 @@ final class KillerSudokuCell: UICollectionViewCell {
     func deselect() {
         selectedMode = false
         switch mode {
-        case "inition":
+        case SudokuCellMode.inition:
             return
-        case "incorrect":
+        case SudokuCellMode.incorrect:
             contentView.backgroundColor = Colors.lightGray
             sumLabel.textColor = Colors.white
         default:

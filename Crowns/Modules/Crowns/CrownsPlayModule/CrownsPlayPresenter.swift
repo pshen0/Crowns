@@ -42,15 +42,19 @@ final class CrownsPlayPresenter: CrownsPlayPresentationLogic {
     }
     
     func showHint(_ response: CrownsPlayModel.GetHint.Response) {
-        let indexPath = IndexPath(item: response.row * 9 + response.col, section: 0)
-        view?.updateCrownsPlayground(CrownsPlayModel.UpdateCrownsPlayground.ViewModel(indexPath: indexPath, color: response.color, mode: "hint", value: 2))
+        let indexPath = IndexPath(item: response.row * Constants.size + response.col, section: 0)
+        view?.updateCrownsPlayground(CrownsPlayModel.UpdateCrownsPlayground.ViewModel(indexPath: indexPath, color: response.color, mode: CrownsCellMode.hint, value: CrownsCellContent.crown))
     }
     
     func showUndoMove(_ response: CrownsPlayModel.UndoMove.Response) {
-        view?.updateCrownsPlayground(CrownsPlayModel.UpdateCrownsPlayground.ViewModel(indexPath: response.move.indexPath, color: response.color, mode: "undo", value: response.move.value))
+        view?.updateCrownsPlayground(CrownsPlayModel.UpdateCrownsPlayground.ViewModel(indexPath: response.move.indexPath, color: response.color, mode: CrownsCellMode.undo, value: response.move.value))
     }
     
     func setLevelImage(_ response: CrownsPlayModel.GetLevel.Response) {
         view?.setLevelPicture(CrownsPlayModel.GetLevel.ViewModel(image: response.image))
+    }
+    
+    private enum Constants {
+        static let size = 9
     }
 }

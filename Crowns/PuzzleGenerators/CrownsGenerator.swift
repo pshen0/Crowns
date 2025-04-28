@@ -7,11 +7,6 @@
 
 import UIKit
 
-enum CrownsConstants {
-    static let crownsToRemove: Int = 9
-    static let directions = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
-}
-
 struct CrownsCell: Codable {
     let row: Int
     let col: Int
@@ -55,7 +50,7 @@ final class CrownsCage: Codable {
 }
 
 final class Crowns: Codable {
-    var size = 9
+    var size = Constants.size
     var table: [[CrownsCell]] = []
     var puzzle: [[CrownsCell]] = []
     var cages: [CrownsCage] = []
@@ -96,7 +91,7 @@ final class Crowns: Codable {
             colOrder.shuffle()
             isColOrderGood = true
             for i in 0..<size - 1 {
-                if abs(colOrder[i] - colOrder[i + 1]) < 2 {
+                if abs(colOrder[i] - colOrder[i + 1]) < Constants.minDistance {
                     isColOrderGood = false
                     break
                 }
@@ -194,7 +189,7 @@ final class Crowns: Codable {
         
         removableCells.shuffle()
         
-        var crownsToRemove = CrownsConstants.crownsToRemove
+        var crownsToRemove = Constants.crownsToRemove
         while !removableCells.isEmpty && crownsToRemove > 0 {
             let cell = removableCells[0]
             puzzle[cell.row][cell.col].hasCrown = false
@@ -340,7 +335,7 @@ final class Crowns: Codable {
             placements[cell.row][cell.col] = false
         }
         
-        let directions = CrownsConstants.directions
+        let directions = Constants.diagonalDirections
         
         for (dx, dy) in directions {
             let newRow = row + dx
@@ -380,7 +375,7 @@ final class Crowns: Codable {
     private func getNeighbors(row: Int, col: Int) -> Set<Cell> {
         var neighbors: Set<Cell> = []
         
-        let directions: [(Int, Int)] = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)]
+        let directions: [(Int, Int)] = Constants.allDirections
         for (dx, dy) in directions {
             let newRow = row + dx
             let newCol = col + dy
@@ -399,6 +394,15 @@ final class Crowns: Codable {
             }
         }
         return false
+    }
+    
+    private enum Constants {
+        static let crownsToRemove: Int = 9
+        static let size = 9
+        static let minDistance = 2
+        
+        static let diagonalDirections = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
+        static let allDirections = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)]
     }
 }
 

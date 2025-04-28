@@ -9,16 +9,16 @@ import UIKit
 
 final class SudokuLearningViewController: UIViewController {
     
-    private let backButton: UIButton = CustomButton(button: UIImageView(image: Images.backButton),
-                                                      tapped: UIImageView(image: Images.backButtonTap))
+    private let backButton: UIButton = CustomButton(button: UIImageView(image: UIImage.backButton),
+                                                      tapped: UIImageView(image: UIImage.backButtonTap))
     
     private let interactor: SudokuLearningBusinessLogic
-    private var imageViews: [UIImageView] = []
+    private var ruleViews: [UIImageView] = []
     private var catViews: [UIImageView] = []
-    let imagesStack: UIStackView = UIStackView()
+    let ruleStack: UIStackView = UIStackView()
     private var currentIndex = 0
-    private let nextButton: UIButton = CustomButton(button: UIImageView(image: Images.nextButton),
-                                                    tapped: UIImageView(image: Images.nextButtonTap))
+    private let nextButton: UIButton = CustomButton(button: UIImageView(image: UIImage.nextButton),
+                                                    tapped: UIImageView(image: UIImage.nextButtonTap))
     
     init(interactor: SudokuLearningBusinessLogic) {
         self.interactor = interactor
@@ -27,7 +27,7 @@ final class SudokuLearningViewController: UIViewController {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     override func viewDidLoad() {
@@ -60,40 +60,40 @@ final class SudokuLearningViewController: UIViewController {
         view.addSubview(nextButton)
         
         nextButton.pinCenterX(to: view)
-        nextButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, 5)
+        nextButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constants.nextButtonBottom)
         
         nextButton.addTarget(self, action: #selector(nextTapped), for: .touchUpInside)
     }
     
     private func configureImages() {
-        let imageNames = ["sudokuRule1", "sudokuRule2", "sudokuRule3", "sudokuRule4"]
-        imagesStack.axis = .vertical
-        imagesStack.alignment = .center
-        imagesStack.spacing = 10
-        view.addSubview(imagesStack)
+        let imageNames = Constants.ruleImageNames
+        ruleStack.axis = .vertical
+        ruleStack.alignment = .center
+        ruleStack.spacing = Constants.ruleStackSpacing
+        view.addSubview(ruleStack)
         
         for name in imageNames {
             let imageView = UIImageView(image: UIImage(named: name))
-            let catView = UIImageView(image: UIImage(named: "ruleCat"))
+            let catView = UIImageView(image: UIImage.ruleCat)
             imageView.contentMode = .scaleAspectFit
-            imageView.alpha = 0
+            imageView.alpha = Constants.invisibleAlpha
             catView.contentMode = .scaleAspectFit
-            catView.alpha = 0
-            imagesStack.addArrangedSubview(imageView)
+            catView.alpha = Constants.invisibleAlpha
+            ruleStack.addArrangedSubview(imageView)
             view.addSubview(catView)
             
             catView.pinCenterY(to: imageView)
             catView.pinLeft(to: imageView.trailingAnchor)
         
-            imageViews.append(imageView)
+            ruleViews.append(imageView)
             catViews.append(catView)
         }
         
-        imagesStack.pinCenter(to: view)
+        ruleStack.pinCenter(to: view)
         
-        if let first = imageViews.first, let cat = catViews.first {
-            first.alpha = 1
-            cat.alpha = 1
+        if let first = ruleViews.first, let cat = catViews.first {
+            first.alpha = Constants.visibleAlpha
+            cat.alpha = Constants.visibleAlpha
         }
     }
     
@@ -102,27 +102,27 @@ final class SudokuLearningViewController: UIViewController {
     }
     
     @objc private func nextTapped() {
-        let nextImage = imageViews[currentIndex + 1]
+        let nextImage = ruleViews[currentIndex + 1]
         let currentCat = catViews[currentIndex]
         let nextCat = catViews[currentIndex + 1]
         
 
-        UIView.transition(with: nextImage, duration: 0.4, options: .transitionCrossDissolve, animations: {
-            nextImage.alpha = 1
+        UIView.transition(with: nextImage, duration: Constants.duration, options: .transitionCrossDissolve, animations: {
+            nextImage.alpha = Constants.visibleAlpha
         }, completion: nil)
         
-        UIView.transition(with: currentCat, duration: 0.4, options: .transitionCrossDissolve, animations: {
-            currentCat.alpha = 0
+        UIView.transition(with: currentCat, duration: Constants.duration, options: .transitionCrossDissolve, animations: {
+            currentCat.alpha = Constants.invisibleAlpha
         }, completion: nil)
         
-        if currentIndex < 2 {
-            UIView.transition(with: nextCat, duration: 0.4, options: .transitionCrossDissolve, animations: {
-                nextCat.alpha = 1
+        if currentIndex < Constants.secondLastIndex {
+            UIView.transition(with: nextCat, duration: Constants.duration, options: .transitionCrossDissolve, animations: {
+                nextCat.alpha = Constants.visibleAlpha
             }, completion: nil)
         }
 
         currentIndex += 1
-        guard currentIndex < imageViews.count - 1 else {
+        guard currentIndex < ruleViews.count - 1 else {
             nextButton.isHidden = true
             return
         }
@@ -130,5 +130,17 @@ final class SudokuLearningViewController: UIViewController {
     
     func systemTouchNextButton() {
         nextButton.sendActions(for: .touchUpInside)
+    }
+    
+    private enum Constants {
+        static let ruleStackSpacing = 10.0
+        static let nextButtonBottom = 5.0
+        
+        static let visibleAlpha = 1.0
+        static let invisibleAlpha = 0.0
+        static let duration = 0.4
+        static let secondLastIndex = 2
+        
+        static let ruleImageNames = ["sudokuRule1", "sudokuRule2", "sudokuRule3", "sudokuRule4"]
     }
 }

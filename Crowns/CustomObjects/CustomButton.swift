@@ -25,7 +25,7 @@ final class CustomButton: UIButton {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     override init(frame: CGRect) {

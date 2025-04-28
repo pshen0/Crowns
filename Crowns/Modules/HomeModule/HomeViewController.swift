@@ -11,14 +11,14 @@ final class HomeViewController: UIViewController{
     
     private let interactor: HomeBusinessLogic
     private let overlayView = UIView()
-    private let chooseGameText = CustomText(text: Text.chooseGame, fontSize: Constraints.selectorTextSize, textColor: Colors.white)
-    private let chooseLearningText = CustomText(text: Text.chooseLearning, fontSize: Constraints.selectorTextSize, textColor: Colors.white)
-    private let newGameButton: UIButton = CustomButton(button: UIImageView(image: Images.newGameButton))
-    private let learningButton: UIButton = CustomButton(button: UIImageView(image: Images.learningButton))
-    private let homeLogoPicture = UIImageView(image: Images.homeLogoPicture)
-    private let homeLogoText = CustomText(text: Text.homeLogo, fontSize: Constraints.homeLogoSize, textColor: Colors.white)
-    private let homeCalendar = CustomCalendar()
-    private let homeButtonsStack: UIStackView = UIStackView()
+    private let chooseGameText = CustomText(text: Constants.chooseGame, fontSize: Constants.selectorTextSize, textColor: Colors.white)
+    private let chooseLearningText = CustomText(text: Constants.chooseLearning, fontSize: Constants.selectorTextSize, textColor: Colors.white)
+    private let newGameButton: UIButton = CustomButton(button: UIImageView(image: UIImage.newGameButton))
+    private let learningButton: UIButton = CustomButton(button: UIImageView(image: UIImage.learningButton))
+    private let logoPicture = UIImageView(image: UIImage.homeLogoPicture)
+    private let logoText = CustomText(text: Constants.logo, fontSize: Constants.logoTextSize, textColor: Colors.white)
+    private let calendar = CustomCalendar()
+    private let buttonsStack: UIStackView = UIStackView()
     private var selectorButtons: Array<UIButton> = []
     private var gameSelectorViewController = GameSelector()
     private var learningSelectorViewController = GameSelector()
@@ -32,13 +32,17 @@ final class HomeViewController: UIViewController{
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        calendar.updateMarkedDates()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,54 +59,52 @@ final class HomeViewController: UIViewController{
         learningSelectorViewController.modalPresentationStyle = .overFullScreen
         configureBackground()
         configureCalendar()
-        homeCalendar.updateMarkedDates()
+        calendar.updateMarkedDates()
         configureButtons()
     }
     
     private func configureBackground() {
         view.backgroundColor = Colors.darkGray
-        view.addSubview(homeLogoPicture)
-        view.addSubview(homeLogoText)
+        view.addSubview(logoPicture)
+        view.addSubview(logoText)
         
-        homeLogoPicture.pinCenterX(to: view)
-        homeLogoPicture.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.homeLogoPictureTop)
-        homeLogoText.pinCenterX(to: view)
-        homeLogoText.setWidth(Constraints.homeLogoTextWidth)
-        homeLogoText.pinTop(to: homeLogoPicture.bottomAnchor, Constraints.homeLogoTextTop)
+        logoPicture.pinCenterX(to: view)
+        logoPicture.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.logoPictureTop)
+        logoText.pinCenterX(to: view)
+        logoText.setWidth(Constants.logoTextWidth)
+        logoText.pinTop(to: logoPicture.bottomAnchor, Constants.logoTextTop)
     }
     
     private func configureCalendar() {
-        view.addSubview(homeCalendar)
+        view.addSubview(calendar)
         
-        homeCalendar.setWidth(Constraints.homeCalendarWidth)
-        homeCalendar.setHeight(Constraints.homeCalendarHeight)
-        homeCalendar.pinCenterX(to: view)
-        homeCalendar.pinTop(to: homeLogoText.bottomAnchor, Constraints.homeCalendarTop)
+        calendar.setWidth(Constants.calendarWidth)
+        calendar.setHeight(Constants.calendarHeight)
+        calendar.pinCenterX(to: view)
+        calendar.pinTop(to: logoText.bottomAnchor, Constants.calendarTop)
     }
     
     private func configureButtons() {
-        homeButtonsStack.axis = .vertical
-        homeButtonsStack.alignment = .center
-        homeButtonsStack.spacing = Constraints.homeButtonStackSpacing
+        buttonsStack.axis = .vertical
+        buttonsStack.alignment = .center
+        buttonsStack.spacing = Constants.buttonStackSpacing
         
         for button in [newGameButton, learningButton] {
-            homeButtonsStack.addArrangedSubview(button)
+            buttonsStack.addArrangedSubview(button)
         }
         
-        view.addSubview(homeButtonsStack)
+        view.addSubview(buttonsStack)
         
-        homeButtonsStack.pinCenterX(to: view)
-        homeButtonsStack.pinTop(to: homeCalendar.bottomAnchor, Constraints.homeButtonStackTop)
+        buttonsStack.pinCenterX(to: view)
+        buttonsStack.pinTop(to: calendar.bottomAnchor, Constants.buttonStackTop)
         
         newGameButton.addTarget(self, action: #selector(gameSelectorTapped), for: .touchUpInside)
         learningButton.addTarget(self, action: #selector(learningSelectorTapped), for: .touchUpInside)
         
         gameSelectorViewController.chooseCrownsButton.addTarget(self, action: #selector(playCrownsTapped), for: .touchUpInside)
         gameSelectorViewController.chooseSudokuButton.addTarget(self, action: #selector(playSudokuTapped), for: .touchUpInside)
-        //gameSelectorViewController.chooseQueensButton.addTarget(self, action: #selector(playQueensTapped), for: .touchUpInside)
         learningSelectorViewController.chooseCrownsButton.addTarget(self, action: #selector(learnCrownsTapped), for: .touchUpInside)
         learningSelectorViewController.chooseSudokuButton.addTarget(self, action: #selector(learnSudokuTapped), for: .touchUpInside)
-        //learningSelectorViewController.chooseQueensButton.addTarget(self, action: #selector(learnQueensTapped), for: .touchUpInside)
     }
     
     func hideGameSelector() {
@@ -143,20 +145,12 @@ final class HomeViewController: UIViewController{
         interactor.playSudokuTapped(HomeModel.RouteToSudokuSettings.Request())
     }
     
-    @objc private func playQueensTapped() {
-        interactor.playQueensTapped(HomeModel.RouteToQueensSettings.Request())
-    }
-    
     @objc private func learnCrownsTapped() {
         interactor.learnCrownsTapped(HomeModel.RouteToCrownsLearning.Request())
     }
     
     @objc private func learnSudokuTapped() {
         interactor.learnSudokuTapped(HomeModel.RouteToSudokuLearning.Request())
-    }
-    
-    @objc private func learnQueensTapped() {
-        interactor.learnQueensTapped(HomeModel.RouteToQueensLearning.Request())
     }
 }
 
@@ -168,5 +162,25 @@ extension HomeViewController: UnfinishedCrownsViewControllerDelegate,  Unfinishe
     func unfinishedCrownsDidRequestToContinue(with foundation: CrownsPlayModel.BuildModule.BuildFoundation) {
         navigationController?.pushViewController(CrownsPlayBuilder.build(foundation) , animated: true)
     }
+    
+    private enum Constants {
+        static let chooseGame: String = "Choose game:"
+        static let chooseLearning: String = "Choose learning:"
+        static let logo: String = "CROWNS"
+        
+        static let selectorTextSize: CGFloat = 25
+        static let logoTextSize: CGFloat = 75
+        static let logoTextWidth: CGFloat = 350
+        static let calendarWidth: CGFloat = 350
+        static let calendarHeight: CGFloat = 250
+        
+        static let logoPictureTop: CGFloat = 0
+        static let logoTextTop: CGFloat = 5
+        static let calendarTop: CGFloat = 35
+        static let buttonStackSpacing: CGFloat = 8
+        static let buttonStackTop: CGFloat = 30
+    }
 }
+
+
 

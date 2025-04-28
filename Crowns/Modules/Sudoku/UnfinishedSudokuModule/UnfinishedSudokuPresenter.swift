@@ -16,12 +16,12 @@ final class UnfinishedSudokuPresenter: UnfinishedSudokuPresentationLogic {
     weak var view: UnfinishedSudokuViewController?
     
     func getDescriptionLabels(_ response: UnfinishedSudokuModel.AddDescription.Response) {
-        let difficultyLabel = "Difficulty: \(response.difficulty)"
+        let difficultyLabel = Constants.difficultyLabel + String(response.difficulty)
         let minutes = response.time / 60
         let minutesString = minutes > 9 ? String(minutes) : "0\(minutes)"
         let seconds = response.time % 60
         let secondsString = seconds > 9 ? String(seconds) : "0\(seconds)"
-        let timeLabel = "Time spent: \(minutesString):\(secondsString)"
+        let timeLabel = "\(Constants.timeLabel) \(minutesString):\(secondsString)"
         view?.configureDescription(UnfinishedSudokuModel.AddDescription.ViewModel(
             difficultyLabel: difficultyLabel,
             timeLabel: timeLabel))
@@ -29,5 +29,10 @@ final class UnfinishedSudokuPresenter: UnfinishedSudokuPresentationLogic {
     
     func routeToGame(_ response: UnfinishedSudokuModel.ContinueTheGame.Response) {
         
+    }
+    
+    private enum Constants {
+        static let difficultyLabel = "Difficulty: "
+        static let timeLabel = "Time spent: "
     }
 }

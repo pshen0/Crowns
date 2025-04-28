@@ -18,22 +18,29 @@ final class CrownsSettingsPresenter: CrownsSettingsPresentationLogic {
     
     func routeCrownsGame(_ response: CrownsSettingsModel.RouteCrownsGame.Response) {
         var time: Int = 0
-        if let minutes = Int(response.timerLabel.prefix(2)) {
-            if let seconds = Int(response.timerLabel.suffix(2)) {
+        if let minutes = Int(response.timerLabel.prefix(Constants.timePrefix)) {
+            if let seconds = Int(response.timerLabel.suffix(Constants.timeSufix)) {
                 time = minutes * 60 + seconds
             }
         }
         
         view?.navigationController?.pushViewController(CrownsPlayBuilder.build(CrownsPlayModel.BuildModule.BuildFoundation(
             crowns: Crowns(response.difficultyLevel),
-            elapsedTime: 0,
+            elapsedTime: Constants.elapsedTime,
             initialTime: time,
             isTimerUsed: time == 0 ? false : true,
-            placements: Array(repeating: Array(repeating: 0, count: 9), count: 9))),
+            placements: Array(repeating: Array(repeating: 0, count: Constants.size), count: Constants.size))),
                                                        animated: false)
     }
     
     func routeBack(_ response: CrownsSettingsModel.RouteBack.Response) {
         view?.navigationController?.popViewController(animated: false)
+    }
+    
+    private enum Constants {
+        static let size = 9
+        static let elapsedTime = 0
+        static let timePrefix = 2
+        static let timeSufix = 2
     }
 }

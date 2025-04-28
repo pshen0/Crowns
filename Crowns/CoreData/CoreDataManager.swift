@@ -11,7 +11,7 @@ final class CoreDataStack {
     static let shared = CoreDataStack()
     
     lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "GameModel")
+        let container = NSPersistentContainer(name: CoreData.containerName)
         container.loadPersistentStores { _, error in
             if let error = error {
                 fatalError(CoreData.loadError)

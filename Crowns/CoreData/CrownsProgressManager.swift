@@ -36,13 +36,13 @@ final class CoreDataCrownsProgressStack {
         do {
             try context.save()
         } catch {
-            print("Failed to save progress: \(error)")
+            print(CoreData.saveError)
         }
     }
     
     func fetchProgress() -> CrownsPlayModel.BuildModule.BuildFoundation? {
         let request = CrownsProgress.fetchRequest()
-        request.fetchLimit = 1
+        request.fetchLimit = Constants.requestLimit
         
         if let result = try? context.fetch(request).first,
            let crownsData = result.crowns,
@@ -69,7 +69,11 @@ final class CoreDataCrownsProgressStack {
             try context.execute(deleteRequest)
             try context.save()
         } catch {
-            print("Failed to delete CrownsProgress entries: \(error)")
+            print(CoreData.deleteError)
         }
+    }
+    
+    private enum Constants {
+        static let requestLimit = 1
     }
 }

@@ -13,6 +13,7 @@ protocol SudokuPlayBusinessLogic {
     func cleanButtonTapped(_ request: SudokuPlayModel.DeleteCellNumber.Request)
     func determineCellsWithSum(_ request: SudokuPlayModel.DetermineCellsWithSum.Request) -> SudokuPlayModel.DetermineCellsWithSum.ViewModel
     func isPlayFinished(_ request: SudokuPlayModel.CheckGameOver.Request) -> Bool
+    func isPlayChallenge(_ request: SudokuPlayModel.CheckChallenge.Request) -> Bool
     func pauseButtonTapped(_ request: SudokuPlayModel.PauseGame.Request)
     func backButtonTapped(_ request: SudokuPlayModel.RouteBack.Request)
     func startTimer(_ request: SudokuPlayModel.StartTimer.Request)
@@ -77,12 +78,12 @@ final class SudokuPlayInteractor: SudokuPlayBusinessLogic {
     
     private func isChangeCorrect(row: Int, col: Int, number: Int) -> String {
         if number == 0 {
-            return Text.correctMode
+            return SudokuCellMode.correct
         }
         for i in 0..<9 {
             if i != col &&  i != row {
                 if killerSudoku.getPuzzle()[row][i] == number ||  killerSudoku.getPuzzle()[i][col] == number {
-                    return Text.incorrectMode
+                    return SudokuCellMode.incorrect
                 }
             }
         }
@@ -91,7 +92,7 @@ final class SudokuPlayInteractor: SudokuPlayBusinessLogic {
             for j in (col / 3 * 3)...(col / 3 * 3 + 2) {
                 if i != col &&  i != row {
                     if killerSudoku.getPuzzle()[i][j] == number {
-                        return Text.incorrectMode
+                        return SudokuCellMode.incorrect
                     }
                 }
             }
@@ -108,14 +109,14 @@ final class SudokuPlayInteractor: SudokuPlayBusinessLogic {
                     filledCells += 1
                 }
                 if sum > targetCage.getSum() {
-                    return Text.incorrectMode
+                    return SudokuCellMode.incorrect
                 }
                 if filledCells == targetCage.getCells().count && sum != targetCage.getSum() {
-                    return Text.incorrectMode
+                    return SudokuCellMode.incorrect
                 }
             }
         }
-        return Text.correctMode
+        return SudokuCellMode.correct
     }
     
     private func getTablePosition(_ index: Int) -> (Int, Int) {
@@ -162,7 +163,7 @@ final class SudokuPlayInteractor: SudokuPlayBusinessLogic {
             let cellIndex = (row % 3) * 3 + (col % 3)
             let blockIndexPath = IndexPath(item: blockIndex, section: 0)
             let cellIndexPath = IndexPath(item: cellIndex, section: 0)
-            let changedCell = SudokuPlayModel.ChangeCell.Change(blockIndex: blockIndexPath, cellIndex: cellIndexPath, number: 0, mode: "correct")
+            let changedCell = SudokuPlayModel.ChangeCell.Change(blockIndex: blockIndexPath, cellIndex: cellIndexPath, number: 0, mode: SudokuCellMode.correct)
             changedCells.append(changedCell)
             
             changedCells = findChanges()
@@ -265,7 +266,19 @@ final class SudokuPlayInteractor: SudokuPlayBusinessLogic {
         return killerSudoku.getTable() == killerSudoku.puzzle
     }
     
+    func isPlayChallenge(_ request: SudokuPlayModel.CheckChallenge.Request) -> Bool {
+        let isChallenge = UserDefaults.standard.bool(forKey: UserDefaultsKeys.sudokuChallengeGoes)
+        return isChallenge
+    }
+    
     func gameIsWon(_ request: SudokuPlayModel.GameIsWon.Request) {
+        if UserDefaults.standard.bool(forKey: UserDefaultsKeys.sudokuChallengeGoes) {
+            UserDefaults.standard.set(true, forKey: UserDefaultsKeys.sudokuChallengeDone)
+            if UserDefaults.standard.bool(forKey: UserDefaultsKeys.crownsChallengeDone) {
+                CoreDataDatesStack.shared.saveDate(Date())
+            }
+        }
+        
         playFinished(isWin: true)
         CoreDataSudokuStatisticStack.shared.recordWin(difficulty: killerSudoku.difficultyLevel, time: Int32(elapsedTime))
     }
@@ -308,12 +321,12 @@ final class SudokuPlayInteractor: SudokuPlayBusinessLogic {
     func getLevelPictute(_ request: SudokuPlayModel.GetLevel.Request) {
         var image: UIImage?
         switch killerSudoku.difficultyLevel {
-        case "Hard":
-            image = Images.hardLevel
-        case "Medium":
-            image = Images.mediumLevel
+        case DifficultyLevels.hard:
+            image = UIImage.hard
+        case DifficultyLevels.medium:
+            image = UIImage.medium
         default:
-            image = Images.easyLevel
+            image = UIImage.easy
         }
         
         presenter.setLevelImage(SudokuPlayModel.GetLevel.Response(image: image))

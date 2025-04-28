@@ -41,6 +41,10 @@ enum CrownsPlayModel {
         struct Request { }
     }
     
+    enum CheckChallenge {
+        struct Request { }
+    }
+    
     enum RouteGameOver {
         struct Request { }
         struct Response {

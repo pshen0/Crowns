@@ -26,14 +26,14 @@ final class CoreDataCrownsStatisticStack {
     func getStatistics() -> [StatisticsModel.StatisticItem] {
         let stats = statistics
         return [
-            .init(title: "Games started", value: "\(stats.totalStarted)"),
-            .init(title: "Games won", value: "\(stats.totalWins)"),
-            .init(title: "Games won: easy", value: "\(stats.easyWins)"),
-            .init(title: "Games won: medium", value: "\(stats.mediumWins)"),
-            .init(title: "Games won: hard", value: "\(stats.hardWins)"),
-            .init(title: "Win rate", value: "\(stats.winRate)%"),
-            .init(title: "The best time", value: stats.bestTime > 0 ? formatTime(time: stats.bestTime) : "-"),
-            .init(title: "The average time", value: stats.averageTime > 0 ? formatTime(time: stats.averageTime) : "-")
+            .init(title: StatisticsFields.all, value: "\(stats.totalStarted)"),
+            .init(title: StatisticsFields.allWin, value: "\(stats.totalWins)"),
+            .init(title: StatisticsFields.easyWin, value: "\(stats.easyWins)"),
+            .init(title: StatisticsFields.mediumWin, value: "\(stats.mediumWins)"),
+            .init(title: StatisticsFields.hardWin, value: "\(stats.hardWins)"),
+            .init(title: StatisticsFields.winRate, value: "\(stats.winRate)%"),
+            .init(title: StatisticsFields.bestTime, value: stats.bestTime > 0 ? formatTime(time: stats.bestTime) : "-"),
+            .init(title: StatisticsFields.averageTime, value: stats.averageTime > 0 ? formatTime(time: stats.averageTime) : "-")
         ]
     }
     
@@ -47,9 +47,9 @@ final class CoreDataCrownsStatisticStack {
         statistics.totalWins += 1
         
         switch difficulty {
-        case "Easy": statistics.easyWins += 1
-        case "Medium": statistics.mediumWins += 1
-        case "Hard": statistics.hardWins += 1
+        case DifficultyLevels.easy: statistics.easyWins += 1
+        case DifficultyLevels.medium: statistics.mediumWins += 1
+        case DifficultyLevels.hard: statistics.hardWins += 1
         default: break
         }
         
@@ -79,13 +79,17 @@ final class CoreDataCrownsStatisticStack {
         do {
             try context.save()
         } catch {
-            print("Failed to save statistics: \(error)")
+            print(CoreData.saveError)
         }
     }
     
     private func formatTime(time: Int32) -> String {
         let minutes = time / 60
         let seconds = time % 60
-        return String(format: "%02d:%02d", minutes, seconds)
+        return String(format: Constants.timeFormatter, minutes, seconds)
+    }
+    
+    private enum Constants {
+        static let timeFormatter = "%02d:%02d"
     }
 }

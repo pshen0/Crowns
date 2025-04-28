@@ -13,6 +13,7 @@ protocol CrownsPlayBusinessLogic {
     func getTable(_ request: CrownsPlayModel.GetTable.Request) -> [[CrownsCell]]
     func getPlacements(_ request: CrownsPlayModel.GetPlacements.Request) -> [[Int]]
     func isPlayFinished(_ request: CrownsPlayModel.CheckGameOver.Request) -> Bool
+    func isPlayChallenge(_ request: CrownsPlayModel.CheckChallenge.Request) -> Bool
     func pauseButtonTapped(_ request: CrownsPlayModel.PauseGame.Request)
     func placeCrown(_ request: CrownsPlayModel.PlaceCrown.Request)
     func gameIsWon(_ request: CrownsPlayModel.GameIsWon.Request)
@@ -84,18 +85,18 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
     func undoButtonTapped(_ request: CrownsPlayModel.UndoMove.Request) {
         if !savedMoves.isEmpty {
             if let indexPath = savedMoves.last?.indexPath, let crownsMove = savedMoves.last {
-                placements[indexPath.item / 9][indexPath.item % 9] = crownsMove.value
-                presenter.showUndoMove(CrownsPlayModel.UndoMove.Response(move: crownsMove, color: crowns.table[indexPath.item / 9][indexPath.item % 9].color.uiColor))
+                placements[indexPath.item / Constants.size][indexPath.item % Constants.size] = crownsMove.value
+                presenter.showUndoMove(CrownsPlayModel.UndoMove.Response(move: crownsMove, color: crowns.table[indexPath.item / Constants.size][indexPath.item % Constants.size].color.uiColor))
                 savedMoves.remove(at: savedMoves.count - 1)
             }
         }
     }
     
     func hintButtonTapped(_ request: CrownsPlayModel.GetHint.Request) {
-        for i in 0...8 {
-            for j in 0...8 {
-                if crowns.table[i][j].hasCrown && placements[i][j] != 2 {
-                    placements[i][j] = 2
+        for i in 0..<Constants.size {
+            for j in 0..<Constants.size {
+                if crowns.table[i][j].hasCrown && placements[i][j] != CrownsCellContent.crown {
+                    placements[i][j] = CrownsCellContent.crown
                     presenter.showHint(CrownsPlayModel.GetHint.Response(row: i, col: j, color: crowns.table[i][j].color.uiColor))
                     return
                 }
@@ -106,10 +107,10 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
     func isPlayFinished(_ request: CrownsPlayModel.CheckGameOver.Request) -> Bool {
         var counter = 0
         let table = crowns.table
-        for i in 0..<9 {
-            for j in 0..<9 {
+        for i in 0..<Constants.size {
+            for j in 0..<Constants.size {
                 if table[i][j].hasCrown == true {
-                    if placements[i][j] == 2 {
+                    if placements[i][j] == CrownsCellContent.crown {
                         counter += 1
                     } else {
                         return false
@@ -117,13 +118,26 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
                 }
             }
         }
-        if counter == 9 {
+        if counter == Constants.size {
             return true
         }
         return false
     }
     
+    func isPlayChallenge(_ request: CrownsPlayModel.CheckChallenge.Request) -> Bool {
+        let isChallenge = UserDefaults.standard.bool(forKey: UserDefaultsKeys.crownsChallengeGoes)
+        return isChallenge
+    }
+    
     func gameIsWon(_ request: CrownsPlayModel.GameIsWon.Request) {
+        if UserDefaults.standard.bool(forKey: UserDefaultsKeys.crownsChallengeGoes) {
+            UserDefaults.standard.set(true, forKey: UserDefaultsKeys.crownsChallengeDone)
+            if UserDefaults.standard.bool(forKey: UserDefaultsKeys.sudokuChallengeDone) {
+                CoreDataDatesStack.shared.saveDate(Date())
+                print(CoreDataDatesStack.shared.fetchAllDates())
+            }
+        }
+        
         playFinished(isWin: true)
         CoreDataCrownsStatisticStack.shared.recordWin(difficulty: crowns.difficultyLevel, time: Int32(elapsedTime))
     }
@@ -156,7 +170,7 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
     }
     
     func saveMove(_ request: CrownsPlayModel.SaveMove.Request) {
-        if savedMoves.count > 10 {
+        if savedMoves.count > Constants.undoNumbers {
             savedMoves.remove(at: 0)
         }
         savedMoves.append(request.move)
@@ -165,12 +179,12 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
     func getLevelPictute(_ request: CrownsPlayModel.GetLevel.Request) {
         var image: UIImage?
         switch crowns.difficultyLevel {
-        case "Hard":
-            image = Images.hardLevel
-        case "Medium":
-            image = Images.mediumLevel
+        case DifficultyLevels.hard:
+            image = UIImage.hard
+        case DifficultyLevels.medium:
+            image = UIImage.medium
         default:
-            image = Images.easyLevel
+            image = UIImage.easy
         }
         
         presenter.setLevelImage(CrownsPlayModel.GetLevel.Response(image: image))
@@ -179,9 +193,9 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
     private func initTimer() {
         timeGoes = true
         if isTimerUsed {
-            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(reverseTimeChange), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: Constants.timeInterval, target: self, selector: #selector(reverseTimeChange), userInfo: nil, repeats: true)
         } else {
-            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(forwardTimeChange), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: Constants.timeInterval, target: self, selector: #selector(forwardTimeChange), userInfo: nil, repeats: true)
         }
     }
     
@@ -194,5 +208,11 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
     deinit {
         timer?.invalidate()
         timer = nil
+    }
+    
+    private enum Constants {
+        static let size = 9
+        static let undoNumbers = 10
+        static let timeInterval = 1.0
     }
 }

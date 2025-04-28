@@ -33,13 +33,13 @@ final class CoreDataSudokuProgressStack {
         do {
             try context.save()
         } catch {
-            print("Failed to save progress: \(error)")
+            print(CoreData.saveError)
         }
     }
     
     func fetchProgress() -> SudokuPlayModel.BuildModule.BuildFoundation? {
         let request = SudokuProgress.fetchRequest()
-        request.fetchLimit = 1
+        request.fetchLimit = Constants.requestLimit
         
         if let result = try? context.fetch(request).first,
            let killerSudokuData = result.sudoku,
@@ -63,7 +63,11 @@ final class CoreDataSudokuProgressStack {
             try context.execute(deleteRequest)
             try context.save()
         } catch {
-            print("Failed to delete SudokuProgress entries: \(error)")
+            print(CoreData.deleteError)
         }
+    }
+    
+    private enum Constants {
+        static let requestLimit = 1
     }
 }

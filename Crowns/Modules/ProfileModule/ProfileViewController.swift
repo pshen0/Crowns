@@ -10,28 +10,28 @@ import UIKit
 final class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     private let interactor: ProfileBusinessLogic
     
-    private let profileLogoText = CustomText(text: Text.profileLogo, fontSize: Constraints.profileLogoSize, textColor: Colors.white)
-    private let nameTextField = NameTextField()
-    private let statisticsButton: UIButton = CustomButton(button: UIImageView(image: Images.statisticsButton))
-    private let developerButton: UIButton = CustomButton(button: UIImageView(image: Images.developerButton))
-    private let profileButtonStack: UIStackView = UIStackView()
+    private let logoText = CustomText(text: Constants.logoText, fontSize: Constants.logoSize, textColor: Colors.white)
+    private let nameField = NameTextField()
+    private let statisticsButton: UIButton = CustomButton(button: UIImageView(image: UIImage.statisticsButton))
+    private let developerButton: UIButton = CustomButton(button: UIImageView(image: UIImage.developerButton))
+    private let buttonStack: UIStackView = UIStackView()
     
-    private let avatarImageField: UIImageView = {
+    private let avatarField: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = Images.startAvatarPicture
+        imageView.image = UIImage.startAvatar
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.setWidth(Constraints.imageViewSize)
-        imageView.setHeight(Constraints.imageViewSize)
-        imageView.layer.cornerRadius = Constraints.imageViewRadius
+        imageView.setWidth(Constants.avatarSize)
+        imageView.setHeight(Constants.avatarSize)
+        imageView.layer.cornerRadius = Constants.avatarRadius
         return imageView
     }()
     
     private let changeAvatarButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(Text.changeAvatarButtonText, for: .normal)
+        button.setTitle(Constants.avatarButtonText, for: .normal)
         button.setTitleColor(Colors.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: Text.fontIrishGrover, size: Constraints.changeAvatarButtonTextSize)
+        button.titleLabel?.font = UIFont(name: Fonts.IrishGrover, size: Constants.avatarButtonTextSize)
         return button
     }()
     
@@ -42,7 +42,7 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     override func viewDidLoad() {
@@ -58,39 +58,39 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
     }
     
     private func configureProfile() {
-        for subview in [profileLogoText, nameTextField, avatarImageField, changeAvatarButton] {
+        for subview in [logoText, nameField, avatarField, changeAvatarButton] {
             view.addSubview(subview)
             subview.pinCenterX(to: view)
         }
         
-        profileLogoText.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constraints.profileLogoTextTop)
-        avatarImageField.pinTop(to: profileLogoText.bottomAnchor, Constraints.avatarImageFieldTop)
-        changeAvatarButton.pinTop(to: avatarImageField.bottomAnchor, Constraints.changeAvatarButtonTop)
-        nameTextField.pinTop(to: changeAvatarButton.bottomAnchor, Constraints.nameTextFieldTop)
-        nameTextField.setWidth(Constraints.nameTextFieldWidth)
+        logoText.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.logoTextTop)
+        avatarField.pinTop(to: logoText.bottomAnchor, Constants.avatarFieldTop)
+        changeAvatarButton.pinTop(to: avatarField.bottomAnchor, Constants.avatarButtonTop)
+        nameField.pinTop(to: changeAvatarButton.bottomAnchor, Constants.nameFieldTop)
+        nameField.setWidth(Constants.nameFieldWidth)
         
         changeAvatarButton.addTarget(self, action: #selector(selectAvatar), for: .touchUpInside)
-        nameTextField.addTarget(self, action: #selector(nameChanged), for: .editingDidEnd)
+        nameField.addTarget(self, action: #selector(nameChanged), for: .editingDidEnd)
     }
     
     func loadProfile(_ viewModel: ProfileModel.LoadProfile.ViewModel) {
-        nameTextField.text = viewModel.name
-        avatarImageField.image = viewModel.avatar
+        nameField.text = viewModel.name
+        avatarField.image = viewModel.avatar
     }
     
     private func configureButtonStack() {
-        profileButtonStack.axis = .vertical
-        profileButtonStack.spacing = Constraints.profileButtonStackSpacing
-        profileButtonStack.alignment = .center
+        buttonStack.axis = .vertical
+        buttonStack.spacing = Constants.buttonStackSpacing
+        buttonStack.alignment = .center
         
         for button in [statisticsButton, developerButton] {
-            profileButtonStack.addArrangedSubview(button)
+            buttonStack.addArrangedSubview(button)
         }
         
-        view.addSubview(profileButtonStack)
+        view.addSubview(buttonStack)
         
-        profileButtonStack.pinCenterX(to: view)
-        profileButtonStack.pinTop(to: nameTextField.bottomAnchor, Constraints.profileButtonStackTop)
+        buttonStack.pinCenterX(to: view)
+        buttonStack.pinTop(to: nameField.bottomAnchor, Constants.buttonStackTop)
         
         statisticsButton.addTarget(self, action: #selector(statisticsButtonTapped), for: .touchUpInside)
         developerButton.addTarget(self, action: #selector(developerButtonTapped), for: .touchUpInside)
@@ -98,8 +98,8 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
-            avatarImageField.image = selectedImage
-            interactor.saveProfileData(ProfileModel.SaveProfile.Request(name: nameTextField.text, avatar: avatarImageField.image))
+            avatarField.image = selectedImage
+            interactor.saveProfileData(ProfileModel.SaveProfile.Request(name: nameField.text, avatar: avatarField.image))
         }
         picker.dismiss(animated: true)
     }
@@ -113,7 +113,7 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
     }
     
     @objc private func nameChanged() {
-        interactor.saveProfileData(ProfileModel.SaveProfile.Request(name: nameTextField.text, avatar: avatarImageField.image))
+        interactor.saveProfileData(ProfileModel.SaveProfile.Request(name: nameField.text, avatar: avatarField.image))
     }
     
     @objc private func statisticsButtonTapped() {
@@ -122,5 +122,25 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
     
     @objc private func developerButtonTapped() {
         interactor.developerButtonTapped(ProfileModel.RouteDeveloper.Request())
+    }
+    
+    private enum Constants {
+        static let logoText: String = "Profile"
+        static let avatarButtonText: String = "Choose photo"
+        
+        static let logoTextTop: CGFloat = 5
+        static let avatarFieldTop: CGFloat = 20
+        static let avatarButtonTop: CGFloat = 10
+        static let nameFieldTop: CGFloat = 10
+        static let buttonStackTop: CGFloat = 100
+        
+        static let logoSize: CGFloat = 35
+        static let avatarSize: CGFloat = 100
+        static let avatarButtonTextSize = 17.0
+        static let nameFieldWidth: CGFloat = 200
+        static let buttonStackSpacing: CGFloat = 15
+        
+        
+        static let avatarRadius: CGFloat = 50
     }
 }

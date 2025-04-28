@@ -19,12 +19,12 @@ final class CustomText: UILabel {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupFont(with: Constraints.textSize)
+        setupFont(with: Constants.textSize)
         setupUI()
     }
     
     private func setupFont(with size: CGFloat) {
-        if let customFont = UIFont(name: Text.fontIrishGrover, size: size) {
+        if let customFont = UIFont(name: Fonts.IrishGrover, size: size) {
             self.font = customFont
         } else {
             self.font = UIFont.systemFont(ofSize: size)
@@ -34,5 +34,9 @@ final class CustomText: UILabel {
     private func setupUI() {
         self.numberOfLines = 0
         self.textAlignment = .center
+    }
+    
+    private enum Constants {
+        static let textSize: CGFloat = 17
     }
 }

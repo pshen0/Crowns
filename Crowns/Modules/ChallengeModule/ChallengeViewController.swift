@@ -7,27 +7,21 @@
 
 import UIKit
 
-enum ChallengeViewConstants {
-    static let animationDurMin: Double = 3.0
-    static let animationDurMax: Double = 5.0
-}
-
 final class ChallengeViewController: UIViewController {
     
     private let interactor: ChallengeBusinessLogic
-    private let challengeLogo = CustomText(text: Text.challengeLogo, fontSize: Constraints.challengeLogoSize, textColor: Colors.white)
-    private let lightning1: UIImageView = UIImageView(image: Images.lightning1)
-    private let lightning2: UIImageView = UIImageView(image: Images.lightning2)
-    private let clouds: UIImageView = UIImageView(image: Images.clouds)
-    private let lightningAnimation1: UIImageView = UIImageView(image: Images.lightning1)
-    private let lightningAnimation2: UIImageView = UIImageView(image: Images.lightning2)
-    private let challengeCat: BlinkingCatView = BlinkingCatView(images: Images.blinkingCatArray, duration: Numbers.blinkingAnimationDuration, repeatCount: Numbers.blinkingRepeat)
-    private let challengeMice: UIImageView = UIImageView(image: Images.challengeMice)
-    private let challengeCrownsButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeCrownsButton))
-    private let challengeSudokuButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeSudokuButton))
-    private let challengeCompletedLevelButton: UIButton = CustomButton(button: UIImageView(image: Images.challengeCompletedLevel))
-    private let challengeCalendar = CustomCalendar()
-    private let streakText = CustomText(text: Text.streak, fontSize: Constraints.streakTextSize, textColor: Colors.white)
+    private let logo = CustomText(text: Constants.logoText, fontSize: Constants.logoTextSize, textColor: Colors.white)
+    private let lightning1: UIImageView = UIImageView(image: UIImage.lightning1)
+    private let lightning2: UIImageView = UIImageView(image: UIImage.lightning2)
+    private let clouds: UIImageView = UIImageView(image: UIImage.clouds)
+    private let lightningAnimation1: UIImageView = UIImageView(image: UIImage.lightning1)
+    private let lightningAnimation2: UIImageView = UIImageView(image: UIImage.lightning2)
+    private let cat: BlinkingCatView = BlinkingCatView(images: Constants.blinkingCatArray, duration: Constants.blinkingAnimationDuration, repeatCount: Constants.blinkingRepeat)
+    private let mice: UIImageView = UIImageView(image: UIImage.challengeMice)
+    private let crownsButton: UIButton = CustomButton(button: UIImageView(image: UIImage.challengeCrownsButton))
+    private let sudokuButton: UIButton = CustomButton(button: UIImageView(image: UIImage.challengeSudokuButton))
+    private let calendar = CustomCalendar()
+    private var streakText = CustomText(text: Constants.streakText, fontSize: Constants.streakTextSize, textColor: Colors.white)
     
     private var thunderTimer: Timer?
     private var catTimer: Timer?
@@ -38,15 +32,12 @@ final class ChallengeViewController: UIViewController {
     }
     
     deinit {
-        thunderTimer?.invalidate()
-        thunderTimer = nil
-        catTimer?.invalidate()
-        catTimer = nil
+        stopAnimateChallengesScreen()
     }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     override func viewDidLoad() {
@@ -57,6 +48,10 @@ final class ChallengeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         startAnimateChallengesScreen()
+        calendar.updateMarkedDates()
+        interactor.updateButtons(ChallengeModel.ResetChallenges.Request())
+        interactor.setupDailyResetObserver(ChallengeModel.ResetChallenges.Request())
+        interactor.getStreak(ChallengeModel.GetStreak.Request())
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -72,82 +67,94 @@ final class ChallengeViewController: UIViewController {
     
     private func configureBackground() {
         view.backgroundColor = Colors.darkGray
-        lightningAnimation1.alpha = Numbers.lightningAnimationUnvisible
-        lightningAnimation2.alpha = Numbers.lightningAnimationUnvisible
+        lightningAnimation1.alpha = Constants.lightningUnvisible
+        lightningAnimation2.alpha = Constants.lightningUnvisible
         
         
-        for (subview, top) in zip([clouds, lightningAnimation1, lightningAnimation2, challengeLogo, challengeCat, challengeMice],
-                                  [Constraints.cloudsTop, Constraints.lightningAnimation1Top,
-                                   Constraints.lightningAnimation2Top, Constraints.challengeLogoTextTop, Constraints.challengeCatTop,
-                                   Constraints.challengeMiceTop]) {
+        for (subview, top) in zip([clouds, lightningAnimation1, lightningAnimation2, logo, cat, mice],
+                                  [Constants.cloudsTop, Constants.lightningAnimation1Top,
+                                   Constants.lightningAnimation2Top, Constants.logoTextTop, Constants.catTop,
+                                   Constants.miceTop]) {
             view.addSubview(subview)
             subview.pinTop(to: view.safeAreaLayoutGuide.topAnchor, top)
         }
         
-        challengeLogo.pinCenterX(to: view)
-        lightningAnimation1.pinLeft(to: view, Constraints.lightningAnimation1Left)
-        lightningAnimation2.pinRight(to: view, Constraints.lightningAnimation2Right)
-        challengeCat.pinLeft(to: view, Constraints.challengeCatLeft)
-        challengeMice.pinRight(to: view, Constraints.challengeMiceRight)
+        logo.pinCenterX(to: view)
+        lightningAnimation1.pinLeft(to: view, Constants.lightningAnimation1Left)
+        lightningAnimation2.pinRight(to: view, Constants.lightningAnimation2Right)
+        cat.pinLeft(to: view, Constants.catLeft)
+        mice.pinRight(to: view, Constants.miceRight)
         clouds.pinCenterX(to: view)
     }
     
     private func configureCalendar() {
-        view.addSubview(challengeCalendar)
+        view.addSubview(calendar)
         view.addSubview(streakText)
         
-        challengeCalendar.setWidth(Constraints.challengeCalendarWidth)
-        challengeCalendar.setHeight(Constraints.challengeCalendarHeight)
-        challengeCalendar.pinCenterX(to: view)
-        challengeCalendar.pinTop(to: challengeCat.bottomAnchor, Constraints.challengeCalendarTop)
-        streakText.pinBottom(to: challengeCalendar.topAnchor, Constraints.streakTextBottom)
-        streakText.pinRight(to: challengeCalendar.trailingAnchor, Constraints.streakTextRight)
+        calendar.setWidth(Constants.calendarWidth)
+        calendar.setHeight(Constants.calendarHeight)
+        calendar.pinCenterX(to: view)
+        calendar.pinTop(to: cat.bottomAnchor, Constants.calendarTop)
+        streakText.pinBottom(to: calendar.topAnchor, Constants.streakTextBottom)
+        streakText.pinRight(to: calendar.trailingAnchor, Constants.streakTextRight)
         
     }
     
     private func configureButtons() {
-        view.addSubview(challengeCrownsButton)
-        view.addSubview(challengeSudokuButton)
+        view.addSubview(crownsButton)
+        view.addSubview(sudokuButton)
         
-        challengeCrownsButton.pinCenterX(to: view)
-        challengeCrownsButton.pinTop(to: challengeCalendar.bottomAnchor, Constraints.challengeCrownsButtonTop)
-        challengeSudokuButton.pinCenterX(to: view)
-        challengeSudokuButton.pinTop(to: challengeCrownsButton.bottomAnchor, Constraints.challengeSudokuButtonTop)
+        crownsButton.pinCenterX(to: view)
+        crownsButton.pinTop(to: calendar.bottomAnchor, Constants.crownsButtonTop)
+        sudokuButton.pinCenterX(to: view)
+        sudokuButton.pinTop(to: crownsButton.bottomAnchor, Constants.sudokuButtonTop)
         
-        challengeCrownsButton.addTarget(self, action: #selector(crownsButtonTapped), for: .touchUpInside)
-        challengeSudokuButton.addTarget(self, action: #selector(sudokuButtonTapped), for: .touchUpInside)
+        crownsButton.addTarget(self, action: #selector(crownsButtonTapped), for: .touchUpInside)
+        sudokuButton.addTarget(self, action: #selector(sudokuButtonTapped), for: .touchUpInside)
     }
     
     func startAnimateChallengesScreen() {
-        self.challengeCat.startBlinking()
-        thunderTimer = Timer.scheduledTimer(timeInterval: Numbers.lightningAnimationDuration, target: self, selector: #selector(animateLightnings), userInfo: nil, repeats: true)
-        catTimer = Timer.scheduledTimer(withTimeInterval: Double.random(in: ChallengeViewConstants.animationDurMin...ChallengeViewConstants.animationDurMax), repeats: true) { _ in
-            self.challengeCat.startBlinking()
+        self.cat.startBlinking()
+        thunderTimer = Timer.scheduledTimer(timeInterval: Constants.lightningAnimationDuration, target: self, selector: #selector(animateLightnings), userInfo: nil, repeats: true)
+        catTimer = Timer.scheduledTimer(withTimeInterval: Double.random(in: Constants.animationDurMin...Constants.animationDurMax), repeats: true) { _ in
+            self.cat.startBlinking()
         }
     }
     
     func stopAnimateChallengesScreen() {
-        challengeCat.stopBlinking()
+        cat.stopBlinking()
         catTimer?.invalidate()
         thunderTimer?.invalidate()
         thunderTimer = nil
         catTimer = nil
     }
     
+    func changeButtonsAccessibility(_ viewModel: ChallengeModel.ResetChallenges.ViewModel) {
+        crownsButton.isEnabled = viewModel.crownsAccessibility
+        sudokuButton.isEnabled = viewModel.sudokusAccessibility
+
+        crownsButton.alpha = viewModel.crownsAccessibility ? Constants.buttonVisabilityMax : Constants.buttonVisabilityMin
+        sudokuButton.alpha = viewModel.sudokusAccessibility ? Constants.buttonVisabilityMax : Constants.buttonVisabilityMin
+    }
+    
+    func changeStreakLabel(_ viewModel: ChallengeModel.GetStreak.ViewModel) {
+        streakText.text = viewModel.streakLabel
+    }
+    
     @objc func animateLightnings() {
-        UIView.animate(withDuration: Numbers.lightningAppearanceDuration) {
-            self.lightningAnimation1.alpha = Numbers.lightningAnimationVisible
+        UIView.animate(withDuration: Constants.lightningAppearanceDuration) {
+            self.lightningAnimation1.alpha = Constants.lightningAnimationVisible
         }
-        UIView.animate(withDuration: Numbers.lightningAppearanceDuration) {
-            self.lightningAnimation1.alpha = Numbers.lightningAnimationUnvisible
+        UIView.animate(withDuration: Constants.lightningAppearanceDuration) {
+            self.lightningAnimation1.alpha = Constants.lightningUnvisible
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + Numbers.lightningAnimationDuration / 2) {
-            UIView.animate(withDuration: Numbers.lightningAppearanceDuration) {
-                self.lightningAnimation2.alpha = Numbers.lightningAnimationVisible
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.lightningAnimationDuration / 2) {
+            UIView.animate(withDuration: Constants.lightningAppearanceDuration) {
+                self.lightningAnimation2.alpha = Constants.lightningAnimationVisible
             }
-            UIView.animate(withDuration: Numbers.lightningAppearanceDuration) {
-                self.lightningAnimation2.alpha = Numbers.lightningAnimationUnvisible
+            UIView.animate(withDuration: Constants.lightningAppearanceDuration) {
+                self.lightningAnimation2.alpha = Constants.lightningUnvisible
             }
         }
     }
@@ -158,5 +165,46 @@ final class ChallengeViewController: UIViewController {
     
     @objc private func sudokuButtonTapped() {
         interactor.sudokuButtonTapped(ChallengeModel.RouteSudokuGame.Request())
+    }
+    
+    private enum Constants {
+        static let logoText: String = "The daily challenge\nCAT AND MOUSE"
+        static let streakText: String = "Current streak: 0"
+        
+        static let logoTextSize: CGFloat = 35
+        static let streakTextSize: CGFloat = 17
+        static let calendarWidth: CGFloat = 350
+        static let calendarHeight: CGFloat = 200
+        
+        static let cloudsTop: CGFloat = -140
+        static let lightningAnimation1Top: CGFloat = -110
+        static let lightningAnimation1Left: CGFloat = 210
+        static let lightningAnimation2Top: CGFloat = -120
+        static let lightningAnimation2Right: CGFloat = 210
+        static let logoTextTop: CGFloat = 45
+        static let catTop: CGFloat = 150
+        static let catLeft: CGFloat = 10
+        static let miceTop: CGFloat = 180
+        static let miceRight: CGFloat = 20
+        static let calendarTop: CGFloat = 55
+        static let crownsButtonTop: CGFloat = 25
+        static let sudokuButtonTop: CGFloat = 8
+        static let streakTextBottom: CGFloat = 10
+        static let streakTextRight: CGFloat = 10
+        
+        
+        static let animationDurMin: Double = 3.0
+        static let animationDurMax: Double = 5.0
+        static let buttonVisabilityMin = 0.5
+        static let buttonVisabilityMax = 1.0
+        static let blinkingAnimationDuration: Double = 0.6
+        static let blinkingRepeat: Int = 1
+        static let lightningUnvisible: Double = 0
+        static let lightningAnimationVisible: Double = 1
+        static let lightningAnimationDuration: Double = 6.0
+        static let lightningAppearanceDuration: Double = 0.5
+        
+        static let blinkingCatArray = [UIImage.challengeBlinkingCat1, UIImage.challengeBlinkingCat2, UIImage.challengeBlinkingCat3, UIImage.challengeBlinkingCat4,
+                                        UIImage.challengeBlinkingCat5, UIImage.challengeBlinkingCat6, UIImage.challengeBlinkingCat7]
     }
 }

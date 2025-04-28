@@ -13,15 +13,13 @@ final class CoreDataDatesStack {
     private let context = CoreDataStack.shared.context
     
     private init() {}
-    
-    // MARK: - Save a new date
+
     func saveDate(_ date: Date) {
         let markedDate = CalendarData(context: context)
         markedDate.date = date
         try? context.save()
     }
-    
-    // MARK: - Fetch all dates
+
     func fetchAllDates() -> [Date] {
         let request: NSFetchRequest<CalendarData> = CalendarData.fetchRequest()
         do {

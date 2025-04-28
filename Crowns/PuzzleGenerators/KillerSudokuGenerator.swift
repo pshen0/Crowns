@@ -7,21 +7,6 @@
 
 import Foundation
 
-enum KillerSudokuConstants {
-    static let size: Int = 9
-    static let n: Int = 3
-    static let removableCounterEasy: Int = 45
-    static let removableCounterMedium: Int = 50
-    static let removableCounterHard: Int = 55
-    static let mixRepeat: Int = 100
-    static let cageSizeMin: Int = 2
-    static let cageSizeMax: Int = 5
-    
-    static let easyTag: String = "Easy"
-    static let mediumTag: String = "Medium"
-    static let hardTag: String = "Hard"
-}
-
 struct SudokuCell: Hashable & Codable {
     let row: Int
     let col: Int
@@ -52,14 +37,14 @@ final class SudokuCage: Codable {
 }
 
 final class KillerSudoku: Codable {
-    private var size: Int = KillerSudokuConstants.size
-    private var n: Int = KillerSudokuConstants.n
+    private var size: Int = Constants.size
+    private var n: Int = Constants.n
     let difficultyLevel: String
     var table: [[Int]]
     private var cages: [SudokuCage] = []
     var puzzle: [[Int]]
     var unsolvedPuzzle: [[Int]]
-    private var removableCounter: Int = KillerSudokuConstants.removableCounterEasy
+    private var removableCounter: Int = Constants.removableCounterEasy
 
     
     init(difficultyLevel: String) {
@@ -69,16 +54,16 @@ final class KillerSudoku: Codable {
         unsolvedPuzzle = Array(repeating: Array(repeating: 0, count: size), count: size)
         
         switch difficultyLevel {
-        case KillerSudokuConstants.easyTag:
-            removableCounter = KillerSudokuConstants.removableCounterEasy
-        case KillerSudokuConstants.mediumTag:
-            removableCounter = KillerSudokuConstants.removableCounterMedium
-        case KillerSudokuConstants.hardTag:
-            removableCounter = KillerSudokuConstants.removableCounterHard
+        case DifficultyLevels.easy:
+            removableCounter = Constants.removableCounterEasy
+        case DifficultyLevels.medium:
+            removableCounter = Constants.removableCounterMedium
+        case DifficultyLevels.hard:
+            removableCounter = Constants.removableCounterHard
         default:
-            removableCounter = [KillerSudokuConstants.removableCounterEasy,
-                                KillerSudokuConstants.removableCounterMedium,
-                                KillerSudokuConstants.removableCounterHard].randomElement() ?? KillerSudokuConstants.removableCounterEasy
+            removableCounter = [Constants.removableCounterEasy,
+                                Constants.removableCounterMedium,
+                                Constants.removableCounterHard].randomElement() ?? Constants.removableCounterEasy
         }
         
         generateBaseTable()
@@ -147,7 +132,7 @@ final class KillerSudoku: Codable {
         transpose()
     }
     
-    private func mix(_ amt: Int = KillerSudokuConstants.mixRepeat) {
+    private func mix(_ amt: Int = Constants.mixRepeat) {
         let mixFunctions: [() -> Void] = [transpose, swapRowsSmall, swapColumnsSmall, swapRowsArea, swapColumnsArea]
         for _ in 0..<amt {
             mixFunctions.randomElement()?()
@@ -162,7 +147,7 @@ final class KillerSudoku: Codable {
             remainingCells.remove(startCell)
             let cage = SudokuCage(cell: startCell)
             
-            let cageSize = Int.random(in: KillerSudokuConstants.cageSizeMin...KillerSudokuConstants.cageSizeMax)
+            let cageSize = Int.random(in: Constants.cageSizeMin...Constants.cageSizeMax)
             for _ in 1..<cageSize {
                 let neighbors = remainingCells.filter {
                     abs($0.row - startCell.row) + abs($0.col - startCell.col) == 1
@@ -282,5 +267,16 @@ final class KillerSudoku: Codable {
             }
         }
         return true
+    }
+    
+    private enum Constants {
+        static let size: Int = 9
+        static let n: Int = 3
+        static let removableCounterEasy: Int = 45
+        static let removableCounterMedium: Int = 50
+        static let removableCounterHard: Int = 55
+        static let mixRepeat: Int = 100
+        static let cageSizeMin: Int = 2
+        static let cageSizeMax: Int = 5
     }
 }

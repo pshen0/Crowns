@@ -10,10 +10,10 @@ import UIKit
 final class StatisticsViewController: UIViewController {
     
     private let interactor: StatisticsBusinessLogic
-    private let backButton: UIButton = CustomButton(button: UIImageView(image: Images.backButton),
-                                                    tapped: UIImageView(image: Images.backButtonTap))
-    private let segmentedControl: UISegmentedControl = UISegmentedControl(items: ["Crowns", "Killer-Sudoku"])
-    private let statisticCat: UIImageView = UIImageView(image: Images.statisticCat)
+    private let backButton: UIButton = CustomButton(button: UIImageView(image: UIImage.backButton),
+                                                    tapped: UIImageView(image: UIImage.backButtonTap))
+    private let segmentedControl: UISegmentedControl = UISegmentedControl(items: Constants.games)
+    private let statisticCat: UIImageView = UIImageView(image: UIImage.ruleCat)
     private let tableView = UITableView()
     private var currentGameType: StatisticsModel.GameType = .crowns
     private var statistics: [StatisticsModel.StatisticItem] = []
@@ -27,7 +27,7 @@ final class StatisticsViewController: UIViewController {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(Text.initErrorCoder)
+        fatalError(Errors.initErrorCoder)
     }
     
     override func viewDidLoad() {
@@ -64,37 +64,37 @@ final class StatisticsViewController: UIViewController {
         
         segmentedControl.setTitleTextAttributes([
             .foregroundColor: Colors.white,
-            .font: UIFont(name: Text.fontIrishGrover, size: 20)
+            .font: UIFont(name: Fonts.IrishGrover, size: Constants.segmentTextSize) ?? UIFont.systemFont(ofSize: Constants.segmentTextSize)
         ], for: .normal)
         segmentedControl.setTitleTextAttributes([
             .foregroundColor: Colors.darkGray,
-            .font: UIFont(name: Text.fontIrishGrover, size: 20)
+            .font: UIFont(name: Fonts.IrishGrover, size: Constants.segmentTextSize) ?? UIFont.systemFont(ofSize: Constants.segmentTextSize)
         ], for: .selected)
         
         view.addSubview(segmentedControl)
         view.addSubview(statisticCat)
         
-        segmentedControl.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 20)
+        segmentedControl.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.segmentedControlTop)
         segmentedControl.pinCenterX(to: view)
         statisticCat.pinCenterX(to: view)
-        statisticCat.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, 10)
+        statisticCat.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constants.statisticCat)
         
         segmentedControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
     }
     
     private func configureTable() {
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "StatisticCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.statisticCellId)
         tableView.backgroundColor = Colors.darkGray
         tableView.allowsSelection = false
         tableView.isScrollEnabled = false
         
         view.addSubview(tableView)
         
-        tableView.pinTop(to: segmentedControl.bottomAnchor, 20)
+        tableView.pinTop(to: segmentedControl.bottomAnchor, Constants.tableTop)
         tableView.pinLeft(to: view.leadingAnchor)
         tableView.pinRight(to: view.trailingAnchor)
-        tableView.pinBottom(to: statisticCat.topAnchor, 20)
+        tableView.pinBottom(to: statisticCat.topAnchor, Constants.tableBottom)
     }
     
     func setGameType(_ viewModel: StatisticsModel.OpenStatistics.ViewModel) {
@@ -133,12 +133,25 @@ extension StatisticsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let stat = statistics[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "StatisticCell", for: indexPath)
-        cell.textLabel?.font = UIFont(name: Text.fontIrishGrover, size: 20)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.statisticCellId, for: indexPath)
+        cell.textLabel?.font = UIFont(name: Fonts.IrishGrover, size: Constants.statisticCellTextSize)
         cell.textLabel?.text = "\(stat.title): \(stat.value)"
         cell.textLabel?.textColor = Colors.white
         cell.backgroundColor = Colors.darkGray
         
         return cell
+    }
+    
+    private enum Constants {
+        static let games = ["Crowns", "Killer-Sudoku"]
+        static let statisticCellId = "StatisticCell"
+        
+        static let segmentTextSize = 20.0
+        static let statisticCellTextSize = 20.0
+        
+        static let segmentedControlTop = 20.0
+        static let statisticCat = 10.0
+        static let tableTop = 20.0
+        static let tableBottom = 20.0
     }
 }

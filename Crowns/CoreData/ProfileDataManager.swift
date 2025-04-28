@@ -16,7 +16,7 @@ final class CoreDataProfileStack {
         let profile = fetchProfile() ?? ProfileData(context: context)
         profile.userName = name
         if let avatar = avatar {
-            profile.userAvatar = avatar.jpegData(compressionQuality: 0.9)
+            profile.userAvatar = avatar.jpegData(compressionQuality: Constants.jpegQuality)
         }
         try? context.save()
     }
@@ -24,5 +24,9 @@ final class CoreDataProfileStack {
     func fetchProfile() -> ProfileData? {
         let request: NSFetchRequest<ProfileData> = ProfileData.fetchRequest()
         return try? context.fetch(request).first
+    }
+    
+    private enum Constants {
+        static let jpegQuality = 0.9
     }
 }
