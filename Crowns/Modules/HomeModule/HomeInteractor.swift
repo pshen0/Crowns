@@ -5,6 +5,7 @@
 //  Created by Анна Сазонова on 22.01.2025.
 //
 
+// MARK: - HomeBusinessLogic protocol
 protocol HomeBusinessLogic {
     func playCrownsTapped(_ request: HomeModel.RouteToCrownsSettings.Request)
     func playSudokuTapped(_ request: HomeModel.RouteToSudokuSettings.Request)
@@ -14,14 +15,18 @@ protocol HomeBusinessLogic {
     func getUnfinishedSudokuGame(_ request: HomeModel.GetUnfinishedSudokuGame.Request)
 }
 
+// MARK: - HomeInteractor class
 final class HomeInteractor: HomeBusinessLogic {
     
+    // MARK: - Properties
      private let presenter: HomePresentationLogic
     
+    // MARK: - Lifecycle
     init(presenter: HomePresentationLogic) {
         self.presenter = presenter
     }
     
+    // MARK: - Funcs
      func playCrownsTapped(_ request: HomeModel.RouteToCrownsSettings.Request) {
         presenter.routeToCrownsSettings(HomeModel.RouteToCrownsSettings.Response())
     }

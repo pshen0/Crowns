@@ -1,8 +1,10 @@
 import FSCalendar
 import UIKit
 
+// MARK: - CustomCalendar class
 final class CustomCalendar: FSCalendar {
     
+    // MARK: - Properties
     private var markedDates: [Date] = []
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -10,6 +12,7 @@ final class CustomCalendar: FSCalendar {
         return formatter
     }()
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureCalendar()
@@ -21,6 +24,14 @@ final class CustomCalendar: FSCalendar {
         configureCalendar()
     }
     
+    // MARK: - Funcs
+    func updateMarkedDates() {
+        self.markedDates = CoreDataDatesStack.shared.fetchAllDates()
+        self.markedDates.sort()
+        reloadData()
+    }
+    
+    // MARK: - Private funcs
     private func configureCalendar() {
         backgroundColor = Colors.lightGray
         
@@ -45,12 +56,6 @@ final class CustomCalendar: FSCalendar {
         delegate = self
         dataSource = self
     }
-    
-    func updateMarkedDates() {
-        self.markedDates = CoreDataDatesStack.shared.fetchAllDates()
-        self.markedDates.sort()
-        reloadData()
-    }
 
     private func isDateMarked(_ date: Date) -> Bool {
         let calendar = Calendar.current
@@ -58,20 +63,8 @@ final class CustomCalendar: FSCalendar {
             calendar.isDate(markedDate, inSameDayAs: date)
         }
     }
-}
-
-extension CustomCalendar: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
-        if isDateMarked(date) {
-            return Constants.markedDateColor
-        }
-        return nil
-    }
     
-    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-        return false
-    }
-    
+    // MARK: - Constants
     private enum Constants {
         static let dateFormatter = "yyyy-MM-dd"
         static let headerFormatter = "MMMM yyyy"
@@ -87,5 +80,19 @@ extension CustomCalendar: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDe
         static let todayColorAlpha = 0.3
         
         static let markedDateColor = Colors.yellow.withAlphaComponent(0.5)
+    }
+}
+
+// MARK: - Extensions
+extension CustomCalendar: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+        if isDateMarked(date) {
+            return Constants.markedDateColor
+        }
+        return nil
+    }
+    
+    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
+        return false
     }
 }

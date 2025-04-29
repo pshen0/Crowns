@@ -7,10 +7,14 @@
 
 import CoreData
 
+// MARK: - CoreDataSudokuProgressStack class
 final class CoreDataSudokuProgressStack {
+    // MARK: - Properties
     static let shared = CoreDataSudokuProgressStack()
     let context = CoreDataStack.shared.context
     
+    // MARK: - Funcs
+    // Save data
     func saveProgress(
         isTimerUsed: Bool,
         initialTime: Int32,
@@ -37,6 +41,7 @@ final class CoreDataSudokuProgressStack {
         }
     }
     
+    // Fetch data
     func fetchProgress() -> SudokuPlayModel.BuildModule.BuildFoundation? {
         let request = SudokuProgress.fetchRequest()
         request.fetchLimit = Constants.requestLimit
@@ -55,6 +60,7 @@ final class CoreDataSudokuProgressStack {
         return nil
     }
     
+    // Delete data
     func deleteAllProgress() {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = SudokuProgress.fetchRequest()
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -67,6 +73,7 @@ final class CoreDataSudokuProgressStack {
         }
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let requestLimit = 1
     }

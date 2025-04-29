@@ -7,8 +7,10 @@
 
 import UIKit
 
+// MARK: - SudokuGameOverViewController class
 final class SudokuGameOverViewController: UIViewController {
     
+    // MARK: - Properties
     private let interactor: SudokuGameOverBusinessLogic
     private let logo: UILabel = CustomText(text: Constants.logoText, fontSize: Constants.logoTextSize, textColor: Colors.white)
     private var result: UILabel = UILabel()
@@ -17,6 +19,7 @@ final class SudokuGameOverViewController: UIViewController {
     private let homeButton: UIButton = CustomButton(button: UIImageView(image: UIImage.gameOverHomeButton))
     private let statisticsButton: UIButton = CustomButton(button: UIImageView(image: UIImage.statisticsButton))
     
+    // MARK: - Lifecycle
     init(interactor: SudokuGameOverBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -48,6 +51,7 @@ final class SudokuGameOverViewController: UIViewController {
         configureUI()
     }
     
+    // MARK: - Private funcs
     private func configureUI() {
         configureBackground()
     }
@@ -71,6 +75,7 @@ final class SudokuGameOverViewController: UIViewController {
         statisticsButton.addTarget(self, action: #selector(statisticsButtonTapped), for: .touchUpInside)
     }
     
+    // MARK: - Actions
     @objc private func homeButtonTapped() {
         interactor.homeButtonTapped(SudokuGameOverModel.RouteHome.Request())
     }
@@ -79,6 +84,7 @@ final class SudokuGameOverViewController: UIViewController {
         interactor.statisticsButtonTapped(SudokuGameOverModel.RouteStatistics.Request())
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let logoText = "Sudoku"
         static let gameTimeText = "Elapsed time:"

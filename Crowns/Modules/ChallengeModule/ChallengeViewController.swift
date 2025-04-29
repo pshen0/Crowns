@@ -7,8 +7,10 @@
 
 import UIKit
 
+// MARK: - ChallengeViewController class
 final class ChallengeViewController: UIViewController {
     
+    // MARK: - Properties
     private let interactor: ChallengeBusinessLogic
     private let logo = CustomText(text: Constants.logoText, fontSize: Constants.logoTextSize, textColor: Colors.white)
     private let lightning1: UIImageView = UIImageView(image: UIImage.lightning1)
@@ -26,6 +28,7 @@ final class ChallengeViewController: UIViewController {
     private var thunderTimer: Timer?
     private var catTimer: Timer?
     
+    // MARK: - Lifecycle
     init(interactor: ChallengeBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -59,6 +62,25 @@ final class ChallengeViewController: UIViewController {
         stopAnimateChallengesScreen()
     }
     
+    // MARK: - Funcs
+    func updateScreen(_ viewModel: ChallengeModel.ResetChallenges.ViewModel) {
+        crownsButton.isEnabled = viewModel.crownsAccessibility
+        sudokuButton.isEnabled = viewModel.sudokusAccessibility
+
+        crownsButton.alpha = viewModel.crownsAccessibility ? Constants.buttonVisabilityMax : Constants.buttonVisabilityMin
+        sudokuButton.alpha = viewModel.sudokusAccessibility ? Constants.buttonVisabilityMax : Constants.buttonVisabilityMin
+        
+        calendar.today = Date()
+        calendar.reloadData()
+        
+        interactor.getStreak(ChallengeModel.GetStreak.Request())
+    }
+    
+    func changeStreakLabel(_ viewModel: ChallengeModel.GetStreak.ViewModel) {
+        streakText.text = viewModel.streakLabel
+    }
+    
+    // MARK: - Private funcs
     private func configureUI() {
         configureBackground()
         configureCalendar()
@@ -113,7 +135,7 @@ final class ChallengeViewController: UIViewController {
         sudokuButton.addTarget(self, action: #selector(sudokuButtonTapped), for: .touchUpInside)
     }
     
-    func startAnimateChallengesScreen() {
+    private func startAnimateChallengesScreen() {
         self.cat.startBlinking()
         thunderTimer = Timer.scheduledTimer(timeInterval: Constants.lightningAnimationDuration, target: self, selector: #selector(animateLightnings), userInfo: nil, repeats: true)
         catTimer = Timer.scheduledTimer(withTimeInterval: Double.random(in: Constants.animationDurMin...Constants.animationDurMax), repeats: true) { _ in
@@ -121,7 +143,7 @@ final class ChallengeViewController: UIViewController {
         }
     }
     
-    func stopAnimateChallengesScreen() {
+    private func stopAnimateChallengesScreen() {
         cat.stopBlinking()
         catTimer?.invalidate()
         thunderTimer?.invalidate()
@@ -129,18 +151,7 @@ final class ChallengeViewController: UIViewController {
         catTimer = nil
     }
     
-    func changeButtonsAccessibility(_ viewModel: ChallengeModel.ResetChallenges.ViewModel) {
-        crownsButton.isEnabled = viewModel.crownsAccessibility
-        sudokuButton.isEnabled = viewModel.sudokusAccessibility
-
-        crownsButton.alpha = viewModel.crownsAccessibility ? Constants.buttonVisabilityMax : Constants.buttonVisabilityMin
-        sudokuButton.alpha = viewModel.sudokusAccessibility ? Constants.buttonVisabilityMax : Constants.buttonVisabilityMin
-    }
-    
-    func changeStreakLabel(_ viewModel: ChallengeModel.GetStreak.ViewModel) {
-        streakText.text = viewModel.streakLabel
-    }
-    
+    // MARK: - Actions
     @objc func animateLightnings() {
         UIView.animate(withDuration: Constants.lightningAppearanceDuration) {
             self.lightningAnimation1.alpha = Constants.lightningAnimationVisible
@@ -167,6 +178,7 @@ final class ChallengeViewController: UIViewController {
         interactor.sudokuButtonTapped(ChallengeModel.RouteSudokuGame.Request())
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let logoText: String = "The daily challenge\nCAT AND MOUSE"
         static let streakText: String = "Current streak: 0"

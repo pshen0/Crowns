@@ -7,7 +7,9 @@
 
 import UIKit
 
-final class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+// MARK: - ProfileViewController class
+final class ProfileViewController: UIViewController {
+    // MARK: - Properties
     private let interactor: ProfileBusinessLogic
     
     private let logoText = CustomText(text: Constants.logoText, fontSize: Constants.logoSize, textColor: Colors.white)
@@ -35,6 +37,7 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
         return button
     }()
     
+    // MARK: - Lifecycle
     init(interactor: ProfileBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -50,6 +53,13 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
         configureUI()
     }
     
+    // MARK: - Funcs
+    func loadProfile(_ viewModel: ProfileModel.LoadProfile.ViewModel) {
+        nameField.text = viewModel.name
+        avatarField.image = viewModel.avatar
+    }
+    
+    // MARK: - Private funcs
     private func configureUI() {
         view.backgroundColor = Colors.darkGray
         configureProfile()
@@ -73,11 +83,6 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
         nameField.addTarget(self, action: #selector(nameChanged), for: .editingDidEnd)
     }
     
-    func loadProfile(_ viewModel: ProfileModel.LoadProfile.ViewModel) {
-        nameField.text = viewModel.name
-        avatarField.image = viewModel.avatar
-    }
-    
     private func configureButtonStack() {
         buttonStack.axis = .vertical
         buttonStack.spacing = Constants.buttonStackSpacing
@@ -96,14 +101,7 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
         developerButton.addTarget(self, action: #selector(developerButtonTapped), for: .touchUpInside)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
-            avatarField.image = selectedImage
-            interactor.saveProfileData(ProfileModel.SaveProfile.Request(name: nameField.text, avatar: avatarField.image))
-        }
-        picker.dismiss(animated: true)
-    }
-    
+    // MARK: - Actions
     @objc private func selectAvatar() {
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -124,6 +122,7 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
         interactor.developerButtonTapped(ProfileModel.RouteDeveloper.Request())
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let logoText: String = "Profile"
         static let avatarButtonText: String = "Choose photo"
@@ -142,5 +141,16 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
         
         
         static let avatarRadius: CGFloat = 50
+    }
+}
+
+// MARK: - Extensions
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
+            avatarField.image = selectedImage
+            interactor.saveProfileData(ProfileModel.SaveProfile.Request(name: nameField.text, avatar: avatarField.image))
+        }
+        picker.dismiss(animated: true)
     }
 }

@@ -7,11 +7,12 @@
 
 import UIKit
 
+// MARK: - CrownsLearningViewController class
 final class CrownsLearningViewController: UIViewController{
     
+    // MARK: - Properties
     private let backButton: UIButton = CustomButton(button: UIImageView(image: UIImage.backButton),
                                                       tapped: UIImageView(image: UIImage.backButtonTap))
-    
     private let interactor: CrownsLearningBusinessLogic
     private var ruleViews: [UIImageView] = []
     private var catViews: [UIImageView] = []
@@ -20,6 +21,7 @@ final class CrownsLearningViewController: UIViewController{
     private let nextButton: UIButton = CustomButton(button: UIImageView(image: UIImage.nextButton),
                                                     tapped: UIImageView(image: UIImage.nextButtonTap))
     
+    // MARK: - Lifecycle
     init(interactor: CrownsLearningBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -46,6 +48,12 @@ final class CrownsLearningViewController: UIViewController{
         tabBarController?.tabBar.isHidden = false
     }
     
+    // MARK: - Funcs
+    func systemTouchNextButton() {
+        nextButton.sendActions(for: .touchUpInside)
+    }
+    
+    // MARK: - Private funcs
     private func configureUI() {
         configureBackground()
         configureImages()
@@ -97,6 +105,7 @@ final class CrownsLearningViewController: UIViewController{
         }
     }
     
+    // MARK: - Actions
     @objc private func backButtonTapped() {
         interactor.backButtonTapped(CrownsLearningModel.RouteBack.Request())
     }
@@ -127,10 +136,7 @@ final class CrownsLearningViewController: UIViewController{
         }
     }
     
-    func systemTouchNextButton() {
-        nextButton.sendActions(for: .touchUpInside)
-    }
-    
+    // MARK: - Constants
     private enum Constants {
         static let ruleStackSpacing = 10.0
         static let nextButtonBottom = 5.0

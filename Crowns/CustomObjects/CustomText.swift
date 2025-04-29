@@ -7,8 +7,10 @@
 
 import UIKit
 
+// MARK: - CustomText class
 final class CustomText: UILabel {
     
+    // MARK: - Lifecycle
     init(text: String, fontSize: CGFloat, textColor: UIColor = .black) {
         super.init(frame: .zero)
         self.text = text
@@ -23,6 +25,7 @@ final class CustomText: UILabel {
         setupUI()
     }
     
+    // MARK: - Private funcs
     private func setupFont(with size: CGFloat) {
         if let customFont = UIFont(name: Fonts.IrishGrover, size: size) {
             self.font = customFont
@@ -36,6 +39,7 @@ final class CustomText: UILabel {
         self.textAlignment = .center
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let textSize: CGFloat = 17
     }

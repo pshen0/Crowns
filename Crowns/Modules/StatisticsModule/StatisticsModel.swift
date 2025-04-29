@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - StatisticsModel enum
 enum StatisticsModel {
     
     enum GameType {

@@ -352,7 +352,7 @@
 		0F1A78D82D482DF600DAA4F0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				0F6AFB0B2D6C2019007B8454 /* AppDiscriptionImages */,
+				0F6AFB0B2D6C2019007B8454 /* AppDescriptionImages */,
 				0F5F18752D513E8600ED204B /* IrishGrover-Regular.ttf */,
 				0F5F8CBB2D41A7DE006A8164 /* Constants.swift */,
 				0F5F8C8A2D4177E4006A8164 /* LaunchScreen.storyboard */,
@@ -658,7 +658,7 @@
 			path = CustomObjects;
 			sourceTree = "<group>";
 		};
-		0F6AFB0B2D6C2019007B8454 /* AppDiscriptionImages */ = {
+		0F6AFB0B2D6C2019007B8454 /* AppDescriptionImages */ = {
 			isa = PBXGroup;
 			children = (
 				0F6AFB0C2D6C2214007B8454 /* home1.PNG */,
@@ -671,7 +671,7 @@
 				0F6AFB1A2D6C2239007B8454 /* settings4.PNG */,
 				0F6AFB1C2D6C223D007B8454 /* settings5.PNG */,
 			);
-			path = AppDiscriptionImages;
+			path = AppDescriptionImages;
 			sourceTree = "<group>";
 		};
 		0F7465382D76581900959164 /* SettingsModule */ = {

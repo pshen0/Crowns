@@ -7,8 +7,10 @@
 
 import UIKit
 
+// MARK: - CrownsGameOverViewController class
 final class CrownsGameOverViewController: UIViewController {
     
+    // MARK: - Properties
     private let interactor: CrownsGameOverBusinessLogic
     private let logo: UILabel = CustomText(text: Constants.logoText, fontSize: Constants.logoTextSize, textColor: Colors.white)
     private var result: UILabel = UILabel()
@@ -17,6 +19,7 @@ final class CrownsGameOverViewController: UIViewController {
     private let homeButton: UIButton = CustomButton(button: UIImageView(image: UIImage.gameOverHomeButton))
     private let statisticsButton: UIButton = CustomButton(button: UIImageView(image: UIImage.statisticsButton))
     
+    // MARK: - Lifecycle
     init(interactor: CrownsGameOverBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -48,6 +51,7 @@ final class CrownsGameOverViewController: UIViewController {
         configureUI()
     }
     
+    // MARK: - Private funcs
     private func configureUI() {
         configureBackground()
     }
@@ -71,6 +75,7 @@ final class CrownsGameOverViewController: UIViewController {
         statisticsButton.addTarget(self, action: #selector(statisticsButtonTapped), for: .touchUpInside)
     }
     
+    // MARK: - Actions
     @objc private func homeButtonTapped() {
         interactor.homeButtonTapped(CrownsGameOverModel.RouteHome.Request())
     }
@@ -79,6 +84,7 @@ final class CrownsGameOverViewController: UIViewController {
         interactor.statisticsButtonTapped(CrownsGameOverModel.RouteStatistics.Request())
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let logoText = "Crowns"
         static let gameTimeText = "Elapsed time:"

@@ -6,8 +6,10 @@
 //
 import UIKit
 
+// MARK: - SudokuSettingsViewController class
 final class SudokuSettingsViewController: UIViewController{
     
+    // MARK: - Properties
     private let interactor: SudokuSettingsBusinessLogic
     private let backButton: UIButton = CustomButton(button: UIImageView(image: UIImage.backButton),
                                                     tapped: UIImageView(image: UIImage.backButtonTap))
@@ -28,6 +30,7 @@ final class SudokuSettingsViewController: UIViewController{
     lazy var barButtonItem = UIBarButtonItem()
     private var choosenButton: Int = Constants.choosenButton
     
+    // MARK: - Lifecycle
     init(interactor: SudokuSettingsBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -55,6 +58,7 @@ final class SudokuSettingsViewController: UIViewController{
         tabBarController?.tabBar.isHidden = false
     }
     
+    // MARK: - Private funcs
     private func configureUI() {
         configureTimer()
         configureBackground()
@@ -118,6 +122,7 @@ final class SudokuSettingsViewController: UIViewController{
         randomButton.addTarget(self, action: #selector(randomButtonTapped), for: .touchUpInside)
     }
     
+    // MARK: - Actions
     @objc private func backButtonTapped() {
         interactor.backButtonTapped(SudokuSettingsModel.RouteBack.Request())
     }
@@ -167,6 +172,7 @@ final class SudokuSettingsViewController: UIViewController{
         }
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let logoText: String = "Sudoku"
         static let timerText: String = "Timer"

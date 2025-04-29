@@ -7,7 +7,10 @@
 
 import UIKit
 
+// MARK: - KillerSudokuBlock class
 final class KillerSudokuBlock: UICollectionViewCell {
+    
+    // MARK: - Properties
     static let identifier = CellsID.sudokuCellId
     
     var collection: UICollectionView = {
@@ -23,6 +26,7 @@ final class KillerSudokuBlock: UICollectionViewCell {
     var cellsWithSum: [(cellPath: IndexPath, sum: Int)] = []
     private var initiallyFilledCells: Set<Int> = []
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         collection.register(KillerSudokuCell.self, forCellWithReuseIdentifier: KillerSudokuCell.identifier)
@@ -33,17 +37,7 @@ final class KillerSudokuBlock: UICollectionViewCell {
         fatalError(Errors.initErrorCoder)
     }
     
-    private func configureBlock() {
-        collection.dataSource = self
-        collection.delegate = self
-        addSubview(collection)
-        
-        collection.pinCenterX(to: self)
-        collection.pinCenterY(to: self)
-        collection.setWidth(self.frame.width)
-        collection.setHeight(self.frame.width)
-    }
-    
+    // MARK: - Funcs
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -71,8 +65,21 @@ final class KillerSudokuBlock: UICollectionViewCell {
             }
         }
     }
+    
+    // MARK: - Private funcs
+    private func configureBlock() {
+        collection.dataSource = self
+        collection.delegate = self
+        addSubview(collection)
+        
+        collection.pinCenterX(to: self)
+        collection.pinCenterY(to: self)
+        collection.setWidth(self.frame.width)
+        collection.setHeight(self.frame.width)
+    }
 }
 
+// MARK: - Extensions
 extension KillerSudokuBlock: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 9
@@ -111,7 +118,10 @@ extension KillerSudokuBlock: UICollectionViewDataSource, UICollectionViewDelegat
     }
 }
 
+// MARK: - KillerSudokuCell class
 final class KillerSudokuCell: UICollectionViewCell {
+    
+    // MARK: - Properties
     static let identifier = CellsID.sudokuCellId
     private let valueLabel: UILabel = {
         let label = UILabel()
@@ -130,6 +140,7 @@ final class KillerSudokuCell: UICollectionViewCell {
     private var mode = ""
     private var selectedMode: Bool = false
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureCell()
@@ -139,25 +150,12 @@ final class KillerSudokuCell: UICollectionViewCell {
         fatalError(Errors.initErrorCoder)
     }
     
-    private func configureCell() {
-        contentView.addSubview(valueLabel)
-        contentView.addSubview(sumLabel)
-        
-        contentView.setWidth(self.frame.width)
-        contentView.setHeight(self.frame.width)
-        valueLabel.pinCenterX(to: contentView.centerXAnchor)
-        valueLabel.pinCenterY(to: contentView.centerYAnchor)
-        sumLabel.pinLeft(to: contentView.leadingAnchor, 2)
-        sumLabel.pinTop(to: contentView.topAnchor, 2)
-        
-        contentView.backgroundColor = Colors.lightGray
-    }
-    
+    // MARK: - Funcs
     func configure(number: Int, mode: String) {
         valueLabel.text = number == 0 ? "" : "\(number)"
         self.mode = mode
         switch self.mode {
-        case SudokuCellMode.correct:
+        case SudokuCellMode.inition:
             sumLabel.textColor = Colors.white
             valueLabel.textColor = Colors.yellow
             contentView.backgroundColor = Colors.lightGray
@@ -217,5 +215,20 @@ final class KillerSudokuCell: UICollectionViewCell {
             valueLabel.textColor = Colors.white
             sumLabel.textColor = Colors.white
         }
+    }
+    
+    // MARK: - Private funcs
+    private func configureCell() {
+        contentView.addSubview(valueLabel)
+        contentView.addSubview(sumLabel)
+        
+        contentView.setWidth(self.frame.width)
+        contentView.setHeight(self.frame.width)
+        valueLabel.pinCenterX(to: contentView.centerXAnchor)
+        valueLabel.pinCenterY(to: contentView.centerYAnchor)
+        sumLabel.pinLeft(to: contentView.leadingAnchor, 2)
+        sumLabel.pinTop(to: contentView.topAnchor, 2)
+        
+        contentView.backgroundColor = Colors.lightGray
     }
 }

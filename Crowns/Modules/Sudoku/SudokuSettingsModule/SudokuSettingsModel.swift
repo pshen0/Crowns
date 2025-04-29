@@ -7,8 +7,8 @@
 
 import Foundation
 
+// MARK: - SudokuSettingsModel enum
 enum SudokuSettingsModel {
-    
     enum RouteSudokuGame {
         struct Request { 
             let buttonTag: Int

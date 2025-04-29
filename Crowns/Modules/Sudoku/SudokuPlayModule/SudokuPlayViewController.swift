@@ -7,8 +7,10 @@
 
 import UIKit
 
+// MARK: - SudokuPlayViewController class
 final class SudokuPlayViewController: UIViewController {
     
+    // MARK: - Properties
     private let interactor: SudokuPlayBusinessLogic
     private let numberButtonsStackView: UIStackView = {
         let stack = UIStackView()
@@ -45,6 +47,7 @@ final class SudokuPlayViewController: UIViewController {
     private var cellSize: CGFloat = 0
     private var pauseOverlayView: UIView?
     
+    // MARK: - Lifecycle
     init(interactor: SudokuPlayBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -87,6 +90,28 @@ final class SudokuPlayViewController: UIViewController {
         }
     }
     
+    // MARK: - Funcs
+    func setTimerLabel(_ viewModel: SudokuPlayModel.SetTime.ViewModel) {
+        DispatchQueue.main.async {
+            self.timerLabel.text = viewModel.timerLabel
+        }
+    }
+    
+    func presentChanges(_ viewModel: SudokuPlayModel.ChangeCell.ViewModel) {
+        for changedCell in viewModel.changes {
+            if let block = playground.cellForItem(at: changedCell.blockIndex) as? KillerSudokuBlock {
+                if let cell = block.collection.cellForItem(at: changedCell.cellIndex) as? KillerSudokuCell {
+                    cell.configure(number: changedCell.number, mode: changedCell.mode)
+                }
+            }
+        }
+    }
+    
+    func setLevelPicture(_ viewModel: SudokuPlayModel.GetLevel.ViewModel) {
+        levelPicture = UIImageView(image: viewModel.image)
+    }
+    
+    // MARK: - Private funcs
     private func configureUI() {
         configureBackground()
         configurePlayground()
@@ -215,30 +240,11 @@ final class SudokuPlayViewController: UIViewController {
         continueButton.addTarget(self, action: #selector(hidePauseOverlay), for: .touchUpInside)
     }
     
+    // MARK: - Actions
     @objc private func hidePauseOverlay() {
         pauseOverlayView?.removeFromSuperview()
         pauseOverlayView = nil
         interactor.pauseButtonTapped(SudokuPlayModel.PauseGame.Request())
-    }
-    
-    func setTimerLabel(_ viewModel: SudokuPlayModel.SetTime.ViewModel) {
-        DispatchQueue.main.async {
-            self.timerLabel.text = viewModel.timerLabel
-        }
-    }
-    
-    func presentChanges(_ viewModel: SudokuPlayModel.ChangeCell.ViewModel) {
-        for changedCell in viewModel.changes {
-            if let block = playground.cellForItem(at: changedCell.blockIndex) as? KillerSudokuBlock {
-                if let cell = block.collection.cellForItem(at: changedCell.cellIndex) as? KillerSudokuCell {
-                    cell.configure(number: changedCell.number, mode: changedCell.mode)
-                }
-            }
-        }
-    }
-    
-    func setLevelPicture(_ viewModel: SudokuPlayModel.GetLevel.ViewModel) {
-        levelPicture = UIImageView(image: viewModel.image)
     }
     
     @objc private func numberButtonTapped(_ sender: UIButton) {
@@ -286,8 +292,37 @@ final class SudokuPlayViewController: UIViewController {
             vc.systemTouchNextButton()
         }
     }
+    
+    // MARK: - Constants
+    private enum Constants {
+        static let logoText: String = "Sudoku"
+        static let continueButtonText: String = "Continue the game"
+        
+        static let numberButtonStackSpacing = 4.0
+        static let playgroundSpacing = 5.0
+        static let logoTextSize: CGFloat = 34
+        static let timerTextSize: CGFloat = 12
+        static let continueButtonTextSize: CGFloat = 20
+        static let numberBittonTextSize = 24.0
+        static let numberButtonRadius = 8.0
+        
+        static let timerLabelRight: CGFloat = 22
+        static let timerLabelTop: CGFloat = 10
+        static let playgroundTop: CGFloat = 75
+        static let buttonsPadding = 10.0
+        static let playgroundPadding = 7.0
+        static let continueButtonY: CGFloat = -4
+        static let numberStackPadding = 50.0
+        
+        static let size = 3
+        static let pauseOverlayAlpha = 0.9
+        static let tapNumbers = 2
+        static let digits = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        static let cellPadding = 4.0
+    }
 }
 
+// MARK: - Extensions
 extension SudokuPlayViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return size * size
@@ -318,32 +353,5 @@ extension SudokuPlayViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: cellSize, height: cellSize)
-    }
-    
-    private enum Constants {
-        static let logoText: String = "Sudoku"
-        static let continueButtonText: String = "Continue the game"
-        
-        static let numberButtonStackSpacing = 4.0
-        static let playgroundSpacing = 5.0
-        static let logoTextSize: CGFloat = 34
-        static let timerTextSize: CGFloat = 12
-        static let continueButtonTextSize: CGFloat = 20
-        static let numberBittonTextSize = 24.0
-        static let numberButtonRadius = 8.0
-        
-        static let timerLabelRight: CGFloat = 22
-        static let timerLabelTop: CGFloat = 10
-        static let playgroundTop: CGFloat = 75
-        static let buttonsPadding = 10.0
-        static let playgroundPadding = 7.0
-        static let continueButtonY: CGFloat = -4
-        static let numberStackPadding = 50.0
-        
-        static let size = 3
-        static let pauseOverlayAlpha = 0.9
-        static let tapNumbers = 2
-        static let digits = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        static let cellPadding = 4.0
     }
 }

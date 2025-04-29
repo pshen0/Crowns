@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - CrownsGameOverModel enum
 enum CrownsGameOverModel {
     enum RouteHome {
         struct Request { }

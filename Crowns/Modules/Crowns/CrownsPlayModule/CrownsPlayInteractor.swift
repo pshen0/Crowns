@@ -8,26 +8,31 @@
 import Foundation
 import UIKit
 
+// MARK: - CrownsPlayBusinessLogic protocol
 protocol CrownsPlayBusinessLogic {
     func backButtonTapped(_ request: CrownsPlayModel.RouteBack.Request)
+    func pauseButtonTapped(_ request: CrownsPlayModel.PauseGame.Request)
+    func hintButtonTapped(_ request: CrownsPlayModel.GetHint.Request)
+    func undoButtonTapped(_ request: CrownsPlayModel.UndoMove.Request)
+    
+    func startTimer(_ request: CrownsPlayModel.StartTimer.Request)
+    func getLevelPictute(_ request: CrownsPlayModel.GetLevel.Request)
+    
     func getTable(_ request: CrownsPlayModel.GetTable.Request) -> [[CrownsCell]]
     func getPlacements(_ request: CrownsPlayModel.GetPlacements.Request) -> [[Int]]
     func isPlayFinished(_ request: CrownsPlayModel.CheckGameOver.Request) -> Bool
     func isPlayChallenge(_ request: CrownsPlayModel.CheckChallenge.Request) -> Bool
-    func pauseButtonTapped(_ request: CrownsPlayModel.PauseGame.Request)
-    func placeCrown(_ request: CrownsPlayModel.PlaceCrown.Request)
     func gameIsWon(_ request: CrownsPlayModel.GameIsWon.Request)
-    func leaveGame(_ request: CrownsPlayModel.LeaveGame.Request)
     func timeIsUp() -> Bool
-    func startTimer(_ request: CrownsPlayModel.StartTimer.Request)
-    func hintButtonTapped(_ request: CrownsPlayModel.GetHint.Request)
+    func placeCrown(_ request: CrownsPlayModel.PlaceCrown.Request)
+    func leaveGame(_ request: CrownsPlayModel.LeaveGame.Request)
     func saveMove(_ request: CrownsPlayModel.SaveMove.Request)
-    func undoButtonTapped(_ request: CrownsPlayModel.UndoMove.Request)
-    func getLevelPictute(_ request: CrownsPlayModel.GetLevel.Request)
 }
 
+// MARK: - CrownsPlayInteractor class
 final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
     
+    // MARK: - Properties
     private let presenter: CrownsPlayPresentationLogic
     private let crowns: Crowns
     private var elapsedTime: Int
@@ -38,6 +43,7 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
     private var timeGoes: Bool = true
     private var savedMoves: [CrownsPlayModel.CrownsMove] = []
     
+    // MARK: - Lifecycle
     init(presenter: CrownsPlayPresentationLogic, foundation: CrownsPlayModel.BuildModule.BuildFoundation) {
         self.presenter = presenter
         self.crowns = foundation.crowns
@@ -47,48 +53,22 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
         self.placements = foundation.placements
     }
     
-    func startTimer(_ request: CrownsPlayModel.StartTimer.Request) {
-        initTimer()
+    deinit {
+        timer?.invalidate()
+        timer = nil
     }
     
-    @objc private func reverseTimeChange() {
-        if initialTime - elapsedTime > 0 {
-            elapsedTime += 1
-            presenter.presentTime(CrownsPlayModel.SetTime.Response(time: initialTime - elapsedTime))
-        } else {
-            playFinished(isWin: false)
-        }
-    }
-    
-    @objc private func forwardTimeChange() {
-        elapsedTime += 1
-        presenter.presentTime(CrownsPlayModel.SetTime.Response(time: elapsedTime))
-    }
-    
-    func placeCrown(_ request: CrownsPlayModel.PlaceCrown.Request) {
-        placements[request.row][request.col] = request.isPlaced
-    }
-    
-    func getTable(_ request: CrownsPlayModel.GetTable.Request) -> [[CrownsCell]] {
-        return crowns.puzzle
-    }
-    
-    func getPlacements(_ request: CrownsPlayModel.GetPlacements.Request) -> [[Int]] {
-        return self.placements
-    }
-    
+    // MARK: - Funcs
     func backButtonTapped(_ request: CrownsPlayModel.RouteBack.Request) {
         deinitTimer()
         presenter.roureBack(CrownsPlayModel.RouteBack.Response())
     }
     
-    func undoButtonTapped(_ request: CrownsPlayModel.UndoMove.Request) {
-        if !savedMoves.isEmpty {
-            if let indexPath = savedMoves.last?.indexPath, let crownsMove = savedMoves.last {
-                placements[indexPath.item / Constants.size][indexPath.item % Constants.size] = crownsMove.value
-                presenter.showUndoMove(CrownsPlayModel.UndoMove.Response(move: crownsMove, color: crowns.table[indexPath.item / Constants.size][indexPath.item % Constants.size].color.uiColor))
-                savedMoves.remove(at: savedMoves.count - 1)
-            }
+    func pauseButtonTapped(_ request: CrownsPlayModel.PauseGame.Request) {
+        if timeGoes {
+            deinitTimer()
+        } else {
+            initTimer()
         }
     }
     
@@ -104,6 +84,43 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
         }
     }
     
+    func undoButtonTapped(_ request: CrownsPlayModel.UndoMove.Request) {
+        if !savedMoves.isEmpty {
+            if let indexPath = savedMoves.last?.indexPath, let crownsMove = savedMoves.last {
+                placements[indexPath.item / Constants.size][indexPath.item % Constants.size] = crownsMove.value
+                presenter.showUndoMove(CrownsPlayModel.UndoMove.Response(move: crownsMove, color: crowns.table[indexPath.item / Constants.size][indexPath.item % Constants.size].color.uiColor))
+                savedMoves.remove(at: savedMoves.count - 1)
+            }
+        }
+    }
+    
+    func startTimer(_ request: CrownsPlayModel.StartTimer.Request) {
+        initTimer()
+    }
+    
+    func getLevelPictute(_ request: CrownsPlayModel.GetLevel.Request) {
+        var image: UIImage?
+        switch crowns.difficultyLevel {
+        case DifficultyLevels.hard:
+            image = UIImage.hard
+        case DifficultyLevels.medium:
+            image = UIImage.medium
+        default:
+            image = UIImage.easy
+        }
+        
+        presenter.setLevelImage(CrownsPlayModel.GetLevel.Response(image: image))
+    }
+    
+    func getTable(_ request: CrownsPlayModel.GetTable.Request) -> [[CrownsCell]] {
+        return crowns.puzzle
+    }
+    
+    func getPlacements(_ request: CrownsPlayModel.GetPlacements.Request) -> [[Int]] {
+        return self.placements
+    }
+    
+    
     func isPlayFinished(_ request: CrownsPlayModel.CheckGameOver.Request) -> Bool {
         var counter = 0
         let table = crowns.table
@@ -113,6 +130,10 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
                     if placements[i][j] == CrownsCellContent.crown {
                         counter += 1
                     } else {
+                        return false
+                    }
+                } else {
+                    if placements[i][j] == CrownsCellContent.crown {
                         return false
                     }
                 }
@@ -142,17 +163,12 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
         CoreDataCrownsStatisticStack.shared.recordWin(difficulty: crowns.difficultyLevel, time: Int32(elapsedTime))
     }
     
-    private func playFinished(isWin: Bool) {
-        deinitTimer()
-        presenter.routeGameOver(CrownsPlayModel.RouteGameOver.Response(isWin: isWin, time: elapsedTime))
+    func timeIsUp() -> Bool {
+        return elapsedTime >= initialTime && isTimerUsed
     }
     
-    func pauseButtonTapped(_ request: CrownsPlayModel.PauseGame.Request) {
-        if timeGoes {
-            deinitTimer()
-        } else {
-            initTimer()
-        }
+    func placeCrown(_ request: CrownsPlayModel.PlaceCrown.Request) {
+        placements[request.row][request.col] = request.isPlaced
     }
     
     func leaveGame(_ request: CrownsPlayModel.LeaveGame.Request) {
@@ -165,10 +181,6 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
         UserDefaults.standard.set(true, forKey: UserDefaultsKeys.unfinishedCrownsGame)
     }
     
-    func timeIsUp() -> Bool {
-        return elapsedTime >= initialTime && isTimerUsed
-    }
-    
     func saveMove(_ request: CrownsPlayModel.SaveMove.Request) {
         if savedMoves.count > Constants.undoNumbers {
             savedMoves.remove(at: 0)
@@ -176,18 +188,10 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
         savedMoves.append(request.move)
     }
     
-    func getLevelPictute(_ request: CrownsPlayModel.GetLevel.Request) {
-        var image: UIImage?
-        switch crowns.difficultyLevel {
-        case DifficultyLevels.hard:
-            image = UIImage.hard
-        case DifficultyLevels.medium:
-            image = UIImage.medium
-        default:
-            image = UIImage.easy
-        }
-        
-        presenter.setLevelImage(CrownsPlayModel.GetLevel.Response(image: image))
+    // MARK: - Private funcs
+    private func playFinished(isWin: Bool) {
+        deinitTimer()
+        presenter.routeGameOver(CrownsPlayModel.RouteGameOver.Response(isWin: isWin, time: elapsedTime))
     }
     
     private func initTimer() {
@@ -205,11 +209,22 @@ final class CrownsPlayInteractor: CrownsPlayBusinessLogic {
         timer = nil
     }
     
-    deinit {
-        timer?.invalidate()
-        timer = nil
+    // MARK: - Actions
+    @objc private func reverseTimeChange() {
+        if initialTime - elapsedTime > 0 {
+            elapsedTime += 1
+            presenter.presentTime(CrownsPlayModel.SetTime.Response(time: initialTime - elapsedTime))
+        } else {
+            playFinished(isWin: false)
+        }
     }
     
+    @objc private func forwardTimeChange() {
+        elapsedTime += 1
+        presenter.presentTime(CrownsPlayModel.SetTime.Response(time: elapsedTime))
+    }
+    
+    // MARK: - Constants
     private enum Constants {
         static let size = 9
         static let undoNumbers = 10

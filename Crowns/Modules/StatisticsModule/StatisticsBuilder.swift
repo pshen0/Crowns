@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - StatisticsBuilder
 enum StatisticsBuilder {
     static func build(game: StatisticsModel.GameType) -> StatisticsViewController {
         let presenter = StatisticsPresenter()

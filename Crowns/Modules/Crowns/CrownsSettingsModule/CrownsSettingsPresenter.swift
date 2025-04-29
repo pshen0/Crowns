@@ -7,15 +7,19 @@
 
 import Foundation
 
+// MARK: - CrownsSettingsPresentationLogic protocol
 protocol CrownsSettingsPresentationLogic {
     func routeCrownsGame(_ response: CrownsSettingsModel.RouteCrownsGame.Response)
     func routeBack(_ response: CrownsSettingsModel.RouteBack.Response)
 }
 
+// MARK: - CrownsSettingsPresenter class
 final class CrownsSettingsPresenter: CrownsSettingsPresentationLogic {
     
+    // MARK: - Properties
     weak var view: CrownsSettingsViewController?
     
+    // MARK: - Funcs
     func routeCrownsGame(_ response: CrownsSettingsModel.RouteCrownsGame.Response) {
         var time: Int = 0
         if let minutes = Int(response.timerLabel.prefix(Constants.timePrefix)) {
@@ -37,6 +41,7 @@ final class CrownsSettingsPresenter: CrownsSettingsPresentationLogic {
         view?.navigationController?.popViewController(animated: false)
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let size = 9
         static let elapsedTime = 0

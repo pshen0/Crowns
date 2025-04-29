@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - ChallengeBuilder
 enum ChallengeBuilder {
     static func build() -> ChallengeViewController {
         let presenter = ChallengePresenter()

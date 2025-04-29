@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - SudokuPlayModel enum
 enum SudokuPlayModel {
     
     struct SudokuMove {

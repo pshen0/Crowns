@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+// MARK: - ProfileBusinessLogic protocol
 protocol ProfileBusinessLogic {
     func statisticsButtonTapped(_ request: ProfileModel.RouteStatistics.Request)
     func developerButtonTapped(_ request: ProfileModel.RouteDeveloper.Request)
@@ -15,14 +16,18 @@ protocol ProfileBusinessLogic {
     func saveProfileData(_ request: ProfileModel.SaveProfile.Request)
 }
 
+// MARK: - ProfileInteractor class
 final class ProfileInteractor: ProfileBusinessLogic {
     
+    // MARK: - Properties
     private let presenter: ProfilePresentationLogic
     
+    // MARK: - Lifecycle
     init(presenter: ProfilePresentationLogic) {
         self.presenter = presenter
     }
     
+    // MARK: - Funcs
     func statisticsButtonTapped(_ request: ProfileModel.RouteStatistics.Request) {
         presenter.routeStatistics(ProfileModel.RouteStatistics.Response())
     }

@@ -7,8 +7,10 @@
 
 import UIKit
 
+// MARK: - TimePickerTextField class
 final class TimePickerTextField: UITextField, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    // MARK: - Properties
     private let timePicker: UIPickerView = UIPickerView()
     private let minutesArray: [String] = Array((Constants.timePickerMin + 1)...Constants.timePickerMax).map { String(format: Constants.timePickerFormat, $0) }
     private let secondsArray: [String] = Array(Constants.timePickerMin...Constants.timePickerMax).map { String(format: Constants.timePickerFormat, $0) }
@@ -20,6 +22,15 @@ final class TimePickerTextField: UITextField, UIPickerViewDelegate, UIPickerView
     private var selectedSecond: String = Constants.timePickerStartSecPosition
     var doneButton: UIBarButtonItem = UIBarButtonItem()
     
+    override var textInputContextIdentifier: String? {
+        return nil
+    }
+    
+    override var hasText: Bool {
+        return false
+    }
+    
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureTextField()
@@ -29,43 +40,8 @@ final class TimePickerTextField: UITextField, UIPickerViewDelegate, UIPickerView
         super.init(coder: coder)
         configureTextField()
     }
-
-    private func configureTextField() {
-        self.backgroundColor = Colors.lightGray
-        self.textAlignment = .center
-        self.layer.cornerRadius = Constants.numberFieldRadius
-        self.inputView = timePicker
-        self.textColor = Colors.white
-        self.tintColor = Colors.white.withAlphaComponent(Constants.numberPickerTintAlpha)
-        self.font = UIFont(name: Fonts.IrishGrover, size: Constants.selectorTextSize) ?? UIFont.systemFont(ofSize: Constants.selectorTextSize)
-        
-        customButton.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
-        doneButton = UIBarButtonItem(customView: customButton)
-        
-        timePicker.backgroundColor = Colors.lightGray
-        timePicker.delegate = self
-        timePicker.dataSource = self
-        toolbar.sizeToFit()
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let screenWidth = windowScene.windows.first?.frame.width {
-                toolbar.frame.size.width = screenWidth
-                self.inputAccessoryView?.frame.size.width = screenWidth
-            }
-        }
-        toolbar.setItems([flexSpace, doneButton], animated: true)
-        toolbar.barTintColor = Colors.lightGray
-        self.inputAccessoryView = toolbar
-        toolbar.isTranslucent = false
-        self.keyboardType = .numberPad
-        
-        updateTextField()
-    }
     
-    private func updateTextField() {
-        self.text = "\(selectedMinute):\(selectedSecond)"
-    }
-    
-    
+    // MARK: - Funcs
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return Constants.timePickerComponentsNumber
     }
@@ -102,19 +78,49 @@ final class TimePickerTextField: UITextField, UIPickerViewDelegate, UIPickerView
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return false
     }
-    override var textInputContextIdentifier: String? {
-        return nil
+    
+    // MARK: - Private funcs
+    private func configureTextField() {
+        self.backgroundColor = Colors.lightGray
+        self.textAlignment = .center
+        self.layer.cornerRadius = Constants.numberFieldRadius
+        self.inputView = timePicker
+        self.textColor = Colors.white
+        self.tintColor = Colors.white.withAlphaComponent(Constants.numberPickerTintAlpha)
+        self.font = UIFont(name: Fonts.IrishGrover, size: Constants.selectorTextSize) ?? UIFont.systemFont(ofSize: Constants.selectorTextSize)
+        
+        customButton.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
+        doneButton = UIBarButtonItem(customView: customButton)
+        
+        timePicker.backgroundColor = Colors.lightGray
+        timePicker.delegate = self
+        timePicker.dataSource = self
+        toolbar.sizeToFit()
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let screenWidth = windowScene.windows.first?.frame.width {
+                toolbar.frame.size.width = screenWidth
+                self.inputAccessoryView?.frame.size.width = screenWidth
+            }
+        }
+        toolbar.setItems([flexSpace, doneButton], animated: true)
+        toolbar.barTintColor = Colors.lightGray
+        self.inputAccessoryView = toolbar
+        toolbar.isTranslucent = false
+        self.keyboardType = .numberPad
+        
+        updateTextField()
     }
     
-    override var hasText: Bool {
-        return false
+    private func updateTextField() {
+        self.text = "\(selectedMinute):\(selectedSecond)"
     }
     
-    
+    // MARK: - Actions
     @objc private func doneTapped() {
         self.resignFirstResponder()
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let selectorTextSize: CGFloat = 25
         

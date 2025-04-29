@@ -7,12 +7,15 @@
 
 import UIKit
 
+// MARK: - UnfinishedSudokuViewControllerDelegate protocol
 protocol UnfinishedSudokuViewControllerDelegate: AnyObject {
     func unfinishedSudokuDidRequestToContinue(with foundation: SudokuPlayModel.BuildModule.BuildFoundation)
 }
 
+// MARK: - UnfinishedSudokuViewController class
 final class UnfinishedSudokuViewController: UIViewController {
     
+    // MARK: - Properties
     private let interactor: UnfinishedSudokuBusinessLogic
     weak var delegate: UnfinishedSudokuViewControllerDelegate?
     
@@ -28,6 +31,7 @@ final class UnfinishedSudokuViewController: UIViewController {
     private let descriptionStack = UIStackView()
     private let continueButton: UIButton = CustomButton(button: UIImageView(image: UIImage.button))
     
+    // MARK: - Lifecycle
     init(interactor: UnfinishedSudokuBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -43,6 +47,30 @@ final class UnfinishedSudokuViewController: UIViewController {
         configureUI()
     }
     
+    // MARK: - Funcs
+    func configureDescription(_ viewModel: UnfinishedSudokuModel.AddDescription.ViewModel) {
+        let difficultyLabel = CustomText(text: viewModel.difficultyLabel, fontSize: Constants.descriptionTextSize, textColor: Colors.white)
+        let timeLabel = CustomText(text: viewModel.timeLabel, fontSize: Constants.descriptionTextSize, textColor: Colors.white)
+        let catImage: UIImageView = UIImageView(image: UIImage.smallCat)
+        
+        descriptionStack.axis = .vertical
+        descriptionStack.alignment = .leading
+        descriptionStack.spacing = Constants.continueViewStackSpacing
+        
+        for subview in [difficultyLabel, timeLabel] {
+            descriptionStack.addArrangedSubview(subview)
+        }
+        
+        view.addSubview(descriptionStack)
+        view.addSubview(catImage)
+        
+        descriptionStack.pinTop(to: logo.bottomAnchor, Constants.descriptionTop)
+        descriptionStack.pinLeft(to: view.safeAreaLayoutGuide.leadingAnchor, Constants.descriptionLeft)
+        catImage.pinRight(to: view.safeAreaLayoutGuide.trailingAnchor, Constants.catRight)
+        catImage.pinBottom(to: timeLabel.bottomAnchor, Constants.catBottom)
+    }
+
+    // MARK: - Private funcs
     private func configureUI() {
         view.backgroundColor = .clear
         view.clipsToBounds = false
@@ -77,28 +105,6 @@ final class UnfinishedSudokuViewController: UIViewController {
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
     
-    func configureDescription(_ viewModel: UnfinishedSudokuModel.AddDescription.ViewModel) {
-        let difficultyLabel = CustomText(text: viewModel.difficultyLabel, fontSize: Constants.descriptionTextSize, textColor: Colors.white)
-        let timeLabel = CustomText(text: viewModel.timeLabel, fontSize: Constants.descriptionTextSize, textColor: Colors.white)
-        let catImage: UIImageView = UIImageView(image: UIImage.smallCat)
-        
-        descriptionStack.axis = .vertical
-        descriptionStack.alignment = .leading
-        descriptionStack.spacing = Constants.continueViewStackSpacing
-        
-        for subview in [difficultyLabel, timeLabel] {
-            descriptionStack.addArrangedSubview(subview)
-        }
-        
-        view.addSubview(descriptionStack)
-        view.addSubview(catImage)
-        
-        descriptionStack.pinTop(to: logo.bottomAnchor, Constants.descriptionTop)
-        descriptionStack.pinLeft(to: view.safeAreaLayoutGuide.leadingAnchor, Constants.descriptionLeft)
-        catImage.pinRight(to: view.safeAreaLayoutGuide.trailingAnchor, Constants.catRight)
-        catImage.pinBottom(to: timeLabel.bottomAnchor, Constants.catBottom)
-    }
-    
     private func configureButton() {
         let continueButtonText = CustomText(text: Constants.continueButtonText, fontSize: Constants.buttonTextSize, textColor: Colors.white)
         
@@ -113,6 +119,7 @@ final class UnfinishedSudokuViewController: UIViewController {
         continueButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
     }
     
+    // MARK: - Actions
     @objc func backButtonTapped() {
         dismiss(animated: false)
         interactor.deleteProgress(UnfinishedSudokuModel.DeleteProgress.Request())
@@ -125,6 +132,7 @@ final class UnfinishedSudokuViewController: UIViewController {
         interactor.deleteProgress(UnfinishedSudokuModel.DeleteProgress.Request())
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let unfinishedSudoku: String = "You have one unfinished sudoku game"
         static let continueButtonText: String = "Continue the game"
@@ -147,7 +155,6 @@ final class UnfinishedSudokuViewController: UIViewController {
         
         static let overlayAlpha = 0.3
         static let continueViewRadius: CGFloat = 16
-        
     }
 }
 

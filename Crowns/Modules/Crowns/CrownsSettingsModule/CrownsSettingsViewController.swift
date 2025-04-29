@@ -7,8 +7,10 @@
 
 import UIKit
 
+// MARK: - CrownsSettingsViewController class
 final class CrownsSettingsViewController: UIViewController{
     
+    // MARK: - Properties
     private let interactor: CrownsSettingsBusinessLogic
     private let backButton: UIButton = CustomButton(button: UIImageView(image: UIImage.backButton),
                                                     tapped: UIImageView(image: UIImage.backButtonTap))
@@ -31,6 +33,7 @@ final class CrownsSettingsViewController: UIViewController{
     lazy var barButtonItem = UIBarButtonItem()
     var choosenButton: Int = Constants.choosenButton
     
+    // MARK: - Lifecycle
     init(interactor: CrownsSettingsBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -58,6 +61,7 @@ final class CrownsSettingsViewController: UIViewController{
         tabBarController?.tabBar.isHidden = false
     }
     
+    // MARK: - Private funcs
     private func configureUI() {
         configureTimer()
         configureBackground()
@@ -121,6 +125,7 @@ final class CrownsSettingsViewController: UIViewController{
         randomButton.addTarget(self, action: #selector(randomButtonTapped), for: .touchUpInside)
     }
     
+    // MARK: - Actions
     @objc private func backButtonTapped() {
         interactor.backButtonTapped(CrownsSettingsModel.RouteBack.Request())
     }
@@ -170,6 +175,7 @@ final class CrownsSettingsViewController: UIViewController{
         }
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let logoText: String = "Crowns"
         static let timerText: String = "Timer"

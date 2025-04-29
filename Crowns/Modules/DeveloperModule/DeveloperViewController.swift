@@ -1,7 +1,9 @@
 import UIKit
 
+// MARK: - DeveloperViewController class
 final class DeveloperViewController: UIViewController {
     
+    // MARK: - Properties
     let interactor: DeveloperBusinessLogic
     private let backButton: UIButton = CustomButton(button: UIImageView(image: UIImage.backButton),
                                                       tapped: UIImageView(image: UIImage.backButtonTap))
@@ -14,6 +16,7 @@ final class DeveloperViewController: UIViewController {
     private let buttonStack = UIStackView()
     private var catTimer: Timer?
     
+    // MARK: - Lifecycle
     init(interactor: DeveloperBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -49,6 +52,7 @@ final class DeveloperViewController: UIViewController {
         configureUI()
     }
     
+    // MARK: - Private funcs
     private func configureUI() {
         view.backgroundColor = Colors.darkGray
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
@@ -101,19 +105,21 @@ final class DeveloperViewController: UIViewController {
         telegramButton.addTarget(self, action: #selector(telegramButtonTapped), for: .touchUpInside)
     }
     
-    func startAnimateDeveloperScreen() {
+    
+    private func startAnimateDeveloperScreen() {
         self.developerCat.startJumping()
         catTimer = Timer.scheduledTimer(withTimeInterval: Constants.catAnimationInterval, repeats: true) { _ in
             self.developerCat.startJumping()
         }
     }
     
-    func stopAnimateDeveloperScreen() {
+    private func stopAnimateDeveloperScreen() {
         developerCat.stopJumping()
         catTimer?.invalidate()
         catTimer = nil
     }
     
+    // MARK: - Actions
     @objc private func mailButtonTapped() {
         if let url = URL(string: Constants.mailURL) {
             UIApplication.shared.open(url)
@@ -136,6 +142,7 @@ final class DeveloperViewController: UIViewController {
         interactor.backButtonTapped(DeveloperModel.RouteBack.Request())
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let logoText = "About the developer"
         static let descriptionText =
@@ -158,8 +165,8 @@ final class DeveloperViewController: UIViewController {
         static let descriptionTop = 10.0
         static let buttonStackTop = 40.0
         
-        static let catDuration = 0.9
+        static let catDuration = 0.8
         static let catRepeat = 1
-        static let catAnimationInterval = 2.0
+        static let catAnimationInterval = 2.2
     }
 }

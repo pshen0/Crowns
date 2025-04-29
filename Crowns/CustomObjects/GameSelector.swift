@@ -7,7 +7,10 @@
 
 import UIKit
 
+// MARK: - GameSelector class
 final class GameSelector: UIViewController {
+    
+    // MARK: - Properties
     let chooseCrownsButton: UIButton = CustomButton(button: UIImageView(image: UIImage.chooseCrownsButton))
     let chooseSudokuButton: UIButton = CustomButton(button: UIImageView(image: UIImage.chooseSudokuButton))
     private let dismissView: UIView = {
@@ -25,6 +28,7 @@ final class GameSelector: UIViewController {
     }()
     private var selectorText: CustomText = CustomText(text: "", fontSize: Constants.selectorTextSize, textColor: Colors.white)
     
+    // MARK: - Lifecycle
     init(logo: CustomText) {
         self.selectorText = logo
         super.init(nibName: nil, bundle: nil)
@@ -44,6 +48,7 @@ final class GameSelector: UIViewController {
         configureUI()
     }
     
+    // MARK: - Private funcs
     private func configureUI() {
         view.backgroundColor = .clear
         view.clipsToBounds = false
@@ -81,10 +86,12 @@ final class GameSelector: UIViewController {
         gameSelectorButtonsStack.pinTop(to: selectorText.bottomAnchor, Constants.gameSelectorButtonsStackTop)
     }
     
+    // MARK: - Actions
     @objc private func dismissSelf() {
         dismiss(animated: false)
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let selectorTextSize: CGFloat = 25
         static let gameSelectorHeight: CGFloat = 310

@@ -7,8 +7,10 @@
 
 import UIKit
 
+// MARK: - SudokuLearningViewController class
 final class SudokuLearningViewController: UIViewController {
     
+    // MARK: - Properties
     private let backButton: UIButton = CustomButton(button: UIImageView(image: UIImage.backButton),
                                                       tapped: UIImageView(image: UIImage.backButtonTap))
     
@@ -20,6 +22,7 @@ final class SudokuLearningViewController: UIViewController {
     private let nextButton: UIButton = CustomButton(button: UIImageView(image: UIImage.nextButton),
                                                     tapped: UIImageView(image: UIImage.nextButtonTap))
     
+    // MARK: - Lifecycle
     init(interactor: SudokuLearningBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -46,6 +49,12 @@ final class SudokuLearningViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
     
+    // MARK: - Funcs
+    func systemTouchNextButton() {
+        nextButton.sendActions(for: .touchUpInside)
+    }
+    
+    // MARK: - Private funcs
     private func configureUI() {
         configureBackground()
         configureImages()
@@ -97,6 +106,7 @@ final class SudokuLearningViewController: UIViewController {
         }
     }
     
+    // MARK: - Actions
     @objc private func backButtonTapped() {
         interactor.backButtonTapped(SudokuLearningModel.RouteBack.Request())
     }
@@ -128,10 +138,7 @@ final class SudokuLearningViewController: UIViewController {
         }
     }
     
-    func systemTouchNextButton() {
-        nextButton.sendActions(for: .touchUpInside)
-    }
-    
+    // MARK: - Constants
     private enum Constants {
         static let ruleStackSpacing = 10.0
         static let nextButtonBottom = 5.0

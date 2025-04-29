@@ -7,21 +7,25 @@
 
 import Foundation
 
-
+// MARK: - CrownsSettingsBusinessLogic protocol
 protocol CrownsSettingsBusinessLogic {
     func startButtonTapped(_ request: CrownsSettingsModel.RouteCrownsGame.Request)
     func backButtonTapped(_ request: CrownsSettingsModel.RouteBack.Request)
 }
 
+// MARK: - CrownsSettingsInteractor class
 final class CrownsSettingsInteractor: CrownsSettingsBusinessLogic {
     
+    // MARK: - Properties
     private let presenter: CrownsSettingsPresentationLogic
     private var chosenDifficultyLevel: String = DifficultyLevels.easy
     
+    // MARK: - Lifecycle
     init(presenter: CrownsSettingsPresentationLogic) {
         self.presenter = presenter
     }
     
+    // MARK: - Funcs
     func startButtonTapped(_ request: CrownsSettingsModel.RouteCrownsGame.Request) {
         switch request.buttonTag {
         case Constants.easyTag:
@@ -42,6 +46,7 @@ final class CrownsSettingsInteractor: CrownsSettingsBusinessLogic {
         presenter.routeBack(CrownsSettingsModel.RouteBack.Response())
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let easyTag: Int = 0
         static let mediumTag: Int = 1

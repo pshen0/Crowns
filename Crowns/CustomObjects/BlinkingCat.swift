@@ -7,10 +7,13 @@
 
 import UIKit
 
+// MARK: - BlinkingCatView class
 final class BlinkingCatView: UIImageView {
     
+    // MARK: - Properties
     private let animationFrames: [UIImage?]
     
+    // MARK: - Lifecycle
     init(images: [UIImage?], duration: TimeInterval, repeatCount: Int) {
         self.animationFrames = images + images.reversed()
         super.init(frame: .zero)
@@ -26,6 +29,16 @@ final class BlinkingCatView: UIImageView {
         fatalError(Errors.initErrorFrame)
     }
     
+    // MARK: - Funcs
+    func startBlinking() {
+        self.startAnimating()
+    }
+    
+    func stopBlinking() {
+        self.stopAnimating()
+    }
+    
+    // MARK: - Private funcs
     private func setupAnimation(duration: TimeInterval, repeatCount: Int) {
         if let image = animationFrames.first {
             self.image = image
@@ -33,13 +46,5 @@ final class BlinkingCatView: UIImageView {
         self.animationImages = animationFrames.compactMap { $0 }
         self.animationDuration = duration
         self.animationRepeatCount = repeatCount
-    }
-    
-    func startBlinking() {
-        self.startAnimating()
-    }
-    
-    func stopBlinking() {
-        self.stopAnimating()
     }
 }

@@ -6,6 +6,7 @@
 //
 
 
+// MARK: - HomeModel enum
 enum HomeModel {
     enum RouteToCrownsSettings {
         struct Request { }

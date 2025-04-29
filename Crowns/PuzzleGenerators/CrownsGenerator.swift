@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - CrownsCell struct
 struct CrownsCell: Codable {
     let row: Int
     let col: Int
@@ -14,11 +15,16 @@ struct CrownsCell: Codable {
     var hasCrown: Bool = false
 }
 
+// MARK: - UIColorCodable struct
 struct UIColorCodable: Codable & Equatable {
     let red: CGFloat
     let green: CGFloat
     let blue: CGFloat
     let alpha: CGFloat
+    
+    var uiColor: UIColor {
+        UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
     
     init(_ color: UIColor) {
         red = color.cgColor.components?[0] ?? 0
@@ -26,17 +32,15 @@ struct UIColorCodable: Codable & Equatable {
         blue = color.cgColor.components?[2] ?? 0
         alpha = color.cgColor.alpha
     }
-    
-    var uiColor: UIColor {
-        UIColor(red: red, green: green, blue: blue, alpha: alpha)
-    }
 }
 
+// MARK: - Cell struct
 struct Cell: Hashable {
     let row: Int
     let col: Int
 }
 
+// MARK: - CrownsCage struct
 final class CrownsCage: Codable {
     var cells: [CrownsCell] = []
     
@@ -49,22 +53,42 @@ final class CrownsCage: Codable {
     }
 }
 
+// MARK: - Crowns class
 final class Crowns: Codable {
+    // MARK: - Properties
     var size = Constants.size
     var table: [[CrownsCell]] = []
     var puzzle: [[CrownsCell]] = []
     var cages: [CrownsCage] = []
     let difficultyLevel: String
     private var crownsCells: [CrownsCell] = []
+    private var singleCellZonesTarget: Int = 0
     
+    // MARK: - Lifecycle
     init(_ difficultyLevel: String) {
         self.difficultyLevel = difficultyLevel
+        
+        switch difficultyLevel {
+        case DifficultyLevels.easy:
+            singleCellZonesTarget = 0
+        case DifficultyLevels.medium:
+            singleCellZonesTarget = 1
+        case DifficultyLevels.hard:
+            singleCellZonesTarget = 2
+        default:
+            singleCellZonesTarget = 0
+        }
+        
+        print(self.difficultyLevel, singleCellZonesTarget)
+        
         generateTable()
         generateCages()
         removeCrowns()
         CoreDataCrownsStatisticStack.shared.recordGameStarted()
     }
     
+    // MARK: - Private funcs
+    // Generate base table
     private func generateTable() {
         var tempTable: [[CrownsCell]] = []
         
@@ -78,13 +102,15 @@ final class Crowns: Codable {
         
         self.table = tempTable
     }
-
+    
+    // Generate cages
     private func generateCages() {
         var queensCoord: [Int: Int] = [:]
+        var skippedCells = 0
         var colOrder = Array(0..<size)
         let colors: [UIColorCodable] = [Colors.CrownsColors.blue, Colors.CrownsColors.green, Colors.CrownsColors.lightBlue,
-                                 Colors.CrownsColors.lightGreen, Colors.CrownsColors.orange, Colors.CrownsColors.purple,
-                                 Colors.CrownsColors.pink, Colors.CrownsColors.red, Colors.CrownsColors.yellow]
+                                        Colors.CrownsColors.lightGreen, Colors.CrownsColors.orange, Colors.CrownsColors.purple,
+                                        Colors.CrownsColors.pink, Colors.CrownsColors.red, Colors.CrownsColors.yellow]
         
         var isColOrderGood = false
         while !isColOrderGood {
@@ -97,11 +123,11 @@ final class Crowns: Codable {
                 }
             }
         }
-
+        
         for i in 0..<size {
             queensCoord[i] = colOrder[i]
         }
-
+        
         var colorGrid: [[Int]] = []
         for i in 0..<size {
             var tempRow: [Int] = []
@@ -116,6 +142,7 @@ final class Crowns: Codable {
         }
         
         let crownsPositions = colorGrid
+        let cellsToSkip = findCellsToSkip(in: colorGrid)
         
         while isElemIn2DArray(-1, arr: colorGrid) {
             var color: Int = -1
@@ -124,6 +151,9 @@ final class Crowns: Codable {
             while color == -1 {
                 randRow = Int.random(in: 0..<size)
                 randCol = Int.random(in: 0..<size)
+                if cellsToSkip.contains(where: { $0.0 == randRow && $0.1 == randCol }) {
+                    continue
+                }
                 color = colorGrid[randRow][randCol]
             }
             
@@ -132,7 +162,7 @@ final class Crowns: Codable {
             if randRow < size - 1 { neighborhood.append([randRow + 1, randCol]) }
             if randCol > 0 { neighborhood.append([randRow, randCol - 1]) }
             if randCol < size - 1 { neighborhood.append([randRow, randCol + 1]) }
-
+            
             let uncoloredNeighborhood = neighborhood.filter { colorGrid[$0[0]][$0[1]] == -1 }
             
             if !uncoloredNeighborhood.isEmpty {
@@ -140,7 +170,7 @@ final class Crowns: Codable {
                 colorGrid[chosenNeighbor[0]][chosenNeighbor[1]] = color
             }
         }
-
+        
         var tempCages: [CrownsCage] = []
         for row in 0..<size {
             for col in 0..<size {
@@ -170,6 +200,7 @@ final class Crowns: Codable {
         cages = tempCages
     }
     
+    // Try to remove crowns
     private func removeCrowns() {
         puzzle = table.map { row in
             row.map { cell in
@@ -202,6 +233,7 @@ final class Crowns: Codable {
         }
     }
     
+    // Try to solve puzzle and check the only solution
     private func isSolvable() -> Bool {
         var placements: [[Bool]] = []
         for _ in 0..<size {
@@ -213,6 +245,7 @@ final class Crowns: Codable {
         return isSolved
     }
     
+    // Solve puzzle
     private func solve(_ placements: inout [[Bool]]) -> Bool {
         var tempBoard = puzzle.map { row in
             row.map { cell in
@@ -229,7 +262,7 @@ final class Crowns: Codable {
                 emptyCrown += 1
             }
         }
-
+        
         var counter = 0
         
         func checkCrown() {
@@ -265,6 +298,7 @@ final class Crowns: Codable {
         return counter == emptyCrown
     }
     
+    // Count crowns in row
     private func inRow(_ placements: inout [[Bool]], row: Int) -> Bool {
         var counter = 0
         for i in 0..<size {
@@ -276,6 +310,7 @@ final class Crowns: Codable {
         return (counter == 1)
     }
     
+    // Count crowns in col
     private func inCol(_ placements: inout [[Bool]], col: Int) -> Bool {
         var counter = 0
         for i in 0..<size {
@@ -287,6 +322,7 @@ final class Crowns: Codable {
         return (counter == 1)
     }
     
+    // Count crowns in cage
     private func inCage(_ placements: inout [[Bool]], row: Int, col: Int) -> Bool {
         var counter = 0
         var tempCage: CrownsCage = CrownsCage(cell: CrownsCell(row: 0, col: 0, color: Colors.CrownsColors.clear))
@@ -304,22 +340,25 @@ final class Crowns: Codable {
                 counter += 1
             }
         }
-
+        
         return (counter == 1)
     }
     
+    // Marks the row as impossible to place the crown on
     private func fillRow(_ placements: inout [[Bool]], row: Int) {
         for i in 0..<size {
             placements[row][i] = false
         }
     }
     
+    // Marks the col as impossible to place the crown on
     private func fillCol(_ placements: inout [[Bool]], col: Int) {
         for i in 0..<size {
             placements[i][col] = false
         }
     }
     
+    // Marks the cage as impossible to place the crown on
     private func fillCage(_ placements: inout [[Bool]], row: Int, col: Int) {
         var tempCage: CrownsCage = CrownsCage(cell: CrownsCell(row: 0, col: 0, color: Colors.CrownsColors.clear))
         
@@ -340,17 +379,18 @@ final class Crowns: Codable {
         for (dx, dy) in directions {
             let newRow = row + dx
             let newCol = col + dy
-
+            
             if newRow >= 0, newRow < size, newCol >= 0, newCol < size, newRow < size {
                 placements[newRow][newCol] = false
             }
         }
     }
     
+    // Marks the neighbors as impossible to place the crown on
     private func fillNeighbors(_ placements: inout [[Bool]]) {
         for cage in cages {
             var allNeighbors: [Set<Cell>] = []
-
+            
             for cell in cage.cells {
                 if placements[cell.row][cell.col] {
                     let neighbors = getNeighbors(row: cell.row, col: cell.col)
@@ -360,7 +400,7 @@ final class Crowns: Codable {
             
             if !allNeighbors.isEmpty {
                 var commonNeighbors: Set<Cell> = allNeighbors[0]
-
+                
                 for tempNeighbors in allNeighbors {
                     commonNeighbors = commonNeighbors.intersection(tempNeighbors)
                 }
@@ -371,7 +411,8 @@ final class Crowns: Codable {
             }
         }
     }
-
+    
+    // Get all neighbors for the cell
     private func getNeighbors(row: Int, col: Int) -> Set<Cell> {
         var neighbors: Set<Cell> = []
         
@@ -386,7 +427,7 @@ final class Crowns: Codable {
         
         return neighbors
     }
-
+    
     private func isElemIn2DArray(_ elem: Int, arr: [[Int]]) -> Bool {
         for row in arr {
             if row.contains(elem) {
@@ -396,6 +437,29 @@ final class Crowns: Codable {
         return false
     }
     
+    private func findCellsToSkip(in array: [[Int]]) -> [(Int, Int)] {
+        var validIndices: [(Int, Int)] = []
+        var result: [(Int, Int)] = []
+        
+        for row in 0..<array.count {
+            for col in 0..<array[row].count {
+                if array[row][col] != -1 {
+                    validIndices.append((row, col))
+                }
+            }
+        }
+        
+        validIndices.shuffle()
+        if validIndices.count >= singleCellZonesTarget {
+            for i in 0..<singleCellZonesTarget {
+                result.append(validIndices[i])
+            }
+        }
+        
+        return result
+    }
+    
+    // MARK: - Constants
     private enum Constants {
         static let crownsToRemove: Int = 9
         static let size = 9

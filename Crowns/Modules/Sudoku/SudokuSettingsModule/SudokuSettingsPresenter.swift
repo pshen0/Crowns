@@ -7,15 +7,19 @@
 
 import Foundation
 
+// MARK: - SudokuSettingsPresentationLogic protocol
 protocol SudokuSettingsPresentationLogic {
     func routeSudokuGame(_ response: SudokuSettingsModel.RouteSudokuGame.Response)
     func routeBack(_ response: SudokuSettingsModel.RouteBack.Response)
 }
 
+// MARK: - SudokuSettingsPresenter class
 final class SudokuSettingsPresenter: SudokuSettingsPresentationLogic {
     
+    // MARK: - Properties
     weak var view: SudokuSettingsViewController?
     
+    // MARK: - Funcs
     func routeSudokuGame(_ response: SudokuSettingsModel.RouteSudokuGame.Response) {
         var time: Int = 0
         if let minutes = Int(response.timerLabel.prefix(Constants.timePrefix)) {
@@ -35,6 +39,7 @@ final class SudokuSettingsPresenter: SudokuSettingsPresentationLogic {
         view?.navigationController?.popViewController(animated: false)
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let elapsedTime = 0
         static let timePrefix = 2

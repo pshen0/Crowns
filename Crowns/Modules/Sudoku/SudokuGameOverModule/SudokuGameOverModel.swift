@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - SudokuGameOverModel enum
 enum SudokuGameOverModel {
     enum RouteHome {
         struct Request { }

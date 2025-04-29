@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - UnfinishedSudokuModel enum
 enum UnfinishedSudokuModel {
     enum BuildModule {
         struct BuildFoundation {

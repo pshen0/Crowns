@@ -7,14 +7,17 @@
 
 import Foundation
 
+// MARK: - UnfinishedCrownsPresentationLogic protocol
 protocol UnfinishedCrownsPresentationLogic {
     func getDescriptionLabels(_ response: UnfinishedCrownsModel.AddDescription.Response)
 }
 
+// MARK: - UnfinishedCrownsPresenter class
 final class UnfinishedCrownsPresenter: UnfinishedCrownsPresentationLogic {
-    
+    // MARK: - Properties
     weak var view: UnfinishedCrownsViewController?
     
+    // MARK: - Funcs
     func getDescriptionLabels(_ response: UnfinishedCrownsModel.AddDescription.Response) {
         let difficultyLabel = Constants.difficultyLabel + String(response.difficulty)
         let minutes = response.time / 60
@@ -27,10 +30,7 @@ final class UnfinishedCrownsPresenter: UnfinishedCrownsPresentationLogic {
             timeLabel: timeLabel))
     }
     
-    func routeToGame(_ response: UnfinishedCrownsModel.ContinueTheGame.Response) {
-        
-    }
-    
+    // MARK: - Constants
     private enum Constants {
         static let difficultyLabel = "Difficulty: "
         static let timeLabel = "Time spent: "

@@ -5,6 +5,7 @@
 //  Created by Анна Сазонова on 28.01.2025.
 //
 
+// MARK: - ChallengePresentationLogic protocol
 protocol ChallengePresentationLogic {
     func routeCrownsGame(_ response: ChallengeModel.RouteCrownsGame.Response)
     func routeSudokuGame(_ response: ChallengeModel.RouteSudokuGame.Response)
@@ -12,18 +13,12 @@ protocol ChallengePresentationLogic {
     func presentStreakLabel(_ response: ChallengeModel.GetStreak.Response)
 }
 
+// MARK: - ChallengePresenter class
 final class ChallengePresenter: ChallengePresentationLogic {
-    
+    // MARK: - Properties
     weak var view: ChallengeViewController?
     
-    private func getDifficultyLevel() -> String {
-        if let level = [DifficultyLevels.easy, DifficultyLevels.medium, DifficultyLevels.hard].randomElement() {
-            return level
-        } else {
-            return DifficultyLevels.easy
-        }
-    }
-    
+    // MARK: - Funcs
     func routeCrownsGame(_ response: ChallengeModel.RouteCrownsGame.Response) {
         let difficultyLevel = getDifficultyLevel()
         let crownsFoundation: CrownsPlayModel.BuildModule.BuildFoundation = CrownsPlayModel.BuildModule.BuildFoundation(
@@ -46,7 +41,7 @@ final class ChallengePresenter: ChallengePresentationLogic {
     }
     
     func changeButtonsAccessibility(_ response: ChallengeModel.ResetChallenges.Response) {
-        view?.changeButtonsAccessibility(ChallengeModel.ResetChallenges.ViewModel(
+        view?.updateScreen(ChallengeModel.ResetChallenges.ViewModel(
             crownsAccessibility: response.crownsAccessibility,
             sudokusAccessibility: response.sudokusAccessibility))
     }
@@ -56,6 +51,16 @@ final class ChallengePresenter: ChallengePresentationLogic {
         view?.changeStreakLabel(ChallengeModel.GetStreak.ViewModel(streakLabel: streakLabel))
     }
     
+    // MARK: - Private funcs
+    private func getDifficultyLevel() -> String {
+        if let level = [DifficultyLevels.easy, DifficultyLevels.medium, DifficultyLevels.hard].randomElement() {
+            return level
+        } else {
+            return DifficultyLevels.easy
+        }
+    }
+    
+    // MARK: - Constants
     private enum Constants {
         static let elapsedTime = 0
         static let initialTime = 5 * 60

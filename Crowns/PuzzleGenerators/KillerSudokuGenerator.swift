@@ -7,13 +7,16 @@
 
 import Foundation
 
+// MARK: - SudokuCell struct
 struct SudokuCell: Hashable & Codable {
     let row: Int
     let col: Int
     let value: Int
 }
 
+// MARK: - SudokuCage class
 final class SudokuCage: Codable {
+    // MARK: - Properties
     private var cells: [SudokuCell] = []
     private var sum: Int = 0
     
@@ -22,21 +25,27 @@ final class SudokuCage: Codable {
         sum += cell.value
     }
     
+    // MARK: - Funcs
+    // Add cell to cage
     func addCell(_ cell: SudokuCell) {
         cells.append(cell)
         sum += cell.value
     }
     
+    // Get cage's cells
     func getCells() -> [SudokuCell] {
         return cells
     }
     
+    // Get cage sum
     func getSum() -> Int {
         return sum
     }
 }
 
+// MARK: - Killer sudoku class
 final class KillerSudoku: Codable {
+    // MARK: - Properties
     private var size: Int = Constants.size
     private var n: Int = Constants.n
     let difficultyLevel: String
@@ -46,7 +55,7 @@ final class KillerSudoku: Codable {
     var unsolvedPuzzle: [[Int]]
     private var removableCounter: Int = Constants.removableCounterEasy
 
-    
+    // MARK: - Lifecycle
     init(difficultyLevel: String) {
         self.difficultyLevel = difficultyLevel
         table = Array(repeating: Array(repeating: 0, count: size), count: size)
@@ -73,18 +82,32 @@ final class KillerSudoku: Codable {
         CoreDataSudokuStatisticStack.shared.recordGameStarted()
     }
     
+    // MARK: - Funcs
+    // Get sudoku puzzle
     func getPuzzle() -> [[Int]] {
         return puzzle
     }
     
+    // Get sudoku cages
     func getCages() -> [SudokuCage] {
         return cages
     }
     
+    // Get sudoku solved puzzle
     func getTable() -> [[Int]] {
         return table
     }
     
+    // MARK: - Private funcs
+    // Mix table to get sudoku solved puzzle
+    private func mix(_ amt: Int = Constants.mixRepeat) {
+        let mixFunctions: [() -> Void] = [transpose, swapRowsSmall, swapColumnsSmall, swapRowsArea, swapColumnsArea]
+        for _ in 0..<amt {
+            mixFunctions.randomElement()?()
+        }
+    }
+    
+    // Generate base sudoku table
     private func generateBaseTable() {
         for i in 0..<(size) {
             for j in 0..<(size) {
@@ -93,10 +116,12 @@ final class KillerSudoku: Codable {
         }
     }
     
+    // Transpose table
     private func transpose() {
         table = (0..<(size)).map { i in (0..<(size)).map { j in table[j][i] } }
     }
     
+    // Swap two rows
     private func swapRowsSmall() {
         let area = Int.random(in: 0..<n)
         let line1 = Int.random(in: 0..<n)
@@ -109,12 +134,14 @@ final class KillerSudoku: Codable {
         table.swapAt(N1, N2)
     }
     
+    // Swap two cols
     private func swapColumnsSmall() {
         transpose()
         swapRowsSmall()
         transpose()
     }
     
+    // Swap two row areas
     private func swapRowsArea() {
         let area1 = Int.random(in: 0..<n)
         var area2 = Int.random(in: 0..<n)
@@ -126,19 +153,14 @@ final class KillerSudoku: Codable {
         }
     }
     
+    // Swap two cols areas
     private func swapColumnsArea() {
         transpose()
         swapRowsArea()
         transpose()
     }
     
-    private func mix(_ amt: Int = Constants.mixRepeat) {
-        let mixFunctions: [() -> Void] = [transpose, swapRowsSmall, swapColumnsSmall, swapRowsArea, swapColumnsArea]
-        for _ in 0..<amt {
-            mixFunctions.randomElement()?()
-        }
-    }
-    
+    // Genereate cages
     private func generateCages() {
         var remainingCells = Set((0..<size).flatMap { row in (0..<size).map { col in SudokuCell(row: row, col: col, value: table[row][col]) } })
         
@@ -161,6 +183,7 @@ final class KillerSudoku: Codable {
         }
     }
     
+    // Generate puzzle removing cell's numbers
     private func generatePuzzle() {
         puzzle = table.map { $0 }
         var remainingCells = Set((0..<size).flatMap { row in (0..<size).map { col in SudokuCell(row: row, col: col, value: table[row][col]) } })
@@ -176,7 +199,8 @@ final class KillerSudoku: Codable {
         }
         unsolvedPuzzle = puzzle.map { $0 }
     }
-
+    
+    // Try to remove symmetric cells
     private func removeSymmetricCells(_ removedCells: inout Set<SudokuCell>, _ checkedPuzzles: inout Set<SudokuCell>, _ remainingCells: inout Set<SudokuCell>) {
         let indexes = Array(0..<size)
 
@@ -192,7 +216,8 @@ final class KillerSudoku: Codable {
             tryDeleteCell(size - 1 - row, size - 1 - i, &removedCells, &checkedPuzzles, &remainingCells)
         }
     }
-
+    
+    // Try to remove cells in every cage
     private func removeCageCells(_ removedCells: inout Set<SudokuCell>, _ checkedPuzzles: inout Set<SudokuCell>, _ remainingCells: inout Set<SudokuCell>) {
         for cage in cages {
             if removedCells.count > removableCounter { break }
@@ -203,7 +228,8 @@ final class KillerSudoku: Codable {
             }
         }
     }
-
+    
+    // Try to delete cell
     private func tryDeleteCell(_ row: Int, _ col: Int, _ removedCells: inout Set<SudokuCell>, _ checkedPuzzles: inout Set<SudokuCell>, _ remainingCells: inout Set<SudokuCell>) {
         guard puzzle[row][col] != 0 else { return }
         
@@ -221,6 +247,7 @@ final class KillerSudoku: Codable {
         remainingCells.remove(cell)
     }
     
+    // Try to solve puzzle and check the only solution
     private func hasUniqueSolution(_ puzzle: [[Int]]) -> Bool {
         var solutionCount = 0
 
@@ -257,6 +284,7 @@ final class KillerSudoku: Codable {
         return solutionCount == 1
     }
     
+    // Validation check
     private func isValid(_ board: [[Int]], _ row: Int, _ col: Int, _ num: Int) -> Bool {
         let boxRow = (row / n) * n
         let boxCol = (col / n) * n
@@ -269,6 +297,7 @@ final class KillerSudoku: Codable {
         return true
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let size: Int = 9
         static let n: Int = 3

@@ -7,10 +7,14 @@
 
 import CoreData
 
+// MARK: - CoreDataCrownsProgressStack class
 final class CoreDataCrownsProgressStack {
+    // MARK: - Properties
     static let shared = CoreDataCrownsProgressStack()
     let context = CoreDataStack.shared.context
     
+    // MARK: - Funcs
+    // Save data
     func saveProgress(
         isTimerUsed: Bool,
         initialTime: Int32,
@@ -40,6 +44,7 @@ final class CoreDataCrownsProgressStack {
         }
     }
     
+    // Fetch data
     func fetchProgress() -> CrownsPlayModel.BuildModule.BuildFoundation? {
         let request = CrownsProgress.fetchRequest()
         request.fetchLimit = Constants.requestLimit
@@ -61,6 +66,7 @@ final class CoreDataCrownsProgressStack {
         return nil
     }
     
+    // Delete data
     func deleteAllProgress() {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = CrownsProgress.fetchRequest()
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -73,6 +79,7 @@ final class CoreDataCrownsProgressStack {
         }
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let requestLimit = 1
     }

@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - CrownsPlayPresentationLogic protocol
 protocol CrownsPlayPresentationLogic {
     func roureBack(_ response: CrownsPlayModel.RouteBack.Response)
     func routeGameOver(_ response: CrownsPlayModel.RouteGameOver.Response)
@@ -16,25 +17,19 @@ protocol CrownsPlayPresentationLogic {
     func setLevelImage(_ response: CrownsPlayModel.GetLevel.Response)
 }
 
+// MARK: - CrownsPlayPresenter class
 final class CrownsPlayPresenter: CrownsPlayPresentationLogic {
     
+    // MARK: - Properties
     weak var view: CrownsPlayViewController?
     
+    // MARK: - Funcs
     func roureBack(_ response: CrownsPlayModel.RouteBack.Response) {
         view?.navigationController?.popToRootViewController(animated: false)
     }
     
     func routeGameOver(_ response: CrownsPlayModel.RouteGameOver.Response) {
         view?.navigationController?.pushViewController(CrownsGameOverBuilder.build(isWin: response.isWin, time: getStringTime(response.time)), animated: false)
-    }
-    
-    private func getStringTime(_ time: Int) -> String {
-        let minutes = time / 60
-        let seconds = time % 60
-        let minutesStr = minutes < 10 ? "0\(minutes)" : "\(minutes)"
-        let secondsStr = seconds < 10 ? "0\(seconds)" : "\(seconds)"
-        let timerLabel = minutesStr + ":" + secondsStr
-        return timerLabel
     }
     
     func presentTime(_ response: CrownsPlayModel.SetTime.Response) {
@@ -54,6 +49,17 @@ final class CrownsPlayPresenter: CrownsPlayPresentationLogic {
         view?.setLevelPicture(CrownsPlayModel.GetLevel.ViewModel(image: response.image))
     }
     
+    // MARK: - Private funcs
+    private func getStringTime(_ time: Int) -> String {
+        let minutes = time / 60
+        let seconds = time % 60
+        let minutesStr = minutes < 10 ? "0\(minutes)" : "\(minutes)"
+        let secondsStr = seconds < 10 ? "0\(seconds)" : "\(seconds)"
+        let timerLabel = minutesStr + ":" + secondsStr
+        return timerLabel
+    }
+    
+    // MARK: - Constants
     private enum Constants {
         static let size = 9
     }

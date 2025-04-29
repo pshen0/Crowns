@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - ChallengeModel
 enum ChallengeModel {
     enum RouteCrownsGame {
         struct Request { }

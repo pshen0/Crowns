@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+// MARK: - ChallengeBusinessLogic protocols
 protocol ChallengeBusinessLogic {
     func crownsButtonTapped(_ request: ChallengeModel.RouteCrownsGame.Request)
     func sudokuButtonTapped(_ request: ChallengeModel.RouteSudokuGame.Request)
@@ -16,10 +17,12 @@ protocol ChallengeBusinessLogic {
     func getStreak(_ request: ChallengeModel.GetStreak.Request)
 }
 
+// MARK: - ChallengeInteractor class
 final class ChallengeInteractor: ChallengeBusinessLogic {
-    
+    // MARK: - Properties
     private let presenter: ChallengePresentationLogic
     
+    // MARK: - Lifecycle
     init(presenter: ChallengePresentationLogic) {
         self.presenter = presenter
     }
@@ -28,6 +31,7 @@ final class ChallengeInteractor: ChallengeBusinessLogic {
         NotificationCenter.default.removeObserver(self)
     }
     
+    // MARK: - Funcs
     func crownsButtonTapped(_ request: ChallengeModel.RouteCrownsGame.Request) {
         UserDefaults.standard.set(false, forKey: UserDefaultsKeys.crownsChallengeAvailable)
         UserDefaults.standard.set(true, forKey: UserDefaultsKeys.crownsChallengeGoes)
@@ -44,56 +48,17 @@ final class ChallengeInteractor: ChallengeBusinessLogic {
     
     func setupDailyResetObserver(_ request: ChallengeModel.ResetChallenges.Request) {
         NotificationCenter.default.addObserver(self, selector: #selector(handleSignificantTimeChange), name: UIApplication.significantTimeChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleSignificantTimeChange), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        handleSignificantTimeChange()
     }
     
     func updateButtons(_ request: ChallengeModel.ResetChallenges.Request) {
         updateChallengeButtonsAvailability()
     }
     
-    @objc private func handleSignificantTimeChange() {
-        resetDailyChallengesIfNeeded()
-        updateChallengeButtonsAvailability()
-    }
-    
-    private func resetDailyChallengesIfNeeded() {
-        let calendar = Calendar.current
-        let now = Date()
-        
-        if let lastReset = UserDefaults.standard.object(forKey: UserDefaultsKeys.lastResetDate) as? Date {
-            if !calendar.isDate(lastReset, inSameDayAs: now) {
-                UserDefaults.standard.set(true, forKey: UserDefaultsKeys.crownsChallengeAvailable)
-                UserDefaults.standard.set(true, forKey: UserDefaultsKeys.sudokuChallengeAvailable)
-                UserDefaults.standard.set(false, forKey: UserDefaultsKeys.crownsChallengeDone)
-                UserDefaults.standard.set(false, forKey: UserDefaultsKeys.sudokuChallengeDone)
-                UserDefaults.standard.set(now, forKey: UserDefaultsKeys.lastResetDate)
-            }
-        } else {
-            UserDefaults.standard.set(true, forKey: UserDefaultsKeys.crownsChallengeAvailable)
-            UserDefaults.standard.set(true, forKey: UserDefaultsKeys.sudokuChallengeAvailable)
-            UserDefaults.standard.set(now, forKey: UserDefaultsKeys.lastResetDate)
-        }
-    }
-    
-    private func updateChallengeButtonsAvailability() {
-        
-        if UserDefaults.standard.object(forKey: UserDefaultsKeys.crownsChallengeAvailable) == nil ||
-            UserDefaults.standard.object(forKey: UserDefaultsKeys.sudokuChallengeAvailable) == nil {
-            
-            UserDefaults.standard.set(true, forKey: UserDefaultsKeys.crownsChallengeAvailable)
-            UserDefaults.standard.set(true, forKey: UserDefaultsKeys.sudokuChallengeAvailable)
-            UserDefaults.standard.set(Date(), forKey: UserDefaultsKeys.lastResetDate)
-        }
-        
-        let isCrownsAvailable = UserDefaults.standard.bool(forKey: UserDefaultsKeys.crownsChallengeAvailable)
-        let isSudokuAvailable = UserDefaults.standard.bool(forKey: UserDefaultsKeys.sudokuChallengeAvailable)
-        
-        presenter.changeButtonsAccessibility(ChallengeModel.ResetChallenges.Response(
-            crownsAccessibility: isCrownsAvailable,
-            sudokusAccessibility: isSudokuAvailable))
-    }
-    
     func getStreak(_ request: ChallengeModel.GetStreak.Request) {
-        var markedDates = CoreDataDatesStack.shared.fetchAllDates()
+        let markedDates = CoreDataDatesStack.shared.fetchAllDates()
         
         guard !markedDates.isEmpty else {
             presenter.presentStreakLabel(ChallengeModel.GetStreak.Response(daysNumber: 0))
@@ -119,5 +84,48 @@ final class ChallengeInteractor: ChallengeBusinessLogic {
         
         presenter.presentStreakLabel(ChallengeModel.GetStreak.Response(daysNumber: streak))
     }
+    
+    // MARK: - Private funcs
+    private func resetDailyChallengesIfNeeded() {
+        let calendar = Calendar.current
+        let now = Date()
+        
+        if let lastReset = UserDefaults.standard.object(forKey: UserDefaultsKeys.lastResetDate) as? Date {
+            if !calendar.isDate(lastReset, inSameDayAs: now) {
+                UserDefaults.standard.set(true, forKey: UserDefaultsKeys.crownsChallengeAvailable)
+                UserDefaults.standard.set(true, forKey: UserDefaultsKeys.sudokuChallengeAvailable)
+                UserDefaults.standard.set(false, forKey: UserDefaultsKeys.crownsChallengeDone)
+                UserDefaults.standard.set(false, forKey: UserDefaultsKeys.sudokuChallengeDone)
+                UserDefaults.standard.set(now, forKey: UserDefaultsKeys.lastResetDate)
+            }
+        } else {
+            UserDefaults.standard.set(true, forKey: UserDefaultsKeys.crownsChallengeAvailable)
+            UserDefaults.standard.set(true, forKey: UserDefaultsKeys.sudokuChallengeAvailable)
+            UserDefaults.standard.set(now, forKey: UserDefaultsKeys.lastResetDate)
+        }
+    }
+    
+    private func updateChallengeButtonsAvailability() {
 
+        if UserDefaults.standard.object(forKey: UserDefaultsKeys.crownsChallengeAvailable) == nil ||
+            UserDefaults.standard.object(forKey: UserDefaultsKeys.sudokuChallengeAvailable) == nil {
+            
+            UserDefaults.standard.set(true, forKey: UserDefaultsKeys.crownsChallengeAvailable)
+            UserDefaults.standard.set(true, forKey: UserDefaultsKeys.sudokuChallengeAvailable)
+            UserDefaults.standard.set(Date(), forKey: UserDefaultsKeys.lastResetDate)
+        }
+        
+        let isCrownsAvailable = UserDefaults.standard.bool(forKey: UserDefaultsKeys.crownsChallengeAvailable)
+        let isSudokuAvailable = UserDefaults.standard.bool(forKey: UserDefaultsKeys.sudokuChallengeAvailable)
+        
+        presenter.changeButtonsAccessibility(ChallengeModel.ResetChallenges.Response(
+            crownsAccessibility: isCrownsAvailable,
+            sudokusAccessibility: isSudokuAvailable))
+    }
+    
+    // MARK: - Actions
+    @objc private func handleSignificantTimeChange() {
+        resetDailyChallengesIfNeeded()
+        updateChallengeButtonsAvailability()
+    }
 }

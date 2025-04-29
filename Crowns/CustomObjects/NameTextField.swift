@@ -7,13 +7,16 @@
 
 import UIKit
 
-final class NameTextField: UITextField, UITextFieldDelegate{
+// MARK: - NameTextField class
+final class NameTextField: UITextField {
     
+    // MARK: - Properties
     private let customButton = CustomButton(button: UIImageView(image: UIImage.doneButton), tapped: UIImageView(image: UIImage.doneButtonTap))
     private let toolbar = UIToolbar()
     let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     var doneButton: UIBarButtonItem = UIBarButtonItem()
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureTextField()
@@ -24,6 +27,7 @@ final class NameTextField: UITextField, UITextFieldDelegate{
         configureTextField()
     }
     
+    // MARK: - Private funcs
     private func configureTextField() {
         self.backgroundColor = Colors.lightGray
         self.textAlignment = .center
@@ -51,8 +55,8 @@ final class NameTextField: UITextField, UITextFieldDelegate{
         self.keyboardType = .asciiCapable
     }
     
-    @objc 
-    private func doneTapped() {
+    // MARK: - Actions
+    @objc private func doneTapped() {
         let currentText = self.text
         if let empty = currentText?.trimmingCharacters(in: .whitespaces).isEmpty {
             self.text = empty ? "" : currentText
@@ -60,13 +64,7 @@ final class NameTextField: UITextField, UITextFieldDelegate{
         self.resignFirstResponder()
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = textField.text ?? ""
-        let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
-        
-        return newText.count <= Constants.nameMaxLength
-    }
-    
+    // MARK: - Constants
     private enum Constants {
         static let userNamePlaceholder: String = "User name"
         
@@ -74,5 +72,15 @@ final class NameTextField: UITextField, UITextFieldDelegate{
         
         static let numberFieldRadius: CGFloat = 10
         static let nameMaxLength: Int = 12
+    }
+}
+
+// MARK: - Extension
+extension NameTextField: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
+        
+        return newText.count <= Constants.nameMaxLength
     }
 }

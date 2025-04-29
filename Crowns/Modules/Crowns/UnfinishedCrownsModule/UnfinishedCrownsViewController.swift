@@ -7,12 +7,14 @@
 
 import UIKit
 
+// MARK: - UnfinishedCrownsViewControllerDelegate protocol
 protocol UnfinishedCrownsViewControllerDelegate: AnyObject {
     func unfinishedCrownsDidRequestToContinue(with foundation: CrownsPlayModel.BuildModule.BuildFoundation)
 }
 
+// MARK: - UnfinishedCrownsViewController class
 final class UnfinishedCrownsViewController: UIViewController {
-    
+    // MARK: - Properties
     private let interactor: UnfinishedCrownsBusinessLogic
     weak var delegate: UnfinishedCrownsViewControllerDelegate?
     
@@ -28,6 +30,7 @@ final class UnfinishedCrownsViewController: UIViewController {
     private let descriptionStack = UIStackView()
     private let continueButton: UIButton = CustomButton(button: UIImageView(image: UIImage.button))
     
+    // MARK: - Lifecycle
     init(interactor: UnfinishedCrownsBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -43,6 +46,30 @@ final class UnfinishedCrownsViewController: UIViewController {
         configureUI()
     }
     
+    // MARK: - Funcs
+    func configureDescription(_ viewModel: UnfinishedCrownsModel.AddDescription.ViewModel) {
+        let difficultyLabel = CustomText(text: viewModel.difficultyLabel, fontSize: Constants.descriptionTextSize, textColor: Colors.white)
+        let timeLabel = CustomText(text: viewModel.timeLabel, fontSize: Constants.descriptionTextSize, textColor: Colors.white)
+        let catImage: UIImageView = UIImageView(image: UIImage.smallCat)
+        
+        descriptionStack.axis = .vertical
+        descriptionStack.alignment = .leading
+        descriptionStack.spacing = Constants.continueViewStackSpacing
+        
+        for subview in [difficultyLabel, timeLabel] {
+            descriptionStack.addArrangedSubview(subview)
+        }
+        
+        view.addSubview(descriptionStack)
+        view.addSubview(catImage)
+        
+        descriptionStack.pinTop(to: logo.bottomAnchor, Constants.descriptionTop)
+        descriptionStack.pinLeft(to: view.safeAreaLayoutGuide.leadingAnchor, Constants.descriptionLeft)
+        catImage.pinRight(to: view.safeAreaLayoutGuide.trailingAnchor, Constants.catRight)
+        catImage.pinBottom(to: timeLabel.bottomAnchor, Constants.catBottom)
+    }
+    
+    // MARK: - Private funcs
     private func configureUI() {
         view.backgroundColor = .clear
         view.clipsToBounds = false
@@ -77,28 +104,6 @@ final class UnfinishedCrownsViewController: UIViewController {
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
     
-    func configureDescription(_ viewModel: UnfinishedCrownsModel.AddDescription.ViewModel) {
-        let difficultyLabel = CustomText(text: viewModel.difficultyLabel, fontSize: Constants.descriptionTextSize, textColor: Colors.white)
-        let timeLabel = CustomText(text: viewModel.timeLabel, fontSize: Constants.descriptionTextSize, textColor: Colors.white)
-        let catImage: UIImageView = UIImageView(image: UIImage.smallCat)
-        
-        descriptionStack.axis = .vertical
-        descriptionStack.alignment = .leading
-        descriptionStack.spacing = Constants.continueViewStackSpacing
-        
-        for subview in [difficultyLabel, timeLabel] {
-            descriptionStack.addArrangedSubview(subview)
-        }
-        
-        view.addSubview(descriptionStack)
-        view.addSubview(catImage)
-        
-        descriptionStack.pinTop(to: logo.bottomAnchor, Constants.descriptionTop)
-        descriptionStack.pinLeft(to: view.safeAreaLayoutGuide.leadingAnchor, Constants.descriptionLeft)
-        catImage.pinRight(to: view.safeAreaLayoutGuide.trailingAnchor, Constants.catRight)
-        catImage.pinBottom(to: timeLabel.bottomAnchor, Constants.catBottom)
-    }
-    
     private func configureButton() {
         let continueButtonText = CustomText(text: Constants.continueButtonText, fontSize: Constants.buttonTextSize, textColor: Colors.white)
         
@@ -113,6 +118,7 @@ final class UnfinishedCrownsViewController: UIViewController {
         continueButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
     }
     
+    // MARK: - Actions
     @objc func backButtonTapped() {
         dismiss(animated: false)
         interactor.deleteProgress(UnfinishedCrownsModel.DeleteProgress.Request())
@@ -125,6 +131,7 @@ final class UnfinishedCrownsViewController: UIViewController {
         interactor.deleteProgress(UnfinishedCrownsModel.DeleteProgress.Request())
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let unfinishedCrowns: String = "You have one unfinished crowns game"
         static let continueButtonText: String = "Continue the game"

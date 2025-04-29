@@ -7,8 +7,8 @@
 
 import Foundation
 
+// MARK: - CrownsSettingsModel enum
 enum CrownsSettingsModel {
-    
     enum RouteCrownsGame {
         struct Request {
             let buttonTag: Int

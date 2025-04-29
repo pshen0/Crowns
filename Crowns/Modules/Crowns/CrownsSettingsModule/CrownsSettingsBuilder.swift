@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - CrownsSettingsBuilder
 enum CrownsSettingsBuilder {
     static func build() -> CrownsSettingsViewController {
         let presenter = CrownsSettingsPresenter()

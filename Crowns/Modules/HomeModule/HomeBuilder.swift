@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - HomeBuilder enum
 enum HomeBuilder {
     static func build() -> HomeViewController {
         let presenter = HomePresenter()

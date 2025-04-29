@@ -7,8 +7,10 @@
 
 import UIKit
 
+// MARK: - HomeViewController class
 final class HomeViewController: UIViewController{
     
+    // MARK: - Properties
     private let interactor: HomeBusinessLogic
     private let overlayView = UIView()
     private let chooseGameText = CustomText(text: Constants.chooseGame, fontSize: Constants.selectorTextSize, textColor: Colors.white)
@@ -23,6 +25,7 @@ final class HomeViewController: UIViewController{
     private var gameSelectorViewController = GameSelector()
     private var learningSelectorViewController = GameSelector()
     
+    // MARK: - Lifecycle
     init(interactor: HomeBusinessLogic) {
         self.interactor = interactor
         self.gameSelectorViewController = GameSelector(logo: chooseGameText)
@@ -54,6 +57,30 @@ final class HomeViewController: UIViewController{
         }
     }
     
+    // MARK: - Funcs
+    func hideGameSelector() {
+        gameSelectorViewController.dismiss(animated: false)
+    }
+    
+    func hideLearningSelector() {
+        learningSelectorViewController.dismiss(animated: false)
+    }
+    
+    func showUnfinishedCrowns(_ viewModel: UnfinishedCrownsModel.BuildModule.BuildFoundation) {
+        let unfinishedGameView = UnfinishedCrownsBuilder.build(foundation: viewModel)
+        unfinishedGameView.modalPresentationStyle = .overFullScreen
+        unfinishedGameView.delegate = self
+        self.present(unfinishedGameView, animated: false)
+    }
+    
+    func showUnfinishedSudoku(_ viewModel: UnfinishedSudokuModel.BuildModule.BuildFoundation) {
+        let unfinishedGameView = UnfinishedSudokuBuilder.build(foundation: viewModel)
+        unfinishedGameView.modalPresentationStyle = .overFullScreen
+        unfinishedGameView.delegate = self
+        self.present(unfinishedGameView, animated: false)
+    }
+    
+    // MARK: - Private funcs
     private func configureUI() {
         gameSelectorViewController.modalPresentationStyle = .overFullScreen
         learningSelectorViewController.modalPresentationStyle = .overFullScreen
@@ -107,28 +134,7 @@ final class HomeViewController: UIViewController{
         learningSelectorViewController.chooseSudokuButton.addTarget(self, action: #selector(learnSudokuTapped), for: .touchUpInside)
     }
     
-    func hideGameSelector() {
-        gameSelectorViewController.dismiss(animated: false)
-    }
-    
-    func hideLearningSelector() {
-        learningSelectorViewController.dismiss(animated: false)
-    }
-    
-    func showUnfinishedCrowns(_ viewModel: UnfinishedCrownsModel.BuildModule.BuildFoundation) {
-        let unfinishedGameView = UnfinishedCrownsBuilder.build(foundation: viewModel)
-        unfinishedGameView.modalPresentationStyle = .overFullScreen
-        unfinishedGameView.delegate = self
-        self.present(unfinishedGameView, animated: false)
-    }
-    
-    func showUnfinishedSudoku(_ viewModel: UnfinishedSudokuModel.BuildModule.BuildFoundation) {
-        let unfinishedGameView = UnfinishedSudokuBuilder.build(foundation: viewModel)
-        unfinishedGameView.modalPresentationStyle = .overFullScreen
-        unfinishedGameView.delegate = self
-        self.present(unfinishedGameView, animated: false)
-    }
-    
+    // MARK: - Actions
     @objc private func gameSelectorTapped() {
         self.present(gameSelectorViewController, animated: false)
     }
@@ -154,7 +160,9 @@ final class HomeViewController: UIViewController{
     }
 }
 
+// MARK: - Extensions
 extension HomeViewController: UnfinishedCrownsViewControllerDelegate,  UnfinishedSudokuViewControllerDelegate {
+    // MARK: - Funcs
     func unfinishedSudokuDidRequestToContinue(with foundation: SudokuPlayModel.BuildModule.BuildFoundation) {
         navigationController?.pushViewController(SudokuPlayBuilder.build(foundation) , animated: true)
     }
@@ -163,6 +171,7 @@ extension HomeViewController: UnfinishedCrownsViewControllerDelegate,  Unfinishe
         navigationController?.pushViewController(CrownsPlayBuilder.build(foundation) , animated: true)
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let chooseGame: String = "Choose game:"
         static let chooseLearning: String = "Choose learning:"

@@ -7,8 +7,10 @@
 
 import UIKit
 
+// MARK: - CrownsPlayViewController class
 final class CrownsPlayViewController: UIViewController{
     
+    // MARK: - Properties
     private let interactor: CrownsPlayBusinessLogic
     private let backButton: UIButton = CustomButton(button: UIImageView(image: UIImage.backButton),
                                                       tapped: UIImageView(image: UIImage.backButtonTap))
@@ -37,6 +39,7 @@ final class CrownsPlayViewController: UIViewController{
     private var cellSize: CGFloat = 0
     private let size: Int = Constants.size
     
+    // MARK: - Lifecycle
     init(interactor: CrownsPlayBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -77,6 +80,27 @@ final class CrownsPlayViewController: UIViewController{
         }
     }
     
+    // MARK: - Funcs
+    func setTimerLabel(_ viewModel: CrownsPlayModel.SetTime.ViewModel) {
+        DispatchQueue.main.async {
+            self.timerLabel.text = viewModel.timerLabel
+        }
+    }
+    
+    func updateCrownsPlayground(_ viewModel: CrownsPlayModel.UpdateCrownsPlayground.ViewModel) {
+        if let cell = playground.cellForItem(at: viewModel.indexPath) as? CrownsPlaygroundCell {
+            cell.configure(color: viewModel.color, value: viewModel.value, mode: viewModel.mode)
+        }
+        if interactor.isPlayFinished(CrownsPlayModel.CheckGameOver.Request()) {
+            interactor.gameIsWon(CrownsPlayModel.GameIsWon.Request())
+        }
+    }
+    
+    func setLevelPicture(_ viewModel: CrownsPlayModel.GetLevel.ViewModel) {
+        levelPicture = UIImageView(image: viewModel.image)
+    }
+    
+    // MARK: - Private funcs
     private func configureUI() {
         configureBackground()
         configurePlayground()
@@ -169,25 +193,7 @@ final class CrownsPlayViewController: UIViewController{
         continueButton.addTarget(self, action: #selector(hidePauseOverlay), for: .touchUpInside)
     }
     
-    func setTimerLabel(_ viewModel: CrownsPlayModel.SetTime.ViewModel) {
-        DispatchQueue.main.async {
-            self.timerLabel.text = viewModel.timerLabel
-        }
-    }
-    
-    func updateCrownsPlayground(_ viewModel: CrownsPlayModel.UpdateCrownsPlayground.ViewModel) {
-        if let cell = playground.cellForItem(at: viewModel.indexPath) as? CrownsPlaygroundCell {
-            cell.configure(color: viewModel.color, value: viewModel.value, mode: viewModel.mode)
-        }
-        if interactor.isPlayFinished(CrownsPlayModel.CheckGameOver.Request()) {
-            interactor.gameIsWon(CrownsPlayModel.GameIsWon.Request())
-        }
-    }
-    
-    func setLevelPicture(_ viewModel: CrownsPlayModel.GetLevel.ViewModel) {
-        levelPicture = UIImageView(image: viewModel.image)
-    }
-    
+    // MARK: - Actions
     @objc private func pauseButtonTapped() {
         interactor.pauseButtonTapped(CrownsPlayModel.PauseGame.Request())
         showPauseOverlay()
@@ -218,8 +224,32 @@ final class CrownsPlayViewController: UIViewController{
             vc.systemTouchNextButton()
         }
     }
+    
+    // MARK: - Constants
+    private enum Constants {
+        static let logoText: String = "Crowns"
+        static let continueButtonText: String = "Continue the game"
+        
+        static let logoTextSize: CGFloat = 34
+        static let timerTextSize: CGFloat = 12
+        static let continueButtonTextSize: CGFloat = 20
+        
+        static let playgroundSpacing: CGFloat = 2.0
+        static let timerLabelRight: CGFloat = 22
+        static let timerLabelTop: CGFloat = 10
+        static let playgroundTop: CGFloat = 75
+        static let buttonsPadding = 10.0
+        static let playgroundPadding = 7.0
+        static let continueButtonY: CGFloat = -4
+        
+        static let size = 9
+        static let pauseOverlayAlpha = 0.9
+        static let tapNumbers = 2
+        
+    }
 }
 
+// MARK: - Extension
 extension CrownsPlayViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return size * size
@@ -241,7 +271,6 @@ extension CrownsPlayViewController: UICollectionViewDelegate, UICollectionViewDa
         interactor.placeCrown(CrownsPlayModel.PlaceCrown.Request(row: indexPath.item / size,
                                                                   col: indexPath.item % size,
                                                                   isPlaced: cell.isCrownPlaced()))
-        
         return cell
     }
     
@@ -260,28 +289,6 @@ extension CrownsPlayViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: cellSize, height: cellSize)
-    }
-    
-    private enum Constants {
-        static let logoText: String = "Crowns"
-        static let continueButtonText: String = "Continue the game"
-        
-        static let logoTextSize: CGFloat = 34
-        static let timerTextSize: CGFloat = 12
-        static let continueButtonTextSize: CGFloat = 20
-        
-        static let playgroundSpacing: CGFloat = 2.0
-        static let timerLabelRight: CGFloat = 22
-        static let timerLabelTop: CGFloat = 10
-        static let playgroundTop: CGFloat = 75
-        static let buttonsPadding = 10.0
-        static let playgroundPadding = 7.0
-        static let continueButtonY: CGFloat = -4
-        
-        static let size = 9
-        static let pauseOverlayAlpha = 0.9
-        static let tapNumbers = 2
-        
     }
 }
 

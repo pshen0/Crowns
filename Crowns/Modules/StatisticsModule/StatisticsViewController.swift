@@ -7,19 +7,22 @@
 
 import UIKit
 
+// MARK: StatisticsViewController - class
 final class StatisticsViewController: UIViewController {
     
+    // MARK: - Properties
     private let interactor: StatisticsBusinessLogic
     private let backButton: UIButton = CustomButton(button: UIImageView(image: UIImage.backButton),
                                                     tapped: UIImageView(image: UIImage.backButtonTap))
     private let segmentedControl: UISegmentedControl = UISegmentedControl(items: Constants.games)
-    private let statisticCat: UIImageView = UIImageView(image: UIImage.ruleCat)
+    private let statisticCat: UIImageView = UIImageView(image: UIImage.statisticsCat)
     private let tableView = UITableView()
     private var currentGameType: StatisticsModel.GameType = .crowns
     private var statistics: [StatisticsModel.StatisticItem] = []
     
     lazy var barButtonItem = UIBarButtonItem()
     
+    // MARK: - Lifecycle
     init(interactor: StatisticsBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -48,6 +51,18 @@ final class StatisticsViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
     
+    // MARK: - Funcs
+    func setGameType(_ viewModel: StatisticsModel.OpenStatistics.ViewModel) {
+        currentGameType = viewModel.gameType
+        if currentGameType == .crowns {
+            segmentedControl.selectedSegmentIndex = 0
+        } else {
+            segmentedControl.selectedSegmentIndex = 1
+        }
+        updateStatistics(game: currentGameType)
+    }
+    
+    // MARK: - Private funcs
     private func configureUI() {
         configureBackground()
         configureTable()
@@ -84,7 +99,7 @@ final class StatisticsViewController: UIViewController {
     
     private func configureTable() {
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.statisticCellId)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: CellsID.statisticCellId)
         tableView.backgroundColor = Colors.darkGray
         tableView.allowsSelection = false
         tableView.isScrollEnabled = false
@@ -97,16 +112,16 @@ final class StatisticsViewController: UIViewController {
         tableView.pinBottom(to: statisticCat.topAnchor, Constants.tableBottom)
     }
     
-    func setGameType(_ viewModel: StatisticsModel.OpenStatistics.ViewModel) {
-        currentGameType = viewModel.gameType
-        if currentGameType == .crowns {
-            segmentedControl.selectedSegmentIndex = 0
+    private func updateStatistics(game: StatisticsModel.GameType) {
+        if game == StatisticsModel.GameType.crowns {
+            statistics = CoreDataCrownsStatisticStack.shared.getStatistics()
         } else {
-            segmentedControl.selectedSegmentIndex = 1
+            statistics = CoreDataSudokuStatisticStack.shared.getStatistics()
         }
-        updateStatistics(game: currentGameType)
+        tableView.reloadData()
     }
     
+    // MARK: - Actions
     @objc private func backButtonTapped() {
         interactor.backButtonTapped(StatisticsModel.RouteBack.Request())
     }
@@ -116,35 +131,9 @@ final class StatisticsViewController: UIViewController {
         updateStatistics(game: currentGameType)
     }
     
-    private func updateStatistics(game: StatisticsModel.GameType) {
-        if game == StatisticsModel.GameType.crowns {
-            statistics = CoreDataCrownsStatisticStack.shared.getStatistics()
-        } else {
-            statistics = CoreDataSudokuStatisticStack.shared.getStatistics()
-        }
-        tableView.reloadData()
-    }
-}
-
-extension StatisticsViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return statistics.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let stat = statistics[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.statisticCellId, for: indexPath)
-        cell.textLabel?.font = UIFont(name: Fonts.IrishGrover, size: Constants.statisticCellTextSize)
-        cell.textLabel?.text = "\(stat.title): \(stat.value)"
-        cell.textLabel?.textColor = Colors.white
-        cell.backgroundColor = Colors.darkGray
-        
-        return cell
-    }
-    
+    // MARK: - Constants
     private enum Constants {
         static let games = ["Crowns", "Killer-Sudoku"]
-        static let statisticCellId = "StatisticCell"
         
         static let segmentTextSize = 20.0
         static let statisticCellTextSize = 20.0
@@ -153,5 +142,23 @@ extension StatisticsViewController: UITableViewDataSource {
         static let statisticCat = 10.0
         static let tableTop = 20.0
         static let tableBottom = 20.0
+    }
+}
+
+// MARK: - Extensions
+extension StatisticsViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return statistics.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let stat = statistics[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellsID.statisticCellId, for: indexPath)
+        cell.textLabel?.font = UIFont(name: Fonts.IrishGrover, size: Constants.statisticCellTextSize)
+        cell.textLabel?.text = "\(stat.title): \(stat.value)"
+        cell.textLabel?.textColor = Colors.white
+        cell.backgroundColor = Colors.darkGray
+        
+        return cell
     }
 }

@@ -6,10 +6,9 @@
 //
 
 import Foundation
-
-
 import UIKit
 
+// MARK: - SudokuSettingsBuilder
 enum SudokuSettingsBuilder {
     static func build() -> SudokuSettingsViewController {
         let presenter = SudokuSettingsPresenter()

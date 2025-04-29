@@ -7,10 +7,14 @@
 
 import UIKit
 
+// MARK: - CageOverlayView class
 final class CageOverlayView: UIView {
+    
+    // MARK: - Properties
     private var cages: [SudokuCage] = []
     private var cellSize: CGFloat = 40
     
+    // MARK: - Lifecycle
     init(_ generatedCages: Array<SudokuCage>, _ size: CGFloat) {
         super.init(frame: .zero)
         cages = generatedCages
@@ -24,6 +28,7 @@ final class CageOverlayView: UIView {
         fatalError(Errors.initErrorCoder)
     }
     
+    // MARK: - Private funcs
     private func drawBorders() {
         for cage in cages {
             drawCageBorder(for: cage)

@@ -7,8 +7,10 @@
 
 import UIKit
 
+// MARK: - CustomNumberPicker class
 final class CustomNumberPicker: UITextField, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    // MARK: - Properties
     private let pickerView = UIPickerView()
     private let toolbar = UIToolbar()
     private let numbers = Array(Constants.queensSizeMin...Constants.queensSizeMax)
@@ -21,7 +23,9 @@ final class CustomNumberPicker: UITextField, UIPickerViewDelegate, UIPickerViewD
             self.text = selectedNumber.map { "\($0)" }
         }
     }
+    override var textInputContextIdentifier: String? { return "" }
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -32,33 +36,7 @@ final class CustomNumberPicker: UITextField, UIPickerViewDelegate, UIPickerViewD
         configureUI()
     }
     
-    private func configureUI() {
-        self.backgroundColor = Colors.lightGray
-        self.textAlignment = .center
-        self.layer.cornerRadius = Constants.numberFieldRadius
-        self.inputView = pickerView
-        self.textColor = Colors.white
-        self.tintColor = Colors.white.withAlphaComponent(Constants.numberPickerTintAlpha)
-        self.font = UIFont(name: Fonts.IrishGrover, size: Constants.selectorTextSize) ?? UIFont.systemFont(ofSize: Constants.selectorTextSize)
-        pickerView.backgroundColor = Colors.lightGray
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        
-        toolbar.sizeToFit()
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let screenWidth = windowScene.windows.first?.frame.width {
-                toolbar.frame.size.width = screenWidth
-                self.inputAccessoryView?.frame.size.width = screenWidth
-            }
-        }
-        customButton.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
-        doneButton = UIBarButtonItem(customView: customButton)
-        toolbar.setItems([flexSpace, doneButton], animated: true)
-        toolbar.barTintColor = Colors.lightGray
-        self.inputAccessoryView = toolbar
-        toolbar.isTranslucent = false
-    }
-    
+    // MARK: - Funcs
     func numberOfComponents(in pickerView: UIPickerView) -> Int { return Constants.numberPickerComponentsNumber }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -87,12 +65,40 @@ final class CustomNumberPicker: UITextField, UIPickerViewDelegate, UIPickerViewD
         return false
     }
     
-    override var textInputContextIdentifier: String? { return "" }
+    // MARK: - Private funcs
+    private func configureUI() {
+        self.backgroundColor = Colors.lightGray
+        self.textAlignment = .center
+        self.layer.cornerRadius = Constants.numberFieldRadius
+        self.inputView = pickerView
+        self.textColor = Colors.white
+        self.tintColor = Colors.white.withAlphaComponent(Constants.numberPickerTintAlpha)
+        self.font = UIFont(name: Fonts.IrishGrover, size: Constants.selectorTextSize) ?? UIFont.systemFont(ofSize: Constants.selectorTextSize)
+        pickerView.backgroundColor = Colors.lightGray
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        
+        toolbar.sizeToFit()
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let screenWidth = windowScene.windows.first?.frame.width {
+                toolbar.frame.size.width = screenWidth
+                self.inputAccessoryView?.frame.size.width = screenWidth
+            }
+        }
+        customButton.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
+        doneButton = UIBarButtonItem(customView: customButton)
+        toolbar.setItems([flexSpace, doneButton], animated: true)
+        toolbar.barTintColor = Colors.lightGray
+        self.inputAccessoryView = toolbar
+        toolbar.isTranslucent = false
+    }
     
+    // MARK: - Actions
     @objc private func doneTapped() {
         self.resignFirstResponder()
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let selectorTextSize: CGFloat = 25
         

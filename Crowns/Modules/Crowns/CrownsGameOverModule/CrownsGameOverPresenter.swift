@@ -7,15 +7,19 @@
 
 import Foundation
 
+// MARK: - CrownsGameOverPresentationLogic protocol
 protocol CrownsGameOverPresentationLogic {
     func routeHome(_ response: CrownsGameOverModel.RouteHome.Response)
     func routeStatistics(_ response: CrownsGameOverModel.RouteStatistics.Response)
 }
 
+// MARK: - CrownsGameOverPresenter class
 final class CrownsGameOverPresenter: CrownsGameOverPresentationLogic {
     
+    // MARK: - Properties
     weak var view: CrownsGameOverViewController?
     
+    // MARK: - Funcs
     func routeHome(_ response: CrownsGameOverModel.RouteHome.Response) {
         view?.navigationController?.popToRootViewController(animated: false)
     }

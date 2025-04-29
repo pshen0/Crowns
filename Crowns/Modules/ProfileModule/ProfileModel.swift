@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - ProfileModel enum
 enum ProfileModel {
     enum RouteSettings {
         struct Request { }

@@ -7,7 +7,10 @@
 
 import UIKit
 
+// MARK: - CustomButton class
 final class CustomButton: UIButton {
+    
+    // MARK: - Lifecycle
     init(button: UIImageView) {
         super.init(frame: .zero)
         if let image = button.image {

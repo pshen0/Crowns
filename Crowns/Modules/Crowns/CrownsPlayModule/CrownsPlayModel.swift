@@ -7,8 +7,8 @@
 
 import UIKit
 
+// MARK: - CrownsPlayModel enum
 enum CrownsPlayModel {
-    
     struct CrownsMove {
         let indexPath: IndexPath
         let value: Int

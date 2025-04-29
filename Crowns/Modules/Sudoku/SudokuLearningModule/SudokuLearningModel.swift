@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - SudokuLearningModel enum
 enum SudokuLearningModel {
     enum RouteBack {
         struct Request { }

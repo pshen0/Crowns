@@ -5,6 +5,7 @@
 //  Created by Анна Сазонова on 22.01.2025.
 //
 
+// MARK: - HomePresentationLogic protocol
 protocol HomePresentationLogic {
     func routeToCrownsSettings(_ response: HomeModel.RouteToCrownsSettings.Response)
     func routeToSudokuSettings(_ response: HomeModel.RouteToSudokuSettings.Response)
@@ -14,9 +15,12 @@ protocol HomePresentationLogic {
     func showUnfinishedSudoku(_ response: HomeModel.GetUnfinishedSudokuGame.Response)
 }
 
+// MARK: - HomePresenter class
 final class HomePresenter: HomePresentationLogic {
+    // MARK: - Properties
     weak var view: HomeViewController?
     
+    // MARK: - Funcs
     func routeToCrownsSettings(_ response: HomeModel.RouteToCrownsSettings.Response) {
         view?.hideGameSelector()
         view?.navigationController?.pushViewController(CrownsSettingsBuilder.build(), animated: false)

@@ -1,6 +1,8 @@
 import CoreData
 
+// MARK: - CoreDataSudokuStatisticStack class
 final class CoreDataSudokuStatisticStack {
+    // MARK: - Properties
     static let shared = CoreDataSudokuStatisticStack()
     private let context = CoreDataStack.shared.context
     
@@ -23,6 +25,8 @@ final class CoreDataSudokuStatisticStack {
         }
     }
     
+    // MARK: - Funcs
+    // Fetch data
     func getStatistics() -> [StatisticsModel.StatisticItem] {
         let stats = statistics
         return [
@@ -37,12 +41,14 @@ final class CoreDataSudokuStatisticStack {
         ]
     }
     
+    // Record start
     func recordGameStarted() {
         statistics.totalStarted += 1
         updateWinRate()
         save()
     }
     
+    // Record win
     func recordWin(difficulty: String, time: Int32?) {
         statistics.totalWins += 1
         
@@ -67,6 +73,8 @@ final class CoreDataSudokuStatisticStack {
         save()
     }
     
+    // MARK: - Private funcs
+    // Update win
     private func updateWinRate() {
         if statistics.totalStarted > 0 {
             statistics.winRate = (statistics.totalWins * 100) / statistics.totalStarted
@@ -74,7 +82,8 @@ final class CoreDataSudokuStatisticStack {
             statistics.winRate = 0
         }
     }
-
+    
+    // Save data
     private func save() {
         do {
             try context.save()
@@ -83,12 +92,14 @@ final class CoreDataSudokuStatisticStack {
         }
     }
     
+    // Format time as string
     private func formatTime(time: Int32) -> String {
         let minutes = time / 60
         let seconds = time % 60
         return String(format: Constants.timeFormatter, minutes, seconds)
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let timeFormatter = "%02d:%02d"
     }

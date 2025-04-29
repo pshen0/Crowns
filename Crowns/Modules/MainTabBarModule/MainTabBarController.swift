@@ -7,13 +7,12 @@
 
 import UIKit
 
+// MARK: - MainTabBarController class
 final class MainTabBarController: UITabBarController {
-    
+    // MARK: - Properties
     private let homeTabBarItem: UITabBarItem = UITabBarItem(title: Constants.homeTab, image: UIImage.homeBar, selectedImage: UIImage.homeBar)
     private let challengeTabBarItem: UITabBarItem = UITabBarItem(title: Constants.challengeTab, image: UIImage.challengeBar, selectedImage: UIImage.challengeBar)
     private let profileTabBarItem: UITabBarItem = UITabBarItem(title: Constants.profileTab, image: UIImage.profileBar, selectedImage: UIImage.profileBar)
-    
-    
     
     private let homeVC: UIViewController = HomeBuilder.build()
     private let challengeVC: UIViewController = ChallengeBuilder.build()
@@ -23,6 +22,7 @@ final class MainTabBarController: UITabBarController {
     private let challengeNavigator: UINavigationController
     private let profileNavigator: UINavigationController
     
+    // MARK: - Lifecycle
     init() {
         homeNavigator = UINavigationController(rootViewController: homeVC)
         challengeNavigator = UINavigationController(rootViewController: challengeVC)
@@ -41,7 +41,7 @@ final class MainTabBarController: UITabBarController {
         changeTabBarAppearance()
     }
     
-    
+    // MARK: - Private funcs
     private func changeTabBarAppearance() {
         let appearance = UITabBarAppearance()
         appearance.stackedLayoutAppearance.normal.iconColor = Colors.white
@@ -60,7 +60,6 @@ final class MainTabBarController: UITabBarController {
     }
     
     private func configureTabBar() {
-        
         let homeNavigator = UINavigationController(rootViewController: homeVC)
         let challengeNavigator = UINavigationController(rootViewController: challengeVC)
         let profileNavigator = UINavigationController(rootViewController: profileVC)
@@ -73,6 +72,7 @@ final class MainTabBarController: UITabBarController {
         selectedIndex = Constants.selectedIndex
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let homeTab: String = "Home"
         static let challengeTab: String = "Challenges"

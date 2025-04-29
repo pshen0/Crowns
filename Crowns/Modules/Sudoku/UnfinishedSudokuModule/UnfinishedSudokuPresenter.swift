@@ -7,14 +7,18 @@
 
 import Foundation
 
+// MARK: - UnfinishedSudokuPresentationLogic protocol
 protocol UnfinishedSudokuPresentationLogic {
     func getDescriptionLabels(_ response: UnfinishedSudokuModel.AddDescription.Response)
 }
 
+// MARK: - UnfinishedSudokuPresenter class
 final class UnfinishedSudokuPresenter: UnfinishedSudokuPresentationLogic {
     
+    // MARK: - Properties
     weak var view: UnfinishedSudokuViewController?
     
+    // MARK: - Funcs
     func getDescriptionLabels(_ response: UnfinishedSudokuModel.AddDescription.Response) {
         let difficultyLabel = Constants.difficultyLabel + String(response.difficulty)
         let minutes = response.time / 60
@@ -31,6 +35,7 @@ final class UnfinishedSudokuPresenter: UnfinishedSudokuPresentationLogic {
         
     }
     
+    // MARK: - Constants
     private enum Constants {
         static let difficultyLabel = "Difficulty: "
         static let timeLabel = "Time spent: "

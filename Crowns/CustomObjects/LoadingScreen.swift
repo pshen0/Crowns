@@ -7,13 +7,20 @@
 
 import UIKit
 
+// MARK: - LoadingScreen class
 final class LoadingScreen: UIViewController {
     
+    // MARK: - Properties
     private let startPlayCat: UIImageView = UIImageView(image: UIImage.startPlayCat)
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     
+    // MARK: - Lifecycle
     init() {
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    deinit {
+        activityIndicator.stopAnimating()
     }
     
     @available(*, unavailable)
@@ -26,6 +33,7 @@ final class LoadingScreen: UIViewController {
         configureUI()
     }
     
+    // MARK: - Private funcs
     private func configureUI() {
         view.backgroundColor = Colors.darkGray
         
