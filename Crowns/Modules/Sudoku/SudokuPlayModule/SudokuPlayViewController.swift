@@ -127,14 +127,12 @@ final class SudokuPlayViewController: UIViewController {
         configureTimer()
         let leftBarButtonItem = UIBarButtonItem(customView: timerView)
         navigationItem.rightBarButtonItem = leftBarButtonItem
+        navigationItem.titleView = gameLogo
         
-        
-        for subview in [gameLogo, gamePlayCat] {
-            view.addSubview(subview)
-            subview.pinCenterX(to: view)
-        }
-        
-        gameLogo.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
+        view.addSubview(gamePlayCat)
+        gamePlayCat.contentMode = .scaleAspectFit
+        gamePlayCat.setHeight(gamePlayCat.bounds.height *  Layout.scaleH)
+        gamePlayCat.pinCenterX(to: view)
         gamePlayCat.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor)
     }
     
@@ -157,7 +155,7 @@ final class SudokuPlayViewController: UIViewController {
         view.addSubview(playground)
         
         playground.pinCenterX(to: view)
-        playground.pinTop(to: gameLogo.bottomAnchor, Constants.playgroundTop)
+        playground.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.playgroundTop)
         playground.setWidth(availableWidth)
         playground.setHeight(availableWidth)
         
@@ -208,7 +206,7 @@ final class SudokuPlayViewController: UIViewController {
             
             numberButtonsStackView.addArrangedSubview(button)
             
-            button.setHeight((view.frame.width - Constants.numberStackPadding) / CGFloat(Constants.digits.count))
+            button.setHeight((view.frame.width - Constants.numberStackPadding) / CGFloat(Constants.digits.count) * Layout.scaleH)
             button.setWidth((view.frame.width - Constants.numberStackPadding) / CGFloat(Constants.digits.count))
             
             button.addTarget(self, action: #selector(numberButtonTapped(_:)), for: .touchUpInside)
@@ -293,6 +291,17 @@ final class SudokuPlayViewController: UIViewController {
         }
     }
     
+    private enum Layout {
+        static let screenHeight = UIScreen.main.bounds.height
+        static let screenWidth = UIScreen.main.bounds.width
+        
+        static let baseHeight: CGFloat = 844
+        static let baseWidth: CGFloat = 390
+        
+        static var scaleH: CGFloat { screenHeight / baseHeight }
+        static var scaleW: CGFloat { screenWidth / baseWidth }
+    }
+    
     // MARK: - Constants
     private enum Constants {
         static let logoText: String = "Sudoku"
@@ -306,13 +315,13 @@ final class SudokuPlayViewController: UIViewController {
         static let numberBittonTextSize = 24.0
         static let numberButtonRadius = 8.0
         
-        static let timerLabelRight: CGFloat = 22
-        static let timerLabelTop: CGFloat = 10
-        static let playgroundTop: CGFloat = 75
-        static let buttonsPadding = 10.0
+        static var timerLabelRight: CGFloat { 22 * Layout.scaleH }
+        static var timerLabelTop: CGFloat { 7 * Layout.scaleH }
+        static var playgroundTop: CGFloat { 75 * Layout.scaleH }
+        static var buttonsPadding: CGFloat { 10 * Layout.scaleH }
         static let playgroundPadding = 7.0
-        static let continueButtonY: CGFloat = -4
-        static let numberStackPadding = 50.0
+        static var continueButtonY: CGFloat { -4 * Layout.scaleH }
+        static var numberStackPadding: CGFloat { 50 * Layout.scaleH }
         
         static let size = 3
         static let pauseOverlayAlpha = 0.9

@@ -54,16 +54,12 @@ final class MainTabBarController: UITabBarController {
             .foregroundColor: Colors.yellow
         ]
         
-        appearance.stackedLayoutAppearance.normal.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: Constants.tabBarItemIndentation)
+        //appearance.stackedLayoutAppearance.normal.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: Constants.tabBarItemIndentation)
         
         tabBar.standardAppearance = appearance
     }
     
     private func configureTabBar() {
-        let homeNavigator = UINavigationController(rootViewController: homeVC)
-        let challengeNavigator = UINavigationController(rootViewController: challengeVC)
-        let profileNavigator = UINavigationController(rootViewController: profileVC)
-        
         homeNavigator.tabBarItem = homeTabBarItem
         challengeNavigator.tabBarItem = challengeTabBarItem
         profileNavigator.tabBarItem = profileTabBarItem
@@ -79,6 +75,6 @@ final class MainTabBarController: UITabBarController {
         static let profileTab: String = "Profile"
         
         static let selectedIndex: Int = 1
-        static let tabBarItemIndentation: CGFloat = 10
+        static let tabBarItemIndentation: CGFloat = 4
     }
 }

@@ -122,25 +122,35 @@ final class ProfileViewController: UIViewController {
         interactor.developerButtonTapped(ProfileModel.RouteDeveloper.Request())
     }
     
+    private enum Layout {
+        static let screenHeight = UIScreen.main.bounds.height
+        static let screenWidth = UIScreen.main.bounds.width
+        
+        static let baseHeight: CGFloat = 844
+        static let baseWidth: CGFloat = 390
+        
+        static var scaleH: CGFloat { screenHeight / baseHeight }
+        static var scaleW: CGFloat { screenWidth / baseWidth }
+    }
+    
     // MARK: - Constants
     private enum Constants {
         static let logoText: String = "Profile"
         static let avatarButtonText: String = "Choose photo"
         
-        static let logoTextTop: CGFloat = 5
-        static let avatarFieldTop: CGFloat = 20
-        static let avatarButtonTop: CGFloat = 10
-        static let nameFieldTop: CGFloat = 10
-        static let buttonStackTop: CGFloat = 100
+        static var logoTextTop: CGFloat { 5 * Layout.scaleH }
+        static var avatarFieldTop: CGFloat { 20 * Layout.scaleH }
+        static var avatarButtonTop: CGFloat { 10 * Layout.scaleH }
+        static var nameFieldTop: CGFloat { 10 * Layout.scaleH }
+        static var buttonStackTop: CGFloat { 100 * Layout.scaleH }
         
-        static let logoSize: CGFloat = 35
-        static let avatarSize: CGFloat = 100
-        static let avatarButtonTextSize = 17.0
-        static let nameFieldWidth: CGFloat = 200
-        static let buttonStackSpacing: CGFloat = 15
+        static var logoSize: CGFloat { 35 * Layout.scaleH }
+        static var avatarSize: CGFloat { 100 * Layout.scaleH }
+        static var avatarButtonTextSize: CGFloat { 17 * Layout.scaleH }
+        static var nameFieldWidth: CGFloat { 200 * Layout.scaleW }
+        static var buttonStackSpacing: CGFloat { 15 * Layout.scaleH }
         
-        
-        static let avatarRadius: CGFloat = 50
+        static var avatarRadius: CGFloat { 50 * Layout.scaleH }
     }
 }
 

@@ -35,6 +35,7 @@ final class CustomCalendar: FSCalendar {
     private func configureCalendar() {
         backgroundColor = Colors.lightGray
         
+        scrollDirection = .horizontal
         layer.cornerRadius = Constants.calendarRadius
         clipsToBounds = true
         layer.shadowColor = UIColor.black.cgColor

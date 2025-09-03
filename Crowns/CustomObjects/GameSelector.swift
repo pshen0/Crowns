@@ -91,19 +91,27 @@ final class GameSelector: UIViewController {
         dismiss(animated: false)
     }
     
+    private enum Layout {
+        static let screenHeight = UIScreen.main.bounds.height
+        static let screenWidth = UIScreen.main.bounds.width
+        
+        static let baseHeight: CGFloat = 844
+        static let baseWidth: CGFloat = 390
+        
+        static var scaleH: CGFloat { screenHeight / baseHeight }
+        static var scaleW: CGFloat { screenWidth / baseWidth }
+    }
+    
     // MARK: - Constants
     private enum Constants {
-        static let selectorTextSize: CGFloat = 25
-        static let gameSelectorHeight: CGFloat = 310
+        static var selectorTextSize: CGFloat { 25 * Layout.scaleH }
+        static var gameSelectorHeight: CGFloat { 310 * Layout.scaleH }
         
-        static let chooseTextTop: CGFloat = 30
+        static var chooseTextTop: CGFloat { 30 * Layout.scaleH }
         
         static let gameSelectorRadius: CGFloat = 16
         static let overlayAlpha = 0.3
-        static let gameSelectorButtonsStackSpacing: CGFloat = 15
-        static let gameSelectorButtonsStackTop: CGFloat = 30
+        static var gameSelectorButtonsStackSpacing: CGFloat { 15 * Layout.scaleH }
+        static var gameSelectorButtonsStackTop: CGFloat { 30 * Layout.scaleH }
     }
 }
-
-
-

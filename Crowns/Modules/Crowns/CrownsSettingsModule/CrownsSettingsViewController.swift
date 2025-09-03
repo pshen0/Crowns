@@ -81,15 +81,15 @@ final class CrownsSettingsViewController: UIViewController{
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         barButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = barButtonItem
+        navigationItem.titleView = logo
         timerPicker.isHidden = true
         
-        for subview in [logo, chooseDifficulty, startPlayButton, timerStack, timerPicker, startPlayCat] {
+        for subview in [chooseDifficulty, startPlayButton, timerStack, timerPicker, startPlayCat] {
             view.addSubview(subview)
             subview.pinCenterX(to: view)
         }
         
-        logo.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
-        chooseDifficulty.pinTop(to: logo.bottomAnchor, Constants.chooseDifficultyTop)
+        chooseDifficulty.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.chooseDifficultyTop)
         startPlayButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constants.startPlayButtonBottom)
         timerPicker.setWidth(Constants.timerPickerWidth)
         startPlayCat.pinBottom(to: startPlayButton.topAnchor, Constants.startPlayCatBottom)
@@ -175,6 +175,17 @@ final class CrownsSettingsViewController: UIViewController{
         }
     }
     
+    private enum Layout {
+        static let screenHeight = UIScreen.main.bounds.height
+        static let screenWidth = UIScreen.main.bounds.width
+        
+        static let baseHeight: CGFloat = 844
+        static let baseWidth: CGFloat = 390
+        
+        static var scaleH: CGFloat { screenHeight / baseHeight }
+        static var scaleW: CGFloat { screenWidth / baseWidth }
+    }
+    
     // MARK: - Constants
     private enum Constants {
         static let logoText: String = "Crowns"
@@ -184,16 +195,16 @@ final class CrownsSettingsViewController: UIViewController{
         
         static let logoTextSize: CGFloat = 34
         static let settingsTextSize: CGFloat = 24
-        static let timerStackSpacing: CGFloat = 20
-        static let timerPickerWidth: CGFloat = 90
-        static let buttonsStackSpacing: CGFloat = 10
+        static var timerStackSpacing: CGFloat { 20 * Layout.scaleH}
+        static var timerPickerWidth: CGFloat { 90 * Layout.scaleW}
+        static var buttonsStackSpacing: CGFloat { 10 * Layout.scaleH}
         
-        static let chooseDifficultyTop: CGFloat = 25
-        static let startPlayButtonBottom: CGFloat = 30
+        static var chooseDifficultyTop: CGFloat { 25 * Layout.scaleH}
+        static var startPlayButtonBottom: CGFloat { 30 * Layout.scaleH}
         static let startPlayCatBottom: CGFloat = -25
-        static let buttonsStackTop: CGFloat = 30
-        static let timerStackTop: CGFloat = 30
-        static let timerPickerTop: CGFloat = 30
+        static var buttonsStackTop: CGFloat { 30 * Layout.scaleH}
+        static var timerStackTop: CGFloat { 30 * Layout.scaleH}
+        static var timerPickerTop: CGFloat { 30 * Layout.scaleH}
         
         static let choosenButton = 0
         static let easyTag: Int = 0

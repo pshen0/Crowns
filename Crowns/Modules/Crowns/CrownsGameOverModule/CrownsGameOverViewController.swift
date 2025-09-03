@@ -84,16 +84,27 @@ final class CrownsGameOverViewController: UIViewController {
         interactor.statisticsButtonTapped(CrownsGameOverModel.RouteStatistics.Request())
     }
     
+    private enum Layout {
+        static let screenHeight = UIScreen.main.bounds.height
+        static let screenWidth = UIScreen.main.bounds.width
+        
+        static let baseHeight: CGFloat = 844
+        static let baseWidth: CGFloat = 390
+        
+        static var scaleH: CGFloat { screenHeight / baseHeight }
+        static var scaleW: CGFloat { screenWidth / baseWidth }
+    }
+    
     // MARK: - Constants
     private enum Constants {
         static let logoText = "Crowns"
         static let gameTimeText = "Elapsed time:"
         
-        static let gameResultTop = 20.0
-        static let gameTimeTop = 20.0
-        static let catImageTop = 50.0
-        static let homeButtonTop = 50.0
-        static let statisticsButtonTop = 10.0
+        static var gameResultTop: CGFloat { 20 * Layout.scaleH }
+        static var gameTimeTop: CGFloat { 20 * Layout.scaleH }
+        static var catImageTop: CGFloat { 50 * Layout.scaleH }
+        static var homeButtonTop: CGFloat { 50 * Layout.scaleH }
+        static var statisticsButtonTop: CGFloat { 10 * Layout.scaleH }
         
         static let logoTextSize: CGFloat = 34
         static let gameTimeTextSize: CGFloat = 20

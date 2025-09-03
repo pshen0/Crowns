@@ -104,8 +104,8 @@ final class HomeViewController: UIViewController{
     
     private func configureCalendar() {
         view.addSubview(calendar)
-        
-        calendar.setWidth(Constants.calendarWidth)
+        calendar.pinLeft(to: view.leadingAnchor, 10)
+        calendar.pinRight(to: view.trailingAnchor, 10)
         calendar.setHeight(Constants.calendarHeight)
         calendar.pinCenterX(to: view)
         calendar.pinTop(to: logoText.bottomAnchor, Constants.calendarTop)
@@ -171,25 +171,33 @@ extension HomeViewController: UnfinishedCrownsViewControllerDelegate,  Unfinishe
         navigationController?.pushViewController(CrownsPlayBuilder.build(foundation) , animated: true)
     }
     
+    private enum Layout {
+        static let screenHeight = UIScreen.main.bounds.height
+        static let screenWidth = UIScreen.main.bounds.width
+        
+        static let baseHeight: CGFloat = 844
+        static let baseWidth: CGFloat = 390
+        
+        static var scaleH: CGFloat { screenHeight / baseHeight }
+        static var scaleW: CGFloat { screenWidth / baseWidth }
+    }
+    
     // MARK: - Constants
     private enum Constants {
         static let chooseGame: String = "Choose game:"
         static let chooseLearning: String = "Choose learning:"
         static let logo: String = "CROWNS"
         
-        static let selectorTextSize: CGFloat = 25
-        static let logoTextSize: CGFloat = 75
-        static let logoTextWidth: CGFloat = 350
-        static let calendarWidth: CGFloat = 350
-        static let calendarHeight: CGFloat = 250
+        static var selectorTextSize: CGFloat { Layout.scaleH * 25 }
+        static var logoTextSize: CGFloat { Layout.scaleH * 75 }
+        static var logoTextWidth: CGFloat { Layout.scaleW * 350 }
+        static var calendarWidth: CGFloat { Layout.scaleW * 350 }
+        static var calendarHeight: CGFloat { Layout.scaleH * 250 }
         
         static let logoPictureTop: CGFloat = 0
-        static let logoTextTop: CGFloat = 5
-        static let calendarTop: CGFloat = 35
-        static let buttonStackSpacing: CGFloat = 8
-        static let buttonStackTop: CGFloat = 30
+        static var logoTextTop: CGFloat { Layout.scaleH * 5 }
+        static var calendarTop: CGFloat { Layout.scaleH * 35 }
+        static var buttonStackSpacing: CGFloat { Layout.scaleH * 8 }
+        static var buttonStackTop: CGFloat { Layout.scaleH * 30 }
     }
 }
-
-
-

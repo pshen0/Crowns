@@ -93,6 +93,7 @@ final class SudokuLearningViewController: UIViewController {
             
             catView.pinCenterY(to: imageView)
             catView.pinLeft(to: imageView.trailingAnchor)
+            imageView.setHeight(imageView.bounds.height * Layout.scaleH)
         
             ruleViews.append(imageView)
             catViews.append(catView)
@@ -138,10 +139,21 @@ final class SudokuLearningViewController: UIViewController {
         }
     }
     
+    private enum Layout {
+        static let screenHeight = UIScreen.main.bounds.height
+        static let screenWidth = UIScreen.main.bounds.width
+        
+        static let baseHeight: CGFloat = 844
+        static let baseWidth: CGFloat = 390
+        
+        static var scaleH: CGFloat { screenHeight / baseHeight }
+        static var scaleW: CGFloat { screenWidth / baseWidth }
+    }
+    
     // MARK: - Constants
     private enum Constants {
-        static let ruleStackSpacing = 10.0
-        static let nextButtonBottom = 5.0
+        static var ruleStackSpacing: CGFloat { 10.0 * Layout.scaleH }
+        static var nextButtonBottom: CGFloat { 5.0 * Layout.scaleH }
         
         static let visibleAlpha = 1.0
         static let invisibleAlpha = 0.0

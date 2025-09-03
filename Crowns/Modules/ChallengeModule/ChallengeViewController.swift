@@ -91,21 +91,26 @@ final class ChallengeViewController: UIViewController {
         view.backgroundColor = Colors.darkGray
         lightningAnimation1.alpha = Constants.lightningUnvisible
         lightningAnimation2.alpha = Constants.lightningUnvisible
-        
+        cat.contentMode = .scaleAspectFit
+        mice.contentMode = .scaleAspectFit
+        clouds.contentMode = .scaleAspectFit
         
         for (subview, top) in zip([clouds, lightningAnimation1, lightningAnimation2, logo, cat, mice],
                                   [Constants.cloudsTop, Constants.lightningAnimation1Top,
-                                   Constants.lightningAnimation2Top, Constants.logoTextTop, Constants.catTop,
-                                   Constants.miceTop]) {
+                                   Constants.lightningAnimation2Top, Constants.logoTextTop, Constants.catTop, Constants.miceTop]) {
             view.addSubview(subview)
             subview.pinTop(to: view.safeAreaLayoutGuide.topAnchor, top)
         }
         
+        view.addSubview(mice)
         logo.pinCenterX(to: view)
         lightningAnimation1.pinLeft(to: view, Constants.lightningAnimation1Left)
         lightningAnimation2.pinRight(to: view, Constants.lightningAnimation2Right)
+        cat.setHeight(Constants.catHeight)
         cat.pinLeft(to: view, Constants.catLeft)
+        mice.setHeight(mice.bounds.height * Layout.scaleH)
         mice.pinRight(to: view, Constants.miceRight)
+        clouds.setHeight(clouds.bounds.height * Layout.scaleH)
         clouds.pinCenterX(to: view)
     }
     
@@ -113,7 +118,8 @@ final class ChallengeViewController: UIViewController {
         view.addSubview(calendar)
         view.addSubview(streakText)
         
-        calendar.setWidth(Constants.calendarWidth)
+        calendar.pinLeft(to: view.leadingAnchor, 10)
+        calendar.pinRight(to: view.trailingAnchor, 10)
         calendar.setHeight(Constants.calendarHeight)
         calendar.pinCenterX(to: view)
         calendar.pinTop(to: cat.bottomAnchor, Constants.calendarTop)
@@ -178,31 +184,45 @@ final class ChallengeViewController: UIViewController {
         interactor.sudokuButtonTapped(ChallengeModel.RouteSudokuGame.Request())
     }
     
+    private enum Layout {
+        static let screenHeight = UIScreen.main.bounds.height
+        static let screenWidth = UIScreen.main.bounds.width
+        
+        static let baseHeight: CGFloat = 844
+        static let baseWidth: CGFloat = 390
+        
+        static var scaleH: CGFloat { screenHeight / baseHeight }
+        static var scaleW: CGFloat { screenWidth / baseWidth }
+    }
+    
     // MARK: - Constants
     private enum Constants {
         static let logoText: String = "The daily challenge\nCAT AND MOUSE"
         static let streakText: String = "Current streak: 0"
         
-        static let logoTextSize: CGFloat = 35
-        static let streakTextSize: CGFloat = 17
-        static let calendarWidth: CGFloat = 350
-        static let calendarHeight: CGFloat = 200
+        static var logoTextSize: CGFloat { 35 * Layout.scaleH }
+        static var streakTextSize: CGFloat { 17 * Layout.scaleH }
+        static var calendarWidth: CGFloat { 350 * Layout.scaleW }
+        static var calendarHeight: CGFloat { 220 * Layout.scaleH }
         
-        static let cloudsTop: CGFloat = -140
-        static let lightningAnimation1Top: CGFloat = -110
-        static let lightningAnimation1Left: CGFloat = 210
-        static let lightningAnimation2Top: CGFloat = -120
-        static let lightningAnimation2Right: CGFloat = 210
-        static let logoTextTop: CGFloat = 45
-        static let catTop: CGFloat = 150
-        static let catLeft: CGFloat = 10
-        static let miceTop: CGFloat = 180
-        static let miceRight: CGFloat = 20
-        static let calendarTop: CGFloat = 55
-        static let crownsButtonTop: CGFloat = 25
-        static let sudokuButtonTop: CGFloat = 8
-        static let streakTextBottom: CGFloat = 10
-        static let streakTextRight: CGFloat = 10
+        static var cloudsTop: CGFloat { -140 * Layout.scaleH }
+        static var cloudsHeight: CGFloat { 314 * Layout.scaleH }
+        static var lightningAnimation1Top: CGFloat { -110 * Layout.scaleH }
+        static var lightningAnimation1Left: CGFloat { 210 * Layout.scaleW }
+        static var lightningAnimation2Top: CGFloat { -120 * Layout.scaleH }
+        static var lightningAnimation2Right: CGFloat { 210 * Layout.scaleW }
+        static var logoTextTop: CGFloat { 45 * Layout.scaleH }
+        static var catTop: CGFloat { 150 * Layout.scaleH }
+        static var catHeight: CGFloat { 123 * Layout.scaleH }
+        static var catLeft: CGFloat { 10 * Layout.scaleW }
+        static var miceTop: CGFloat { 180 * Layout.scaleH }
+        static var miceHeight: CGFloat { 83 * Layout.scaleH }
+        static var miceRight: CGFloat { 20 * Layout.scaleW }
+        static var calendarTop: CGFloat { 35 * Layout.scaleH }
+        static var crownsButtonTop: CGFloat { 25 * Layout.scaleH }
+        static var sudokuButtonTop: CGFloat { 8 * Layout.scaleH }
+        static var streakTextBottom: CGFloat { 10 * Layout.scaleH }
+        static var streakTextRight: CGFloat { 10 * Layout.scaleW }
         
         
         static let animationDurMin: Double = 3.0

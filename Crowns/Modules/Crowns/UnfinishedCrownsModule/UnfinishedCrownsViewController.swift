@@ -131,29 +131,40 @@ final class UnfinishedCrownsViewController: UIViewController {
         interactor.deleteProgress(UnfinishedCrownsModel.DeleteProgress.Request())
     }
     
+    private enum Layout {
+        static let screenHeight = UIScreen.main.bounds.height
+        static let screenWidth = UIScreen.main.bounds.width
+        
+        static let baseHeight: CGFloat = 844
+        static let baseWidth: CGFloat = 390
+        
+        static var scaleH: CGFloat { screenHeight / baseHeight }
+        static var scaleW: CGFloat { screenWidth / baseWidth }
+    }
+    
     // MARK: - Constants
     private enum Constants {
         static let unfinishedCrowns: String = "You have one unfinished crowns game"
         static let continueButtonText: String = "Continue the game"
         
-        static let logoTextSize: CGFloat = 25
-        static let continueViewHeight: CGFloat = 310
-        static let continueViewLogoWidth: CGFloat = 280
-        static let descriptionTextSize: CGFloat = 20
-        static let continueViewStackSpacing: CGFloat = 8
+        static var logoTextSize: CGFloat { 25 * Layout.scaleH }
+        static var continueViewHeight: CGFloat { 310 * Layout.scaleH }
+        static var continueViewLogoWidth: CGFloat { 280 * Layout.scaleW }
+        static var descriptionTextSize: CGFloat { 20 * Layout.scaleH }
+        static var continueViewStackSpacing: CGFloat { 8 * Layout.scaleH }
         static let buttonTextSize: CGFloat = 20
         
-        static let logoTop: CGFloat = 15
-        static let backButtonLeft: CGFloat = 15
-        static let descriptionTop: CGFloat = 20
-        static let descriptionLeft: CGFloat = 20
-        static let catBottom: CGFloat = 10
-        static let catRight: CGFloat = 20
-        static let continueButtonY: CGFloat = -4
-        static let continueButtonBottom: CGFloat = 20
+        static var logoTop: CGFloat { 15 * Layout.scaleH }
+        static var backButtonLeft: CGFloat { 15 * Layout.scaleW }
+        static var descriptionTop: CGFloat { 20 * Layout.scaleH }
+        static var descriptionLeft: CGFloat { 20 * Layout.scaleW }
+        static var catBottom: CGFloat { 10 * Layout.scaleH }
+        static var catRight: CGFloat { 20 * Layout.scaleW }
+        static var continueButtonY: CGFloat { -4 * Layout.scaleH }
+        static var continueButtonBottom: CGFloat { 20 * Layout.scaleH }
         
         static let overlayAlpha = 0.3
-        static let continueViewRadius: CGFloat = 16
+        static var continueViewRadius: CGFloat { 25 * Layout.scaleH }
         
     }
 }

@@ -92,7 +92,7 @@ final class StatisticsViewController: UIViewController {
         segmentedControl.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.segmentedControlTop)
         segmentedControl.pinCenterX(to: view)
         statisticCat.pinCenterX(to: view)
-        statisticCat.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constants.statisticCat)
+        statisticCat.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constants.statisticCatBottom)
         
         segmentedControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
     }
@@ -131,6 +131,17 @@ final class StatisticsViewController: UIViewController {
         updateStatistics(game: currentGameType)
     }
     
+    private enum Layout {
+        static let screenHeight = UIScreen.main.bounds.height
+        static let screenWidth = UIScreen.main.bounds.width
+        
+        static let baseHeight: CGFloat = 844
+        static let baseWidth: CGFloat = 390
+        
+        static var scaleH: CGFloat { screenHeight / baseHeight }
+        static var scaleW: CGFloat { screenWidth / baseWidth }
+    }
+    
     // MARK: - Constants
     private enum Constants {
         static let games = ["Crowns", "Killer-Sudoku"]
@@ -138,10 +149,10 @@ final class StatisticsViewController: UIViewController {
         static let segmentTextSize = 20.0
         static let statisticCellTextSize = 20.0
         
-        static let segmentedControlTop = 20.0
-        static let statisticCat = 10.0
-        static let tableTop = 20.0
-        static let tableBottom = 20.0
+        static var segmentedControlTop: CGFloat { 20 * Layout.scaleH }
+        static var statisticCatBottom: CGFloat { 10 * Layout.scaleH }
+        static var tableTop: CGFloat { 20 * Layout.scaleH }
+        static var tableBottom: CGFloat { 20 * Layout.scaleH }
     }
 }
 

@@ -23,7 +23,7 @@ final class CrownsPlayViewController: UIViewController{
     private let pauseButton:  UIButton = CustomButton(button: UIImageView(image: UIImage.pauseButton))
     private let cleanerButton:  UIButton = CustomButton(button: UIImageView(image: UIImage.cleanerButton))
     private let learningButton:  UIButton = CustomButton(button: UIImageView(image: UIImage.gameLearningButton))
-    private let logo: UILabel = CustomText(text: Constants.logoText, fontSize: Constants.logoTextSize, textColor: Colors.white)
+    private let gameLogo: UILabel = CustomText(text: Constants.logoText, fontSize: Constants.logoTextSize, textColor: Colors.white)
     private let gamePlayCat: UIImageView = UIImageView(image: UIImage.startPlayCat)
     private var selectedCellIndex: Int? = 0
     private var playground: UICollectionView = {
@@ -112,14 +112,11 @@ final class CrownsPlayViewController: UIViewController{
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         let lBarButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = lBarButtonItem
+        navigationItem.titleView = gameLogo
         configureTimer()
         
-        for subview in [logo, gamePlayCat] {
-            view.addSubview(subview)
-            subview.pinCenterX(to: view)
-        }
-        
-        logo.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
+        view.addSubview(gamePlayCat)
+        gamePlayCat.pinCenterX(to: view)
         gamePlayCat.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor)
     }
     
@@ -142,10 +139,10 @@ final class CrownsPlayViewController: UIViewController{
         
         view.addSubview(playground)
         
-        playground.pinCenterX(to: view)
-        playground.pinTop(to: logo.bottomAnchor, Constants.playgroundTop)
         playground.setWidth(availableWidth)
         playground.setHeight(availableWidth)
+        playground.pinCenterX(to: view)
+        playground.pinCenterY(to: view)
     }
     
     private func configurePlaygroundButtons() {
@@ -225,6 +222,17 @@ final class CrownsPlayViewController: UIViewController{
         }
     }
     
+    private enum Layout {
+        static let screenHeight = UIScreen.main.bounds.height
+        static let screenWidth = UIScreen.main.bounds.width
+        
+        static let baseHeight: CGFloat = 844
+        static let baseWidth: CGFloat = 390
+        
+        static var scaleH: CGFloat { screenHeight / baseHeight }
+        static var scaleW: CGFloat { screenWidth / baseWidth }
+    }
+    
     // MARK: - Constants
     private enum Constants {
         static let logoText: String = "Crowns"
@@ -234,13 +242,13 @@ final class CrownsPlayViewController: UIViewController{
         static let timerTextSize: CGFloat = 12
         static let continueButtonTextSize: CGFloat = 20
         
-        static let playgroundSpacing: CGFloat = 2.0
-        static let timerLabelRight: CGFloat = 22
-        static let timerLabelTop: CGFloat = 10
-        static let playgroundTop: CGFloat = 75
-        static let buttonsPadding = 10.0
-        static let playgroundPadding = 7.0
-        static let continueButtonY: CGFloat = -4
+        static var playgroundSpacing: CGFloat = 2
+        static var timerLabelRight: CGFloat { 22 * Layout.scaleW }
+        static var timerLabelTop: CGFloat { 7 * Layout.scaleH }
+        static var playgroundTop: CGFloat { 75 * Layout.scaleH }
+        static var buttonsPadding: CGFloat { 10 * Layout.scaleH }
+        static var playgroundPadding: CGFloat = 7
+        static var continueButtonY: CGFloat { -4 * Layout.scaleH }
         
         static let size = 9
         static let pauseOverlayAlpha = 0.9

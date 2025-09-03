@@ -142,6 +142,17 @@ final class DeveloperViewController: UIViewController {
         interactor.backButtonTapped(DeveloperModel.RouteBack.Request())
     }
     
+    private enum Layout {
+        static let screenHeight = UIScreen.main.bounds.height
+        static let screenWidth = UIScreen.main.bounds.width
+        
+        static let baseHeight: CGFloat = 844
+        static let baseWidth: CGFloat = 390
+        
+        static var scaleH: CGFloat { screenHeight / baseHeight }
+        static var scaleW: CGFloat { screenWidth / baseWidth }
+    }
+    
     // MARK: - Constants
     private enum Constants {
         static let logoText = "About the developer"
@@ -156,14 +167,14 @@ final class DeveloperViewController: UIViewController {
         
         static let logoTextSize = 35.0
         static let descriptionTextSize = 20.0
-        static let buttonStackSpacing = 70.0
+        static var buttonStackSpacing: CGFloat { 70 * Layout.scaleW }
         
-        static let logoTop = 50.0
-        static let catTop = 10.0
-        static let descriptionLeft = 10.0
-        static let descriptionRight = 10.0
-        static let descriptionTop = 10.0
-        static let buttonStackTop = 40.0
+        static var logoTop: CGFloat { 50 * Layout.scaleH }
+        static var catTop: CGFloat { 10 * Layout.scaleH }
+        static var descriptionLeft: CGFloat { 10 * Layout.scaleW }
+        static var descriptionRight: CGFloat { 10 * Layout.scaleW }
+        static var descriptionTop: CGFloat { 10 * Layout.scaleH }
+        static var buttonStackTop: CGFloat { 40 * Layout.scaleH }
         
         static let catDuration = 0.8
         static let catRepeat = 1
