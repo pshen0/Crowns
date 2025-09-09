@@ -1,6 +1,9 @@
 Crowns
 =
-Crown – мобильное приложение-игра на Swift (UIKit, Xcode) с архитектурой SVIP.
+Crown – мобильное приложение-игра на iOS.
+-
+
+[Ссылка](https://apps.apple.com/ru/app/crowns-cats-vs-mice/id6748743484) на приложение в App Store.
 -
 
 Основной экран **Home**
@@ -132,25 +135,3 @@ Crown – мобильное приложение-игра на Swift (UIKit, Xc
     <img src="Crowns/Resources/AppDescriptionImages/dev.gif" width="200">
 </div>
 
-Установка и использование проекта
--
-### Требования
-- macOS с установленным Xcode (версия 15.0 или новее)
-- Swift и UIKit
-
-### Установка
-1. **Клонируйте репозиторий или скачайте по кнопке <>Code → DownloadZIP**  
-   ```sh
-   git clone https://github.com/pshen0/Crowns.git
-    ```
-2. **Перейдите в нужную папку**
-    ```sh
-    cd path/Crowns
-    ```
-3. **Откройте проект в Xcode**
-    ```sh
-    open Crowns.xcodeproj
-    ```
-4. **Соберите и запустите проект в Xcode**
-    Выберите симулятор или подключенное устройство
-    Нажмите Cmd + R или Run в Xcode
